@@ -14,68 +14,65 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
 
 /* Splash screen */
 #splash {
-  position: fixed; top:0; left:0; width:100vw; height:100vh;
-  background: #fff; display:flex; justify-content:center; align-items:center;
-  z-index:10000; transition: opacity 0.5s ease;
-}
-#splash img { max-width:90%; max-height:90%; object-fit:contain; }
-
-/* Partner content toggle */
-.partner-content { max-height:0; overflow:hidden; opacity:0; transition:max-height 0.5s ease, opacity 0.4s ease, margin-top 0.4s ease; margin-top:0; }
-.partner-content.active { opacity:1; margin-top:1rem; max-height:2000px; }
-
-/* Partner links */
-.partner-link {
-  display:flex; align-items:center; padding:1rem 1.25rem; margin-bottom:0.75rem;
-  border-radius:0.75rem; background-color:#f9fafb; color:#1f2937;
-  font-weight:500; font-size:1rem; box-shadow:0 2px 6px rgba(0,0,0,0.08);
-  cursor:pointer; transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s, color 0.2s;
-}
-.partner-link:hover { transform:translateY(-2px); box-shadow:0 4px 12px rgba(0,0,0,0.15); background-color:#fff; color:#dc2626; }
-.partner-link:last-child { margin-bottom:0; }
-
-/* Modal */
-#imageModal {
-  display: none;
   position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(0,0,0,0.7);
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #fff;
+  display: flex;
   justify-content: center;
   align-items: center;
   z-index: 10000;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.5s ease;
 }
-#imageModal.active { display: flex; animation: fadeIn 0.3s ease; }
-@keyframes fadeIn { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
+#splash img { max-width: 90%; max-height: 90%; object-fit: contain; }
 
-.modal-content {
-  position: relative;
-  background: #fff;
-  border-radius: 16px;
-  padding: 1rem;
-  box-shadow: 0 0 25px rgba(0,0,0,0.5);
+/* Partner content toggle */
+.partner-content {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.5s ease, opacity 0.4s ease, margin-top 0.4s ease;
+  margin-top: 0;
 }
-#imageModal img {
-  max-width: 85vw;
-  max-height: 75vh;
-  display: block;
-  border-radius: 12px;
+.partner-content.active {
+  opacity: 1;
+  margin-top: 1rem;
+  max-height: 2000px;
 }
-#closeBtn {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: #dc2626;
-  color: #fff;
-  border: none;
-  padding: 8px 14px;
-  border-radius: 6px;
-  font-weight: bold;
+
+/* Partner links */
+.partner-link {
+  display: flex;
+  align-items: center;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+  border-radius: 0.75rem;
+  background-color: #f9fafb;
+  color: #1f2937;
+  font-weight: 500;
+  font-size: 1rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
   cursor: pointer;
-  transition: background 0.2s ease;
+  transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s, color 0.2s;
 }
-#closeBtn:hover { background: #b91c1c; }
+.partner-link:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  background-color: #fff;
+  color: #dc2626;
+}
+.partner-link:last-child { margin-bottom: 0; }
+
+/* Modal */
+#imageModal {
+  display:none; position:fixed; top:0; left:0; width:100%; height:100%;
+  background: rgba(0,0,0,0.7); justify-content:center; align-items:center; z-index:10000; transition: opacity 0.3s ease;
+}
+#imageModal.active { display:flex; }
+#imageModal img { max-width:90%; max-height:80%; border-radius:12px; box-shadow:0 0 20px rgba(0,0,0,0.5); }
+#imageModal button { position:absolute; top:20px; right:20px; background:#dc2626; color:#fff; border:none; padding:8px 12px; border-radius:6px; cursor:pointer; font-weight:bold; }
 
 /* Category cards */
 .category-card img { width:100%; height:12rem; object-fit:cover; border-radius: 1rem; }
@@ -89,11 +86,9 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
 </div>
 
 <!-- Modal -->
-<div id="imageModal" onclick="closeOnOutsideClick(event)">
-  <div class="modal-content">
-    <button id="closeBtn" onclick="closeModal()">Fermer ✖</button>
-    <img id="modalImg" src="" alt="Partenaire">
-  </div>
+<div id="imageModal" onclick="closeModal()">
+  <button onclick="closeModal()">Fermer</button>
+  <img id="modalImg" src="" alt="Partenaire" onclick="event.stopPropagation()">
 </div>
 
 <!-- HEADER -->
@@ -146,9 +141,9 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
         <div class="absolute inset-0 bg-gray-900 bg-opacity-60 rounded-2xl flex items-center justify-center text-white text-xl font-bold">🥖 ARTISANS DU GOÛT</div>
       </div>
       <div id="gout-content" class="partner-content bg-white border border-gray-200 rounded-xl p-4 shadow-lg">
-        <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/images/janny%20fruits.jpg')">Janny Fruits</div>
+        <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/images/janny%20fruits.jpg')">Janny fruits</div>        
         <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/images/le%20pepites%20bressanes.jpg')">Les Pépites Bressanes</div>
-        <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/images/lou%20pan.jpg')">Lou Pan</div>
+        <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/images/lou%20pan.jpg')">LouPan</div>
         <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/images/Monts%20et%20Terroir.jpg')">Monts et Terroir</div>
         <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/images/grain%20dpain.jpg')">Grain d'pain</div>
         <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/images/boucherie_andré.jpg')">Boucherie André</div>
@@ -166,6 +161,7 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
       <div id="auto-content" class="partner-content bg-white border border-gray-200 rounded-xl p-4 shadow-lg">
         <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/images/autosur.jpg')">Autosur</div>
         <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/images/auto%20securitas.jpg')">Auto Securitas</div>
+        <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/images/apc.jpg')">APC</div>
         <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/images/123%20parebrise.jpg')">123 Parebrise</div>
         <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/images/renault.jpg')">Renault</div>
         <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/images/speedy.jpg')">Speedy</div>
@@ -186,18 +182,18 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
       </div>
     </div>
 
-    <!-- TRAVAUX -->
+    <!-- MAISON & TRAVAUX -->
     <div class="col-span-1">
       <div class="category-card relative group cursor-pointer transform hover:scale-[1.02] transition duration-300 shadow-lg rounded-2xl overflow-hidden" onclick="toggleCategory('travaux-content')">
-        <img src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/maison_travaux.jpg" alt="Maison et travaux">
-        <div class="absolute inset-0 bg-gray-900 bg-opacity-60 rounded-2xl flex items-center justify-center text-white text-xl font-bold">🏠 TRAVAUX</div>
+        <img src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/maison_travaux.jpg" alt="Maison et déco">
+        <div class="absolute inset-0 bg-gray-900 bg-opacity-60 rounded-2xl flex items-center justify-center text-white text-xl font-bold">🏠 MAISON & TRAVAUX</div>
       </div>
       <div id="travaux-content" class="partner-content bg-white border border-gray-200 rounded-xl p-4 shadow-lg">
         <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/images/ecocuisine.jpg')">Ecocuisine</div>
         <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/images/schmidt.jpg')">Schmidt</div>
         <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/images/michel%20parisot.jpg')">Parisot Motoculture</div>
         <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/images/sikkens.jpg')">Sikkens Solutions</div>
-        <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/images/Les%20coqs%20de%20Bresse.jpg')">Les Coques de Bresse</div>
+        <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/images/Les%20coqs%20de%20Bresse.jpg')">Les Coqs de Bresse</div>
         <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/images/habitat%20confort.jpg')">Habitat Confort</div>
         <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/images/Conforama.jpg')">Conforama</div>
         <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/images/chaleur%20et%20bois.jpg')">Chaleur et Bois</div>
@@ -212,47 +208,28 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
       </div>
       <div id="terroir-content" class="partner-content bg-white border border-gray-200 rounded-xl p-4 shadow-lg">
         <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/images/Cerdon.jpg')">Cerdon AOC Gabin Grobon</div>
-        <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/images/Cave%20des%20vignerons.jpg')">Cave des Vignerons</div>
+        <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/images/la_cezee.jpg')">La Cézée</div>
       </div>
     </div>
 
-    <!-- SPORT -->
+    <!-- FINANCEMENT -->
     <div class="col-span-1">
-      <div class="category-card relative group cursor-pointer transform hover:scale-[1.02] transition duration-300 shadow-lg rounded-2xl overflow-hidden" onclick="toggleCategory('sport-content')">
-        <img src="https://images.unsplash.com/photo-1599058917212-d750089bc07e?w=800" alt="Sport">
-        <div class="absolute inset-0 bg-gray-900 bg-opacity-60 rounded-2xl flex items-center justify-center text-white text-xl font-bold">🏋️‍♂️ SPORT</div>
+      <div class="category-card relative group cursor-pointer transform hover:scale-[1.02] transition duration-300 shadow-lg rounded-2xl overflow-hidden" onclick="toggleCategory('finance-content')">
+        <img src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/finance.jpg" alt="Financement">
+        <div class="absolute inset-0 bg-gray-900 bg-opacity-60 rounded-2xl flex items-center justify-center text-white text-xl font-bold">💰 FINANCEMENT</div>
       </div>
-      <div id="sport-content" class="partner-content bg-white border border-gray-200 rounded-xl p-4 shadow-lg">
-        <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/images/Keepcool.jpg')">KeepCool</div>
-        <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/images/Bowling.jpg')">Bowling Bresse Loisirs</div>
-      </div>
-    </div>
-
-    <!-- MODE -->
-    <div class="col-span-1">
-      <div class="category-card relative group cursor-pointer transform hover:scale-[1.02] transition duration-300 shadow-lg rounded-2xl overflow-hidden" onclick="toggleCategory('mode-content')">
-        <img src="https://images.unsplash.com/photo-1521334884684-d80222895322?w=800" alt="Mode et beauté">
-        <div class="absolute inset-0 bg-gray-900 bg-opacity-60 rounded-2xl flex items-center justify-center text-white text-xl font-bold">👗 MODE & BEAUTÉ</div>
-      </div>
-      <div id="mode-content" class="partner-content bg-white border border-gray-200 rounded-xl p-4 shadow-lg">
-        <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/images/Optic%202000.jpg')">Optic 2000</div>
-        <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/images/Nocibe.jpg')">Nocibé</div>
-      </div>
-    </div>
-
-    <!-- LOISIRS -->
-    <div class="col-span-1">
-      <div class="category-card relative group cursor-pointer transform hover:scale-[1.02] transition duration-300 shadow-lg rounded-2xl overflow-hidden" onclick="toggleCategory('loisir-content')">
-        <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=800" alt="Loisirs">
-        <div class="absolute inset-0 bg-gray-900 bg-opacity-60 rounded-2xl flex items-center justify-center text-white text-xl font-bold">🎟️ LOISIRS</div>
-      </div>
-      <div id="loisir-content" class="partner-content bg-white border border-gray-200 rounded-xl p-4 shadow-lg">
-        <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/images/Cin%C3%A9ma.jpg')">Pathé Bourg-en-Bresse</div>
-        <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/images/Culture.jpg')">Espace Culturel</div>
+      <div id="finance-content" class="partner-content bg-white border border-gray-200 rounded-xl p-4 shadow-lg">
+        <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/images/lcl.jpg')">LCL</div>
+        <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/images/Banque%20Populaire.jpg')">Banque Populaire</div>
       </div>
     </div>
 
   </div>
+</section>
+
+<section id="mentions" class="bg-gray-100 py-10 px-6 rounded-xl shadow-inner mt-10">
+  <h2 class="text-2xl font-bold text-red-700 mb-4">Mentions Légales</h2>
+  <p class="text-gray-700 leading-relaxed">… contenu des mentions légales …</p>
 </section>
 
 <script>
@@ -261,19 +238,30 @@ function toggleCategory(id) {
   const section = document.getElementById(id);
   const card = document.querySelector(`[onclick="toggleCategory('${id}')"]`);
   document.querySelectorAll('.partner-content').forEach(item => { if(item.id !== id) item.classList.remove('active'); });
-  document.querySelectorAll('.category-card').forEach(cardEl => { cardEl.classList.remove("shadow-red-500/50", "shadow-xl"); cardEl.classList.add("shadow-lg"); });
+  document.querySelectorAll('.category-card').forEach(cardEl => {
+    cardEl.classList.remove("shadow-red-500/50", "shadow-xl");
+    cardEl.classList.add("shadow-lg");
+  });
   section.classList.toggle('active');
   if(section.classList.contains('active')){
-    card.classList.remove("shadow-lg"); card.classList.add("shadow-xl", "shadow-red-500/50");
+    card.classList.remove("shadow-lg");
+    card.classList.add("shadow-xl", "shadow-red-500/50");
   } else {
-    card.classList.remove("shadow-xl", "shadow-red-500/50"); card.classList.add("shadow-lg");
+    card.classList.remove("shadow-xl", "shadow-red-500/50");
+    card.classList.add("shadow-lg");
   }
 }
 
 // Splash screen
-window.addEventListener('load', () => { setTimeout(() => { const splash = document.getElementById('splash'); splash.style.opacity='0'; setTimeout(() => splash.style.display='none',500); }, 3000); });
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    const splash = document.getElementById('splash');
+    splash.style.opacity = '0';
+    setTimeout(() => splash.style.display='none', 500);
+  }, 3000);
+});
 
-// Modal functions
+// Modal
 function openModal(url) {
   const modal = document.getElementById('imageModal');
   const modalImg = document.getElementById('modalImg');
@@ -283,11 +271,32 @@ function openModal(url) {
 function closeModal() {
   document.getElementById('imageModal').classList.remove('active');
 }
-function closeOnOutsideClick(event) {
-  if (event.target.id === 'imageModal') closeModal();
-}
-document.addEventListener('keydown', function(event) {
-  if (event.key === 'Escape') closeModal();
+
+// PWA install banner
+let deferredPrompt;
+const installBanner = document.createElement('div');
+installBanner.style.cssText = `
+position: fixed; bottom: 20px; left: 20px; right: 20px;
+background: #dc2626; color: #fff; padding: 12px 20px; 
+border-radius: 12px; text-align: center; font-weight: bold; z-index: 10001;
+cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+`;
+installBanner.textContent = "Installer l'application sur votre écran d'accueil";
+installBanner.style.display = 'none';
+document.body.appendChild(installBanner);
+
+window.addEventListener('appinstalled', () => { installBanner.style.display = 'none'; });
+window.addEventListener('beforeinstallprompt', (e) => {
+  if (window.matchMedia('(display-mode: standalone)').matches) return;
+  e.preventDefault();
+  deferredPrompt = e;
+  installBanner.style.display = 'block';
+  installBanner.addEventListener('click', async () => {
+    installBanner.style.display = 'none';
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    deferredPrompt = null;
+  });
 });
 </script>
 
