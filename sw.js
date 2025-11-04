@@ -104,7 +104,7 @@
 
   <!-- SPLASH SCREEN -->
   <div id="splashScreen">
-    <img src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/1761728183491.jpg" alt="Logo Renault Trucks" class="w-64 md:w-96">
+    <img src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/1761728183491.jpg" alt="Logo Renault Trucks" class="w-80 md:w-112">
   </div>
 
   <!-- HEADER -->
