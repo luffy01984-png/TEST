@@ -1,72 +1,62 @@
-// Nom du cache (à changer à chaque mise à jour pour forcer le refresh)
-const CACHE_NAME = "cse-renault-trucks-v1";
-
-// Liste des fichiers à mettre en cache
-const ASSETS = [
-  "/Renault-trucks-CE/",
-  "/Renault-trucks-CE/index.html",
-  "/Renault-trucks-CE/manifest.json",
-  "/Renault-trucks-CE/assets/1761728183491.jpg",
-  "https://cdn.tailwindcss.com",
-  "https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+const CACHE_NAME = 'cse-renault-trucks-cache-v1';
+const FILES_TO_CACHE = [
+  '/',
+  '/index.html',
+  '/manifest.json',
+  '/assets/icons/icon-192.png',
+  '/assets/icons/icon-512.png',
+  '/assets/icons/icon-1024.png',
+  '/favicon.ico',
+  // CSS / JS
+  'https://cdn.tailwindcss.com',
+  'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap'
 ];
 
-// Installation du service worker → mise en cache initiale
-self.addEventListener("install", (event) => {
-  console.log("🛠️ Installation du Service Worker...");
+// INSTALL
+self.addEventListener('install', event => {
+  console.log('[ServiceWorker] Install');
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(ASSETS);
+    caches.open(CACHE_NAME).then(cache => {
+      console.log('[ServiceWorker] Caching app shell');
+      return cache.addAll(FILES_TO_CACHE);
     })
   );
-  self.skipWaiting(); // activation immédiate
+  self.skipWaiting();
 });
 
-// Activation → nettoyage des anciens caches
-self.addEventListener("activate", (event) => {
-  console.log("⚙️ Activation du Service Worker...");
+// ACTIVATE
+self.addEventListener('activate', event => {
+  console.log('[ServiceWorker] Activate');
   event.waitUntil(
-    caches.keys().then((keys) =>
-      Promise.all(
-        keys.map((key) => {
-          if (key !== CACHE_NAME) {
-            console.log("🧹 Suppression de l'ancien cache :", key);
-            return caches.delete(key);
-          }
-        })
-      )
-    )
+    caches.keys().then(keyList => {
+      return Promise.all(keyList.map(key => {
+        if (key !== CACHE_NAME) {
+          console.log('[ServiceWorker] Removing old cache', key);
+          return caches.delete(key);
+        }
+      }));
+    })
   );
-  self.clients.claim(); // prend le contrôle immédiatement
+  self.clients.claim();
 });
 
-// Interception des requêtes → cache + réseau de secours
-self.addEventListener("fetch", (event) => {
+// FETCH
+self.addEventListener('fetch', event => {
+  if (event.request.method !== 'GET') return;
+
   event.respondWith(
-    caches.match(event.request).then((cachedResponse) => {
-      if (cachedResponse) {
-        return cachedResponse; // réponse depuis le cache
-      }
-
-      // Sinon, on va chercher sur le réseau et on met en cache
-      return fetch(event.request)
-        .then((response) => {
-          // Évite de mettre en cache les requêtes non valides
-          if (!response || response.status !== 200 || response.type !== "basic") {
-            return response;
-          }
-
-          const responseClone = response.clone();
-          caches.open(CACHE_NAME).then((cache) => {
-            cache.put(event.request, responseClone);
-          });
-
-          return response;
-        })
-        .catch(() => {
-          // Mode hors ligne : renvoie une page fallback si souhaité
-          return caches.match("/Renault-trucks-CE/index.html");
+    caches.match(event.request).then(response => {
+      return response || fetch(event.request).then(fetchResponse => {
+        return caches.open(CACHE_NAME).then(cache => {
+          cache.put(event.request, fetchResponse.clone());
+          return fetchResponse;
         });
+      });
+    }).catch(() => {
+      // Optionnel : fallback si offline et fichier non en cache
+      if (event.request.destination === 'document') {
+        return caches.match('/index.html');
+      }
     })
   );
 });
