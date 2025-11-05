@@ -5,7 +5,9 @@ const FILES_TO_CACHE = [
   '/cse-renault-trucks/manifest.json',
   '/cse-renault-trucks/assets/icons/icon-192.png',
   '/cse-renault-trucks/assets/icons/icon-512.png',
+  '/cse-renault-trucks/assets/icons/icon-1024.png',
   '/cse-renault-trucks/favicon.ico',
+  // CSS / JS externes
   'https://cdn.tailwindcss.com',
   'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap'
 ];
@@ -46,22 +48,18 @@ self.addEventListener('fetch', event => {
 
   event.respondWith(
     caches.match(event.request).then(response => {
-      if (response) return response;
-
-      return fetch(event.request)
-        .then(fetchResponse => {
-          return caches.open(CACHE_NAME).then(cache => {
-            if(fetchResponse && fetchResponse.status === 200 && fetchResponse.type === 'basic') {
-              cache.put(event.request, fetchResponse.clone());
-            }
-            return fetchResponse;
-          });
-        })
-        .catch(() => {
-          if (event.request.destination === 'document') {
-            return caches.match('/cse-renault-trucks/index.html');
-          }
+      return response || fetch(event.request).then(fetchResponse => {
+        return caches.open(CACHE_NAME).then(cache => {
+          // Mise en cache du nouveau fichier
+          cache.put(event.request, fetchResponse.clone());
+          return fetchResponse;
         });
+      });
+    }).catch(() => {
+      // fallback si offline et fichier non en cache
+      if (event.request.destination === 'document') {
+        return caches.match('/cse-renault-trucks/index.html');
+      }
     })
   );
 });
