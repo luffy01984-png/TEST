@@ -1,13 +1,13 @@
 {
-  "name": "Avantages CSE Renault Trucks",
+  "name": "CSE Renault Trucks Bourg-en-Bresse",
   "short_name": "CSE Renault Trucks",
-  "description": "Toutes les offres et avantages de votre CSE Renault Trucks Bourg-en-Bresse",
+  "description": "Découvrez les avantages exclusifs négociés par votre Comité d'Entreprise Renault Trucks.",
   "start_url": "/cse-renault-trucks/index.html",
-  "scope": "/cse-renault-trucks/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#dc2626",
   "orientation": "portrait-primary",
+  "scope": "/cse-renault-trucks/",
   "icons": [
     {
       "src": "/cse-renault-trucks/assets/icons/icon-192.png",
@@ -17,6 +17,11 @@
     {
       "src": "/cse-renault-trucks/assets/icons/icon-512.png",
       "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/cse-renault-trucks/assets/icons/icon-1024.png",
+      "sizes": "1024x1024",
       "type": "image/png"
     }
   ]
