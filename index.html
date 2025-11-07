@@ -359,6 +359,47 @@ modalImg.addEventListener('click', closeModal);
 closeModalBtn.addEventListener('click', closeModal);
 modal.addEventListener('click', (e) => { if(e.target === modal) closeModal(); });
 window.addEventListener('popstate', () => { if(modal.classList.contains('active')) closeModal(); });
+  // PWA install banner
+let deferredPrompt;
+const installBanner = document.createElement('div');
+installBanner.style.cssText =
+  `position: fixed;
+   bottom: 20px; left: 20px; right: 20px;
+   background: #dc2626;
+   color: #fff;
+   padding: 12px 20px;
+   border-radius: 12px;
+   text-align: center;
+   font-weight: bold;
+   z-index: 10001;
+   cursor: pointer;
+   box-shadow: 0 4px 12px rgba(0,0,0,0.3);`;
+installBanner.textContent = "Installer l'application sur votre écran d'accueil";
+installBanner.style.display = 'none';
+
+document.body.appendChild(installBanner);
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+
+  // Ne pas afficher si déjà installé
+  if (!window.matchMedia('(display-mode: standalone)').matches) {
+    installBanner.style.display = 'block';
+  }
+});
+
+installBanner.addEventListener('click', async () => {
+  installBanner.style.display = 'none';
+  deferredPrompt.prompt();
+  await deferredPrompt.userChoice;
+  deferredPrompt = null;
+});
+
+window.addEventListener('appinstalled', () => {
+  installBanner.style.display = 'none';
+});
+
 
 // Accordion avec titre actif rouge
 document.querySelectorAll(".accordion-btn").forEach(btn => {
