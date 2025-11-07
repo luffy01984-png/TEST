@@ -12,25 +12,30 @@
 <style>
 body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#f3f4f6; }
 
-/* Splash screen responsive */
+/* Splash screen */
 #splash {
   position: fixed; inset: 0; width: 100vw; height: 100vh;
   background: #dc2626; display: flex; flex-direction: column; justify-content: center; align-items: center;
   z-index: 10000; transition: opacity 0.8s ease;
 }
 #splash span {
-  color: #fff; font-weight: bold; text-align: center; margin-bottom: 1rem;
-  font-size: 1.8rem;
+  color: #fff;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  font-weight: bold;
+  text-align: center;
 }
 #splash img {
-  width: 80vw; max-width: 300px; height: auto; object-fit: contain;
+  width: 70vw;
+  max-width: 500px;
+  height: auto;
+  object-fit: contain;
   animation: zoomIn 2s ease-in-out forwards;
 }
-@media (min-width: 768px) {
-  #splash span { font-size: 2.4rem; }
-  #splash img { width: 70vw; max-width: 500px; }
+@keyframes zoomIn {
+  0% { transform: scale(0.9); opacity: 0.8; }
+  100% { transform: scale(1); opacity: 1; }
 }
-@keyframes zoomIn { 0% { transform: scale(0.9); opacity: 0.8; } 100% { transform: scale(1); opacity: 1; } }
 
 /* Partner content toggle */
 .partner-content { max-height: 0; overflow: hidden; opacity: 0; transition: max-height 0.5s ease, opacity 0.4s ease, margin-top 0.4s ease; margin-top: 0; }
@@ -49,7 +54,7 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
 /* Modal */
 #imageModal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.7); justify-content:center; align-items:center; z-index:10000; transition: opacity 0.3s ease; }
 #imageModal.active { display:flex; }
-#imageModal img { max-width:90%; max-height:80%; border-radius:12px; box-shadow:0 0 20px rgba(0,0,0,0.5); }
+#imageModal img { max-width:90%; max-height:80%; border-radius:12px; box-shadow:0 0 20px rgba(0,0,0,0.5); cursor:pointer; }
 #imageModal button { position:absolute; top:20px; right:20px; background:#dc2626; color:#fff; border:none; padding:8px 12px; border-radius:6px; cursor:pointer; font-weight:bold; }
 
 /* Category cards */
@@ -144,6 +149,8 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
         <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/images/boucherie_andré.jpg')">Boucherie André</div>
         <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/images/Papilles_Ain_solites.png')">Papilles Ain Solites</div>
         <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/images/biocoop.jpg')">Biocoop</div>
+        <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/images/Cerdon.jpg')">Cerdon AOC Gabin Grobon</div>
+        <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/images/la_cezee.jpg')">La Cézée</div>
       </div>
     </div>
 
@@ -225,6 +232,7 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
         <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/images/ConceptOptique.png')">Concept_Optique</div>
       </div>
     </div>
+
 
     <!-- ENFANTS -->
     <div class="col-span-1">
@@ -316,10 +324,21 @@ function toggleCategory(id) {
 const modal = document.getElementById('imageModal');
 const modalImg = document.getElementById('modalImg');
 const closeModalBtn = modal.querySelector('button');
-function openModal(url) { modalImg.src = url; modal.classList.add('active'); history.pushState({ modalOpen: true }, ""); }
-function closeModal() { modal.classList.remove('active'); if(history.state && history.state.modalOpen) history.back(); }
-modal.addEventListener('click', (e) => { if(e.target === modal) closeModal(); });
+
+function openModal(url) {
+  modalImg.src = url;
+  modal.classList.add('active');
+  history.pushState({ modalOpen: true }, "");
+}
+
+function closeModal() {
+  modal.classList.remove('active');
+  if(history.state && history.state.modalOpen) history.back();
+}
+
+modalImg.addEventListener('click', closeModal);
 closeModalBtn.addEventListener('click', closeModal);
+modal.addEventListener('click', (e) => { if(e.target === modal) closeModal(); });
 window.addEventListener('popstate', () => { if(modal.classList.contains('active')) closeModal(); });
 
 // Accordion
@@ -332,20 +351,6 @@ document.querySelectorAll(".accordion-btn").forEach(btn => {
     if(content.classList.contains("open")) { content.style.maxHeight = null; content.classList.remove("open"); arrow.classList.remove("rotate"); }
     else { content.classList.add("open"); arrow.classList.add("rotate"); requestAnimationFrame(() => { content.style.maxHeight = content.scrollHeight + "px"; }); }
   });
-});
-
-// PWA install banner
-let deferredPrompt;
-const installBanner = document.createElement('div');
-installBanner.style.cssText = `position: fixed; bottom: 20px; left: 20px; right: 20px; background: #dc2626; color: #fff; padding: 12px 20px; border-radius: 12px; text-align: center; font-weight: bold; z-index: 10001; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.3);`;
-installBanner.textContent = "Installer l'application sur votre écran d'accueil";
-installBanner.style.display = 'none';
-document.body.appendChild(installBanner);
-window.addEventListener('appinstalled', () => { installBanner.style.display = 'none'; });
-window.addEventListener('beforeinstallprompt', (e) => {
-  if (window.matchMedia('(display-mode: standalone)').matches) return;
-  e.preventDefault(); deferredPrompt = e; installBanner.style.display = 'block';
-  installBanner.addEventListener('click', async () => { installBanner.style.display = 'none'; deferredPrompt.prompt(); await deferredPrompt.userChoice; deferredPrompt = null; });
 });
 </script>
 
