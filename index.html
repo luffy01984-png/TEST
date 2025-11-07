@@ -28,11 +28,26 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
 
 /* Logo centré et plus grand */
 #splash img {
-  width: 60vw;           /* 60% de la largeur de l’écran */
-  max-width: 500px;      /* limite sur grands écrans */
+  width: 85vw;           /* Par défaut : prend 85% de la largeur de l’écran */
+  max-width: 800px;      /* Taille maximale sur grands écrans */
   height: auto;
   object-fit: contain;
   animation: zoomIn 2s ease-in-out forwards;
+}
+
+/* Responsive — ajuste selon la taille de l’écran */
+@media (max-width: 768px) { /* Tablette & mobile */
+  #splash img {
+    width: 90vw;          /* Un peu plus large sur mobile */
+    max-width: none;
+  }
+}
+
+@media (min-width: 1200px) { /* Très grands écrans */
+  #splash img {
+    width: 70vw;          /* Un peu plus petit sur écrans très larges */
+    max-width: 900px;
+  }
 }
 
 /* Animation d’apparition du logo */
