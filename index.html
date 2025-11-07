@@ -12,46 +12,47 @@
 <style>
 body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#f3f4f6; }
 
+/* Pré-splash */
+#pre-splash {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #dc2626;
+  z-index: 20000;
+  transition: opacity 0.5s ease;
+}
+#pre-splash img {
+  width: 40vw;
+  max-width: 300px;
+  min-width: 150px;
+  height: auto;
+}
+
 /* Splash screen amélioré */
 #splash {
   position: fixed;
   inset: 0;
   width: 100vw;
   height: 100vh;
-  background: #dc2626; /* Rouge Renault Trucks */
+  background: #dc2626;
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 10000;
   transition: opacity 0.8s ease;
 }
-
-/* Logo centré et plus grand */
 #splash img {
-  width: 85vw;           
-  max-width: 800px;      
+  width: 85vw;
+  max-width: 800px;
   height: auto;
   object-fit: contain;
   animation: zoomIn 2s ease-in-out forwards;
 }
-
-@media (max-width: 768px) {
-  #splash img {
-    width: 90vw;
-    max-width: none;
-  }
-}
-@media (min-width: 1200px) {
-  #splash img {
-    width: 70vw;
-    max-width: 900px;
-  }
-}
-
-@keyframes zoomIn {
-  0% { transform: scale(0.9); opacity: 0.8; }
-  100% { transform: scale(1); opacity: 1; }
-}
+@media (max-width: 768px) { #splash img { width: 90vw; max-width: none; } }
+@media (min-width: 1200px) { #splash img { width: 70vw; max-width: 900px; } }
+@keyframes zoomIn { 0% { transform: scale(0.9); opacity: 0.8; } 100% { transform: scale(1); opacity: 1; } }
 
 /* Partner content toggle */
 .partner-content {
@@ -61,11 +62,7 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
   transition: max-height 0.5s ease, opacity 0.4s ease, margin-top 0.4s ease;
   margin-top: 0;
 }
-.partner-content.active {
-  opacity: 1;
-  margin-top: 1rem;
-  max-height: 2000px;
-}
+.partner-content.active { opacity: 1; margin-top: 1rem; max-height: 2000px; }
 
 /* Partner links */
 .partner-link {
@@ -106,17 +103,10 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
 
 <body class="bg-gray-30 text-gray-700">
 
-<!-- Image pré-splash (avant le splashscreen) -->
-<img id="pre-splash"
-     src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/Startup_logo.webp"
-     style="
-       position: fixed;
-       inset: 0;
-       width: 100vw;
-       height: 100vh;
-       object-fit: cover;
-       z-index: 20000;
-     ">
+<!-- Pré-splash -->
+<div id="pre-splash">
+  <img src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/Startup_logo.webp" alt="Pré-splash">
+</div>
 
 <!-- Splash screen -->
 <div id="splash">
@@ -155,6 +145,24 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
 </section>
 
 <script>
+// Gestion du pre-splash puis splash
+window.addEventListener('load', () => {
+  const preSplash = document.getElementById('pre-splash');
+  const splash = document.getElementById('splash');
+  // Faire disparaître le pré-splash rapidement
+  setTimeout(() => {
+    preSplash.style.opacity = '0';
+    setTimeout(() => preSplash.style.display = 'none', 500);
+    // Montrer le splash ensuite
+    splash.style.display = 'flex';
+    setTimeout(() => {
+      splash.style.opacity = '0';
+      splash.style.transform = 'scale(1.05)';
+      setTimeout(() => splash.style.display = 'none', 800);
+    }, 2000); // durée du splash
+  }, 1000); // durée du pre-splash
+});
+
 // Toggle categories
 function toggleCategory(id) {
   const section = document.getElementById(id);
@@ -174,16 +182,6 @@ function toggleCategory(id) {
   }
 }
 
-// Splash screen avec fondu et zoom
-window.addEventListener('load', () => {
-  const splash = document.getElementById('splash');
-  setTimeout(() => {
-    splash.style.opacity = '0';
-    splash.style.transform = 'scale(1.05)';
-    setTimeout(() => splash.style.display = 'none', 800);
-  }, 3000); // durée avant disparition
-});
-
 // Modal
 const modal = document.getElementById('imageModal');
 const modalImg = document.getElementById('modalImg');
@@ -200,20 +198,10 @@ function closeModal() {
   if(history.state && history.state.modalOpen) history.back();
 }
 
-// Fermer en cliquant autour
-modal.addEventListener('click', (e) => {
-  if(e.target === modal) closeModal();
-});
-
-// ✅ Fermer en cliquant sur l’image
+modal.addEventListener('click', (e) => { if(e.target === modal) closeModal(); });
 modalImg.addEventListener('click', () => closeModal());
-
 closeModalBtn.addEventListener('click', closeModal);
-
-window.addEventListener('popstate', () => {
-  if(modal.classList.contains('active')) closeModal();
-});
-
+window.addEventListener('popstate', () => { if(modal.classList.contains('active')) closeModal(); });
 
 // PWA install banner
 let deferredPrompt;
@@ -228,13 +216,9 @@ installBanner.textContent = "Installer l'application sur votre écran d'accueil"
 installBanner.style.display = 'none';
 document.body.appendChild(installBanner);
 
-// Vérifie si déjà installée
-window.addEventListener('appinstalled', () => {
-  installBanner.style.display = 'none';
-});
-
+window.addEventListener('appinstalled', () => { installBanner.style.display = 'none'; });
 window.addEventListener('beforeinstallprompt', (e) => {
-  if (window.matchMedia('(display-mode: standalone)').matches) return; // déjà installé
+  if (window.matchMedia('(display-mode: standalone)').matches) return;
   e.preventDefault();
   deferredPrompt = e;
   installBanner.style.display = 'block';
