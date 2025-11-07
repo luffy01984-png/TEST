@@ -28,38 +28,29 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
 
 /* Logo centré et plus grand */
 #splash img {
-  width: 85vw;           /* Par défaut : prend 85% de la largeur de l’écran */
-  max-width: 800px;      /* Taille maximale sur grands écrans */
+  width: 85vw;           
+  max-width: 800px;      
   height: auto;
   object-fit: contain;
   animation: zoomIn 2s ease-in-out forwards;
 }
 
-/* Responsive — ajuste selon la taille de l’écran */
-@media (max-width: 768px) { /* Tablette & mobile */
+@media (max-width: 768px) {
   #splash img {
-    width: 90vw;          /* Un peu plus large sur mobile */
+    width: 90vw;
     max-width: none;
   }
 }
-
-@media (min-width: 1200px) { /* Très grands écrans */
+@media (min-width: 1200px) {
   #splash img {
-    width: 70vw;          /* Un peu plus petit sur écrans très larges */
+    width: 70vw;
     max-width: 900px;
   }
 }
 
-/* Animation d’apparition du logo */
 @keyframes zoomIn {
-  0% {
-    transform: scale(0.9);
-    opacity: 0.8;
-  }
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
+  0% { transform: scale(0.9); opacity: 0.8; }
+  100% { transform: scale(1); opacity: 1; }
 }
 
 /* Partner content toggle */
@@ -115,6 +106,18 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
 
 <body class="bg-gray-30 text-gray-700">
 
+<!-- Image pré-splash (avant le splashscreen) -->
+<img id="pre-splash"
+     src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/Startup_logo.webp"
+     style="
+       position: fixed;
+       inset: 0;
+       width: 100vw;
+       height: 100vh;
+       object-fit: cover;
+       z-index: 20000;
+     ">
+
 <!-- Splash screen -->
 <div id="splash">
   <img src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/elecctra.webp" alt="Splash">
@@ -127,7 +130,7 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
 </div>
 
 <!-- HEADER -->
-<header class="bg-white shadow-xl sticky top-0 z-50">
+<header class="bg-white shadow-xl sticky top-0 z-50 hidden-before-splash">
   <div class="max-w-7xl mx-auto flex justify-between items-center px-4 py-3">
     <div class="flex items-center space-x-2">
       <img src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/1761728183491.jpg" alt="Logo Renault Trucks" class="h-16 rounded-md">
