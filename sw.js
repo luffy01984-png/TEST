@@ -1,12 +1,15 @@
-const CACHE_NAME = "renault-cse-cache-v1";
+const CACHE_NAME = "renault-cse-cache-v2"; // Version mise à jour
 const urlsToCache = [
-  "/", "/index.html", "/manifest.json",
+  "/", 
+  "/index.html", 
+  "/manifest.json",
   "https://cdn.tailwindcss.com",
   "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap",
 
-  // Logo et splash
-  "https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/1761728183491.jpg",
-  "https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/images/electra%20maj.jpg",
+  // Logos et splash
+  "https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/Startup_logo.webp", // pré-splash
+  "https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/elecctra.webp",      // splash
+  "https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/Header.webp",       // header
 
   // Restaurants
   "https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/images/food%20truck%20fermier.jpg",
