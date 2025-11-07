@@ -12,24 +12,39 @@
 <style>
 body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#f3f4f6; }
 
-/* Splash screen */
+/* Splash screen amélioré */
 #splash {
   position: fixed;
-  top: 0;
-  left: 0;
+  inset: 0;
   width: 100vw;
   height: 100vh;
-  background: #fff;
+  background: #dc2626; /* Rouge Renault Trucks */
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 10000;
-  transition: opacity 0.5s ease;
+  transition: opacity 0.8s ease;
 }
+
+/* Logo centré et plus grand */
 #splash img {
-  max-width: 90%;
-  max-height: 90%;
+  width: 60vw;           /* 60% de la largeur de l’écran */
+  max-width: 500px;      /* limite sur grands écrans */
+  height: auto;
   object-fit: contain;
+  animation: zoomIn 2s ease-in-out forwards;
+}
+
+/* Animation d’apparition du logo */
+@keyframes zoomIn {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 /* Partner content toggle */
@@ -141,13 +156,14 @@ function toggleCategory(id) {
   }
 }
 
-// Splash screen
+// Splash screen avec fondu et zoom
 window.addEventListener('load', () => {
+  const splash = document.getElementById('splash');
   setTimeout(() => {
-    const splash = document.getElementById('splash');
     splash.style.opacity = '0';
-    setTimeout(() => splash.style.display='none', 500);
-  }, 3000); // délai 3 secondes
+    splash.style.transform = 'scale(1.05)';
+    setTimeout(() => splash.style.display = 'none', 800);
+  }, 3000); // durée avant disparition
 });
 
 // Modal
