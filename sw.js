@@ -33,7 +33,7 @@ const urlsToCache = [
   "https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/images/renault.jpg",
   "https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/images/speedy.jpg",
   "https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/images/Vulco.jpg",
-  "https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/images/0%E2%82%AC_PareBrise.png",
+  "https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/images/0€_PareBrise.webp",
 
   // ANIMAUX
   "https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/images/food%20animo.jpg",
