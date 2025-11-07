@@ -10,10 +10,14 @@
 <meta name="theme-color" content="#dc2626">
 
 <style>
-body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#f3f4f6; }
+body {
+  font-family: 'Inter', sans-serif;
+  margin:0;
+  padding:0;
+  background-color:#f3f4f6;
+}
 
-
-/* Splash screen amélioré */
+/* Splash screen */
 #splash {
   position: fixed;
   inset: 0;
@@ -21,6 +25,7 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
   height: 100vh;
   background: #dc2626;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   z-index: 10000;
@@ -33,8 +38,12 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
   object-fit: contain;
   animation: zoomIn 2s ease-in-out forwards;
 }
-@media (max-width: 768px) { #splash img { width: 90vw; max-width: none; } }
-@media (min-width: 1200px) { #splash img { width: 70vw; max-width: 900px; } }
+#splash span {
+  color: #fff;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  font-weight: bold;
+}
 @keyframes zoomIn { 0% { transform: scale(0.9); opacity: 0.8; } 100% { transform: scale(1); opacity: 1; } }
 
 /* Partner content toggle */
@@ -88,6 +97,7 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
 
 <!-- Splash screen -->
 <div id="splash">
+  <span>Chargement de l'application...</span>
   <img src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/elecctra.webp" alt="Splash">
 </div>
 
