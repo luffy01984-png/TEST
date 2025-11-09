@@ -25,12 +25,16 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
   font-weight: bold;
   text-align: center;
 }
-#splash img {
-  width: 70vw;
-  max-width: 500px;
-  height: auto;
-  object-fit: contain;
-  animation: zoomIn 2s ease-in-out forwards;
+#splash span {
+  color: #fff;
+  font-size: 2.5rem;
+  font-weight: 700;
+  text-align: center;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-shadow: 0 3px 6px rgba(0,0,0,0.3); /* renforce le contraste sur fond rouge */
+  margin-bottom: 2rem;
+  font-family: 'Montserrat', sans-serif; /* police plus moderne */
 }
 @keyframes zoomIn {
   0% { transform: scale(0.9); opacity: 0.8; }
