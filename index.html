@@ -21,61 +21,78 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
 #splash span {
   color: #fff;
   font-size: 2rem;
-  font-weight: 700;
+  margin-bottom: 1rem;
+  font-weight: bold;
   text-align: center;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  text-shadow: 0 3px 6px rgba(0,0,0,0.3);
-  margin-bottom: 2rem;
-  font-family: 'Montserrat', sans-serif;
 }
-@media (min-width: 640px) { #splash span { font-size: 2.5rem; } }
-@media (min-width: 1024px) { #splash span { font-size: 1.8rem; } }
-@media (min-width: 1440px) { #splash span { font-size: 1.5rem; } }
+#splash img {
+  width: 70vw;
+  max-width: 500px;
+  height: auto;
+  object-fit: contain;
+  animation: zoomIn 2s ease-in-out forwards;
+}
+@keyframes zoomIn {
+  0% { transform: scale(0.9); opacity: 0.8; }
+  100% { transform: scale(1); opacity: 1; }
+}
 
-/* Categories */
-.partner-content {
-  max-height: 0; overflow: hidden; opacity: 0; margin-top: 0;
-  transition: max-height 0.5s ease, opacity 0.4s ease, margin-top 0.4s ease;
+/* Partner content toggle */
+.partner-content { max-height: 0; overflow: hidden; opacity: 0; transition: max-height 0.5s ease, opacity 0.4s ease, margin-top 0.4s ease; margin-top: 0; }
+.partner-content.active { opacity: 1; margin-top: 1rem; max-height: 2000px; }
+
+/* Partner links */
+.partner-link {
+  display: flex; align-items: center; padding: 1rem 1.25rem; margin-bottom: 0.75rem; border-radius: 0.75rem;
+  background-color: #f9fafb; color: #1f2937; font-weight: 500; font-size: 1rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08); cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s, color 0.2s;
 }
-.partner-content.active {
-  max-height: 5000px; /* Assez grand pour tout contenu */
-  opacity: 1; margin-top: 1rem;
-}
+.partner-link:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.15); background-color: #fff; color: #dc2626; }
+.partner-link:last-child { margin-bottom: 0; }
 
 /* Modal */
-#imageModal {
-  display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8);
-  justify-content: center; align-items: center; z-index: 10001;
-}
-#imageModal.active { display: flex; }
-#imageModal img { max-width: 90%; max-height: 80%; cursor: pointer; }
-#imageModal button {
-  position: absolute; top: 20px; right: 20px;
-  background: #dc2626; color: white; padding: 8px 16px; border: none; border-radius: 8px;
-  cursor: pointer;
-}
+#imageModal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.7); justify-content:center; align-items:center; z-index:10000; transition: opacity 0.3s ease; }
+#imageModal.active { display:flex; }
+#imageModal img { max-width:90%; max-height:80%; border-radius:12px; box-shadow:0 0 20px rgba(0,0,0,0.5); cursor:pointer; }
+#imageModal button { position:absolute; top:20px; right:20px; background:#dc2626; color:#fff; border:none; padding:8px 12px; border-radius:6px; cursor:pointer; font-weight:bold; }
+
+/* Category cards */
+.category-card img { width:100%; height:9rem; object-fit:cover; border-radius: 1rem; }
 
 /* Accordion */
-.accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
-.accordion-btn.active { color: #dc2626; }
-.arrow { display:inline-block; transition: transform 0.3s ease; }
+.accordion-btn {
+    width: 100%; text-align: left; padding: 0.75rem 1rem; background-color: #f3f4f6; border-radius: 0.5rem;
+    font-weight: 600; color: #1f2937; cursor: pointer; transition: background-color 0.3s ease, color 0.3s ease;
+    display: flex; justify-content: space-between; align-items: center;
+}
+.accordion-btn:hover { background-color: #e5e7eb; }
+.accordion-btn.active { color: #dc2626; } /* titre rouge quand actif */
+.arrow { transition: transform 0.3s ease; }
 .arrow.rotate { transform: rotate(90deg); }
+.accordion-content {
+    max-height: 0; overflow: hidden; transition: max-height 0.4s ease;
+    background: white; padding: 0 1rem; border-left: 3px solid #dc2626; margin-top: 0.25rem; border-radius: 0.5rem;
+}
+.accordion-content.open { padding-top: 0.5rem; padding-bottom: 0.5rem; }
+
 </style>
 </head>
-<body>
 
-<!-- SPLASH -->
+<body class="bg-gray-30 text-gray-700">
+
+<!-- Splash screen -->
 <div id="splash">
-  <span>Renault Trucks CSE</span>
-  <img src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/Header.webp" alt="Logo" style="width:200px; height:auto;">
+  <span>VOTRE CSE VOUS PROPOSE</span>
+  <img src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/elecctra.webp" alt="Splash">
 </div>
 
-<!-- MODAL -->
+<!-- Modal -->
 <div id="imageModal">
   <button>Fermer</button>
   <img id="modalImg" src="" alt="Partenaire">
 </div>
+
 
 <!-- HEADER -->
 <header class="bg-white shadow-xl sticky top-0 z-50 hidden-before-splash">
@@ -90,7 +107,6 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
     </nav>
   </div>
 </header>
-
 <!-- HERO -->
 <section class="bg-white text-gray-900 text-center py-12 px-4 shadow-md">
   <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight">
@@ -105,8 +121,22 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
 <!-- CATEGORIES -->
 <section id="categories" class="max-w-6xl mx-auto py-12 px-4">
   <h2 class="text-2xl font-bold text-center mb-10 text-gray-800 flex items-center justify-center gap-2">
-    Catégories d'Offres
-  </h2>
+  <!-- Flèche gauche -->
+  <svg class="w-10 h-10 text-red-600 animate-bounce cursor-pointer" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" onclick="document.getElementById('categories').scrollIntoView({behavior: 'smooth'});">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path>
+  </svg>
+
+  Catégories d'Offres
+
+  <!-- Flèche droite -->
+  <svg class="w-10 h-10 text-red-600 animate-bounce cursor-pointer" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" onclick="document.getElementById('categories').scrollIntoView({behavior: 'smooth'});">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path>
+  </svg>
+</h2>
+
+
+  
+
 
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 
@@ -294,21 +324,18 @@ document.addEventListener('DOMContentLoaded', () => {
 function toggleCategory(id) {
   const section = document.getElementById(id);
   const card = document.querySelector(`[onclick="toggleCategory('${id}')"]`);
-  
-  document.querySelectorAll('.partner-content').forEach(item => { 
-    if(item.id !== id) item.classList.remove('active'); 
-  });
-  
-  section.classList.toggle('active');
-
+  document.querySelectorAll('.partner-content').forEach(item => { if(item.id !== id) item.classList.remove('active'); });
   document.querySelectorAll('.category-card').forEach(cardEl => {
     cardEl.classList.remove("shadow-red-500/50", "shadow-xl");
     cardEl.classList.add("shadow-lg");
   });
-
+  section.classList.toggle('active');
   if(section.classList.contains('active')){
     card.classList.remove("shadow-lg");
     card.classList.add("shadow-xl", "shadow-red-500/50");
+  } else {
+    card.classList.remove("shadow-xl", "shadow-red-500/50");
+    card.classList.add("shadow-lg");
   }
 }
 
@@ -322,29 +349,86 @@ function openModal(url) {
   modal.classList.add('active');
   history.pushState({ modalOpen: true }, "");
 }
+
 function closeModal() {
   modal.classList.remove('active');
   if(history.state && history.state.modalOpen) history.back();
 }
+
 modalImg.addEventListener('click', closeModal);
 closeModalBtn.addEventListener('click', closeModal);
 modal.addEventListener('click', (e) => { if(e.target === modal) closeModal(); });
 window.addEventListener('popstate', () => { if(modal.classList.contains('active')) closeModal(); });
+  // PWA install banner
+let deferredPrompt;
+const installBanner = document.createElement('div');
+installBanner.style.cssText =
+  `position: fixed;
+   bottom: 20px; left: 20px; right: 20px;
+   background: #dc2626;
+   color: #fff;
+   padding: 12px 20px;
+   border-radius: 12px;
+   text-align: center;
+   font-weight: bold;
+   z-index: 10001;
+   cursor: pointer;
+   box-shadow: 0 4px 12px rgba(0,0,0,0.3);`;
+installBanner.textContent = "Installer l'application sur votre écran d'accueil";
+installBanner.style.display = 'none';
 
-// Accordion
+document.body.appendChild(installBanner);
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+
+  // Ne pas afficher si déjà installé
+  if (!window.matchMedia('(display-mode: standalone)').matches) {
+    installBanner.style.display = 'block';
+  }
+});
+
+installBanner.addEventListener('click', async () => {
+  installBanner.style.display = 'none';
+  deferredPrompt.prompt();
+  await deferredPrompt.userChoice;
+  deferredPrompt = null;
+});
+
+window.addEventListener('appinstalled', () => {
+  installBanner.style.display = 'none';
+});
+
+
+// Accordion avec titre actif rouge
 document.querySelectorAll(".accordion-btn").forEach(btn => {
   btn.addEventListener("click", () => {
     const content = btn.nextElementSibling;
     const arrow = btn.querySelector(".arrow");
-    document.querySelectorAll(".accordion-btn").forEach(b => { if(b !== btn) b.classList.remove("active"); });
+
+    // Retirer active de tous les boutons sauf celui cliqué
+    document.querySelectorAll(".accordion-btn").forEach(b => {
+      if(b !== btn) b.classList.remove("active");
+    });
+
+    // Toggle ouverture
     if(content.classList.contains("open")) { 
-      content.style.maxHeight = null; content.classList.remove("open"); arrow.classList.remove("rotate"); btn.classList.remove("active");
+      content.style.maxHeight = null; 
+      content.classList.remove("open"); 
+      arrow.classList.remove("rotate"); 
+      btn.classList.remove("active");
     } else { 
-      content.classList.add("open"); arrow.classList.add("rotate"); btn.classList.add("active");
-      requestAnimationFrame(() => { content.style.maxHeight = content.scrollHeight + "px"; }); 
+      content.classList.add("open"); 
+      arrow.classList.add("rotate"); 
+      btn.classList.add("active");
+      requestAnimationFrame(() => { 
+        content.style.maxHeight = content.scrollHeight + "px"; 
+      }); 
     }
   });
 });
+
 </script>
 
 </body>
