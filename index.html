@@ -307,7 +307,7 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
 </section>
 
 <script>
-// Splash screen
+// SPLASH SCREEN
 document.addEventListener('DOMContentLoaded', () => {
   const splash = document.getElementById('splash');
   document.body.style.overflow = 'hidden';
@@ -320,7 +320,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }, 3000);
 });
 
-// Toggle categories
+// TOGGLE CATEGORIES
 function toggleCategory(id) {
   const section = document.getElementById(id);
   const card = document.querySelector(`[onclick="toggleCategory('${id}')"]`);
@@ -350,9 +350,8 @@ function toggleCategory(id) {
   // Restaurer la position du scroll pour éviter le "saut"
   window.scrollTo({ top: scrollPos, behavior: 'auto' });
 }
-}
 
-// Modal
+// MODAL
 const modal = document.getElementById('imageModal');
 const modalImg = document.getElementById('modalImg');
 const closeModalBtn = modal.querySelector('button');
@@ -372,7 +371,8 @@ modalImg.addEventListener('click', closeModal);
 closeModalBtn.addEventListener('click', closeModal);
 modal.addEventListener('click', (e) => { if(e.target === modal) closeModal(); });
 window.addEventListener('popstate', () => { if(modal.classList.contains('active')) closeModal(); });
-  // PWA install banner
+
+// PWA INSTALL BANNER
 let deferredPrompt;
 const installBanner = document.createElement('div');
 installBanner.style.cssText =
@@ -389,7 +389,6 @@ installBanner.style.cssText =
    box-shadow: 0 4px 12px rgba(0,0,0,0.3);`;
 installBanner.textContent = "Installer l'application sur votre écran d'accueil";
 installBanner.style.display = 'none';
-
 document.body.appendChild(installBanner);
 
 window.addEventListener('beforeinstallprompt', (e) => {
@@ -413,8 +412,7 @@ window.addEventListener('appinstalled', () => {
   installBanner.style.display = 'none';
 });
 
-
-// Accordion avec titre actif rouge
+// ACCORDION AVEC TITRE ACTIF ROUGE
 document.querySelectorAll(".accordion-btn").forEach(btn => {
   btn.addEventListener("click", () => {
     const content = btn.nextElementSibling;
@@ -441,8 +439,4 @@ document.querySelectorAll(".accordion-btn").forEach(btn => {
     }
   });
 });
-
 </script>
-
-</body>
-</html>
