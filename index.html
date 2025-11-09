@@ -307,7 +307,7 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
 </section>
 
 <script>
-// SPLASH SCREEN
+// Splash screen
 document.addEventListener('DOMContentLoaded', () => {
   const splash = document.getElementById('splash');
   document.body.style.overflow = 'hidden';
@@ -320,23 +320,18 @@ document.addEventListener('DOMContentLoaded', () => {
   }, 3000);
 });
 
-// TOGGLE CATEGORIES
+// Toggle categories
 function toggleCategory(id) {
   const section = document.getElementById(id);
   const card = document.querySelector(`[onclick="toggleCategory('${id}')"]`);
-
-  // Sauvegarder la position actuelle du scroll
   const scrollPos = window.scrollY;
 
-  // Fermer toutes les autres catégories
   document.querySelectorAll('.partner-content').forEach(item => { 
     if(item.id !== id) item.classList.remove('active'); 
   });
 
-  // Ouvrir / fermer la catégorie cliquée
   section.classList.toggle('active');
 
-  // Ajuster les ombres
   document.querySelectorAll('.category-card').forEach(cardEl => {
     cardEl.classList.remove("shadow-red-500/50", "shadow-xl");
     cardEl.classList.add("shadow-lg");
@@ -347,11 +342,10 @@ function toggleCategory(id) {
     card.classList.add("shadow-xl", "shadow-red-500/50");
   }
 
-  // Restaurer la position du scroll pour éviter le "saut"
   window.scrollTo({ top: scrollPos, behavior: 'auto' });
 }
 
-// MODAL
+// Modal
 const modal = document.getElementById('imageModal');
 const modalImg = document.getElementById('modalImg');
 const closeModalBtn = modal.querySelector('button');
@@ -372,30 +366,42 @@ closeModalBtn.addEventListener('click', closeModal);
 modal.addEventListener('click', (e) => { if(e.target === modal) closeModal(); });
 window.addEventListener('popstate', () => { if(modal.classList.contains('active')) closeModal(); });
 
-// PWA INSTALL BANNER
+// Accordion
+document.querySelectorAll(".accordion-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const content = btn.nextElementSibling;
+    const arrow = btn.querySelector(".arrow");
+
+    document.querySelectorAll(".accordion-btn").forEach(b => { if(b !== btn) b.classList.remove("active"); });
+
+    if(content.classList.contains("open")) { 
+      content.style.maxHeight = null; 
+      content.classList.remove("open"); 
+      arrow.classList.remove("rotate"); 
+      btn.classList.remove("active");
+    } else { 
+      content.classList.add("open"); 
+      arrow.classList.add("rotate"); 
+      btn.classList.add("active");
+      requestAnimationFrame(() => { content.style.maxHeight = content.scrollHeight + "px"; }); 
+    }
+  });
+});
+
+// PWA install banner
 let deferredPrompt;
 const installBanner = document.createElement('div');
 installBanner.style.cssText =
-  `position: fixed;
-   bottom: 20px; left: 20px; right: 20px;
-   background: #dc2626;
-   color: #fff;
-   padding: 12px 20px;
-   border-radius: 12px;
-   text-align: center;
-   font-weight: bold;
-   z-index: 10001;
-   cursor: pointer;
-   box-shadow: 0 4px 12px rgba(0,0,0,0.3);`;
+  `position: fixed; bottom: 20px; left: 20px; right: 20px;
+   background: #dc2626; color: #fff; padding: 12px 20px;
+   border-radius: 12px; text-align: center; font-weight: bold; z-index: 10001;
+   cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.3); display: none;`;
 installBanner.textContent = "Installer l'application sur votre écran d'accueil";
-installBanner.style.display = 'none';
 document.body.appendChild(installBanner);
 
 window.addEventListener('beforeinstallprompt', (e) => {
   e.preventDefault();
   deferredPrompt = e;
-
-  // Ne pas afficher si déjà installé
   if (!window.matchMedia('(display-mode: standalone)').matches) {
     installBanner.style.display = 'block';
   }
@@ -408,35 +414,8 @@ installBanner.addEventListener('click', async () => {
   deferredPrompt = null;
 });
 
-window.addEventListener('appinstalled', () => {
-  installBanner.style.display = 'none';
-});
-
-// ACCORDION AVEC TITRE ACTIF ROUGE
-document.querySelectorAll(".accordion-btn").forEach(btn => {
-  btn.addEventListener("click", () => {
-    const content = btn.nextElementSibling;
-    const arrow = btn.querySelector(".arrow");
-
-    // Retirer active de tous les boutons sauf celui cliqué
-    document.querySelectorAll(".accordion-btn").forEach(b => {
-      if(b !== btn) b.classList.remove("active");
-    });
-
-    // Toggle ouverture
-    if(content.classList.contains("open")) { 
-      content.style.maxHeight = null; 
-      content.classList.remove("open"); 
-      arrow.classList.remove("rotate"); 
-      btn.classList.remove("active");
-    } else { 
-      content.classList.add("open"); 
-      arrow.classList.add("rotate"); 
-      btn.classList.add("active");
-      requestAnimationFrame(() => { 
-        content.style.maxHeight = content.scrollHeight + "px"; 
-      }); 
-    }
-  });
-});
+window.addEventListener('appinstalled', () => { installBanner.style.display = 'none'; });
 </script>
+
+</body>
+</html>
