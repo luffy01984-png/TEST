@@ -20,65 +20,61 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
 }
 #splash span {
   color: #fff;
-  font-size: 2.5rem;
+  font-size: 2rem;
   font-weight: 700;
   text-align: center;
   letter-spacing: 1px;
   text-transform: uppercase;
   text-shadow: 0 3px 6px rgba(0,0,0,0.3);
+  margin-bottom: 2rem;
   font-family: 'Montserrat', sans-serif;
-  animation: zoomIn 0.8s ease;
 }
-@keyframes zoomIn {
-  0% { transform: scale(0.9); opacity: 0.8; }
-  100% { transform: scale(1); opacity: 1; }
-}
+@media (min-width: 640px) { #splash span { font-size: 2.5rem; } }
+@media (min-width: 1024px) { #splash span { font-size: 1.8rem; } }
+@media (min-width: 1440px) { #splash span { font-size: 1.5rem; } }
 
-/* Desktop adjustments */
-@media (min-width: 1024px) {
-  #splash img { width: 350px; height: auto; }
-  #splash span { font-size: 1.8rem; }
-}
-@media (min-width: 1440px) {
-  #splash img { width: 280px; }
-  #splash span { font-size: 1.5rem; }
-}
-
-/* Partner content toggle */
-.partner-content { 
-  max-height: 0; 
-  overflow: hidden; 
-  opacity: 0; 
-  margin-top: 0;
-  transition: max-height 0.5s ease, opacity 0.4s ease, margin-top 0.4s ease; 
+/* Categories */
+.partner-content {
+  max-height: 0; overflow: hidden; opacity: 0; margin-top: 0;
+  transition: max-height 0.5s ease, opacity 0.4s ease, margin-top 0.4s ease;
 }
 .partner-content.active {
-  max-height: 2000px; 
-  opacity: 1;
-  margin-top: 1rem;
+  max-height: 5000px; /* Assez grand pour tout contenu */
+  opacity: 1; margin-top: 1rem;
+}
+
+/* Modal */
+#imageModal {
+  display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8);
+  justify-content: center; align-items: center; z-index: 10001;
+}
+#imageModal.active { display: flex; }
+#imageModal img { max-width: 90%; max-height: 80%; cursor: pointer; }
+#imageModal button {
+  position: absolute; top: 20px; right: 20px;
+  background: #dc2626; color: white; padding: 8px 16px; border: none; border-radius: 8px;
+  cursor: pointer;
 }
 
 /* Accordion */
-.accordion-content { 
-  max-height: 0; 
-  overflow: hidden; 
-  transition: max-height 0.4s ease;
-}
-.accordion-btn.active { color: #dc2626; font-weight: 600; }
-.accordion-btn .arrow.rotate { transform: rotate(90deg); transition: transform 0.3s; }
+.accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+.accordion-btn.active { color: #dc2626; }
+.arrow { display:inline-block; transition: transform 0.3s ease; }
+.arrow.rotate { transform: rotate(90deg); }
 </style>
 </head>
 <body>
 
-<!-- Splash Screen -->
+<!-- SPLASH -->
 <div id="splash">
-  <span>Bienvenue sur vos avantages CSE</span>
+  <span>Renault Trucks CSE</span>
+  <img src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/Header.webp" alt="Logo" style="width:200px; height:auto;">
 </div>
 
-<!-- Modal (déplacé dans le body) -->
-<div id="imageModal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 hidden">
-  <button class="absolute top-4 right-4 bg-red-600 text-white px-4 py-2 rounded-lg font-bold">Fermer</button>
-  <img id="modalImg" src="" alt="Partenaire" class="max-h-[80vh] max-w-[90vw] rounded-lg shadow-xl cursor-pointer">
+<!-- MODAL -->
+<div id="imageModal">
+  <button>Fermer</button>
+  <img id="modalImg" src="" alt="Partenaire">
 </div>
 
 <!-- HEADER -->
@@ -111,6 +107,7 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
   <h2 class="text-2xl font-bold text-center mb-10 text-gray-800 flex items-center justify-center gap-2">
     Catégories d'Offres
   </h2>
+
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 
     <!-- RESTAURANTS -->
@@ -297,14 +294,18 @@ document.addEventListener('DOMContentLoaded', () => {
 function toggleCategory(id) {
   const section = document.getElementById(id);
   const card = document.querySelector(`[onclick="toggleCategory('${id}')"]`);
+  
   document.querySelectorAll('.partner-content').forEach(item => { 
     if(item.id !== id) item.classList.remove('active'); 
   });
+  
+  section.classList.toggle('active');
+
   document.querySelectorAll('.category-card').forEach(cardEl => {
     cardEl.classList.remove("shadow-red-500/50", "shadow-xl");
     cardEl.classList.add("shadow-lg");
   });
-  section.classList.toggle('active');
+
   if(section.classList.contains('active')){
     card.classList.remove("shadow-lg");
     card.classList.add("shadow-xl", "shadow-red-500/50");
@@ -318,31 +319,29 @@ const closeModalBtn = modal.querySelector('button');
 
 function openModal(url) {
   modalImg.src = url;
-  modal.classList.remove('hidden');
+  modal.classList.add('active');
   history.pushState({ modalOpen: true }, "");
 }
-
 function closeModal() {
-  modal.classList.add('hidden');
+  modal.classList.remove('active');
   if(history.state && history.state.modalOpen) history.back();
 }
-
 modalImg.addEventListener('click', closeModal);
 closeModalBtn.addEventListener('click', closeModal);
 modal.addEventListener('click', (e) => { if(e.target === modal) closeModal(); });
-window.addEventListener('popstate', () => { if(!modal.classList.contains('hidden')) closeModal(); });
+window.addEventListener('popstate', () => { if(modal.classList.contains('active')) closeModal(); });
 
 // Accordion
 document.querySelectorAll(".accordion-btn").forEach(btn => {
   btn.addEventListener("click", () => {
     const content = btn.nextElementSibling;
     const arrow = btn.querySelector(".arrow");
-    btn.classList.toggle("active");
-    arrow.classList.toggle("rotate");
-    if(content.style.maxHeight){ 
-      content.style.maxHeight = null; 
+    document.querySelectorAll(".accordion-btn").forEach(b => { if(b !== btn) b.classList.remove("active"); });
+    if(content.classList.contains("open")) { 
+      content.style.maxHeight = null; content.classList.remove("open"); arrow.classList.remove("rotate"); btn.classList.remove("active");
     } else { 
-      content.style.maxHeight = content.scrollHeight + "px"; 
+      content.classList.add("open"); arrow.classList.add("rotate"); btn.classList.add("active");
+      requestAnimationFrame(() => { content.style.maxHeight = content.scrollHeight + "px"; }); 
     }
   });
 });
