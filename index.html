@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Avantages Partenaires | Renault Trucks CSE Bourg-en-Bresse</title>
 <script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#dc2626">
 
@@ -37,6 +37,9 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
   100% { transform: scale(1); opacity: 1; }
 }
 
+/* Partner content toggle */
+.partner-content { max-height: 0; overflow: hidden; opacity: 0; transition: max-height 0.5s ease, opacity 0.4s ease, margin-top 0.4s ease; margin-top: 0; }
+.partner-content.active { opacity: 1; margin-top: 1rem; max-height: 2000px; }
 
 /* Partner links */
 .partner-link {
@@ -45,11 +48,7 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
   box-shadow: 0 2px 6px rgba(0,0,0,0.08); cursor: pointer;
   transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s, color 0.2s;
 }
-.partner-link:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-  background-color: #fff; color: #dc2626;
-}
+.partner-link:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.15); background-color: #fff; color: #dc2626; }
 .partner-link:last-child { margin-bottom: 0; }
 
 /* Modal */
@@ -68,7 +67,7 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
     display: flex; justify-content: space-between; align-items: center;
 }
 .accordion-btn:hover { background-color: #e5e7eb; }
-.accordion-btn.active { color: #dc2626; }
+.accordion-btn.active { color: #dc2626; } /* titre rouge quand actif */
 .arrow { transition: transform 0.3s ease; }
 .arrow.rotate { transform: rotate(90deg); }
 .accordion-content {
@@ -76,9 +75,6 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
     background: white; padding: 0 1rem; border-left: 3px solid #dc2626; margin-top: 0.25rem; border-radius: 0.5rem;
 }
 .accordion-content.open { padding-top: 0.5rem; padding-bottom: 0.5rem; }
-
-/* Hover image effect */
-.partner-link img:hover { transform: scale(1.1); }
 
 </style>
 </head>
@@ -97,6 +93,7 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
   <img id="modalImg" src="" alt="Partenaire">
 </div>
 
+
 <!-- HEADER -->
 <header class="bg-white shadow-xl sticky top-0 z-50 hidden-before-splash">
   <div class="max-w-7xl mx-auto flex justify-between items-center px-4 py-3">
@@ -110,7 +107,6 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
     </nav>
   </div>
 </header>
-
 <!-- HERO -->
 <section class="bg-white text-gray-900 text-center py-12 px-4 shadow-md">
   <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight">
@@ -169,11 +165,11 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
         <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/lou%20pan.webp')">LouPan</div>
         <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/images/Monts%20et%20Terroir.jpg')">Monts et Terroir</div>
         <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/images/grain%20dpain.jpg')">Grain d'pain</div>
-        <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/boucherie_andré.webp')">Boucherie André</div>
-        <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Papilles_Ain_solites.webp')">Papilles Ain Solites</div>
-        <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/biocoop.webp')">Biocoop</div>
-        <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Cerdon.webp')">Cerdon AOC Gabin Grobon</div>
-        <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/la_cezee.webp')">La Cézée</div>
+        <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/images/boucherie_andré.jpg')">Boucherie André</div>
+        <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/images/Papilles_Ain_solites.png')">Papilles Ain Solites</div>
+        <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/images/biocoop.jpg')">Biocoop</div>
+        <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/images/Cerdon.jpg')">Cerdon AOC Gabin Grobon</div>
+        <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/images/la_cezee.jpg')">La Cézée</div>
       </div>
     </div>
 
@@ -224,6 +220,16 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
         <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/images/chaleur%20et%20bois.jpg')">Chaleur et bois</div>
       </div>
       </div> 
+    
+    <!-- Beauté & Shopping -->
+<div class="col-span-1">
+  <div class="category-card relative group cursor-pointer transform hover:scale-[1.02] transition duration-300 shadow-lg rounded-2xl overflow-hidden"
+       onclick="toggleCategory('beaute-shopping')">
+    <img src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/beaut%C3%A9new.webp" alt="Beauté & Shopping">
+    <div class="absolute inset-0 bg-gray-900 bg-opacity-60 rounded-2xl flex items-center justify-center text-white text-xl font-bold">
+      🧸 Beauté & Shopping
+    </div>
+  </div>
 
     <!-- FINANCEMENT -->
     <div class="col-span-1">
@@ -244,41 +250,17 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
         <div class="absolute inset-0 bg-gray-900 bg-opacity-60 rounded-2xl flex items-center justify-center text-white text-xl font-bold"></div>
       </div>
       <div id="quotidien-content" class="partner-content bg-white border border-gray-200 rounded-xl p-4 shadow-lg">
-        
+        <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/images/Salon%20de%20coiffure.jpg')">15th Avenue Coiffure</div>
+        <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/images/salondecoiffure.jpg')">Renaissance Coiffure</div>
         <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/images/a%20fleur%20de%20pot.jpg')">A Fleur de pot</div>
         <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/images/cigusto.jpg')">Cigusto</div>
         <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/images/montbarbon.jpg')">Montbarbon</div>
         <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/images/la%20rek1ke.jpg')">La Rek1que</div>
         <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/images/Librairie_papeterie.png')">Librairie</div>
-        
+        <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/images/Dessous_dessus.png')">Dessous_Dessus</div>
         <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/images/ConceptOptique.png')">Concept_Optique</div>
       </div>
     </div>
-
-    
-    <!-- Beauté & Shopping -->
-<div class="col-span-1">
-  <div class="category-card relative group cursor-pointer transform hover:scale-[1.02] transition duration-300 shadow-lg rounded-2xl overflow-hidden"
-       onclick="toggleCategory('beaute-shopping')">
-    <img src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/beaut%C3%A9new.webp" alt="Beauté & Shopping">
-    <div class="absolute inset-0 bg-gray-900 bg-opacity-60 rounded-2xl flex items-center justify-center text-white text-xl font-bold">
-      🧸 Beauté & Shopping
-    </div>
-  </div>
-
-  <div id="beaute-shopping" class="partner-content bg-white border border-gray-200 rounded-xl p-4 shadow-lg">
-    <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/images/Salon%20de%20coiffure.jpg')">
-      15th Avenue Coiffure
-    </div>
-    <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/images/salondecoiffure.jpg')">
-      Renaissance Coiffure
-    </div>
-    <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/images/Dessous_dessus.png')">
-      Dessous_Dessus
-    </div>
-  </div>
-</div>
-
 
 
     <!-- ENFANTS -->
@@ -352,25 +334,19 @@ document.addEventListener('DOMContentLoaded', () => {
 function toggleCategory(id) {
   const section = document.getElementById(id);
   const card = document.querySelector(`[onclick="toggleCategory('${id}')"]`);
-  const scrollPos = window.scrollY;
-
-  document.querySelectorAll('.partner-content').forEach(item => { 
-    if(item.id !== id) item.classList.remove('active'); 
-  });
-
-  section.classList.toggle('active');
-
+  document.querySelectorAll('.partner-content').forEach(item => { if(item.id !== id) item.classList.remove('active'); });
   document.querySelectorAll('.category-card').forEach(cardEl => {
     cardEl.classList.remove("shadow-red-500/50", "shadow-xl");
     cardEl.classList.add("shadow-lg");
   });
-
+  section.classList.toggle('active');
   if(section.classList.contains('active')){
     card.classList.remove("shadow-lg");
     card.classList.add("shadow-xl", "shadow-red-500/50");
+  } else {
+    card.classList.remove("shadow-xl", "shadow-red-500/50");
+    card.classList.add("shadow-lg");
   }
-
-  window.scrollTo({ top: scrollPos, behavior: 'auto' });
 }
 
 // Modal
@@ -393,43 +369,31 @@ modalImg.addEventListener('click', closeModal);
 closeModalBtn.addEventListener('click', closeModal);
 modal.addEventListener('click', (e) => { if(e.target === modal) closeModal(); });
 window.addEventListener('popstate', () => { if(modal.classList.contains('active')) closeModal(); });
-
-// Accordion
-document.querySelectorAll(".accordion-btn").forEach(btn => {
-  btn.addEventListener("click", () => {
-    const content = btn.nextElementSibling;
-    const arrow = btn.querySelector(".arrow");
-
-    document.querySelectorAll(".accordion-btn").forEach(b => { if(b !== btn) b.classList.remove("active"); });
-
-    if(content.classList.contains("open")) { 
-      content.style.maxHeight = null; 
-      content.classList.remove("open"); 
-      arrow.classList.remove("rotate"); 
-      btn.classList.remove("active");
-    } else { 
-      content.classList.add("open"); 
-      arrow.classList.add("rotate"); 
-      btn.classList.add("active");
-      requestAnimationFrame(() => { content.style.maxHeight = content.scrollHeight + "px"; }); 
-    }
-  });
-});
-
-// PWA install banner
+  // PWA install banner
 let deferredPrompt;
 const installBanner = document.createElement('div');
 installBanner.style.cssText =
-  `position: fixed; bottom: 20px; left: 20px; right: 20px;
-   background: #dc2626; color: #fff; padding: 12px 20px;
-   border-radius: 12px; text-align: center; font-weight: bold; z-index: 10001;
-   cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.3); display: none;`;
+  `position: fixed;
+   bottom: 20px; left: 20px; right: 20px;
+   background: #dc2626;
+   color: #fff;
+   padding: 12px 20px;
+   border-radius: 12px;
+   text-align: center;
+   font-weight: bold;
+   z-index: 10001;
+   cursor: pointer;
+   box-shadow: 0 4px 12px rgba(0,0,0,0.3);`;
 installBanner.textContent = "Installer l'application sur votre écran d'accueil";
+installBanner.style.display = 'none';
+
 document.body.appendChild(installBanner);
 
 window.addEventListener('beforeinstallprompt', (e) => {
   e.preventDefault();
   deferredPrompt = e;
+
+  // Ne pas afficher si déjà installé
   if (!window.matchMedia('(display-mode: standalone)').matches) {
     installBanner.style.display = 'block';
   }
@@ -442,7 +406,39 @@ installBanner.addEventListener('click', async () => {
   deferredPrompt = null;
 });
 
-window.addEventListener('appinstalled', () => { installBanner.style.display = 'none'; });
+window.addEventListener('appinstalled', () => {
+  installBanner.style.display = 'none';
+});
+
+
+// Accordion avec titre actif rouge
+document.querySelectorAll(".accordion-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const content = btn.nextElementSibling;
+    const arrow = btn.querySelector(".arrow");
+
+    // Retirer active de tous les boutons sauf celui cliqué
+    document.querySelectorAll(".accordion-btn").forEach(b => {
+      if(b !== btn) b.classList.remove("active");
+    });
+
+    // Toggle ouverture
+    if(content.classList.contains("open")) { 
+      content.style.maxHeight = null; 
+      content.classList.remove("open"); 
+      arrow.classList.remove("rotate"); 
+      btn.classList.remove("active");
+    } else { 
+      content.classList.add("open"); 
+      arrow.classList.add("rotate"); 
+      btn.classList.add("active");
+      requestAnimationFrame(() => { 
+        content.style.maxHeight = content.scrollHeight + "px"; 
+      }); 
+    }
+  });
+});
+
 </script>
 
 </body>
