@@ -37,44 +37,6 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
   100% { transform: scale(1); opacity: 1; }
 }
 
-/* Rotation 3D fluide du logo dans le header */
-@keyframes slowSpinY {
-  from { transform: rotateY(0deg); }
-  to { transform: rotateY(360deg); }
-}
-
-header img {
-  animation: slowSpinY 10s linear infinite;
-  transform-style: preserve-3d;
-  backface-visibility: hidden;
-  transform-origin: center;
-  filter: drop-shadow(0 0 6px rgba(0, 0, 0, 0.3));
-  transition: filter 0.3s ease;
-}
-
-header img:active {
-  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
-}
-
-@media (max-width: 768px) {
-  header img {
-    animation-duration: 4s;
-  }
-}
-
-/* Partner content toggle */
-.partner-content {
-  max-height: 0;
-  overflow: hidden;
-  opacity: 0;
-  transition: max-height 0.5s ease, opacity 0.4s ease, margin-top 0.4s ease;
-  margin-top: 0;
-}
-.partner-content.active {
-  opacity: 1;
-  margin-top: 1rem;
-  max-height: 2000px;
-}
 
 /* Partner links */
 .partner-link {
