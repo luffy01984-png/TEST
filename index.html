@@ -10,6 +10,37 @@
 <meta name="theme-color" content="#dc2626">
 
 <style>
+  .partner-link img:hover {
+  transform: scale(1.1);
+}
+
+/* === Rotation 3D fluide du logo dans le header (optimisée mobile) === */
+@keyframes slowSpinY {
+  from { transform: rotateY(0deg); }
+  to { transform: rotateY(360deg); }
+}
+
+header img {
+  animation: slowSpinY 10s linear infinite;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  transform-origin: center;
+  filter: drop-shadow(0 0 6px rgba(0, 0, 0, 0.3)); /* Ombre subtile pour effet de relief */
+  transition: filter 0.3s ease;
+}
+
+/* Petit effet lumineux quand on touche le logo (mobile friendly) */
+header img:active {
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
+}
+
+/* Ralentir la rotation sur mobile pour plus de fluidité */
+@media (max-width: 768px) {
+  header img {
+    animation-duration: 14s;
+  }
+}
+</style>
 body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#f3f4f6; }
 
 /* Splash screen */
