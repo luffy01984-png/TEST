@@ -32,7 +32,10 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
   object-fit: contain;
   animation: zoomIn 2s ease-in-out forwards;
 }
-@keyframes zoomIn { 0% { transform: scale(0.9); opacity: 0.8; } 100% { transform: scale(1); opacity: 1; } }
+@keyframes zoomIn {
+  0% { transform: scale(0.9); opacity: 0.8; }
+  100% { transform: scale(1); opacity: 1; }
+}
 
 /* Partner content toggle */
 .partner-content { max-height: 0; overflow: hidden; opacity: 0; transition: max-height 0.5s ease, opacity 0.4s ease, margin-top 0.4s ease; margin-top: 0; }
@@ -40,14 +43,27 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
 
 /* Partner links */
 .partner-link {
-  display: flex; align-items: center; justify-content: center;
-  padding: 1rem 1.25rem; border-radius: 0.75rem; background-color: #f9fafb; 
-  color: #1f2937; font-weight: 500; font-size: 1rem;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.2); cursor: pointer;
+  display: flex; 
+  align-items: center; 
+  justify-content: center;
+  padding: 1rem 1.25rem; 
+  border-radius: 0.75rem;
+  background-color: #f9fafb; 
+  color: #1f2937; 
+  font-weight: 500; 
+  font-size: 1rem;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.2); /* ombre plus prononcée */
+  cursor: pointer;
   transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s, color 0.2s;
-  text-align: center; margin-bottom: 1.5rem;
+  text-align: center;
+  margin-bottom: 1.5rem; /* <-- plus d'espace entre les partenaires */
 }
-.partner-link:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(0,0,0,0.25); background-color: #fff; color: #dc2626; }
+.partner-link:hover { 
+  transform: translateY(-2px); 
+  box-shadow: 0 10px 30px rgba(0,0,0,0.25); /* ombre plus profonde au survol */
+  background-color: #fff; 
+  color: #dc2626; 
+}
 .partner-link:last-child { margin-bottom: 0; }
 
 /* Modal */
@@ -57,29 +73,42 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
 #imageModal button { position:absolute; top:20px; right:20px; background:#dc2626; color:#fff; border:none; padding:8px 12px; border-radius:6px; cursor:pointer; font-weight:bold; }
 
 /* Category cards */
-.category-card img { width:100%; height:9rem; object-fit:cover; border-radius: 1rem; cursor:pointer; }
-.category-card { position: relative; }
+.category-card img { width:100%; height:9rem; object-fit:cover; border-radius: 1rem; }
 
 /* Accordion */
-.accordion-btn { width: 100%; text-align: left; padding: 0.75rem 1rem; background-color: #f3f4f6; border-radius: 0.5rem; font-weight: 600; color: #1f2937; cursor: pointer; transition: background-color 0.3s ease, color 0.3s ease; display: flex; justify-content: space-between; align-items: center; }
+.accordion-btn {
+    width: 100%; text-align: left; padding: 0.75rem 1rem; background-color: #f3f4f6; border-radius: 0.5rem;
+    font-weight: 600; color: #1f2937; cursor: pointer; transition: background-color 0.3s ease, color 0.3s ease;
+    display: flex; justify-content: space-between; align-items: center;
+}
 .accordion-btn:hover { background-color: #e5e7eb; }
-.accordion-btn.active { color: #dc2626; }
+.accordion-btn.active { color: #dc2626; } /* titre rouge quand actif */
 .arrow { transition: transform 0.3s ease; }
 .arrow.rotate { transform: rotate(90deg); }
-.accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; background: white; padding: 0 1rem; border-left: 3px solid #dc2626; margin-top: 0.25rem; border-radius: 0.5rem; }
+.accordion-content {
+    max-height: 0; overflow: hidden; transition: max-height 0.4s ease;
+    background: white; padding: 0 1rem; border-left: 3px solid #dc2626; margin-top: 0.25rem; border-radius: 0.5rem;
+}
 .accordion-content.open { padding-top: 0.5rem; padding-bottom: 0.5rem; }
 
-/* Navbar */
+/* Navbar active */
 .nav-link { color: #9ca3af; text-decoration: none; font-weight: 500; padding: 0.25rem 0.5rem; border-radius: 0.5rem; transition: all 0.2s ease; }
 .nav-link.active { background-color: #dc2626; color: #fff; }
 
-/* Bounce animation for arrows */
-@keyframes bounce { 0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);} }
-.animate-bounce { animation: bounce 1s infinite; }
-
 /* Responsive grid for partner-content */
-@media (min-width: 640px) { .partner-content.active { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; } }
-@media (min-width: 1024px) { .partner-content.active { grid-template-columns: repeat(3, 1fr); gap: 1.5rem; } }
+@media (min-width: 640px) {
+  .partner-content.active {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+}
+@media (min-width: 1024px) {
+  .partner-content.active {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+}
 </style>
 </head>
 
@@ -125,9 +154,15 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
 <!-- CATEGORIES -->
 <section id="categories" class="max-w-6xl mx-auto py-4 px-4">
   <h2 class="text-2xl font-bold text-center mb-10 text-gray-800 flex items-center justify-center gap-2">
-    <svg class="w-10 h-10 text-red-600 animate-bounce cursor-pointer" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path></svg>
+    <!-- Flèche gauche -->
+    <svg class="w-10 h-10 text-red-600 animate-bounce cursor-pointer" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" onclick="document.getElementById('categories').scrollIntoView({behavior: 'smooth'});">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path>
+    </svg>
     Catégories d'Offres
-    <svg class="w-10 h-10 text-red-600 animate-bounce cursor-pointer" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path></svg>
+    <!-- Flèche droite -->
+    <svg class="w-10 h-10 text-red-600 animate-bounce cursor-pointer" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" onclick="document.getElementById('categories').scrollIntoView({behavior: 'smooth'});">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path>
+    </svg>
   </h2>
 
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -318,66 +353,6 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
     <p>Pour toute demande, veuillez contacter le CSE Renault Trucks Bourg-en-Bresse à l’adresse ci-dessus.</p>
   </div>
 </section>
-  
-  <!-- PWA install banner -->
-<div id="installBanner" style="position: fixed; bottom:20px; left:20px; right:20px; background:#dc2626; color:#fff; padding:12px 20px; border-radius:12px; text-align:center; font-weight:bold; z-index:10001; cursor:pointer; display:none; box-shadow: 0 4px 12px rgba(0,0,0,0.3);">Installer l'application sur votre écran d'accueil</div>
-
-<script>
-// ===== Splash screen =====
-document.addEventListener('DOMContentLoaded', () => {
-  const splash = document.getElementById('splash');
-  document.body.style.overflow = 'hidden';
-  setTimeout(() => { splash.style.opacity = '0';
-    setTimeout(()=>{ splash.style.display='none'; document.body.style.overflow='auto'; },800);
-  }, 3000);
-});
-
-// ===== Toggle categories =====
-function toggleCategory(id) {
-  const section = document.getElementById(id);
-  section.classList.toggle('active');
-}
-
-// ===== Modal =====
-const modal = document.getElementById('imageModal');
-const modalImg = document.getElementById('modalImg');
-const closeModalBtn = modal.querySelector('button');
-function openModal(url){ modalImg.src=url; modal.classList.add('active'); }
-function closeModal(){ modal.classList.remove('active'); }
-modalImg.addEventListener('click', closeModal);
-closeModalBtn.addEventListener('click', closeModal);
-modal.addEventListener('click', (e)=>{ if(e.target===modal) closeModal(); });
-
-// ===== Accordion =====
-document.querySelectorAll(".accordion-btn").forEach(btn => {
-  btn.addEventListener("click", ()=>{
-    const content = btn.nextElementSibling;
-    const arrow = btn.querySelector(".arrow");
-    if(content.classList.contains("open")){ content.style.maxHeight=null; content.classList.remove("open"); arrow.classList.remove("rotate"); btn.classList.remove("active"); }
-    else { content.classList.add("open"); arrow.classList.add("rotate"); btn.classList.add("active"); requestAnimationFrame(()=>{ content.style.maxHeight=content.scrollHeight+"px"; }); }
-  });
-});
-
-// ===== Navigation Partenaires / Mentions =====
-document.querySelectorAll('nav a').forEach(link=>{
-  link.addEventListener('click',(e)=>{
-    e.preventDefault();
-    document.querySelectorAll('.nav-link').forEach(l=>l.classList.remove('active'));
-    link.classList.add('active');
-    const targetId = link.getAttribute('href').replace('#','');
-    document.getElementById(targetId).scrollIntoView({behavior:'smooth'});
-  });
-});
-
-// ===== PWA install banner =====
-let deferredPrompt;
-const installBanner = document.getElementById('installBanner');
-window.addEventListener('beforeinstallprompt', (e)=>{ e.preventDefault(); deferredPrompt=e; if(!window.matchMedia('(display-mode: standalone)').matches){ installBanner.style.display='block'; } });
-installBanner.addEventListener('click', async ()=>{ installBanner.style.display='none'; deferredPrompt.prompt(); await deferredPrompt.userChoice; deferredPrompt=null; });
-window.addEventListener('appinstalled', ()=>{ installBanner.style.display='none'; });
-</script>
-</body>
-</html>
 
 <script>
 // ===== Splash screen =====
