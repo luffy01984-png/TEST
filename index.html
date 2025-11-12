@@ -67,7 +67,7 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
     display: flex; justify-content: space-between; align-items: center;
 }
 .accordion-btn:hover { background-color: #e5e7eb; }
-.accordion-btn.active { color: #dc2626; } /* titre rouge quand actif */
+.accordion-btn.active { color: #dc2626; }
 .arrow { transition: transform 0.3s ease; }
 .arrow.rotate { transform: rotate(90deg); }
 .accordion-content {
@@ -93,7 +93,6 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
   <img id="modalImg" src="" alt="Partenaire">
 </div>
 
-
 <!-- HEADER -->
 <header class="bg-white shadow-xl sticky top-0 z-50 hidden-before-splash">
   <div class="max-w-7xl mx-auto flex justify-between items-center px-4 py-3">
@@ -107,6 +106,7 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
     </nav>
   </div>
 </header>
+
 <!-- HERO -->
 <section class="bg-white text-gray-900 text-center py-12 px-4 shadow-md">
   <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight">
@@ -121,22 +121,8 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
 <!-- CATEGORIES -->
 <section id="categories" class="max-w-6xl mx-auto py-4 px-4">
   <h2 class="text-2xl font-bold text-center mb-10 text-gray-800 flex items-center justify-center gap-2">
-  <!-- Flèche gauche -->
-  <svg class="w-10 h-10 text-red-600 animate-bounce cursor-pointer" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" onclick="document.getElementById('categories').scrollIntoView({behavior: 'smooth'});">
-    <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path>
-  </svg>
-
-  Catégories d'Offres
-
-  <!-- Flèche droite -->
-  <svg class="w-10 h-10 text-red-600 animate-bounce cursor-pointer" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" onclick="document.getElementById('categories').scrollIntoView({behavior: 'smooth'});">
-    <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path>
-  </svg>
-</h2>
-
-
-  
-
+    Catégories d'Offres
+  </h2>
 
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 
@@ -380,31 +366,22 @@ modalImg.addEventListener('click', closeModal);
 closeModalBtn.addEventListener('click', closeModal);
 modal.addEventListener('click', (e) => { if(e.target === modal) closeModal(); });
 window.addEventListener('popstate', () => { if(modal.classList.contains('active')) closeModal(); });
-  // PWA install banner
+
+// PWA banner
 let deferredPrompt;
 const installBanner = document.createElement('div');
 installBanner.style.cssText =
-  `position: fixed;
-   bottom: 20px; left: 20px; right: 20px;
-   background: #dc2626;
-   color: #fff;
-   padding: 12px 20px;
-   border-radius: 12px;
-   text-align: center;
-   font-weight: bold;
-   z-index: 10001;
-   cursor: pointer;
-   box-shadow: 0 4px 12px rgba(0,0,0,0.3);`;
+  `position: fixed; bottom: 20px; left: 20px; right: 20px;
+   background: #dc2626; color: #fff; padding: 12px 20px;
+   border-radius: 12px; text-align: center; font-weight: bold;
+   z-index: 10001; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.3);`;
 installBanner.textContent = "Installer l'application sur votre écran d'accueil";
 installBanner.style.display = 'none';
-
 document.body.appendChild(installBanner);
 
 window.addEventListener('beforeinstallprompt', (e) => {
   e.preventDefault();
   deferredPrompt = e;
-
-  // Ne pas afficher si déjà installé
   if (!window.matchMedia('(display-mode: standalone)').matches) {
     installBanner.style.display = 'block';
   }
@@ -421,19 +398,14 @@ window.addEventListener('appinstalled', () => {
   installBanner.style.display = 'none';
 });
 
-
-// Accordion avec titre actif rouge
+// Accordion
 document.querySelectorAll(".accordion-btn").forEach(btn => {
   btn.addEventListener("click", () => {
     const content = btn.nextElementSibling;
     const arrow = btn.querySelector(".arrow");
-
-    // Retirer active de tous les boutons sauf celui cliqué
     document.querySelectorAll(".accordion-btn").forEach(b => {
       if(b !== btn) b.classList.remove("active");
     });
-
-    // Toggle ouverture
     if(content.classList.contains("open")) { 
       content.style.maxHeight = null; 
       content.classList.remove("open"); 
@@ -450,6 +422,19 @@ document.querySelectorAll(".accordion-btn").forEach(btn => {
   });
 });
 
+// ✅ Ajout du compteur de partenaires
+document.querySelectorAll('.category-card').forEach(card => {
+  const nextContent = card.nextElementSibling;
+  if (nextContent && nextContent.classList.contains('partner-content')) {
+    const count = nextContent.querySelectorAll('.partner-link').length;
+    if (count > 0) {
+      const badge = document.createElement('span');
+      badge.textContent = `${count} partenaire${count > 1 ? 's' : ''}`;
+      badge.className = 'absolute bottom-3 right-3 bg-red-600 text-white text-xs font-semibold px-2 py-1 rounded-full shadow-md opacity-90';
+      card.appendChild(badge);
+    }
+  }
+});
 </script>
 
 </body>
