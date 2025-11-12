@@ -38,32 +38,33 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
 }
 
 /* Partner content toggle */
-.partner-content { max-height: 0; overflow: hidden; opacity: 0; transition: max-height 0.5s ease, opacity 0.4s ease, margin-top 0.4s ease; margin-top: 0; }
+.partner-content { max-height: 0; overflow: hidden; opacity: 0; transition: max-height 0.5s ease, opacity 0.4s ease, margin-top 0.4s ease; margin-top: 0; display:grid; grid-template-columns:1fr; gap:0.5rem;}
 .partner-content.active { opacity: 1; margin-top: 1rem; max-height: 2000px; }
+@media(min-width:640px){ .partner-content { grid-template-columns:1fr 1fr; } }
+@media(min-width:1024px){ .partner-content { grid-template-columns:1fr; } }
 
 /* Partner links */
 .partner-link {
-  display: flex; 
-  align-items: center; 
-  justify-content: center;
-  padding: 1rem 1.25rem; 
-  border-radius: 0.75rem;
-  background-color: #f9fafb; 
-  color: #1f2937; 
-  font-weight: 500; 
-  font-size: 1rem;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.2); /* ombre plus prononcée */
-  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  padding: 1rem 1.25rem; border-radius: 0.75rem;
+  background-color: #f9fafb; color: #1f2937; font-weight: 500; font-size: 1rem;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.2); cursor: pointer;
   transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s, color 0.2s;
   text-align: center;
 }
-.partner-link:hover { 
-  transform: translateY(-2px); 
-  box-shadow: 0 10px 30px rgba(0,0,0,0.25); /* ombre plus profonde au survol */
-  background-color: #fff; 
-  color: #dc2626; 
-}
+.partner-link:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.25); background-color: #fff; color: #dc2626; }
 .partner-link:last-child { margin-bottom: 0; }
+
+/* Badges partenaires */
+.partner-count {
+  background-color: #dc2626;
+  color: white;
+  border-radius: 9999px;
+  padding: 0 8px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  margin-left: 0.5rem;
+}
 
 /* Modal */
 #imageModal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.7); justify-content:center; align-items:center; z-index:10000; transition: opacity 0.3s ease; }
@@ -73,6 +74,7 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
 
 /* Category cards */
 .category-card img { width:100%; height:9rem; object-fit:cover; border-radius: 1rem; }
+.category-card { position: relative; cursor:pointer; }
 
 /* Accordion */
 .accordion-btn {
@@ -90,23 +92,10 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
 }
 .accordion-content.open { padding-top: 0.5rem; padding-bottom: 0.5rem; }
 
-/* Navbar active */
-.nav-link { color: #9ca3af; text-decoration: none; font-weight: 500; padding: 0.25rem 0.5rem; border-radius: 0.5rem; transition: all 0.2s ease; }
-.nav-link.active { background-color: #dc2626; color: #fff; }
-
-/* Responsive grid for partner-content */
-@media (min-width: 640px) {
-  .partner-content.active {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0.75rem;
-  }
-}
-@media (min-width: 1024px) {
-  .partner-content.active {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
+/* Header nav links */
+nav a { color: #6b7280; transition: color 0.3s, background-color 0.3s; padding: 0.25rem 0.75rem; border-radius: 0.5rem; text-decoration: none; font-weight:600;}
+nav a.active { color:#fff; background-color:#dc2626; }
+nav a:hover { color:#dc2626; }
 </style>
 </head>
 
@@ -132,8 +121,8 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
       <span class="text-xs font-bold text-red-600 uppercase tracking-widest hidden sm:inline">CE Bourg-en-Bresse</span>
     </div>
     <nav class="space-x-4 text-sm font-semibold">
-      <a href="#categories" class="nav-link" id="nav-partenaires">Partenaires</a>
-      <a href="#mentions" class="nav-link" id="nav-mentions">Mentions</a>
+      <a href="#categories" id="nav-partners">Partenaires</a>
+      <a href="#mentions" id="nav-mentions">Mentions</a>
     </nav>
   </div>
 </header>
@@ -152,15 +141,13 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
 <!-- CATEGORIES -->
 <section id="categories" class="max-w-6xl mx-auto py-4 px-4">
   <h2 class="text-2xl font-bold text-center mb-10 text-gray-800 flex items-center justify-center gap-2">
-    <!-- Flèche gauche -->
-    <svg class="w-10 h-10 text-red-600 animate-bounce cursor-pointer" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" onclick="document.getElementById('categories').scrollIntoView({behavior: 'smooth'});">
-      <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path>
-    </svg>
-    Catégories d'Offres
-    <!-- Flèche droite -->
-    <svg class="w-10 h-10 text-red-600 animate-bounce cursor-pointer" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" onclick="document.getElementById('categories').scrollIntoView({behavior: 'smooth'});">
-      <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path>
-    </svg>
+  <svg class="w-10 h-10 text-red-600 animate-bounce cursor-pointer" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path>
+  </svg>
+  Catégories d'Offres
+  <svg class="w-10 h-10 text-red-600 animate-bounce cursor-pointer" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path>
+  </svg>
   </h2>
 
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -353,7 +340,7 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
 </section>
 
 <script>
-// ===== Splash screen =====
+// Splash screen
 document.addEventListener('DOMContentLoaded', () => {
   const splash = document.getElementById('splash');
   document.body.style.overflow = 'hidden';
@@ -366,7 +353,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }, 3000);
 });
 
-// ===== Toggle categories =====
+// Toggle categories
 function toggleCategory(id) {
   const section = document.getElementById(id);
   const card = document.querySelector(`[onclick="toggleCategory('${id}')"]`);
@@ -385,7 +372,7 @@ function toggleCategory(id) {
   }
 }
 
-// ===== Modal =====
+// Modal
 const modal = document.getElementById('imageModal');
 const modalImg = document.getElementById('modalImg');
 const closeModalBtn = modal.querySelector('button');
@@ -395,63 +382,39 @@ function openModal(url) {
   modal.classList.add('active');
   history.pushState({ modalOpen: true }, "");
 }
-
 function closeModal() {
   modal.classList.remove('active');
   if(history.state && history.state.modalOpen) history.back();
 }
-
 modalImg.addEventListener('click', closeModal);
 closeModalBtn.addEventListener('click', closeModal);
 modal.addEventListener('click', (e) => { if(e.target === modal) closeModal(); });
 window.addEventListener('popstate', () => { if(modal.classList.contains('active')) closeModal(); });
 
-// ===== Menu Partenaires / Mentions =====
-document.querySelectorAll('nav a').forEach(link => {
-  link.classList.add('nav-link');
-  link.addEventListener('click', (e) => {
-    e.preventDefault();
-    document.querySelectorAll('.nav-link').forEach(l => {
-      l.classList.remove('text-white');
-      l.classList.add('text-gray-400');
-      l.style.backgroundColor = 'transparent';
-      l.style.padding = '0';
-      l.style.borderRadius = '0';
-    });
-    link.classList.remove('text-gray-400');
-    link.classList.add('text-white');
-    link.style.backgroundColor = '#dc2626';
-    link.style.padding = '0.25rem 0.75rem';
-    link.style.borderRadius = '9999px';
+// Badges partenaires automatiques
+document.querySelectorAll('.partner-content').forEach(content => {
+  const id = content.id.replace('-content','');
+  const count = content.querySelectorAll('.partner-link').length;
+  const badge = document.getElementById(`${id}-count`);
+  if(badge) badge.textContent = count;
+});
 
-    if(link.textContent.includes("Partenaires")) {
-      document.getElementById('categories').scrollIntoView({behavior: 'smooth'});
-    } else if(link.textContent.includes("Mentions")) {
-      document.getElementById('mentions').scrollIntoView({behavior: 'smooth'});
-    }
+// Nav active
+const navPartners = document.getElementById('nav-partners');
+const navMentions = document.getElementById('nav-mentions');
+[navPartners, navMentions].forEach(nav => {
+  nav.addEventListener('click', () => {
+    [navPartners, navMentions].forEach(n => n.classList.remove('active'));
+    nav.classList.add('active');
   });
 });
 
-// ===== Badge automatique nombre de partenaires =====
-document.querySelectorAll('.category-card').forEach(card => {
-  const id = card.getAttribute('onclick')?.match(/'(.+?)'/)?.[1];
-  if(id) {
-    const count = document.getElementById(id)?.querySelectorAll('.partner-link').length || 0;
-    const badge = document.createElement('div');
-    badge.className = "absolute top-2 right-2 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded-full shadow";
-    badge.textContent = count;
-    card.appendChild(badge);
-  }
-});
-
-// ===== Accordion =====
+// Accordion
 document.querySelectorAll(".accordion-btn").forEach(btn => {
   btn.addEventListener("click", () => {
     const content = btn.nextElementSibling;
     const arrow = btn.querySelector(".arrow");
-
     document.querySelectorAll(".accordion-btn").forEach(b => { if(b !== btn) b.classList.remove("active"); });
-
     if(content.classList.contains("open")) { 
       content.style.maxHeight = null; 
       content.classList.remove("open"); 
