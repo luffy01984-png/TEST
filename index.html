@@ -41,26 +41,28 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
 .partner-content { max-height: 0; overflow: hidden; opacity: 0; transition: max-height 0.5s ease, opacity 0.4s ease, margin-top 0.4s ease; margin-top: 0; }
 .partner-content.active { opacity: 1; margin-top: 1rem; max-height: 2000px; }
 
-/* Partner links grid */
-.partner-content .partner-links-container {
-  display: grid;
-  grid-template-columns: repeat(1, 1fr);
-  gap: 0.75rem;
-}
-@media (min-width: 640px) {
-  .partner-content .partner-links-container { grid-template-columns: repeat(2, 1fr); }
-}
-
 /* Partner links */
 .partner-link {
-  display: flex; align-items: center; justify-content: center;
-  padding: 1rem 1.25rem; border-radius: 0.75rem;
-  background-color: #f9fafb; color: #1f2937; font-weight: 500; font-size: 1rem;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.08); cursor: pointer;
+  display: flex; 
+  align-items: center; 
+  justify-content: center;
+  padding: 1rem 1.25rem; 
+  border-radius: 0.75rem;
+  background-color: #f9fafb; 
+  color: #1f2937; 
+  font-weight: 500; 
+  font-size: 1rem;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.2); /* ombre plus prononcée */
+  cursor: pointer;
   transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s, color 0.2s;
   text-align: center;
 }
-.partner-link:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.15); background-color: #fff; color: #dc2626; }
+.partner-link:hover { 
+  transform: translateY(-2px); 
+  box-shadow: 0 10px 30px rgba(0,0,0,0.25); /* ombre plus profonde au survol */
+  background-color: #fff; 
+  color: #dc2626; 
+}
 .partner-link:last-child { margin-bottom: 0; }
 
 /* Modal */
@@ -88,11 +90,26 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
 }
 .accordion-content.open { padding-top: 0.5rem; padding-bottom: 0.5rem; }
 
-/* Nav link */
-nav a { transition: all 0.3s; color: #d1d5db; padding: 0; border-radius: 0; }
-nav a.active { background-color: #dc2626; color: white; padding: 0.25rem 0.75rem; border-radius: 9999px; }
+/* Navbar active */
+.nav-link { color: #9ca3af; text-decoration: none; font-weight: 500; padding: 0.25rem 0.5rem; border-radius: 0.5rem; transition: all 0.2s ease; }
+.nav-link.active { background-color: #dc2626; color: #fff; }
+
+/* Responsive grid for partner-content */
+@media (min-width: 640px) {
+  .partner-content.active {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+}
+@media (min-width: 1024px) {
+  .partner-content.active {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
 </style>
 </head>
+
 <body class="bg-gray-30 text-gray-700">
 
 <!-- Splash screen -->
@@ -115,8 +132,8 @@ nav a.active { background-color: #dc2626; color: white; padding: 0.25rem 0.75rem
       <span class="text-xs font-bold text-red-600 uppercase tracking-widest hidden sm:inline">CE Bourg-en-Bresse</span>
     </div>
     <nav class="space-x-4 text-sm font-semibold">
-      <a href="#categories">Partenaires</a>
-      <a href="#mentions">Mentions</a>
+      <a href="#categories" class="nav-link" id="nav-partenaires">Partenaires</a>
+      <a href="#mentions" class="nav-link" id="nav-mentions">Mentions</a>
     </nav>
   </div>
 </header>
