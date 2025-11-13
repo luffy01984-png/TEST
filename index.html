@@ -383,32 +383,42 @@ function toggleCategory(id) {
   const section = document.getElementById(id);
   const card = document.querySelector(`[onclick="toggleCategory('${id}')"]`);
 
-  // Fermer les autres catégories
+  // Fermer toutes les autres catégories
   document.querySelectorAll('.partner-content').forEach(item => {
     if(item.id !== id) item.classList.remove('active');
   });
 
-  // Reset ombres
+  // Reset ombres des cartes
   document.querySelectorAll('.category-card').forEach(cardEl => {
     cardEl.classList.remove("shadow-red-500/50", "shadow-xl");
     cardEl.classList.add("shadow-lg");
   });
 
-  // Toggle catégorie
+  // Toggle la catégorie sélectionnée
   section.classList.toggle('active');
 
-  if(section.classList.contains('active')){
+  if(section.classList.contains('active')) {
     card.classList.remove("shadow-lg");
     card.classList.add("shadow-xl", "shadow-red-500/50");
 
-    // ⚡ Scroll automatique pour que la catégorie ouverte reste visible
-    const headerOffset = 100; // Ajuste selon la hauteur de ton header sticky
-    const elementPosition = section.getBoundingClientRect().top + window.scrollY;
-    const offsetPosition = elementPosition - headerOffset;
+    // ===== Scroll fluide et centré =====
+    const header = document.querySelector('header');
+    const headerHeight = header ? header.offsetHeight : 0;
+
+    // On calcule la position centrale de la section
+    const sectionTop = section.getBoundingClientRect().top + window.scrollY;
+    const sectionHeight = section.offsetHeight;
+    const viewportHeight = window.innerHeight;
+
+    // Position cible pour centrer la section
+    let scrollTarget = sectionTop - (viewportHeight / 2) + (sectionHeight / 2);
+
+    // On s’assure que le scroll ne dépasse pas le top du document
+    scrollTarget = Math.max(0, scrollTarget - headerHeight);
 
     window.scrollTo({
-      top: offsetPosition,
-      behavior: "smooth"
+      top: scrollTarget,
+      behavior: 'smooth'
     });
 
   } else {
