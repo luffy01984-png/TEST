@@ -379,7 +379,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }, 3000);
 });
 
-// ===== Toggle categories (scroll immédiat, sans saut) =====
+// ===== Toggle categories (vignette stable en haut, contenu déployé après scroll) =====
 function toggleCategory(id) {
   const section = document.getElementById(id);
   const card = document.querySelector(`[onclick="toggleCategory('${id}')"]`);
@@ -402,21 +402,24 @@ function toggleCategory(id) {
     card.classList.remove("shadow-lg");
     card.classList.add("shadow-xl", "shadow-red-500/50");
 
-    // Scroll immédiat vers le haut de la vignette (vignette visible sous header)
-    const header = document.querySelector('header');
-    const headerHeight = header ? header.offsetHeight : 0;
-    const cardRect = card.getBoundingClientRect();
-    const scrollTarget = window.scrollY + cardRect.top - headerHeight - 8; // padding léger
+    // Activer le contenu immédiatement
+    section.classList.add('active');
 
-    window.scrollTo({
-      top: scrollTarget,
-      behavior: 'smooth'
+    // Laisser le navigateur recalculer le layout, puis scroll
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        const header = document.querySelector('header');
+        const headerHeight = header ? header.offsetHeight : 0;
+        const cardRect = card.getBoundingClientRect();
+        const scrollTarget = window.scrollY + cardRect.top - headerHeight - 8;
+
+        window.scrollTo({
+          top: scrollTarget,
+          behavior: 'smooth'
+        });
+      });
     });
 
-    // Activer le contenu après un petit délai pour éviter le saut
-    setTimeout(() => {
-      section.classList.add('active');
-    }, 50); // 50ms suffit
   } else {
     // Carte fermée : réinitialiser l'ombre
     card.classList.remove("shadow-xl", "shadow-red-500/50");
@@ -425,12 +428,6 @@ function toggleCategory(id) {
     section.classList.remove('active');
   }
 }
-
-
-
-
-
-
 
 // ===== Modal =====
 const modal = document.getElementById('imageModal');
