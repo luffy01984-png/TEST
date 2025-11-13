@@ -97,17 +97,21 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
 
 /* Responsive grid for partner-content */
 @media (min-width: 640px) {
-  .partner-content.active {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.5rem;
-  }
+  .partner-content.active {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    /* AJOUTER CETTE LIGNE POUR CENTRER LES ÉLÉMENTS RESTANTS */
+    justify-content: center; 
+  }
 }
 @media (min-width: 1024px) {
-  .partner-content.active {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
-  }
+  .partner-content.active {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    /* AJOUTER CETTE LIGNE POUR CENTRER LES ÉLÉMENTS RESTANTS */
+    justify-content: center;
+  }
 }
 </style>
 </head>
