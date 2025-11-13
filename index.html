@@ -379,11 +379,12 @@ document.addEventListener('DOMContentLoaded', () => {
   }, 3000);
 });
 
+// ===== Toggle categories (corrigé avec scroll après ouverture) =====
 function toggleCategory(id) {
   const section = document.getElementById(id);
   const card = document.querySelector(`[onclick="toggleCategory('${id}')"]`);
 
-  // Fermer toutes les autres catégories
+  // Fermer les autres catégories
   document.querySelectorAll('.partner-content').forEach(item => {
     if(item.id !== id) item.classList.remove('active');
   });
@@ -394,38 +395,43 @@ function toggleCategory(id) {
     cardEl.classList.add("shadow-lg");
   });
 
-  // Toggle la catégorie sélectionnée
+  // Toggle catégorie
   section.classList.toggle('active');
 
   if(section.classList.contains('active')) {
     card.classList.remove("shadow-lg");
     card.classList.add("shadow-xl", "shadow-red-500/50");
 
-    // ===== Scroll fluide et centré =====
-    const header = document.querySelector('header');
-    const headerHeight = header ? header.offsetHeight : 0;
+    // ===== Scroll fluide après la transition =====
+    const onTransitionEnd = () => {
+      const header = document.querySelector('header');
+      const headerHeight = header ? header.offsetHeight : 0;
 
-    // On calcule la position centrale de la section
-    const sectionTop = section.getBoundingClientRect().top + window.scrollY;
-    const sectionHeight = section.offsetHeight;
-    const viewportHeight = window.innerHeight;
+      const sectionTop = section.getBoundingClientRect().top + window.scrollY;
+      const sectionHeight = section.offsetHeight;
+      const viewportHeight = window.innerHeight;
 
-    // Position cible pour centrer la section
-    let scrollTarget = sectionTop - (viewportHeight / 2) + (sectionHeight / 2);
+      let scrollTarget = sectionTop - (viewportHeight / 2) + (sectionHeight / 2);
+      scrollTarget = Math.max(0, scrollTarget - headerHeight);
 
-    // On s’assure que le scroll ne dépasse pas le top du document
-    scrollTarget = Math.max(0, scrollTarget - headerHeight);
+      window.scrollTo({
+        top: scrollTarget,
+        behavior: 'smooth'
+      });
 
-    window.scrollTo({
-      top: scrollTarget,
-      behavior: 'smooth'
-    });
+      // Nettoyer l'écouteur pour ne pas l'appeler plusieurs fois
+      section.removeEventListener('transitionend', onTransitionEnd);
+    };
+
+    // Ajouter l'écouteur sur la propriété max-height (transition CSS)
+    section.addEventListener('transitionend', onTransitionEnd);
 
   } else {
     card.classList.remove("shadow-xl", "shadow-red-500/50");
     card.classList.add("shadow-lg");
   }
 }
+
 
 
 // ===== Modal =====
