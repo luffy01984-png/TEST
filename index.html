@@ -405,25 +405,25 @@ function toggleCategory(id) {
     card.classList.remove("shadow-lg");
     card.classList.add("shadow-xl", "shadow-red-500/50");
 
-    // ⚡ SCROLL IMMÉDIAT avant l'animation avec plus de padding
-    const header = document.querySelector('header');
-    const headerHeight = header ? header.offsetHeight : 0;
-    const cardTop = card.getBoundingClientRect().top + window.scrollY;
-    const scrollTarget = Math.max(0, cardTop - headerHeight - 20); // ← 20px au lieu de 10px
+    // ⚡ Attendre 600ms que tout se stabilise (fermeture + début ouverture)
+    setTimeout(() => {
+      const header = document.querySelector('header');
+      const headerHeight = header ? header.offsetHeight : 0;
+      const cardTop = card.getBoundingClientRect().top + window.scrollY;
+      const scrollTarget = Math.max(0, cardTop - headerHeight - 20);
 
-    // Scroll instantané (sans behavior: 'smooth')
-    window.scrollTo({
-      top: scrollTarget,
-      behavior: 'auto'
-    });
+      window.scrollTo({
+        top: scrollTarget,
+        behavior: 'smooth'
+      });
+    }, 600); // Délai fixe de 600ms
 
   } else {
     // Carte désactivée : réinitialiser l'ombre
     card.classList.remove("shadow-xl", "shadow-red-500/50");
     card.classList.add("shadow-lg");
   }
-}
-  
+}  
 // ===== Modal =====
 const modal = document.getElementById('imageModal');
 const modalImg = document.getElementById('modalImg');
