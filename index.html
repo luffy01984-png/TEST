@@ -138,13 +138,7 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
       <a href="#mentions" class="nav-link" id="nav-mentions">Mentions</a>
     </nav>
   </div>
-  <!-- 🔍 Barre de recherche -->
-<div class="w-full bg-white flex justify-center pb-3">
-  <input 
-    type="text" 
-    id="searchInput"
-    placeholder="Rechercher un partenaire..."
-    class="w-10/12 sm:w-6/12 max-w-md border border-gray-300 bg-gray-50 rounded-full px-4 py-2 text-sm text-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-red-400"
+  
   />
 </div>
 </header>
@@ -363,25 +357,7 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
 </section>
 
 <script>
-  // ===== Barre de recherche =====
-const searchInput = document.getElementById('searchInput');
-
-if (searchInput) {
-  searchInput.addEventListener('input', () => {
-    const query = searchInput.value.toLowerCase();
-
-    // Filtrer les cartes de catégories
-    document.querySelectorAll('.category-card').forEach(card => {
-      const text = card.textContent.toLowerCase();
-      card.parentElement.style.display = text.includes(query) ? '' : 'none';
-    });
-
-    // Filtrer les partenaires visibles
-    document.querySelectorAll('.partner-link').forEach(link => {
-      const text = link.textContent.toLowerCase();
-      link.style.display = text.includes(query) ? '' : 'none';
-    });
-  });
+  
 }
 // ===== Splash screen =====
 document.addEventListener('DOMContentLoaded', () => {
