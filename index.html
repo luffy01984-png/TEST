@@ -379,59 +379,62 @@ document.addEventListener('DOMContentLoaded', () => {
   }, 3000);
 });
 
-// ===== Toggle categories (final, mobile-friendly) =====
-function toggleCategory(id) {
-  const section = document.getElementById(id);
-  const card = document.querySelector(`[onclick="toggleCategory('${id}')"]`);
+// ===== Toggle Categories (clean, mobile-friendly, no onclick) =====
 
-  // Fermer les autres catégories
-  document.querySelectorAll('.partner-content').forEach(item => {
-    if(item.id !== id) item.classList.remove('active');
+document.querySelectorAll("[data-target]").forEach(card => {
+  card.addEventListener("click", () => {
+    const id = card.getAttribute("data-target");
+    const section = document.getElementById(id);
+
+    // Fermer les autres sections
+    document.querySelectorAll('.partner-content').forEach(item => {
+      if (item.id !== id) item.classList.remove('active');
+    });
+
+    // Reset ombres des cartes
+    document.querySelectorAll('.category-card').forEach(cardEl => {
+      cardEl.classList.remove("shadow-red-500/50", "shadow-xl");
+      cardEl.classList.add("shadow-lg");
+    });
+
+    // Détermine si on ouvre ou on ferme
+    const opening = !section.classList.contains('active');
+    section.classList.toggle('active');
+
+    if (opening) {
+
+      // Appliquer l’ombre spéciale sur la carte active
+      card.classList.remove("shadow-lg");
+      card.classList.add("shadow-xl", "shadow-red-500/50");
+
+      // Smooth scroll quand l’animation d’ouverture est terminée
+      const onTransitionEnd = (e) => {
+        if (e.propertyName !== 'max-height') return;
+
+        const header = document.querySelector('header');
+        const headerHeight = header ? header.offsetHeight : 0;
+
+        const sectionTop = section.getBoundingClientRect().top + window.scrollY;
+        const scrollTarget = Math.max(0, sectionTop - headerHeight - 16);
+
+        window.scrollTo({
+          top: scrollTarget,
+          behavior: 'smooth'
+        });
+
+        section.removeEventListener('transitionend', onTransitionEnd);
+      };
+
+      section.addEventListener('transitionend', onTransitionEnd);
+
+    } else {
+      // Quand on referme : reset ombre
+      card.classList.remove("shadow-xl", "shadow-red-500/50");
+      card.classList.add("shadow-lg");
+    }
   });
+});
 
-  // Reset ombres des cartes
-  document.querySelectorAll('.category-card').forEach(cardEl => {
-    cardEl.classList.remove("shadow-red-500/50", "shadow-xl");
-    cardEl.classList.add("shadow-lg");
-  });
-
-  // Déterminer si on ouvre ou ferme la section
-  const opening = !section.classList.contains('active');
-  section.classList.toggle('active');
-
-  if (opening) {
-    // Ajouter l'ombre spéciale à la carte active
-    card.classList.remove("shadow-lg");
-    card.classList.add("shadow-xl", "shadow-red-500/50");
-
-    // ⚡ Attendre la fin de la transition CSS de max-height
-    const onTransitionEnd = (e) => {
-      if (e.propertyName !== 'max-height') return;
-
-      const header = document.querySelector('header');
-      const headerHeight = header ? header.offsetHeight : 0;
-
-      const sectionTop = section.getBoundingClientRect().top + window.scrollY;
-
-      // Calcul du scroll pour que le top de la section soit visible sous le header
-      const scrollTarget = Math.max(0, sectionTop - headerHeight - 16); // 16px padding
-
-      window.scrollTo({
-        top: scrollTarget,
-        behavior: 'smooth'
-      });
-
-      section.removeEventListener('transitionend', onTransitionEnd);
-    };
-
-    section.addEventListener('transitionend', onTransitionEnd);
-
-  } else {
-    // Carte désactivée : réinitialiser l'ombre
-    card.classList.remove("shadow-xl", "shadow-red-500/50");
-    card.classList.add("shadow-lg");
-  }
-}
 
 
 
