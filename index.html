@@ -369,22 +369,20 @@ document.addEventListener('DOMContentLoaded', () => {
 function toggleCategory(id) {
   const section = document.getElementById(id);
   const card = document.querySelector(`[onclick="toggleCategory('${id}')"]`);
+  const header = document.querySelector('header');
 
-  // Sauvegarder la position actuelle AVANT toute modification
+  // Désactiver temporairement le sticky header
+  const originalPosition = header.style.position;
+  header.style.position = 'relative';
+
+  // Sauvegarder la position de scroll actuelle
   const savedScrollY = window.scrollY;
   
-  // Variable pour bloquer le scroll
-  let preventScroll = true;
-  
-  // Fonction qui force le maintien de la position
-  const maintainScroll = () => {
-    if (preventScroll) {
-      window.scrollTo(0, savedScrollY);
-    }
-  };
-  
-  // Ajouter l'écouteur de scroll
-  window.addEventListener('scroll', maintainScroll, { passive: false });
+  // Désactiver complètement le scroll
+  document.body.style.overflow = 'hidden';
+  document.body.style.position = 'fixed';
+  document.body.style.top = `-${savedScrollY}px`;
+  document.body.style.width = '100%';
 
   // Fermer les autres catégories
   document.querySelectorAll('.partner-content').forEach(item => {
@@ -411,19 +409,20 @@ function toggleCategory(id) {
     card.classList.add("shadow-lg");
   }
   
-  // Forcer la position après chaque frame pendant 800ms
-  const forcePosition = setInterval(() => {
-    window.scrollTo(0, savedScrollY);
-  }, 10);
-  
-  // Débloquer après l'animation complète (fermeture + ouverture)
+  // Réactiver le scroll après l'animation
   setTimeout(() => {
-    preventScroll = false;
-    clearInterval(forcePosition);
-    window.removeEventListener('scroll', maintainScroll);
-    // Dernière correction de position
+    // Réactiver le scroll
+    document.body.style.overflow = '';
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.width = '';
+    
+    // Restaurer la position
     window.scrollTo(0, savedScrollY);
-  }, 800);
+    
+    // Réactiver le sticky header
+    header.style.position = originalPosition;
+  }, 600);
 }
 // ===== Modal =====
 const modal = document.getElementById('imageModal');
