@@ -404,26 +404,23 @@ function toggleCategory(id) {
     card.classList.remove("shadow-lg");
     card.classList.add("shadow-xl", "shadow-red-500/50");
 
-    // ⚡ Attendre la fin de la transition CSS de max-height
-    const onTransitionEnd = (e) => {
-      if (e.propertyName !== 'max-height') return;
+    // ⚡ Double requestAnimationFrame pour attendre que tout soit rendu
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        // Attendre un peu plus pour que l'animation se termine
+        setTimeout(() => {
+          const header = document.querySelector('header');
+          const headerHeight = header ? header.offsetHeight : 0;
+          const cardTop = card.getBoundingClientRect().top + window.scrollY;
+          const scrollTarget = Math.max(0, cardTop - headerHeight - 10);
 
-      // ⚡ CALCULER APRÈS la fermeture des autres catégories
-      const header = document.querySelector('header');
-      const headerHeight = header ? header.offsetHeight : 0;
-      const cardTop = card.getBoundingClientRect().top + window.scrollY;
-      const scrollTarget = Math.max(0, cardTop - headerHeight - 10);
-
-      // Scroll direct
-      window.scrollTo({
-        top: scrollTarget,
-        behavior: 'smooth'
+          window.scrollTo({
+            top: scrollTarget,
+            behavior: 'smooth'
+          });
+        }, 400); // Durée de la transition CSS (0.4s)
       });
-
-      section.removeEventListener('transitionend', onTransitionEnd);
-    };
-
-    section.addEventListener('transitionend', onTransitionEnd);
+    });
 
   } else {
     // Carte désactivée : réinitialiser l'ombre
@@ -431,6 +428,7 @@ function toggleCategory(id) {
     card.classList.add("shadow-lg");
   }
 }
+  
 // ===== Modal =====
 const modal = document.getElementById('imageModal');
 const modalImg = document.getElementById('modalImg');
