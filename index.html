@@ -411,10 +411,11 @@ function toggleCategory(id) {
       const header = document.querySelector('header');
       const headerHeight = header ? header.offsetHeight : 0;
 
-      const sectionTop = section.getBoundingClientRect().top + window.scrollY;
+      // Position de la CARTE (image) pas de la section
+      const cardTop = card.getBoundingClientRect().top + window.scrollY;
 
-      // Calcul du scroll pour que le top de la section soit visible sous le header
-      const scrollTarget = Math.max(0, sectionTop - headerHeight - 16); // 16px padding
+      // Calcul du scroll pour que le top de la CARTE soit visible sous le header
+      const scrollTarget = Math.max(0, cardTop - headerHeight - 10); // 10px padding
 
       window.scrollTo({
         top: scrollTarget,
@@ -432,7 +433,6 @@ function toggleCategory(id) {
     card.classList.add("shadow-lg");
   }
 }
-
 
 
 // ===== Modal =====
