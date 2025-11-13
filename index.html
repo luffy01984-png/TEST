@@ -379,6 +379,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }, 3000);
 });
 
+// ===== Toggle categories (final, mobile-friendly) =====
 function toggleCategory(id) {
   const section = document.getElementById(id);
   const card = document.querySelector(`[onclick="toggleCategory('${id}')"]`);
@@ -394,38 +395,44 @@ function toggleCategory(id) {
     cardEl.classList.add("shadow-lg");
   });
 
-  // Toggle catégorie
+  // Déterminer si on ouvre ou ferme la section
+  const opening = !section.classList.contains('active');
   section.classList.toggle('active');
 
-  if(section.classList.contains('active')) {
+  if (opening) {
+    // Ajouter l'ombre spéciale à la carte active
     card.classList.remove("shadow-lg");
     card.classList.add("shadow-xl", "shadow-red-500/50");
 
-    // ⚡ Attendre que le navigateur applique le style actif
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        const header = document.querySelector('header');
-        const headerHeight = header ? header.offsetHeight : 0;
+    // ⚡ Attendre la fin de la transition CSS de max-height
+    const onTransitionEnd = (e) => {
+      if (e.propertyName !== 'max-height') return;
 
-        const sectionTop = section.getBoundingClientRect().top + window.scrollY;
-        const sectionHeight = section.offsetHeight;
-        const viewportHeight = window.innerHeight;
+      const header = document.querySelector('header');
+      const headerHeight = header ? header.offsetHeight : 0;
 
-        let scrollTarget = sectionTop - (viewportHeight / 2) + (sectionHeight / 2);
-        scrollTarget = Math.max(0, scrollTarget - headerHeight);
+      const sectionTop = section.getBoundingClientRect().top + window.scrollY;
 
-        window.scrollTo({
-          top: scrollTarget,
-          behavior: 'smooth'
-        });
+      // Calcul du scroll pour que le top de la section soit visible sous le header
+      const scrollTarget = Math.max(0, sectionTop - headerHeight - 16); // 16px padding
+
+      window.scrollTo({
+        top: scrollTarget,
+        behavior: 'smooth'
       });
-    });
+
+      section.removeEventListener('transitionend', onTransitionEnd);
+    };
+
+    section.addEventListener('transitionend', onTransitionEnd);
 
   } else {
+    // Carte désactivée : réinitialiser l'ombre
     card.classList.remove("shadow-xl", "shadow-red-500/50");
     card.classList.add("shadow-lg");
   }
 }
+
 
 
 
