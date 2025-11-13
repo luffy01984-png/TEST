@@ -481,7 +481,7 @@ document.querySelectorAll('.category-card').forEach(card => {
     const count = document.getElementById(id)?.querySelectorAll('.partner-link').length || 0;
     const badge = document.createElement('div');
     badge.className = "absolute top-2 right-2 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded-full shadow";
-    badge.textContent = count;
+    badge.textContent = count + " Partenaire" + (count > 1 ? "s" : "");
     card.appendChild(badge);
   }
 });
