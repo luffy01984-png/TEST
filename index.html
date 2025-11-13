@@ -384,9 +384,6 @@ function toggleCategory(id) {
   const section = document.getElementById(id);
   const card = document.querySelector(`[onclick="toggleCategory('${id}')"]`);
 
-  // Déterminer si on ouvre ou ferme la section
-  const opening = !section.classList.contains('active');
-
   // Fermer les autres catégories
   document.querySelectorAll('.partner-content').forEach(item => {
     if(item.id !== id) item.classList.remove('active');
@@ -398,26 +395,14 @@ function toggleCategory(id) {
     cardEl.classList.add("shadow-lg");
   });
 
+  // Déterminer si on ouvre ou ferme la section
+  const opening = !section.classList.contains('active');
   section.classList.toggle('active');
 
   if (opening) {
     // Ajouter l'ombre spéciale à la carte active
     card.classList.remove("shadow-lg");
     card.classList.add("shadow-xl", "shadow-red-500/50");
-
-    // ⚡ Attendre 600ms que tout se stabilise (fermeture + début ouverture)
-    setTimeout(() => {
-      const header = document.querySelector('header');
-      const headerHeight = header ? header.offsetHeight : 0;
-      const cardTop = card.getBoundingClientRect().top + window.scrollY;
-      const scrollTarget = Math.max(0, cardTop - headerHeight - 20);
-
-      window.scrollTo({
-        top: scrollTarget,
-        behavior: 'smooth'
-      });
-    }, 600); // Délai fixe de 600ms
-
   } else {
     // Carte désactivée : réinitialiser l'ombre
     card.classList.remove("shadow-xl", "shadow-red-500/50");
