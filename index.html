@@ -384,6 +384,9 @@ function toggleCategory(id) {
   const section = document.getElementById(id);
   const card = document.querySelector(`[onclick="toggleCategory('${id}')"]`);
 
+  // Déterminer si on ouvre ou ferme la section
+  const opening = !section.classList.contains('active');
+
   // Fermer les autres catégories
   document.querySelectorAll('.partner-content').forEach(item => {
     if(item.id !== id) item.classList.remove('active');
@@ -395,8 +398,6 @@ function toggleCategory(id) {
     cardEl.classList.add("shadow-lg");
   });
 
-  // Déterminer si on ouvre ou ferme la section
-  const opening = !section.classList.contains('active');
   section.classList.toggle('active');
 
   if (opening) {
@@ -404,24 +405,25 @@ function toggleCategory(id) {
     card.classList.remove("shadow-lg");
     card.classList.add("shadow-xl", "shadow-red-500/50");
 
-    // ⚡ Calculer le nombre de partenaires pour ajuster le délai
-    const partnerCount = section.querySelectorAll('.partner-link').length;
-    const baseDelay = 500; // délai de base
-    const delayPerPartner = 30; // 30ms par partenaire supplémentaire
-    const totalDelay = baseDelay + (partnerCount * delayPerPartner);
-
-    // ⚡ Attendre que l'animation soit complète
+    // ⚡ Attendre que le DOM se stabilise après fermeture des autres catégories
     setTimeout(() => {
-      const header = document.querySelector('header');
-      const headerHeight = header ? header.offsetHeight : 0;
-      const cardTop = card.getBoundingClientRect().top + window.scrollY;
-      const scrollTarget = Math.max(0, cardTop - headerHeight - 10);
+      // Calculer le nombre de partenaires pour ajuster le délai
+      const partnerCount = section.querySelectorAll('.partner-link').length;
+      const animationDelay = 500 + (partnerCount * 20);
 
-      window.scrollTo({
-        top: scrollTarget,
-        behavior: 'smooth'
-      });
-    }, totalDelay);
+      // Attendre que l'animation d'ouverture soit complète
+      setTimeout(() => {
+        const header = document.querySelector('header');
+        const headerHeight = header ? header.offsetHeight : 0;
+        const cardTop = card.getBoundingClientRect().top + window.scrollY;
+        const scrollTarget = Math.max(0, cardTop - headerHeight - 10);
+
+        window.scrollTo({
+          top: scrollTarget,
+          behavior: 'smooth'
+        });
+      }, animationDelay);
+    }, 100); // 100ms pour laisser les autres catégories se fermer d'abord
 
   } else {
     // Carte désactivée : réinitialiser l'ombre
