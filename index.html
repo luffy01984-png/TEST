@@ -379,7 +379,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }, 3000);
 });
 
-// ===== Toggle categories (version complète, mobile-friendly, pas de saut) =====
 function toggleCategory(id) {
   const section = document.getElementById(id);
   const card = document.querySelector(`[onclick="toggleCategory('${id}')"]`);
@@ -406,7 +405,15 @@ function toggleCategory(id) {
     const header = document.querySelector('header');
     const headerHeight = header ? header.offsetHeight : 0;
     const cardRect = card.getBoundingClientRect();
-    const scrollTarget = window.scrollY + cardRect.top - headerHeight - 8; // petit padding
+    const viewportHeight = window.innerHeight;
+
+    // Calcul pour que la carte ne dépasse jamais le haut de l'écran
+    let scrollTarget = window.scrollY + cardRect.top - headerHeight - 8;
+
+    // Vérifier si la carte est plus grande que l’écran, si oui, ajuster
+    if (cardRect.height > viewportHeight - headerHeight - 16) {
+      scrollTarget = window.scrollY + cardRect.top - headerHeight - 8;
+    }
 
     window.scrollTo({
       top: scrollTarget,
@@ -416,7 +423,7 @@ function toggleCategory(id) {
     // Déclencher l’expansion après un court délai pour éviter le saut
     setTimeout(() => {
       section.classList.add('active');
-    }, 150); // 150ms = scroll commencé, contenu se déploie doucement
+    }, 150);
 
   } else {
     // Carte fermée : réinitialiser l'ombre
@@ -425,6 +432,7 @@ function toggleCategory(id) {
     section.classList.remove('active');
   }
 }
+
 
 
 // ===== Modal =====
