@@ -379,82 +379,55 @@ document.addEventListener('DOMContentLoaded', () => {
   }, 3000);
 });
 
+// ===== Toggle categories (final, mobile-friendly) =====
 function toggleCategory(id) {
   const section = document.getElementById(id);
   const card = document.querySelector(`[onclick="toggleCategory('${id}')"]`);
 
   // Fermer les autres catégories
   document.querySelectorAll('.partner-content').forEach(item => {
-    if (item.id !== id) {
-      item.classList.remove('active');
-      item.style.maxHeight = null;
-    }
+    if(item.id !== id) item.classList.remove('active');
   });
 
-  // Reset ombres
+  // Reset ombres des cartes
   document.querySelectorAll('.category-card').forEach(cardEl => {
     cardEl.classList.remove("shadow-red-500/50", "shadow-xl");
     cardEl.classList.add("shadow-lg");
   });
 
+  // Déterminer si on ouvre ou ferme la section
   const opening = !section.classList.contains('active');
-  const header = document.querySelector('header');
-  const headerHeight = header ? header.offsetHeight : 0;
-  const paddingTop = 12;
+  section.classList.toggle('active');
 
   if (opening) {
-    // Marquer la section active
-    section.classList.add('active');
+    // Ajouter l'ombre spéciale à la carte active
     card.classList.remove("shadow-lg");
     card.classList.add("shadow-xl", "shadow-red-500/50");
 
-    // Calcul de scroll minimal pour garder la vignette visible
-    const cardRect = card.getBoundingClientRect();
-    let scrollTarget = window.scrollY + cardRect.top - headerHeight - paddingTop;
-    if (scrollTarget < window.scrollY) scrollTarget = window.scrollY;
+    // ⚡ Attendre la fin de la transition CSS de max-height
+    const onTransitionEnd = (e) => {
+      if (e.propertyName !== 'max-height') return;
 
-    // Scroll fluide
-    window.scrollTo({
-      top: scrollTarget,
-      behavior: 'smooth'
-    });
+      const header = document.querySelector('header');
+      const headerHeight = header ? header.offsetHeight : 0;
 
-    // Expansion avec easing "ease-out"
-    const targetHeight = section.scrollHeight;
-    section.style.maxHeight = '0px';
-    let start = null;
+      const sectionTop = section.getBoundingClientRect().top + window.scrollY;
 
-    function expand(timestamp) {
-      if (!start) start = timestamp;
-      const progress = timestamp - start;
-      const duration = 300; // 300ms
-      const eased = 1 - Math.pow(1 - progress / duration, 3); // ease-out cubic
-      section.style.maxHeight = (targetHeight * eased) + 'px';
-      if (progress < duration) requestAnimationFrame(expand);
-      else section.style.maxHeight = targetHeight + 'px';
-    }
-    requestAnimationFrame(expand);
+      // Calcul du scroll pour que le top de la section soit visible sous le header
+      const scrollTarget = Math.max(0, sectionTop - headerHeight - 16); // 16px padding
+
+      window.scrollTo({
+        top: scrollTarget,
+        behavior: 'smooth'
+      });
+
+      section.removeEventListener('transitionend', onTransitionEnd);
+    };
+
+    section.addEventListener('transitionend', onTransitionEnd);
 
   } else {
-    // Fermeture avec easing "ease-in"
-    const currentHeight = section.scrollHeight;
-    let start = null;
-
-    function collapse(timestamp) {
-      if (!start) start = timestamp;
-      const progress = timestamp - start;
-      const duration = 300;
-      const eased = Math.pow(progress / duration, 3); // ease-in cubic
-      section.style.maxHeight = Math.max(currentHeight * (1 - eased), 0) + 'px';
-      if (progress < duration) requestAnimationFrame(collapse);
-      else {
-        section.classList.remove('active');
-        section.style.maxHeight = null;
-      }
-    }
-    requestAnimationFrame(collapse);
-
-    // Ombre carte reset
+    // Carte désactivée : réinitialiser l'ombre
     card.classList.remove("shadow-xl", "shadow-red-500/50");
     card.classList.add("shadow-lg");
   }
