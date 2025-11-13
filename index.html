@@ -379,14 +379,14 @@ document.addEventListener('DOMContentLoaded', () => {
   }, 3000);
 });
 
-// ===== Toggle categories (amélioré, smooth & mobile-friendly) =====
+// ===== Toggle categories (ultime version, mobile-friendly, smooth scroll) =====
 function toggleCategory(id) {
   const section = document.getElementById(id);
   const card = document.querySelector(`[onclick="toggleCategory('${id}')"]`);
 
   // Fermer les autres catégories
   document.querySelectorAll('.partner-content').forEach(item => {
-    if(item.id !== id) item.classList.remove('active');
+    if (item.id !== id) item.classList.remove('active');
   });
 
   // Reset ombres des cartes
@@ -399,45 +399,50 @@ function toggleCategory(id) {
   section.classList.toggle('active');
 
   if (opening) {
+    // Ombre spéciale pour carte active
     card.classList.remove("shadow-lg");
     card.classList.add("shadow-xl", "shadow-red-500/50");
 
-    // ⚡ Scroll après transition
-    const onTransitionEnd = (e) => {
+    // Scroll fluide après fin de transition
+    const scrollAfterTransition = (e) => {
       if (e.propertyName !== 'max-height') return;
 
-      const header = document.querySelector('header');
-      const headerHeight = header ? header.offsetHeight : 0;
+      // Laisser le navigateur terminer le layout avant le scroll
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          const header = document.querySelector('header');
+          const headerHeight = header ? header.offsetHeight : 0;
 
-      const sectionRect = section.getBoundingClientRect();
-      const sectionTop = window.scrollY + sectionRect.top;
+          const sectionTop = section.getBoundingClientRect().top + window.scrollY;
+          const sectionHeight = section.offsetHeight;
+          const viewportHeight = window.innerHeight;
 
-      const viewportHeight = window.innerHeight;
-      const sectionHeight = section.offsetHeight;
+          let scrollTarget = sectionTop - headerHeight - 16; // padding
 
-      // Scroll légèrement amorti pour éviter que le top de la section soit caché
-      let scrollTarget = sectionTop - headerHeight - 16;
+          // Si la section dépasse la hauteur visible, ajuster le scroll
+          if (sectionHeight > viewportHeight - headerHeight - 32) {
+            scrollTarget = sectionTop - headerHeight;
+          }
 
-      // Si la section est plus grande que l'écran, ne pas trop remonter
-      if(sectionHeight > viewportHeight - headerHeight - 32){
-        scrollTarget = sectionTop - headerHeight;
-      }
-
-      window.scrollTo({
-        top: scrollTarget,
-        behavior: 'smooth'
+          window.scrollTo({
+            top: scrollTarget,
+            behavior: 'smooth'
+          });
+        });
       });
 
-      section.removeEventListener('transitionend', onTransitionEnd);
+      section.removeEventListener('transitionend', scrollAfterTransition);
     };
 
-    section.addEventListener('transitionend', onTransitionEnd);
+    section.addEventListener('transitionend', scrollAfterTransition);
 
   } else {
+    // Carte fermée : réinitialiser l'ombre
     card.classList.remove("shadow-xl", "shadow-red-500/50");
     card.classList.add("shadow-lg");
   }
 }
+
 
 
 
