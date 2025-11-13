@@ -370,6 +370,9 @@ function toggleCategory(id) {
   const section = document.getElementById(id);
   const card = document.querySelector(`[onclick="toggleCategory('${id}')"]`);
 
+  // Sauvegarder la position actuelle du scroll
+  const currentScrollY = window.scrollY;
+
   // Fermer les autres catégories
   document.querySelectorAll('.partner-content').forEach(item => {
     if(item.id !== id) item.classList.remove('active');
@@ -389,13 +392,30 @@ function toggleCategory(id) {
     // Ajouter l'ombre spéciale à la carte active
     card.classList.remove("shadow-lg");
     card.classList.add("shadow-xl", "shadow-red-500/50");
+    
+    // Forcer le maintien de la position de scroll pendant 600ms (durée de l'animation)
+    let scrollLocked = true;
+    const lockScroll = () => {
+      if (scrollLocked) {
+        window.scrollTo(0, currentScrollY);
+      }
+    };
+    
+    // Bloquer le scroll pendant l'animation
+    window.addEventListener('scroll', lockScroll);
+    
+    // Débloquer après l'animation
+    setTimeout(() => {
+      scrollLocked = false;
+      window.removeEventListener('scroll', lockScroll);
+    }, 600);
+    
   } else {
     // Carte désactivée : réinitialiser l'ombre
     card.classList.remove("shadow-xl", "shadow-red-500/50");
     card.classList.add("shadow-lg");
   }
 }
-
 // ===== Modal =====
 const modal = document.getElementById('imageModal');
 const modalImg = document.getElementById('modalImg');
