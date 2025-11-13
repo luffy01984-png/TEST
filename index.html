@@ -52,15 +52,15 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
   color: #1f2937; 
   font-weight: 500; 
   font-size: 1rem;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.2); /* ombre plus prononcée */
+  box-shadow: 0 6px 18px rgba(0,0,0,0.2);
   cursor: pointer;
   transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s, color 0.2s;
   text-align: center;
-  margin-bottom: 1.5rem; /* <-- plus d'espace entre les partenaires */
+  margin-bottom: 1.5rem;
 }
 .partner-link:hover { 
   transform: translateY(-2px); 
-  box-shadow: 0 10px 30px rgba(0,0,0,0.25); /* ombre plus profonde au survol */
+  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
   background-color: #fff; 
   color: #dc2626; 
 }
@@ -82,7 +82,7 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
     display: flex; justify-content: space-between; align-items: center;
 }
 .accordion-btn:hover { background-color: #e5e7eb; }
-.accordion-btn.active { color: #dc2626; } /* titre rouge quand actif */
+.accordion-btn.active { color: #dc2626; }
 .arrow { transition: transform 0.3s ease; }
 .arrow.rotate { transform: rotate(90deg); }
 .accordion-content {
@@ -138,7 +138,6 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
       <a href="#mentions" class="nav-link" id="nav-mentions">Mentions</a>
     </nav>
   </div>
-</div>
 </header>
 
 <!-- HERO -->
@@ -156,12 +155,12 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
 <section id="categories" class="max-w-6xl mx-auto py-4 px-4">
   <h2 class="text-2xl font-bold text-center mb-10 text-gray-800 flex items-center justify-center gap-2">
     <!-- Flèche gauche -->
-    <svg class="w-10 h-10 text-red-600 animate-bounce cursor-pointer" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" onclick="document.getElementById('categories').scrollIntoView({behavior: 'smooth'});">
+    <svg class="w-10 h-10 text-red-600 animate-bounce" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
       <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path>
     </svg>
     Catégories d'Offres
     <!-- Flèche droite -->
-    <svg class="w-10 h-10 text-red-600 animate-bounce cursor-pointer" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" onclick="document.getElementById('categories').scrollIntoView({behavior: 'smooth'});">
+    <svg class="w-10 h-10 text-red-600 animate-bounce" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
       <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path>
     </svg>
   </h2>
@@ -217,7 +216,6 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
         <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/RJAuto.webp')">RJ Auto Services</div>
         <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/speedy.webp')">Speedy</div>
         <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Vulco.webp')">Vulco</div>
-        
       </div>
     </div>
 
@@ -250,8 +248,8 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
         <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/images/michel%20parisot.jpg')">Parisot Motoculture</div>
         <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/images/schmidt.jpg')">Schmidt</div>        
         <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/images/sikkens.jpg')">Sikkens Solutions</div>       
-        </div>
-      </div> 
+      </div>
+    </div> 
 
     <!-- FINANCEMENT -->
     <div class="col-span-1">
@@ -262,7 +260,6 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
       <div id="event-content" class="partner-content bg-white border border-gray-200 rounded-xl p-4 shadow-lg">
         <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/images/hymosti.jpg')">Himosty</div>
         <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/images/La_centrale_de_finacement.jpg')">La centrale du Financement</div>
-                
       </div>
     </div>
 
@@ -270,10 +267,9 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
     <div class="col-span-1">
       <div class="category-card relative group cursor-pointer transform hover:scale-[1.02] transition duration-300 shadow-lg rounded-2xl overflow-hidden" onclick="toggleCategory('quotidien-content')">
         <img src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/services.png" alt="Quotidien">
-        <div class="absolute inset-0 bg-gray-900 bg-opacity-60 rounded-2xl flex items-center justify-center text-white text-xl font-bold"></div>
+        <div class="absolute inset-0 bg-gray-900 bg-opacity-60 rounded-2xl flex items-center justify-center text-white text-xl font-bold">QUOTIDIEN</div>
       </div>
       <div id="quotidien-content" class="partner-content bg-white border border-gray-200 rounded-xl p-4 shadow-lg">
-       
         <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/images/a%20fleur%20de%20pot.jpg')">A Fleur de pot</div>
         <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/images/cigusto.jpg')">Cigusto</div>
         <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/images/ConceptOptique.png')">Concept_Optique</div>
@@ -284,23 +280,18 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
     </div>
     
     <!-- Beauté & Shopping -->
-<div class="col-span-1">
-  <div class="category-card relative group cursor-pointer transform hover:scale-[1.02] transition duration-300 shadow-lg rounded-2xl overflow-hidden"
-       onclick="toggleCategory('beaute-shopping')">
-    <img src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/beaut%C3%A9new.webp" alt="Beauté & Shopping">
-    <div class="absolute inset-0 bg-gray-900 bg-opacity-60 rounded-2xl flex items-center justify-center text-white text-xl font-bold"> Beauté & Shopping</div>
-  </div>
-  <div id="beaute-shopping" class="partner-content bg-white border border-gray-200 rounded-xl p-4 shadow-lg">
-    
-    <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/images/Salon%20de%20coiffure.jpg')">15th Avenue Coiffure</div>
-    <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/images/Dessous_dessus.png')">Dessous_Dessus</div>
-    <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/LeSalondeshommes.webp')">Le Salon des Hommes</div>
-    <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/images/salondecoiffure.jpg')">Renaissance Coiffure</div>
-  </div>
-</div>
-
-
-
+    <div class="col-span-1">
+      <div class="category-card relative group cursor-pointer transform hover:scale-[1.02] transition duration-300 shadow-lg rounded-2xl overflow-hidden" onclick="toggleCategory('beaute-shopping')">
+        <img src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/beaut%C3%A9new.webp" alt="Beauté & Shopping">
+        <div class="absolute inset-0 bg-gray-900 bg-opacity-60 rounded-2xl flex items-center justify-center text-white text-xl font-bold"> Beauté & Shopping</div>
+      </div>
+      <div id="beaute-shopping" class="partner-content bg-white border border-gray-200 rounded-xl p-4 shadow-lg">
+        <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/images/Salon%20de%20coiffure.jpg')">15th Avenue Coiffure</div>
+        <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/images/Dessous_dessus.png')">Dessous_Dessus</div>
+        <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/LeSalondeshommes.webp')">Le Salon des Hommes</div>
+        <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/images/salondecoiffure.jpg')">Renaissance Coiffure</div>
+      </div>
+    </div>
 
     <!-- ENFANTS -->
     <div class="col-span-1">
@@ -310,7 +301,7 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
       </div>
       <div id="enfants-content" class="partner-content bg-white border border-gray-200 rounded-xl p-4 shadow-lg">
         <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/images/autour%20de%20bebe.jpg')">Autour de Bébé</div>        
-    </div>
+      </div>
     </div>
 
   </div>
@@ -327,8 +318,7 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
 
   <button class="accordion-btn">2. Conception et Realisation <span class="arrow">▶</span></button>
   <div class="accordion-content">
-    <p><strong>Bouaraba Arab UEP8</strong> - WebMaster,
-      Conception,design et administration du site
+    <p><strong>Bouaraba Arab UEP8</strong> - WebMaster, Conception, design et administration du site</p>
   </div>
 
   <button class="accordion-btn">3. Hébergement du site <span class="arrow">▶</span></button>
@@ -338,37 +328,34 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
 
   <button class="accordion-btn">4. Propriété intellectuelle <span class="arrow">▶</span></button>
   <div class="accordion-content">
-    <p>L’ensemble des éléments du site (textes, images, graphismes, logo, etc.) sont la propriété exclusive du
-    <strong>CSE Renault Trucks Bourg-en-Bresse</strong>, sauf mention contraire. Toute reproduction, distribution ou
-    modification sans autorisation écrite est interdite.</p>
+    <p>L'ensemble des éléments du site (textes, images, graphismes, logo, etc.) sont la propriété exclusive du <strong>CSE Renault Trucks Bourg-en-Bresse</strong>, sauf mention contraire. Toute reproduction, distribution ou modification sans autorisation écrite est interdite.</p>
   </div>
 
   <button class="accordion-btn">5. Protection des données <span class="arrow">▶</span></button>
   <div class="accordion-content">
-    <p>Aucune donnée personnelle n’est collectée par ce site. Aucun cookie n’est déposé.</p>
+    <p>Aucune donnée personnelle n'est collectée par ce site. Aucun cookie n'est déposé.</p>
   </div>
 
   <button class="accordion-btn">6. Contact <span class="arrow">▶</span></button>
   <div class="accordion-content">
-    <p>Pour toute demande, veuillez contacter le CSE Renault Trucks Bourg-en-Bresse à l’adresse ci-dessus.</p>
+    <p>Pour toute demande, veuillez contacter le CSE Renault Trucks Bourg-en-Bresse à l'adresse ci-dessus.</p
+>
   </div>
 </section>
 
 <script>
 // ===== Splash screen avec option =====
-const SPLASH_ENABLED = false; // ← Mets à true pour réactiver le splashscreen
+const SPLASH_ENABLED = false;
 
 document.addEventListener('DOMContentLoaded', () => {
   const splash = document.getElementById('splash');
 
   if (!SPLASH_ENABLED) {
-    // Désactivation temporaire : on masque directement
     splash.style.display = 'none';
     document.body.style.overflow = 'auto';
     return;
   }
 
-  // Version active du splashscreen
   document.body.style.overflow = 'hidden';
   setTimeout(() => {
     splash.style.opacity = '0';
@@ -379,7 +366,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }, 3000);
 });
 
-// ===== Toggle categories (final, mobile-friendly) =====
+// ===== Toggle categories (SANS SCROLL) =====
 function toggleCategory(id) {
   const section = document.getElementById(id);
   const card = document.querySelector(`[onclick="toggleCategory('${id}')"]`);
@@ -408,7 +395,8 @@ function toggleCategory(id) {
     card.classList.remove("shadow-xl", "shadow-red-500/50");
     card.classList.add("shadow-lg");
   }
-}  
+}
+
 // ===== Modal =====
 const modal = document.getElementById('imageModal');
 const modalImg = document.getElementById('modalImg');
@@ -429,7 +417,8 @@ modalImg.addEventListener('click', closeModal);
 closeModalBtn.addEventListener('click', closeModal);
 modal.addEventListener('click', (e) => { if(e.target === modal) closeModal(); });
 window.addEventListener('popstate', () => { if(modal.classList.contains('active')) closeModal(); });
-  // PWA install banner
+
+// ===== PWA install banner =====
 let deferredPrompt;
 const installBanner = document.createElement('div');
 installBanner.style.cssText =
@@ -453,7 +442,6 @@ window.addEventListener('beforeinstallprompt', (e) => {
   e.preventDefault();
   deferredPrompt = e;
 
-  // Ne pas afficher si déjà installé
   if (!window.matchMedia('(display-mode: standalone)').matches) {
     installBanner.style.display = 'block';
   }
@@ -470,7 +458,7 @@ window.addEventListener('appinstalled', () => {
   installBanner.style.display = 'none';
 });
 
-// ===== Menu Partenaires / Mentions =====
+// ===== Menu Partenaires / Mentions (SANS SCROLL) =====
 document.querySelectorAll('nav a').forEach(link => {
   link.classList.add('nav-link');
   link.addEventListener('click', (e) => {
@@ -487,12 +475,8 @@ document.querySelectorAll('nav a').forEach(link => {
     link.style.backgroundColor = '#dc2626';
     link.style.padding = '0.25rem 0.75rem';
     link.style.borderRadius = '9999px';
-
-    if(link.textContent.includes("Partenaires")) {
-      document.getElementById('categories').scrollIntoView({behavior: 'smooth'});
-    } else if(link.textContent.includes("Mentions")) {
-      document.getElementById('mentions').scrollIntoView({behavior: 'smooth'});
-    }
+    
+    // SCROLL SUPPRIMÉ - seul le style change
   });
 });
 
