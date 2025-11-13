@@ -155,12 +155,12 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
 <section id="categories" class="max-w-6xl mx-auto py-4 px-4">
   <h2 class="text-2xl font-bold text-center mb-10 text-gray-800 flex items-center justify-center gap-2">
     <!-- Flèche gauche -->
-    <svg class="w-10 h-10 text-red-600 animate-bounce" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <svg class="w-10 h-10 text-red-600 animate-bounce cursor-pointer" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" onclick="document.getElementById('categories').scrollIntoView({behavior: 'smooth'});">
       <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path>
     </svg>
     Catégories d'Offres
     <!-- Flèche droite -->
-    <svg class="w-10 h-10 text-red-600 animate-bounce" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <svg class="w-10 h-10 text-red-600 animate-bounce cursor-pointer" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" onclick="document.getElementById('categories').scrollIntoView({behavior: 'smooth'});">
       <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path>
     </svg>
   </h2>
@@ -338,8 +338,7 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
 
   <button class="accordion-btn">6. Contact <span class="arrow">▶</span></button>
   <div class="accordion-content">
-    <p>Pour toute demande, veuillez contacter le CSE Renault Trucks Bourg-en-Bresse à l'adresse ci-dessus.</p
->
+    <p>Pour toute demande, veuillez contacter le CSE Renault Trucks Bourg-en-Bresse à l'adresse ci-dessus.</p>
   </div>
 </section>
 
@@ -458,11 +457,13 @@ window.addEventListener('appinstalled', () => {
   installBanner.style.display = 'none';
 });
 
-// ===== Menu Partenaires / Mentions (SANS SCROLL) =====
+// ===== Menu Partenaires / Mentions (AVEC SCROLL) =====
 document.querySelectorAll('nav a').forEach(link => {
   link.classList.add('nav-link');
   link.addEventListener('click', (e) => {
     e.preventDefault();
+    
+    // Changer le style du lien actif
     document.querySelectorAll('.nav-link').forEach(l => {
       l.classList.remove('text-white');
       l.classList.add('text-gray-400');
@@ -475,8 +476,13 @@ document.querySelectorAll('nav a').forEach(link => {
     link.style.backgroundColor = '#dc2626';
     link.style.padding = '0.25rem 0.75rem';
     link.style.borderRadius = '9999px';
-    
-    // SCROLL SUPPRIMÉ - seul le style change
+
+    // Scroll vers la section correspondante
+    if(link.textContent.includes("Partenaires")) {
+      document.getElementById('categories').scrollIntoView({behavior: 'smooth'});
+    } else if(link.textContent.includes("Mentions")) {
+      document.getElementById('mentions').scrollIntoView({behavior: 'smooth'});
+    }
   });
 });
 
