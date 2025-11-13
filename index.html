@@ -366,19 +366,25 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ===== Toggle categories (SANS SCROLL) =====
-function toggleCategory(id, event) {
-  // Empêcher tout comportement par défaut
-  if (event) {
-    event.preventDefault();
-    event.stopPropagation();
-  }
-
+function toggleCategory(id) {
   const section = document.getElementById(id);
-  const card = document.querySelector(`[onclick*="'${id}'"]`);
+  const card = document.querySelector(`[onclick="toggleCategory('${id}')"]`);
 
-  // Sauvegarder la position de scroll
-  const scrollY = window.scrollY;
-  const scrollX = window.scrollX;
+  // Sauvegarder la position actuelle AVANT toute modification
+  const savedScrollY = window.scrollY;
+  
+  // Variable pour bloquer le scroll
+  let preventScroll = true;
+  
+  // Fonction qui force le maintien de la position
+  const maintainScroll = () => {
+    if (preventScroll) {
+      window.scrollTo(0, savedScrollY);
+    }
+  };
+  
+  // Ajouter l'écouteur de scroll
+  window.addEventListener('scroll', maintainScroll, { passive: false });
 
   // Fermer les autres catégories
   document.querySelectorAll('.partner-content').forEach(item => {
@@ -404,16 +410,20 @@ function toggleCategory(id, event) {
     card.classList.remove("shadow-xl", "shadow-red-500/50");
     card.classList.add("shadow-lg");
   }
-
-  // Forcer le retour à la position exacte
-  requestAnimationFrame(() => {
-    window.scrollTo(scrollX, scrollY);
-    
-    // Double sécurité
-    setTimeout(() => {
-      window.scrollTo(scrollX, scrollY);
-    }, 0);
-  });
+  
+  // Forcer la position après chaque frame pendant 800ms
+  const forcePosition = setInterval(() => {
+    window.scrollTo(0, savedScrollY);
+  }, 10);
+  
+  // Débloquer après l'animation complète (fermeture + ouverture)
+  setTimeout(() => {
+    preventScroll = false;
+    clearInterval(forcePosition);
+    window.removeEventListener('scroll', maintainScroll);
+    // Dernière correction de position
+    window.scrollTo(0, savedScrollY);
+  }, 800);
 }
 // ===== Modal =====
 const modal = document.getElementById('imageModal');
