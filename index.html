@@ -169,56 +169,17 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 
     <!-- RESTAURANTS -->
-<div class="col-span-1">
-  
-  <!-- Category Card -->
-  <div class="category-card relative group cursor-pointer transform hover:scale-[1.02] transition duration-300 shadow-lg rounded-2xl overflow-hidden"
-       data-target="resto-content">
-    
-    <img src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/Restaurant.webp" 
-         alt="Restaurants" class="w-full h-full object-cover">
-
-    <div class="absolute inset-0 bg-gray-900 bg-opacity-60 rounded-2xl flex items-center justify-center text-white text-xl font-bold">
-      RESTAURANTS
+    <div class="col-span-1">
+      <div class="category-card relative group cursor-pointer transform hover:scale-[1.02] transition duration-300 shadow-lg rounded-2xl overflow-hidden" onclick="toggleCategory('resto-content')">
+        <img src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/Restaurant.webp" alt="Restaurants">
+        <div class="absolute inset-0 bg-gray-900 bg-opacity-60 rounded-2xl flex items-center justify-center text-white text-xl font-bold"> RESTAURANTS</div>
+      </div>
+      <div id="resto-content" class="partner-content bg-white border border-gray-200 rounded-xl p-4 shadow-lg">
+        <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/food%20truck%20fermier.webp')">Food Truck Fermier</div>
+        <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/le%20loft%20pizza.webp')">Le Loft</div>
+        <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/WokAna.webp')">WokAna</div>
+      </div>
     </div>
-  </div>
-
-  <!-- Category Content -->
-  <div id="resto-content" class="partner-content bg-white border border-gray-200 rounded-xl p-4 shadow-lg hidden overflow-hidden">
-
-    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-
-      <!-- Partner 1 -->
-      <div class="partner-card p-3 bg-white rounded-lg shadow text-center cursor-pointer"
-           onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/food%20truck%20fermier.webp')">
-        <img src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/food%20truck%20fermier.webp"
-             alt="Food Truck Fermier"
-             class="w-full h-20 object-contain mx-auto mb-2">
-        <h4 class="text-sm font-semibold">Food Truck Fermier</h4>
-      </div>
-
-      <!-- Partner 2 -->
-      <div class="partner-card p-3 bg-white rounded-lg shadow text-center cursor-pointer"
-           onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/le%20loft%20pizza.webp')">
-        <img src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/le%20loft%20pizza.webp"
-             alt="Le Loft"
-             class="w-full h-20 object-contain mx-auto mb-2">
-        <h4 class="text-sm font-semibold">Le Loft</h4>
-      </div>
-
-      <!-- Partner 3 -->
-      <div class="partner-card p-3 bg-white rounded-lg shadow text-center cursor-pointer"
-           onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/WokAna.webp')">
-        <img src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/WokAna.webp"
-             alt="WokAna"
-             class="w-full h-20 object-contain mx-auto mb-2">
-        <h4 class="text-sm font-semibold">WokAna</h4>
-      </div>
-
-    </div>
-  </div>
-</div>
-
 
     <!-- ARTISANS DU GOÛT -->
     <div class="col-span-1">
@@ -418,62 +379,59 @@ document.addEventListener('DOMContentLoaded', () => {
   }, 3000);
 });
 
-// ===== Toggle Categories (clean, mobile-friendly, no onclick) =====
+// ===== Toggle categories (final, mobile-friendly) =====
+function toggleCategory(id) {
+  const section = document.getElementById(id);
+  const card = document.querySelector(`[onclick="toggleCategory('${id}')"]`);
 
-document.querySelectorAll("[data-target]").forEach(card => {
-  card.addEventListener("click", () => {
-    const id = card.getAttribute("data-target");
-    const section = document.getElementById(id);
-
-    // Fermer les autres sections
-    document.querySelectorAll('.partner-content').forEach(item => {
-      if (item.id !== id) item.classList.remove('active');
-    });
-
-    // Reset ombres des cartes
-    document.querySelectorAll('.category-card').forEach(cardEl => {
-      cardEl.classList.remove("shadow-red-500/50", "shadow-xl");
-      cardEl.classList.add("shadow-lg");
-    });
-
-    // Détermine si on ouvre ou on ferme
-    const opening = !section.classList.contains('active');
-    section.classList.toggle('active');
-
-    if (opening) {
-
-      // Appliquer l’ombre spéciale sur la carte active
-      card.classList.remove("shadow-lg");
-      card.classList.add("shadow-xl", "shadow-red-500/50");
-
-      // Smooth scroll quand l’animation d’ouverture est terminée
-      const onTransitionEnd = (e) => {
-        if (e.propertyName !== 'max-height') return;
-
-        const header = document.querySelector('header');
-        const headerHeight = header ? header.offsetHeight : 0;
-
-        const sectionTop = section.getBoundingClientRect().top + window.scrollY;
-        const scrollTarget = Math.max(0, sectionTop - headerHeight - 16);
-
-        window.scrollTo({
-          top: scrollTarget,
-          behavior: 'smooth'
-        });
-
-        section.removeEventListener('transitionend', onTransitionEnd);
-      };
-
-      section.addEventListener('transitionend', onTransitionEnd);
-
-    } else {
-      // Quand on referme : reset ombre
-      card.classList.remove("shadow-xl", "shadow-red-500/50");
-      card.classList.add("shadow-lg");
-    }
+  // Fermer les autres catégories
+  document.querySelectorAll('.partner-content').forEach(item => {
+    if(item.id !== id) item.classList.remove('active');
   });
-});
 
+  // Reset ombres des cartes
+  document.querySelectorAll('.category-card').forEach(cardEl => {
+    cardEl.classList.remove("shadow-red-500/50", "shadow-xl");
+    cardEl.classList.add("shadow-lg");
+  });
+
+  // Déterminer si on ouvre ou ferme la section
+  const opening = !section.classList.contains('active');
+  section.classList.toggle('active');
+
+  if (opening) {
+    // Ajouter l'ombre spéciale à la carte active
+    card.classList.remove("shadow-lg");
+    card.classList.add("shadow-xl", "shadow-red-500/50");
+
+    // ⚡ Attendre la fin de la transition CSS de max-height
+    const onTransitionEnd = (e) => {
+      if (e.propertyName !== 'max-height') return;
+
+      const header = document.querySelector('header');
+      const headerHeight = header ? header.offsetHeight : 0;
+
+      const sectionTop = section.getBoundingClientRect().top + window.scrollY;
+
+      // Calcul du scroll pour que le top de la section soit visible sous le header
+      const scrollTarget = Math.max(0, sectionTop - headerHeight - 16); // 16px padding
+
+      window.scrollTo({
+        top: scrollTarget,
+        behavior: 'smooth'
+      });
+
+      section.removeEventListener('transitionend', onTransitionEnd);
+    };
+
+    section.addEventListener('transitionend', onTransitionEnd);
+
+  } else {
+    // Carte désactivée : réinitialiser l'ombre
+    card.classList.remove("shadow-xl", "shadow-red-500/50");
+    card.classList.add("shadow-lg");
+  }
+}
 
 
 
