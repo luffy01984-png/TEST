@@ -379,7 +379,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }, 3000);
 });
 
-// ===== Toggle categories (corrigé avec scroll après ouverture) =====
 function toggleCategory(id) {
   const section = document.getElementById(id);
   const card = document.querySelector(`[onclick="toggleCategory('${id}')"]`);
@@ -402,29 +401,25 @@ function toggleCategory(id) {
     card.classList.remove("shadow-lg");
     card.classList.add("shadow-xl", "shadow-red-500/50");
 
-    // ===== Scroll fluide après la transition =====
-    const onTransitionEnd = () => {
-      const header = document.querySelector('header');
-      const headerHeight = header ? header.offsetHeight : 0;
+    // ⚡ Attendre que le navigateur applique le style actif
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        const header = document.querySelector('header');
+        const headerHeight = header ? header.offsetHeight : 0;
 
-      const sectionTop = section.getBoundingClientRect().top + window.scrollY;
-      const sectionHeight = section.offsetHeight;
-      const viewportHeight = window.innerHeight;
+        const sectionTop = section.getBoundingClientRect().top + window.scrollY;
+        const sectionHeight = section.offsetHeight;
+        const viewportHeight = window.innerHeight;
 
-      let scrollTarget = sectionTop - (viewportHeight / 2) + (sectionHeight / 2);
-      scrollTarget = Math.max(0, scrollTarget - headerHeight);
+        let scrollTarget = sectionTop - (viewportHeight / 2) + (sectionHeight / 2);
+        scrollTarget = Math.max(0, scrollTarget - headerHeight);
 
-      window.scrollTo({
-        top: scrollTarget,
-        behavior: 'smooth'
+        window.scrollTo({
+          top: scrollTarget,
+          behavior: 'smooth'
+        });
       });
-
-      // Nettoyer l'écouteur pour ne pas l'appeler plusieurs fois
-      section.removeEventListener('transitionend', onTransitionEnd);
-    };
-
-    // Ajouter l'écouteur sur la propriété max-height (transition CSS)
-    section.addEventListener('transitionend', onTransitionEnd);
+    });
 
   } else {
     card.classList.remove("shadow-xl", "shadow-red-500/50");
