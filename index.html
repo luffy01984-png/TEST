@@ -379,7 +379,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }, 3000);
 });
 
-// ===== Toggle categories (ultime version, mobile-friendly, smooth scroll) =====
+// ===== Toggle categories (version finale complète) =====
 function toggleCategory(id) {
   const section = document.getElementById(id);
   const card = document.querySelector(`[onclick="toggleCategory('${id}')"]`);
@@ -403,31 +403,21 @@ function toggleCategory(id) {
     card.classList.remove("shadow-lg");
     card.classList.add("shadow-xl", "shadow-red-500/50");
 
-    // Scroll fluide après fin de transition
+    // Scroll fluide pour garder la vignette visible sous le header
     const scrollAfterTransition = (e) => {
       if (e.propertyName !== 'max-height') return;
 
-      // Laisser le navigateur terminer le layout avant le scroll
+      // Laisser le navigateur terminer la mise à jour du layout
       requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          const header = document.querySelector('header');
-          const headerHeight = header ? header.offsetHeight : 0;
+        const header = document.querySelector('header');
+        const headerHeight = header ? header.offsetHeight : 0;
 
-          const sectionTop = section.getBoundingClientRect().top + window.scrollY;
-          const sectionHeight = section.offsetHeight;
-          const viewportHeight = window.innerHeight;
+        const cardRect = card.getBoundingClientRect();
+        const scrollTarget = window.scrollY + cardRect.top - headerHeight - 8; // padding léger
 
-          let scrollTarget = sectionTop - headerHeight - 16; // padding
-
-          // Si la section dépasse la hauteur visible, ajuster le scroll
-          if (sectionHeight > viewportHeight - headerHeight - 32) {
-            scrollTarget = sectionTop - headerHeight;
-          }
-
-          window.scrollTo({
-            top: scrollTarget,
-            behavior: 'smooth'
-          });
+        window.scrollTo({
+          top: scrollTarget,
+          behavior: 'smooth'
         });
       });
 
