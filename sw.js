@@ -91,7 +91,7 @@ const urlsToCache = [
   'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Shivaa.webp',
 
   // PARTENAIRES ENFANTS
-  'https://raw.github.com/luffy01984-png/Renault-trucks-CE/blob/main/assets/assets/autour%20de%20bebe.webp',
+  'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/autour%20de%20bebe.webp',
   'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/KingJouet.webp',
 
   // PARTENAIRES ANIMAL
