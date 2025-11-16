@@ -672,7 +672,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-// ===== Toggle categories anti-rebond + anti-dépassement =====
+// ===== Toggle categories anti-dépassement =====
 function toggleCategory(id) {
   const section = document.getElementById(id);
   const card = document.querySelector(`[onclick="toggleCategory('${id}')"]`);
@@ -681,18 +681,18 @@ function toggleCategory(id) {
 
   if (opening) {
 
-    // 1) FERME TEMPORAIREMENT l’ancienne sans animation
+    // 1) Fermer instantanément les autres
     allSections.forEach(s => {
       if (s.id !== id) {
         s.classList.remove("active");
-        s.style.maxHeight = "0px";     // pas d’animation
+        s.style.maxHeight = "0px";
         s.style.overflow = "hidden";
       }
     });
 
-    // 2) Préparer la nouvelle catégorie pour ne PAS pousser le layout
+    // 2) Préparer la nouvelle
     section.classList.add("active");
-    section.style.maxHeight = "0px";   // neutre
+    section.style.maxHeight = "0px";
     section.style.overflow = "hidden";
 
     // Ombres
@@ -703,26 +703,33 @@ function toggleCategory(id) {
     card.classList.remove("shadow-lg");
     card.classList.add("shadow-xl", "shadow-red-500/50");
 
-    // 3) Scroll AVANT de déployer la hauteur
-    const header = document.querySelector("header");
-    const headerHeight = header.offsetHeight;
-    const cardTop = card.getBoundingClientRect().top + window.scrollY;
-    const scrollTarget = cardTop - headerHeight - 10;
-
-    window.scrollTo({
-      top: scrollTarget,
-      behavior: "smooth"
-    });
-
-    // 4) Une fois le scroll lancé → déployer la vraie hauteur
+    // 3) Scroll en mode ANTI-DÉPASSEMENT
     setTimeout(() => {
-      const fullHeight = section.scrollHeight;
-      section.style.maxHeight = fullHeight + "px"; // animation propre
-    }, 50);
+      const header = document.querySelector("header");
+      const headerHeight = header.offsetHeight;
+
+      // Position de la carte dans le DOM
+      const cardTopInPage = card.getBoundingClientRect().top + window.scrollY;
+
+      // Position finale SANS JAMAIS dépasser le header
+      let scrollTarget = cardTopInPage - headerHeight - 8;
+
+      if (scrollTarget < 0) scrollTarget = 0;
+
+      window.scrollTo({
+        top: scrollTarget,
+        behavior: "smooth"
+      });
+    }, 10);
+
+    // 4) Déployer la vraie hauteur APRÈS le scroll
+    setTimeout(() => {
+      section.style.maxHeight = section.scrollHeight + "px";
+    }, 300);
 
   } else {
 
-    // Fermeture classique
+    // Fermeture normale
     section.classList.remove("active");
     section.style.maxHeight = "0px";
     card.classList.remove("shadow-xl", "shadow-red-500/50");
