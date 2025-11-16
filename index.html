@@ -700,17 +700,22 @@ function toggleCategory(id) {
     card.classList.remove("shadow-lg");
     card.classList.add("shadow-xl", "shadow-red-500/50");
     
-    // Calculer IMMÉDIATEMENT la position cible avant les animations
-    const header = document.querySelector('header');
-    const headerHeight = header ? header.offsetHeight : 0;
-    const cardTop = card.getBoundingClientRect().top + window.scrollY;
-    const scrollTarget = Math.max(0, cardTop - headerHeight - 10);
-    
-    // Scroll AVANT que l'animation ne commence pour éviter le rebond
-    window.scrollTo({ 
-      top: scrollTarget, 
-      behavior: 'smooth' 
-    });
+    // Délai réduit pour éviter le rebond mais garder la précision
+    setTimeout(() => {
+      const header = document.querySelector('header');
+      const headerHeight = header ? header.offsetHeight : 0;
+      
+      // Position de la CARTE (pas du contenu)
+      const cardTop = card.getBoundingClientRect().top + window.scrollY;
+      
+      // Scroll pour que la carte soit visible sous le header
+      const scrollTarget = cardTop - headerHeight - 20; // 20px de marge
+      
+      window.scrollTo({ 
+        top: Math.max(0, scrollTarget), 
+        behavior: 'smooth' 
+      });
+    }, 100); // Réduit à 100ms pour minimiser l'effet de rebond
     
   } else {
     // Carte désactivée : reset ombre
