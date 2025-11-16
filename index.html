@@ -194,6 +194,7 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
 }
 
 /* Responsive grid for partner-content */
+/* Mobile et Tablette: 2 colonnes */
 .partner-content.active {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -202,17 +203,17 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
   align-items: start;
 }
 
+/* Tablette: même disposition mais espacement augmenté */
 @media (min-width: 768px) {
   .partner-content.active {
-    grid-template-columns: repeat(3, 1fr);
     gap: 1rem;
   }
 }
 
+/* Desktop: 2 colonnes avec plus d'espace */
 @media (min-width: 1024px) {
   .partner-content.active {
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1.25rem;
+    gap: 1.5rem;
   }
 }
 
