@@ -672,72 +672,58 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-// ===== Toggle category 100% anti-rebond =====
+// ===== Toggle categories fluide et responsive =====
 function toggleCategory(id) {
   const section = document.getElementById(id);
   const card = document.querySelector(`[onclick="toggleCategory('${id}')"]`);
-  const opening = !section.classList.contains("active");
-
-  // Désactiver le scroll automatique pendant les opérations internes
-  let scrollingLocked = true;
-
+  
+  const wasAlreadyOpen = section.classList.contains('active');
+  const opening = !wasAlreadyOpen;
+  
+  // Si on ouvre une nouvelle catégorie
   if (opening) {
-
-    // 1️⃣ Mesurer la hauteur réelle de chaque section avant modification
-    document.querySelectorAll(".partner-content").forEach(item => {
-      item.style.height = item.scrollHeight + "px";
-    });
-
-    // 2️⃣ Ouvrir la nouvelle section immédiatement (sans rebond)
-    section.classList.add("active");
+    // 1. Capturer la position ACTUELLE de la carte AVANT toute modification
+    const header = document.querySelector('header');
+    const headerHeight = header ? header.offsetHeight : 0;
+    const cardTopBeforeChanges = card.getBoundingClientRect().top + window.scrollY;
+    const targetScrollPosition = Math.max(0, cardTopBeforeChanges - headerHeight - 20);
+    
+    // 2. Appliquer tous les changements visuels en une seule fois
+    section.classList.add('active');
     card.classList.remove("shadow-lg");
     card.classList.add("shadow-xl", "shadow-red-500/50");
-
-    // 3️⃣ Fermer les autres visuellement sans réduire leur hauteur
-    document.querySelectorAll(".partner-content").forEach(item => {
+    
+    // 3. Fermer les autres catégories
+    document.querySelectorAll('.partner-content').forEach(item => {
       if (item.id !== id) {
-        item.classList.remove("active");
+        item.classList.remove('active');
       }
     });
-
-    // 4️⃣ Attendre 20ms pour que le DOM applique les classes
-    setTimeout(() => {
-
-      // Applique la vraie hauteur ouverte uniquement à la section active
-      section.style.height = section.scrollHeight + "px";
-
-      // Les autres se ferment SANS changer leur hauteur → pas de rebond
-      document.querySelectorAll(".partner-content").forEach(item => {
-        if (item.id !== id) {
-          item.style.height = "0px";
-        }
+    
+    // Reset des ombres sur les autres cartes
+    document.querySelectorAll('.category-card').forEach(cardEl => {
+      if (cardEl !== card) {
+        cardEl.classList.remove("shadow-red-500/50", "shadow-xl");
+        cardEl.classList.add("shadow-lg");
+      }
+    });
+    
+    // 4. Scroller vers la position calculée AVANT les changements
+    // Cela compense automatiquement les changements de hauteur
+    requestAnimationFrame(() => {
+      window.scrollTo({ 
+        top: targetScrollPosition, 
+        behavior: 'smooth' 
       });
-
-      // 5️⃣ Après stabilisation → scroll propre
-      setTimeout(() => {
-        const headerHeight = document.querySelector("header").offsetHeight;
-        const top = card.getBoundingClientRect().top + window.scrollY;
-
-        scrollingLocked = false;
-
-        window.scrollTo({
-          top: top - headerHeight - 12,
-          behavior: "smooth"
-        });
-
-      }, 150);
-
-    }, 20);
-
+    });
+    
   } else {
-    // Fermeture simple
-    section.classList.remove("active");
+    // Si on ferme la catégorie actuelle
+    section.classList.remove('active');
     card.classList.remove("shadow-xl", "shadow-red-500/50");
     card.classList.add("shadow-lg");
-    section.style.height = "0px";
   }
 }
-
 
 
 
