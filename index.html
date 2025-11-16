@@ -672,69 +672,59 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-// ===== Toggle categories ANTI-REBOND =====
+// ===== Toggle categories anti-rebond + anti-dépassement =====
 function toggleCategory(id) {
   const section = document.getElementById(id);
   const card = document.querySelector(`[onclick="toggleCategory('${id}')"]`);
   const opening = !section.classList.contains('active');
-
-  // Empêcher les changements de hauteur brutaux
   const allSections = document.querySelectorAll('.partner-content');
 
-  // Geler la hauteur de TOUTES les catégories
-  allSections.forEach(s => {
-    s.style.height = s.classList.contains("active")
-      ? s.scrollHeight + "px"
-      : "0px";
-  });
-
   if (opening) {
-    // Activer la nouvelle catégorie
-    section.classList.add("active");
-    section.style.height = section.scrollHeight + "px";
 
+    // 1) FERME TEMPORAIREMENT l’ancienne sans animation
+    allSections.forEach(s => {
+      if (s.id !== id) {
+        s.classList.remove("active");
+        s.style.maxHeight = "0px";     // pas d’animation
+        s.style.overflow = "hidden";
+      }
+    });
+
+    // 2) Préparer la nouvelle catégorie pour ne PAS pousser le layout
+    section.classList.add("active");
+    section.style.maxHeight = "0px";   // neutre
+    section.style.overflow = "hidden";
+
+    // Ombres
+    document.querySelectorAll('.category-card').forEach(c => {
+      c.classList.remove("shadow-red-500/50", "shadow-xl");
+      c.classList.add("shadow-lg");
+    });
     card.classList.remove("shadow-lg");
     card.classList.add("shadow-xl", "shadow-red-500/50");
 
-    // Scroll propre
-    const header = document.querySelector('header');
+    // 3) Scroll AVANT de déployer la hauteur
+    const header = document.querySelector("header");
     const headerHeight = header.offsetHeight;
     const cardTop = card.getBoundingClientRect().top + window.scrollY;
+    const scrollTarget = cardTop - headerHeight - 10;
 
     window.scrollTo({
-      top: cardTop - headerHeight - 16,
+      top: scrollTarget,
       behavior: "smooth"
     });
 
-    // Une fois le scroll terminé → fermer les autres
+    // 4) Une fois le scroll lancé → déployer la vraie hauteur
     setTimeout(() => {
-      allSections.forEach(s => {
-        if (s.id !== id) {
-          s.classList.remove("active");
-          s.style.height = "0px";
-        }
-      });
-
-      // Reset des autres cartes
-      document.querySelectorAll('.category-card').forEach(c => {
-        if (c !== card) {
-          c.classList.remove("shadow-red-500/50", "shadow-xl");
-          c.classList.add("shadow-lg");
-        }
-      });
-
-      // Ajuster la hauteur finale de la nouvelle section
-      setTimeout(() => {
-        section.style.height = section.scrollHeight + "px";
-      }, 200);
-
-    }, 400); // attendre la fin du scroll smooth
+      const fullHeight = section.scrollHeight;
+      section.style.maxHeight = fullHeight + "px"; // animation propre
+    }, 50);
 
   } else {
-    // Fermeture
-    section.classList.remove("active");
-    section.style.height = "0px";
 
+    // Fermeture classique
+    section.classList.remove("active");
+    section.style.maxHeight = "0px";
     card.classList.remove("shadow-xl", "shadow-red-500/50");
     card.classList.add("shadow-lg");
   }
