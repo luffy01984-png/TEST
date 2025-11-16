@@ -672,78 +672,51 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-// ===== Toggle categories fluide et responsive =====
+// ===== Toggle idéal : simple, propre, sans rebond =====
 function toggleCategory(id) {
   const section = document.getElementById(id);
   const card = document.querySelector(`[onclick="toggleCategory('${id}')"]`);
-  
-  const wasAlreadyOpen = section.classList.contains('active');
-  const opening = !wasAlreadyOpen;
-  
+  const opening = !section.classList.contains('active');
+
+  // Fermer toutes les catégories sauf celle cliquée
+  document.querySelectorAll('.partner-content').forEach(item => {
+    if (item.id !== id) item.classList.remove('active');
+  });
+
+  // Reset ombres sur toutes les cartes
+  document.querySelectorAll('.category-card').forEach(cardEl => {
+    cardEl.classList.remove("shadow-red-500/50", "shadow-xl");
+    cardEl.classList.add("shadow-lg");
+  });
+
+  // Ouvrir ou fermer
+  section.classList.toggle('active');
+
   if (opening) {
-    // 1. Ouvrir d'ABORD la nouvelle catégorie
-    section.classList.add('active');
+    // Ombre spéciale sur la carte sélectionnée
     card.classList.remove("shadow-lg");
     card.classList.add("shadow-xl", "shadow-red-500/50");
-    
-    // 2. Attendre que l'animation d'ouverture soit complète
+
+    // Correction si dépasse sous le header
     setTimeout(() => {
-      // 3. Calculer la position finale APRÈS ouverture complète
-      const header = document.querySelector('header');
-      const headerHeight = header ? header.offsetHeight : 0;
-      
-      // Obtenir la position du HAUT de l'image (pas de la carte entière)
-      const cardImg = card.querySelector('img');
-      const imgTop = cardImg ? cardImg.getBoundingClientRect().top + window.scrollY : card.getBoundingClientRect().top + window.scrollY;
-      
-      // Position pour que l'image soit juste sous le header (sans marge supplémentaire)
-      const targetPosition = Math.max(0, imgTop - headerHeight);
-      
-      // 4. Scroller vers la position
-      window.scrollTo({ 
-        top: targetPosition, 
-        behavior: 'smooth' 
-      });
-      
-      // 5. Fermer les autres catégories IMMÉDIATEMENT après le scroll (pas pendant)
-      // Cela évite le rebond car le scroll est déjà en cours vers la bonne position
-      setTimeout(() => {
-        document.querySelectorAll('.partner-content').forEach(item => {
-          if (item.id !== id) {
-            item.classList.remove('active');
-          }
+      const headerHeight = document.querySelector('header').offsetHeight;
+      const rect = card.getBoundingClientRect();
+
+      if (rect.top < headerHeight + 8) {
+        window.scrollTo({
+          top: window.scrollY - (headerHeight - rect.top + 8),
+          behavior: 'smooth'
         });
-        
-        // Reset des ombres
-        document.querySelectorAll('.category-card').forEach(cardEl => {
-          if (cardEl !== card) {
-            cardEl.classList.remove("shadow-red-500/50", "shadow-xl");
-            cardEl.classList.add("shadow-lg");
-          }
-        });
-      }, 100); // Fermer juste après le début du smooth scroll
-      
-    }, 550); // Attendre l'ouverture complète (max-height 0.5s + marge)
-    
+      }
+    }, 60);
+
   } else {
-    // Fermeture simple
-    section.classList.remove('active');
+    // Réinitialiser la carte
     card.classList.remove("shadow-xl", "shadow-red-500/50");
     card.classList.add("shadow-lg");
-    
-    // Fermer les autres
-    document.querySelectorAll('.partner-content').forEach(item => {
-      if (item.id !== id) {
-        item.classList.remove('active');
-      }
-    });
-    
-    document.querySelectorAll('.category-card').forEach(cardEl => {
-      cardEl.classList.remove("shadow-red-500/50", "shadow-xl");
-      cardEl.classList.add("shadow-lg");
-    });
   }
 }
+
 
 // ===== Modal =====
 const modal = document.getElementById('imageModal');
