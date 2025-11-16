@@ -672,66 +672,41 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-// ===== Toggle categories anti-dépassement =====
+// ===== Toggle catégories fluide et anti-débordement =====
 function toggleCategory(id) {
   const section = document.getElementById(id);
   const card = document.querySelector(`[onclick="toggleCategory('${id}')"]`);
-  const opening = !section.classList.contains('active');
+  const header = document.querySelector("header");
+  const headerHeight = header.offsetHeight;
+  const isOpening = !section.classList.contains('active');
   const allSections = document.querySelectorAll('.partner-content');
 
-  if (opening) {
-
-    // 1) Fermer instantanément les autres
+  if (isOpening) {
+    // 1) Fermer toutes les autres catégories
     allSections.forEach(s => {
-      if (s.id !== id) {
-        s.classList.remove("active");
-        s.style.maxHeight = "0px";
-        s.style.overflow = "hidden";
-      }
+      if (s.id !== id) s.classList.remove('active');
     });
 
-    // 2) Préparer la nouvelle
-    section.classList.add("active");
-    section.style.maxHeight = "0px";
-    section.style.overflow = "hidden";
+    // 2) Déployer la nouvelle catégorie
+    section.classList.add('active');
 
-    // Ombres
+    // 3) Mettre à jour les ombres des cartes
     document.querySelectorAll('.category-card').forEach(c => {
-      c.classList.remove("shadow-red-500/50", "shadow-xl");
+      c.classList.remove("shadow-xl", "shadow-red-500/50");
       c.classList.add("shadow-lg");
     });
     card.classList.remove("shadow-lg");
     card.classList.add("shadow-xl", "shadow-red-500/50");
 
-    // 3) Scroll en mode ANTI-DÉPASSEMENT
+    // 4) Scroll fluide vers la carte, sans dépasser le header
     setTimeout(() => {
-      const header = document.querySelector("header");
-      const headerHeight = header.offsetHeight;
-
-      // Position de la carte dans le DOM
-      const cardTopInPage = card.getBoundingClientRect().top + window.scrollY;
-
-      // Position finale SANS JAMAIS dépasser le header
-      let scrollTarget = cardTopInPage - headerHeight - 8;
-
-      if (scrollTarget < 0) scrollTarget = 0;
-
-      window.scrollTo({
-        top: scrollTarget,
-        behavior: "smooth"
-      });
-    }, 10);
-
-    // 4) Déployer la vraie hauteur APRÈS le scroll
-    setTimeout(() => {
-      section.style.maxHeight = section.scrollHeight + "px";
-    }, 300);
+      const scrollTarget = Math.max(section.offsetTop - headerHeight - 10, 0);
+      window.scrollTo({ top: scrollTarget, behavior: 'smooth' });
+    }, 50);
 
   } else {
-
-    // Fermeture normale
-    section.classList.remove("active");
-    section.style.maxHeight = "0px";
+    // Fermer la catégorie ouverte
+    section.classList.remove('active');
     card.classList.remove("shadow-xl", "shadow-red-500/50");
     card.classList.add("shadow-lg");
   }
