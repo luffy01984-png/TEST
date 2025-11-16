@@ -667,7 +667,7 @@ function toggleCategory(id) {
     card.classList.remove("shadow-lg");
     card.classList.add("shadow-xl", "shadow-red-500/50");
     
-    // Attendre que la transition CSS se termine
+    // Attendre que TOUTES les transitions soient terminées (fermeture + ouverture)
     setTimeout(() => {
       const header = document.querySelector('header');
       const headerHeight = header ? header.offsetHeight : 0;
@@ -682,7 +682,7 @@ function toggleCategory(id) {
         top: Math.max(0, scrollTarget), 
         behavior: 'smooth' 
       });
-    }, 100);
+    }, 600); // Augmenté à 600ms pour laisser le temps aux transitions CSS (0.5s max-height + marge)
     
   } else {
     // Carte désactivée : reset ombre
@@ -690,7 +690,6 @@ function toggleCategory(id) {
     card.classList.add("shadow-lg");
   }
 }
-
 
 // ===== Modal =====
 const modal = document.getElementById('imageModal');
