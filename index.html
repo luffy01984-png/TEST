@@ -681,14 +681,7 @@ function toggleCategory(id) {
   const opening = !wasAlreadyOpen;
   
   if (opening) {
-    // 1. Désactiver temporairement les transitions pour éviter le rebond
-    document.querySelectorAll('.partner-content').forEach(item => {
-      if (item.id !== id) {
-        item.style.transition = 'none';
-      }
-    });
-    
-    // 2. Fermer immédiatement les autres catégories (sans animation)
+    // 1. Fermer toutes les autres catégories
     document.querySelectorAll('.partner-content').forEach(item => {
       if (item.id !== id) {
         item.classList.remove('active');
@@ -701,22 +694,18 @@ function toggleCategory(id) {
       cardEl.classList.add("shadow-lg");
     });
     
-    // 3. Réactiver les transitions après un court délai
-    setTimeout(() => {
-      document.querySelectorAll('.partner-content').forEach(item => {
-        item.style.transition = '';
-      });
-    }, 50);
-    
-    // 4. Ouvrir la nouvelle catégorie avec animation
+    // 2. Ouvrir la nouvelle catégorie
     section.classList.add('active');
     card.classList.remove("shadow-lg");
     card.classList.add("shadow-xl", "shadow-red-500/50");
     
-    // 5. Scroll après que tout soit stabilisé
+    // 3. Attendre que les animations de fermeture ET d'ouverture soient terminées
+    // PUIS recalculer la position (car la carte a peut-être bougé)
     setTimeout(() => {
       const header = document.querySelector('header');
       const headerHeight = header ? header.offsetHeight : 0;
+      
+      // Recalculer la position APRÈS que tout soit stabilisé
       const cardTop = card.getBoundingClientRect().top + window.scrollY;
       const scrollTarget = cardTop - headerHeight - 20;
       
@@ -724,7 +713,7 @@ function toggleCategory(id) {
         top: Math.max(0, scrollTarget), 
         behavior: 'smooth' 
       });
-    }, 500);
+    }, 550); // Légèrement augmenté pour être sûr que tout est stabilisé
     
   } else {
     // Carte désactivée : reset ombre
@@ -733,7 +722,6 @@ function toggleCategory(id) {
     card.classList.add("shadow-lg");
   }
 }
-
 
 
 // ===== Modal =====
