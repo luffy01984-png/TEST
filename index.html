@@ -672,86 +672,55 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-// ===== Toggle catégories PREMIUM (smooth + anti-rebond + anti-débordement) =====
+// ===== Toggle categories fluide et responsive =====
 function toggleCategory(id) {
-
   const section = document.getElementById(id);
   const card = document.querySelector(`[onclick="toggleCategory('${id}')"]`);
-  const header = document.querySelector("header");
-  const headerHeight = header.offsetHeight;
-
-  const allSections = document.querySelectorAll('.partner-content');
-  const allCards = document.querySelectorAll('.category-card');
-
-  const isOpening = !section.classList.contains("active");
-
-
-  /* ============================================================
-      1) FERMER TOUT — PROPREMENT (sans secousses)
-     ============================================================ */
-  allSections.forEach(sec => {
-    if (sec !== section) {
-      sec.style.maxHeight = "0px";
-      sec.classList.remove("active");
+  
+  // Fermer toutes les autres catégories
+  document.querySelectorAll('.partner-content').forEach(item => {
+    if (item.id !== id) {
+      item.classList.remove('active');
     }
   });
-
-  allCards.forEach(c => {
-    c.classList.remove("shadow-xl", "shadow-red-500/50");
-    c.classList.add("shadow-lg");
+  
+  // Reset des ombres sur toutes les cartes
+  document.querySelectorAll('.category-card').forEach(cardEl => {
+    cardEl.classList.remove("shadow-red-500/50", "shadow-xl");
+    cardEl.classList.add("shadow-lg");
   });
-
-
-  /* ============================================================
-      2) SI ON OUVRE LA CATÉGORIE
-     ============================================================ */
-  if (isOpening) {
-
-    // Activer la section
-    section.classList.add("active");
-
-    // Hauteur naturelle du contenu
-    const fullHeight = section.scrollHeight + "px";
-
-    // Déployer en animation fluide
-    section.style.maxHeight = fullHeight;
-
-    // Ombre spéciale sur carte active
+  
+  const opening = !section.classList.contains('active');
+  section.classList.toggle('active');
+  
+  if (opening) {
+    // Carte active : ajouter ombre spéciale
     card.classList.remove("shadow-lg");
     card.classList.add("shadow-xl", "shadow-red-500/50");
-
-
-    /* ============================================================
-        3) SCROLL PARFAIT SANS DÉPASSER LE HEADER
-       ============================================================ */
+    
+    // Attendre que TOUTES les transitions soient terminées (fermeture + ouverture)
     setTimeout(() => {
-
-      // Position de la CARTE (pas du contenu interne)
+      const header = document.querySelector('header');
+      const headerHeight = header ? header.offsetHeight : 0;
+      
+      // Position de la CARTE (pas du contenu)
       const cardTop = card.getBoundingClientRect().top + window.scrollY;
-
-      const scrollTarget = cardTop - headerHeight - 15; // marge de 15px
-
-      window.scrollTo({
-        top: Math.max(0, scrollTarget),
-        behavior: "smooth"
+      
+      // Scroll pour que la carte soit visible sous le header
+      const scrollTarget = cardTop - headerHeight - 20; // 20px de marge
+      
+      window.scrollTo({ 
+        top: Math.max(0, scrollTarget), 
+        behavior: 'smooth' 
       });
-
-    }, 50); // On laisse le temps à la section de s'ouvrir avant le scroll
-
-
-  /* ============================================================
-      4) SI ON FERME LA CATÉGORIE ACTIVE
-     ============================================================ */
+    }, 600); // Augmenté à 600ms pour laisser le temps aux transitions CSS (0.5s max-height + marge)
+    
   } else {
-
-    section.style.maxHeight = "0px";
-    section.classList.remove("active");
-
+    // Carte désactivée : reset ombre
     card.classList.remove("shadow-xl", "shadow-red-500/50");
     card.classList.add("shadow-lg");
   }
 }
-
 
 
 // ===== Modal =====
