@@ -672,46 +672,51 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-// ===== Toggle idéal : simple, propre, sans rebond =====
+// ===== Toggle categories fluide et responsive =====
 function toggleCategory(id) {
   const section = document.getElementById(id);
   const card = document.querySelector(`[onclick="toggleCategory('${id}')"]`);
-  const opening = !section.classList.contains('active');
-
-  // Fermer toutes les catégories sauf celle cliquée
+  
+  // Fermer toutes les autres catégories
   document.querySelectorAll('.partner-content').forEach(item => {
-    if (item.id !== id) item.classList.remove('active');
+    if (item.id !== id) {
+      item.classList.remove('active');
+    }
   });
-
-  // Reset ombres sur toutes les cartes
+  
+  // Reset des ombres sur toutes les cartes
   document.querySelectorAll('.category-card').forEach(cardEl => {
     cardEl.classList.remove("shadow-red-500/50", "shadow-xl");
     cardEl.classList.add("shadow-lg");
   });
-
-  // Ouvrir ou fermer
+  
+  const opening = !section.classList.contains('active');
   section.classList.toggle('active');
-
+  
   if (opening) {
-    // Ombre spéciale sur la carte sélectionnée
+    // Carte active : ajouter ombre spéciale
     card.classList.remove("shadow-lg");
     card.classList.add("shadow-xl", "shadow-red-500/50");
-
-    // Correction si dépasse sous le header
+    
+    // Attendre que TOUTES les transitions soient terminées (fermeture + ouverture)
     setTimeout(() => {
-      const headerHeight = document.querySelector('header').offsetHeight;
-      const rect = card.getBoundingClientRect();
-
-      if (rect.top < headerHeight + 8) {
-        window.scrollTo({
-          top: window.scrollY - (headerHeight - rect.top + 8),
-          behavior: 'smooth'
-        });
-      }
-    }, 60);
-
+      const header = document.querySelector('header');
+      const headerHeight = header ? header.offsetHeight : 0;
+      
+      // Position de la CARTE (pas du contenu)
+      const cardTop = card.getBoundingClientRect().top + window.scrollY;
+      
+      // Scroll pour que la carte soit visible sous le header
+      const scrollTarget = cardTop - headerHeight - 20; // 20px de marge
+      
+      window.scrollTo({ 
+        top: Math.max(0, scrollTarget), 
+        behavior: 'smooth' 
+      });
+    }, 600); // Augmenté à 600ms pour laisser le temps aux transitions CSS (0.5s max-height + marge)
+    
   } else {
-    // Réinitialiser la carte
+    // Carte désactivée : reset ombre
     card.classList.remove("shadow-xl", "shadow-red-500/50");
     card.classList.add("shadow-lg");
   }
