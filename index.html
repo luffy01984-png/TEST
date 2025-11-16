@@ -641,59 +641,71 @@ document.addEventListener('DOMContentLoaded', () => {
   }, 3000);
 });
 
-// ===== Toggle categories (final, mobile-friendly) =====
+// ===== Toggle categories responsive et fluide =====
 function toggleCategory(id) {
   const section = document.getElementById(id);
   const card = document.querySelector(`[onclick="toggleCategory('${id}')"]`);
 
-  // Fermer les autres catégories
+  // Fermer toutes les autres catégories
   document.querySelectorAll('.partner-content').forEach(item => {
-    if(item.id !== id) item.classList.remove('active');
+    if (item.id !== id) {
+      item.style.maxHeight = null;
+      item.classList.remove('active');
+    }
   });
 
-  // Reset ombres des cartes
+  // Reset des ombres sur toutes les cartes
   document.querySelectorAll('.category-card').forEach(cardEl => {
     cardEl.classList.remove("shadow-red-500/50", "shadow-xl");
     cardEl.classList.add("shadow-lg");
   });
 
-  // Déterminer si on ouvre ou ferme la section
   const opening = !section.classList.contains('active');
   section.classList.toggle('active');
 
   if (opening) {
-    // Ajouter l'ombre spéciale à la carte active
+    // Carte active : ajouter ombre spéciale
     card.classList.remove("shadow-lg");
     card.classList.add("shadow-xl", "shadow-red-500/50");
 
-    // ⚡ Attendre la fin de la transition CSS de max-height
-    const onTransitionEnd = (e) => {
-      if (e.propertyName !== 'max-height') return;
+    // Appliquer la hauteur exacte
+    function setSectionHeight() {
+      section.style.maxHeight = section.scrollHeight + "px";
+    }
 
-      const header = document.querySelector('header');
-      const headerHeight = header ? header.offsetHeight : 0;
+    setSectionHeight();
 
-      const sectionTop = section.getBoundingClientRect().top + window.scrollY;
+    // Ajuster la hauteur si l’écran change
+    window.addEventListener('resize', setSectionHeight);
 
-      // Calcul du scroll pour que le top de la section soit visible sous le header
-      const scrollTarget = Math.max(0, sectionTop - headerHeight - 16); // 16px padding
+    // Scroll pour que la section soit visible sous le header
+    const header = document.querySelector('header');
+    const headerHeight = header ? header.offsetHeight : 0;
+    const sectionTop = section.getBoundingClientRect().top + window.scrollY;
+    const scrollTarget = Math.max(0, sectionTop - headerHeight - 16);
 
-      window.scrollTo({
-        top: scrollTarget,
-        behavior: 'smooth'
-      });
+    setTimeout(() => {
+      window.scrollTo({ top: scrollTarget, behavior: 'smooth' });
+    }, 50);
 
-      section.removeEventListener('transitionend', onTransitionEnd);
-    };
-
-    section.addEventListener('transitionend', onTransitionEnd);
+    // Nettoyage : enlever listener si on ferme la catégorie
+    section.dataset.listenerId = setSectionHeight;
 
   } else {
-    // Carte désactivée : réinitialiser l'ombre
+    // Carte désactivée : reset ombre et hauteur
     card.classList.remove("shadow-xl", "shadow-red-500/50");
     card.classList.add("shadow-lg");
+    section.style.maxHeight = null;
+
+    // Supprimer l'écouteur resize
+    const listener = section.dataset.listenerId;
+    if (listener) {
+      window.removeEventListener('resize', listener);
+      delete section.dataset.listenerId;
+    }
   }
 }
+
 
 
 
