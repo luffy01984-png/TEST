@@ -672,54 +672,69 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-// ===== Toggle categories fluide et responsive =====
+// ===== Toggle categories ANTI-REBOND =====
 function toggleCategory(id) {
   const section = document.getElementById(id);
   const card = document.querySelector(`[onclick="toggleCategory('${id}')"]`);
-  
-  const wasAlreadyOpen = section.classList.contains('active');
-  const opening = !wasAlreadyOpen;
-  
+  const opening = !section.classList.contains('active');
+
+  // Empêcher les changements de hauteur brutaux
+  const allSections = document.querySelectorAll('.partner-content');
+
+  // Geler la hauteur de TOUTES les catégories
+  allSections.forEach(s => {
+    s.style.height = s.classList.contains("active")
+      ? s.scrollHeight + "px"
+      : "0px";
+  });
+
   if (opening) {
-    // 1. Ouvrir la nouvelle catégorie SANS fermer les autres
-    section.classList.add('active');
+    // Activer la nouvelle catégorie
+    section.classList.add("active");
+    section.style.height = section.scrollHeight + "px";
+
     card.classList.remove("shadow-lg");
     card.classList.add("shadow-xl", "shadow-red-500/50");
-    
-    // 2. Attendre que l'ouverture soit terminée, puis scroller
+
+    // Scroll propre
+    const header = document.querySelector('header');
+    const headerHeight = header.offsetHeight;
+    const cardTop = card.getBoundingClientRect().top + window.scrollY;
+
+    window.scrollTo({
+      top: cardTop - headerHeight - 16,
+      behavior: "smooth"
+    });
+
+    // Une fois le scroll terminé → fermer les autres
     setTimeout(() => {
-      const header = document.querySelector('header');
-      const headerHeight = header ? header.offsetHeight : 0;
-      const cardTop = card.getBoundingClientRect().top + window.scrollY;
-      const scrollTarget = cardTop - headerHeight - 20;
-      
-      window.scrollTo({ 
-        top: Math.max(0, scrollTarget), 
-        behavior: 'smooth' 
+      allSections.forEach(s => {
+        if (s.id !== id) {
+          s.classList.remove("active");
+          s.style.height = "0px";
+        }
       });
-      
-      // 3. PENDANT le scroll, fermer discrètement les autres catégories
+
+      // Reset des autres cartes
+      document.querySelectorAll('.category-card').forEach(c => {
+        if (c !== card) {
+          c.classList.remove("shadow-red-500/50", "shadow-xl");
+          c.classList.add("shadow-lg");
+        }
+      });
+
+      // Ajuster la hauteur finale de la nouvelle section
       setTimeout(() => {
-        document.querySelectorAll('.partner-content').forEach(item => {
-          if (item.id !== id) {
-            item.classList.remove('active');
-          }
-        });
-        
-        // Reset des ombres sur les autres cartes
-        document.querySelectorAll('.category-card').forEach(cardEl => {
-          if (cardEl !== card) {
-            cardEl.classList.remove("shadow-red-500/50", "shadow-xl");
-            cardEl.classList.add("shadow-lg");
-          }
-        });
-      }, 200); // Fermeture pendant le smooth scroll
-      
-    }, 500); // Attendre l'ouverture complète
-    
+        section.style.height = section.scrollHeight + "px";
+      }, 200);
+
+    }, 400); // attendre la fin du scroll smooth
+
   } else {
-    // Carte désactivée : reset ombre
-    section.classList.remove('active');
+    // Fermeture
+    section.classList.remove("active");
+    section.style.height = "0px";
+
     card.classList.remove("shadow-xl", "shadow-red-500/50");
     card.classList.add("shadow-lg");
   }
