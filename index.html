@@ -95,33 +95,23 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
 .nav-link { color: #9ca3af; text-decoration: none; font-weight: 500; padding: 0.25rem 0.5rem; border-radius: 0.5rem; transition: all 0.2s ease; }
 .nav-link.active { background-color: #dc2626; color: #fff; }
 
-.partner-content.active {
-  display: grid;
-  gap: 1.2rem;
-  justify-content: center;
-  opacity: 1;
-  transition: opacity 0.4s ease;
+/* Responsive grid for partner-content */
+@media (min-width: 640px) {
+  .partner-content.active {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    /* AJOUTER CETTE LIGNE POUR CENTRER LES ÉLÉMENTS RESTANTS */
+    justify-content: center; 
+  }
 }
-
-/* Mobile → 2 colonnes */
-@media (min-width: 480px) {
-  .partner-content.active {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-/* Tablette → 3 colonnes */
-@media (min-width: 768px) {
-  .partner-content.active {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-/* PC → 4 colonnes */
 @media (min-width: 1024px) {
-  .partner-content.active {
-    grid-template-columns: repeat(4, 1fr);
-  }
+  .partner-content.active {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    /* AJOUTER CETTE LIGNE POUR CENTRER LES ÉLÉMENTS RESTANTS */
+    justify-content: center;
+  }
 }
 
 </style>
