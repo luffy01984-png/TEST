@@ -672,59 +672,67 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-// ===== Toggle categories ultra fluide =====
+// ===== Toggle categories sans dépassement du header =====
 function toggleCategory(id) {
   const section = document.getElementById(id);
   const card = document.querySelector(`[onclick="toggleCategory('${id}')"]`);
-  
+
   const opening = !section.classList.contains("active");
 
   // Si la catégorie s’ouvre
   if (opening) {
 
-    // 1️⃣ Fermer les autres catégories SANS transition (invisible)
+    // 1️⃣ Fermer toutes les autres catégories SANS transition
     document.querySelectorAll(".partner-content").forEach(item => {
       if (item.id !== id) {
         item.style.transition = "none";
         item.classList.remove("active");
-        item.offsetHeight; // force style apply
-        item.style.transition = ""; // réactive pour plus tard
+        item.offsetHeight; // Force l'application instantanée
+        item.style.transition = ""; // Restaure la transition
       }
     });
 
-    // 2️⃣ Reset ombres
+    // Reset ombres
     document.querySelectorAll(".category-card").forEach(c => {
       c.classList.remove("shadow-red-500/50", "shadow-xl");
       c.classList.add("shadow-lg");
     });
 
-    // 3️⃣ Ouvrir la nouvelle catégorie AVEC transition
+    // 2️⃣ Ouvre la nouvelle catégorie (transition active)
     section.classList.add("active");
 
-    // 4️⃣ Ombre active
+    // Ombre sur la carte 
     card.classList.remove("shadow-lg");
     card.classList.add("shadow-xl", "shadow-red-500/50");
 
-    // 5️⃣ Scroll fluide vers la carte
-    setTimeout(() => {
+    // 3️⃣ 🔥 Scroll APRÈS la fin de l'animation CSS
+    const onTransitionEnd = (e) => {
+      if (e.propertyName !== "max-height") return;
+
       const headerHeight = document.querySelector("header").offsetHeight;
       const cardTop = card.getBoundingClientRect().top + window.scrollY;
+
       const scrollTarget = Math.max(0, cardTop - headerHeight - 20);
 
       window.scrollTo({
         top: scrollTarget,
         behavior: "smooth"
       });
-    }, 50);
+
+      section.removeEventListener("transitionend", onTransitionEnd);
+    };
+
+    section.addEventListener("transitionend", onTransitionEnd);
 
   } else {
 
-    // Fermeture normale de la même catégorie
+    // Si on ferme la catégorie ouverte
     section.classList.remove("active");
     card.classList.remove("shadow-xl", "shadow-red-500/50");
     card.classList.add("shadow-lg");
   }
 }
+
 
 
 
