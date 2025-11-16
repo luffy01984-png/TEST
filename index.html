@@ -315,6 +315,43 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
   </div>
 </header>
 
+<script>
+  // Sélection des liens
+  const navPartenaires = document.getElementById('nav-partenaires');
+  const navMentions = document.getElementById('nav-mentions');
+
+  // Gestion clic pour scroll et active
+  navPartenaires.addEventListener('click', () => {
+    navPartenaires.classList.add('active');
+    navMentions.classList.remove('active');
+    document.getElementById('categories').scrollIntoView({ behavior: 'smooth' });
+  });
+
+  navMentions.addEventListener('click', () => {
+    navMentions.classList.add('active');
+    navPartenaires.classList.remove('active');
+    document.getElementById('mentions').scrollIntoView({ behavior: 'smooth' });
+  });
+
+  // Détection scroll pour active link automatique
+  const categoriesSection = document.getElementById('categories');
+  const mentionsSection = document.getElementById('mentions');
+
+  window.addEventListener('scroll', () => {
+    const scrollPos = window.scrollY + 150; // Ajuste pour le header sticky
+    if (categoriesSection && mentionsSection) {
+      if (scrollPos >= mentionsSection.offsetTop) {
+        navMentions.classList.add('active');
+        navPartenaires.classList.remove('active');
+      } else if (scrollPos >= categoriesSection.offsetTop) {
+        navPartenaires.classList.add('active');
+        navMentions.classList.remove('active');
+      }
+    }
+  });
+</script>
+
+
 <!-- HERO -->
 <section class="bg-white text-gray-900 text-center py-12 px-4 shadow-md">
   <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight">
