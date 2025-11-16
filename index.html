@@ -704,7 +704,7 @@ function toggleCategory(id) {
     const header = document.querySelector('header');
     const headerHeight = header ? header.offsetHeight : 0;
     const cardTop = card.getBoundingClientRect().top + window.scrollY;
-    const scrollTarget = Math.max(0, cardTop - headerHeight - 20);
+    const scrollTarget = Math.max(0, cardTop - headerHeight - 10);
     
     // Scroll AVANT que l'animation ne commence pour éviter le rebond
     window.scrollTo({ 
