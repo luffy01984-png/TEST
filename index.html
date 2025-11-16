@@ -672,69 +672,69 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-// ===== Toggle categories anti-rebond (spécial grandes catégories) =====
+// ===== Toggle category 100% anti-rebond =====
 function toggleCategory(id) {
   const section = document.getElementById(id);
   const card = document.querySelector(`[onclick="toggleCategory('${id}')"]`);
   const opening = !section.classList.contains("active");
 
+  // Désactiver le scroll automatique pendant les opérations internes
+  let scrollingLocked = true;
+
   if (opening) {
 
-    // 1️⃣ Fermer instantanément les autres catégories
+    // 1️⃣ Mesurer la hauteur réelle de chaque section avant modification
     document.querySelectorAll(".partner-content").forEach(item => {
-      if (item.id !== id) {
-        item.style.transition = "none";
-        item.classList.remove("active");
-        item.offsetHeight;
-        item.style.transition = "";
-      }
+      item.style.height = item.scrollHeight + "px";
     });
 
-    // Reset ombres
-    document.querySelectorAll(".category-card").forEach(c => {
-      c.classList.remove("shadow-red-500/50", "shadow-xl");
-      c.classList.add("shadow-lg");
-    });
-
-    // 2️⃣ Ouvrir la nouvelle catégorie
+    // 2️⃣ Ouvrir la nouvelle section immédiatement (sans rebond)
     section.classList.add("active");
-
-    // Ombre
     card.classList.remove("shadow-lg");
     card.classList.add("shadow-xl", "shadow-red-500/50");
 
-    // 3️⃣ Attendre transition → puis reflow complet → puis scroll
-    const scrollWhenStable = () => {
-      const headerHeight = document.querySelector("header").offsetHeight;
+    // 3️⃣ Fermer les autres visuellement sans réduire leur hauteur
+    document.querySelectorAll(".partner-content").forEach(item => {
+      if (item.id !== id) {
+        item.classList.remove("active");
+      }
+    });
 
-      // Position stabilisée de la catégorie
-      const sectionTop = section.getBoundingClientRect().top + window.scrollY;
+    // 4️⃣ Attendre 20ms pour que le DOM applique les classes
+    setTimeout(() => {
 
-      const target = sectionTop - headerHeight - 12;
+      // Applique la vraie hauteur ouverte uniquement à la section active
+      section.style.height = section.scrollHeight + "px";
 
-      window.scrollTo({
-        top: Math.max(0, target),
-        behavior: "smooth"
+      // Les autres se ferment SANS changer leur hauteur → pas de rebond
+      document.querySelectorAll(".partner-content").forEach(item => {
+        if (item.id !== id) {
+          item.style.height = "0px";
+        }
       });
-    };
 
-    const afterTransition = (e) => {
-      if (e.propertyName !== "max-height") return;
+      // 5️⃣ Après stabilisation → scroll propre
+      setTimeout(() => {
+        const headerHeight = document.querySelector("header").offsetHeight;
+        const top = card.getBoundingClientRect().top + window.scrollY;
 
-      section.removeEventListener("transitionend", afterTransition);
+        scrollingLocked = false;
 
-      // Attendre 50ms pour images + grid → layout stable
-      setTimeout(scrollWhenStable, 50);
-    };
+        window.scrollTo({
+          top: top - headerHeight - 12,
+          behavior: "smooth"
+        });
 
-    section.addEventListener("transitionend", afterTransition);
+      }, 150);
+
+    }, 20);
 
   } else {
-
-    // Fermer la catégorie
+    // Fermeture simple
     section.classList.remove("active");
     card.classList.remove("shadow-xl", "shadow-red-500/50");
     card.classList.add("shadow-lg");
+    section.style.height = "0px";
   }
 }
 
