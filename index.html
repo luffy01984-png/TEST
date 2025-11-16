@@ -672,60 +672,67 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-// ===== Toggle categories fluide et responsive =====
+// ===== Toggle categories fluide et sans rebond =====
 function toggleCategory(id) {
   const section = document.getElementById(id);
   const card = document.querySelector(`[onclick="toggleCategory('${id}')"]`);
-  
-  const wasAlreadyOpen = section.classList.contains('active');
-  const opening = !wasAlreadyOpen;
-  
+
+  const opening = !section.classList.contains("active");
+
   // Si on ouvre une nouvelle catégorie
   if (opening) {
-    // 1. D'ABORD : Ouvrir la nouvelle catégorie et scroller
-    section.classList.add('active');
-    
-    // Carte active : ajouter ombre spéciale
+
+    // 1️⃣ Désactiver temporairement la transition pour une ouverture instantanée
+    section.style.transition = "none";
+    section.classList.add("active");
+
+    // Forcer le navigateur à appliquer le style instantané
+    section.offsetHeight;
+
+    // 2️⃣ Scroll fluide vers la carte
+    const headerHeight = document.querySelector("header").offsetHeight;
+    const cardTop = card.getBoundingClientRect().top + window.scrollY;
+    const scrollTarget = Math.max(0, cardTop - headerHeight - 20);
+
+    window.scrollTo({
+      top: scrollTarget,
+      behavior: "smooth"
+    });
+
+    // Appliquer l’ombre spéciale
     card.classList.remove("shadow-lg");
     card.classList.add("shadow-xl", "shadow-red-500/50");
-    
-    // Scroll immédiat vers la nouvelle carte
+
+    // 3️⃣ Réactiver la transition après l'ouverture instantanée
     setTimeout(() => {
-      const header = document.querySelector('header');
-      const headerHeight = header ? header.offsetHeight : 0;
-      const cardTop = card.getBoundingClientRect().top + window.scrollY;
-      const scrollTarget = cardTop - headerHeight - 20;
-      
-      window.scrollTo({ 
-        top: Math.max(0, scrollTarget), 
-        behavior: 'smooth' 
-      });
+      section.style.transition = ""; // restore CSS transition
     }, 50);
-    
-    // 2. ENSUITE : Fermer les autres en arrière-plan (tâche de fond)
+
+    // 4️⃣ Fermer les autres sections APRÈS le scroll (tâche de fond)
     setTimeout(() => {
-      document.querySelectorAll('.partner-content').forEach(item => {
+      document.querySelectorAll(".partner-content").forEach(item => {
         if (item.id !== id) {
-          item.classList.remove('active');
+          item.classList.remove("active");
         }
       });
-      
-      // Reset des ombres sur les autres cartes
-      document.querySelectorAll('.category-card').forEach(cardEl => {
-        if (cardEl !== card) {
-          cardEl.classList.remove("shadow-red-500/50", "shadow-xl");
-          cardEl.classList.add("shadow-lg");
+
+      document.querySelectorAll(".category-card").forEach(c => {
+        if (c !== card) {
+          c.classList.remove("shadow-red-500/50", "shadow-xl");
+          c.classList.add("shadow-lg");
         }
       });
-    }, 100);
-    
+    }, 400); // On attend pour ne pas perturber le scroll
+
   } else {
-    // Si on ferme la catégorie actuelle
-    section.classList.remove('active');
+
+    // Fermeture normale
+    section.classList.remove("active");
     card.classList.remove("shadow-xl", "shadow-red-500/50");
     card.classList.add("shadow-lg");
   }
 }
+
 
 
 // ===== Modal =====
