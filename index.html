@@ -691,8 +691,13 @@ function toggleCategory(id) {
       // 3. Calculer la position finale APRÈS ouverture complète
       const header = document.querySelector('header');
       const headerHeight = header ? header.offsetHeight : 0;
-      const cardTop = card.getBoundingClientRect().top + window.scrollY;
-      const targetPosition = Math.max(0, cardTop - headerHeight - 20);
+      
+      // Obtenir la position du HAUT de l'image (pas de la carte entière)
+      const cardImg = card.querySelector('img');
+      const imgTop = cardImg ? cardImg.getBoundingClientRect().top + window.scrollY : card.getBoundingClientRect().top + window.scrollY;
+      
+      // Position pour que l'image soit juste sous le header (sans marge supplémentaire)
+      const targetPosition = Math.max(0, imgTop - headerHeight);
       
       // 4. Scroller vers la position
       window.scrollTo({ 
@@ -739,7 +744,6 @@ function toggleCategory(id) {
     });
   }
 }
-
 
 // ===== Modal =====
 const modal = document.getElementById('imageModal');
