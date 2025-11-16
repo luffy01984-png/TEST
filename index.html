@@ -672,53 +672,58 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-// ===== Toggle categories fluide SANS REBOND =====
+// ===== Toggle categories fluide et responsive =====
 function toggleCategory(id) {
   const section = document.getElementById(id);
   const card = document.querySelector(`[onclick="toggleCategory('${id}')"]`);
-
-  const isOpening = !section.classList.contains('active');
-
-  // Fermer les autres catégories
-  document.querySelectorAll('.partner-content').forEach(item => {
-    if (item !== section) item.classList.remove('active');
-  });
-
-  // Reset ombres
-  document.querySelectorAll('.category-card').forEach(cardEl => {
-    cardEl.classList.remove("shadow-xl", "shadow-red-500/50");
-    cardEl.classList.add("shadow-lg");
-  });
-
-  // Basculer l'état actuel
-  section.classList.toggle('active');
-
-  if (isOpening) {
-    // Ombre spéciale pour la catégorie active
-    card.classList.add("shadow-xl", "shadow-red-500/50");
+  
+  const wasAlreadyOpen = section.classList.contains('active');
+  const opening = !wasAlreadyOpen;
+  
+  // Si on ouvre une nouvelle catégorie
+  if (opening) {
+    // 1. D'ABORD : Ouvrir la nouvelle catégorie et scroller
+    section.classList.add('active');
+    
+    // Carte active : ajouter ombre spéciale
     card.classList.remove("shadow-lg");
-
-    // Écouter la fin de la transition de la section OUVERTE
-    const onEnd = (e) => {
-      if (e.propertyName !== "max-height") return; // Sécurité
-
+    card.classList.add("shadow-xl", "shadow-red-500/50");
+    
+    // Scroll immédiat vers la nouvelle carte
+    setTimeout(() => {
       const header = document.querySelector('header');
       const headerHeight = header ? header.offsetHeight : 0;
-
-      // Position de la CARTE, pas du contenu
       const cardTop = card.getBoundingClientRect().top + window.scrollY;
-      const scrollTo = Math.max(0, cardTop - headerHeight - 16);
-
-      // Scroll final sans rebond
-      window.scrollTo({
-        top: scrollTo,
-        behavior: "smooth"
+      const scrollTarget = cardTop - headerHeight - 20;
+      
+      window.scrollTo({ 
+        top: Math.max(0, scrollTarget), 
+        behavior: 'smooth' 
       });
-
-      section.removeEventListener("transitionend", onEnd);
-    };
-
-    section.addEventListener("transitionend", onEnd);
+    }, 50);
+    
+    // 2. ENSUITE : Fermer les autres en arrière-plan (tâche de fond)
+    setTimeout(() => {
+      document.querySelectorAll('.partner-content').forEach(item => {
+        if (item.id !== id) {
+          item.classList.remove('active');
+        }
+      });
+      
+      // Reset des ombres sur les autres cartes
+      document.querySelectorAll('.category-card').forEach(cardEl => {
+        if (cardEl !== card) {
+          cardEl.classList.remove("shadow-red-500/50", "shadow-xl");
+          cardEl.classList.add("shadow-lg");
+        }
+      });
+    }, 100);
+    
+  } else {
+    // Si on ferme la catégorie actuelle
+    section.classList.remove('active');
+    card.classList.remove("shadow-xl", "shadow-red-500/50");
+    card.classList.add("shadow-lg");
   }
 }
 
