@@ -677,6 +677,8 @@ function toggleCategory(id) {
   const section = document.getElementById(id);
   const card = document.querySelector(`[onclick="toggleCategory('${id}')"]`);
   
+  const wasAlreadyOpen = section.classList.contains('active');
+  
   // Fermer toutes les autres catégories
   document.querySelectorAll('.partner-content').forEach(item => {
     if (item.id !== id) {
@@ -690,7 +692,7 @@ function toggleCategory(id) {
     cardEl.classList.add("shadow-lg");
   });
   
-  const opening = !section.classList.contains('active');
+  const opening = !wasAlreadyOpen;
   section.classList.toggle('active');
   
   if (opening) {
@@ -698,22 +700,17 @@ function toggleCategory(id) {
     card.classList.remove("shadow-lg");
     card.classList.add("shadow-xl", "shadow-red-500/50");
     
-    // Attendre que TOUTES les transitions soient terminées (fermeture + ouverture)
-    setTimeout(() => {
-      const header = document.querySelector('header');
-      const headerHeight = header ? header.offsetHeight : 0;
-      
-      // Position de la CARTE (pas du contenu)
-      const cardTop = card.getBoundingClientRect().top + window.scrollY;
-      
-      // Scroll pour que la carte soit visible sous le header
-      const scrollTarget = cardTop - headerHeight - 20; // 20px de marge
-      
-      window.scrollTo({ 
-        top: Math.max(0, scrollTarget), 
-        behavior: 'smooth' 
-      });
-    }, 600); // Augmenté à 600ms pour laisser le temps aux transitions CSS (0.5s max-height + marge)
+    // Calculer IMMÉDIATEMENT la position cible avant les animations
+    const header = document.querySelector('header');
+    const headerHeight = header ? header.offsetHeight : 0;
+    const cardTop = card.getBoundingClientRect().top + window.scrollY;
+    const scrollTarget = Math.max(0, cardTop - headerHeight - 20);
+    
+    // Scroll AVANT que l'animation ne commence pour éviter le rebond
+    window.scrollTo({ 
+      top: scrollTarget, 
+      behavior: 'smooth' 
+    });
     
   } else {
     // Carte désactivée : reset ombre
@@ -721,7 +718,6 @@ function toggleCategory(id) {
     card.classList.add("shadow-lg");
   }
 }
-
 // ===== Modal =====
 const modal = document.getElementById('imageModal');
 const modalImg = document.getElementById('modalImg');
