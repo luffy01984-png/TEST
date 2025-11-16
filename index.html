@@ -641,7 +641,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }, 3000);
 });
 
-// ===== Toggle categories responsive et fluide =====
+// ===== Toggle categories fluide et responsive =====
 function toggleCategory(id) {
   const section = document.getElementById(id);
   const card = document.querySelector(`[onclick="toggleCategory('${id}')"]`);
@@ -668,46 +668,27 @@ function toggleCategory(id) {
     card.classList.remove("shadow-lg");
     card.classList.add("shadow-xl", "shadow-red-500/50");
 
-    // Appliquer la hauteur exacte
-    function setSectionHeight() {
-      section.style.maxHeight = section.scrollHeight + "px";
-    }
+    // Définir la hauteur max pour la transition (animation CSS)
+    section.style.maxHeight = section.scrollHeight + "px";
 
-    setSectionHeight();
-
-    // Ajuster la hauteur si l’écran change
-    window.addEventListener('resize', setSectionHeight);
-
-    // Scroll pour que la section soit visible sous le header
+    // Scroll après rendu pour éviter que la section passe sous le header
     const header = document.querySelector('header');
     const headerHeight = header ? header.offsetHeight : 0;
-    const sectionTop = section.getBoundingClientRect().top + window.scrollY;
-    const scrollTarget = Math.max(0, sectionTop - headerHeight - 16);
 
-    setTimeout(() => {
+    // Attendre que le navigateur applique la nouvelle hauteur
+    requestAnimationFrame(() => {
+      const sectionTop = section.getBoundingClientRect().top + window.scrollY;
+      const scrollTarget = Math.max(0, sectionTop - headerHeight - 16); // 16px marge
       window.scrollTo({ top: scrollTarget, behavior: 'smooth' });
-    }, 50);
-
-    // Nettoyage : enlever listener si on ferme la catégorie
-    section.dataset.listenerId = setSectionHeight;
+    });
 
   } else {
     // Carte désactivée : reset ombre et hauteur
     card.classList.remove("shadow-xl", "shadow-red-500/50");
     card.classList.add("shadow-lg");
     section.style.maxHeight = null;
-
-    // Supprimer l'écouteur resize
-    const listener = section.dataset.listenerId;
-    if (listener) {
-      window.removeEventListener('resize', listener);
-      delete section.dataset.listenerId;
-    }
   }
 }
-
-
-
 
 
 // ===== Modal =====
