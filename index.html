@@ -681,31 +681,15 @@ function toggleCategory(id) {
   const opening = !wasAlreadyOpen;
   
   if (opening) {
-    // 1. Fermer toutes les autres catégories
-    document.querySelectorAll('.partner-content').forEach(item => {
-      if (item.id !== id) {
-        item.classList.remove('active');
-      }
-    });
-    
-    // Reset des ombres sur toutes les cartes
-    document.querySelectorAll('.category-card').forEach(cardEl => {
-      cardEl.classList.remove("shadow-red-500/50", "shadow-xl");
-      cardEl.classList.add("shadow-lg");
-    });
-    
-    // 2. Ouvrir la nouvelle catégorie
+    // 1. Ouvrir la nouvelle catégorie SANS fermer les autres
     section.classList.add('active');
     card.classList.remove("shadow-lg");
     card.classList.add("shadow-xl", "shadow-red-500/50");
     
-    // 3. Attendre que les animations de fermeture ET d'ouverture soient terminées
-    // PUIS recalculer la position (car la carte a peut-être bougé)
+    // 2. Attendre que l'ouverture soit terminée, puis scroller
     setTimeout(() => {
       const header = document.querySelector('header');
       const headerHeight = header ? header.offsetHeight : 0;
-      
-      // Recalculer la position APRÈS que tout soit stabilisé
       const cardTop = card.getBoundingClientRect().top + window.scrollY;
       const scrollTarget = cardTop - headerHeight - 20;
       
@@ -713,7 +697,25 @@ function toggleCategory(id) {
         top: Math.max(0, scrollTarget), 
         behavior: 'smooth' 
       });
-    }, 550); // Légèrement augmenté pour être sûr que tout est stabilisé
+      
+      // 3. PENDANT le scroll, fermer discrètement les autres catégories
+      setTimeout(() => {
+        document.querySelectorAll('.partner-content').forEach(item => {
+          if (item.id !== id) {
+            item.classList.remove('active');
+          }
+        });
+        
+        // Reset des ombres sur les autres cartes
+        document.querySelectorAll('.category-card').forEach(cardEl => {
+          if (cardEl !== card) {
+            cardEl.classList.remove("shadow-red-500/50", "shadow-xl");
+            cardEl.classList.add("shadow-lg");
+          }
+        });
+      }, 200); // Fermeture pendant le smooth scroll
+      
+    }, 500); // Attendre l'ouverture complète
     
   } else {
     // Carte désactivée : reset ombre
