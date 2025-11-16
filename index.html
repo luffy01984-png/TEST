@@ -670,22 +670,23 @@ function toggleCategory(id) {
     card.classList.remove("shadow-lg");
     card.classList.add("shadow-xl", "shadow-red-500/50");
     
-    // Scroll immédiat vers la carte pour plus de fluidité
-    const header = document.querySelector('header');
-    const headerHeight = header ? header.offsetHeight : 0;
-    
-    // Petit délai minimal pour laisser le DOM se mettre à jour
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        const cardTop = card.getBoundingClientRect().top + window.scrollY;
-        const scrollTarget = cardTop - headerHeight - 20;
-        
-        window.scrollTo({ 
-          top: Math.max(0, scrollTarget), 
-          behavior: 'smooth' 
-        });
+    // Attendre que les autres catégories se ferment (300ms = optimal pour mobile)
+    setTimeout(() => {
+      const header = document.querySelector('header');
+      const headerHeight = header ? header.offsetHeight : 0;
+      
+      // Position de la carte
+      const cardRect = card.getBoundingClientRect();
+      const cardTop = cardRect.top + window.scrollY;
+      
+      // Scroll avec plus de marge pour éviter que ça disparaisse
+      const scrollTarget = cardTop - headerHeight - 30; // 30px de marge
+      
+      window.scrollTo({ 
+        top: Math.max(0, scrollTarget), 
+        behavior: 'smooth' 
       });
-    });
+    }, 300); // 300ms = bon compromis fluidité/précision
     
   } else {
     // Carte désactivée : reset ombre
@@ -693,7 +694,6 @@ function toggleCategory(id) {
     card.classList.add("shadow-lg");
   }
 }
-
 // ===== Modal =====
 const modal = document.getElementById('imageModal');
 const modalImg = document.getElementById('modalImg');
