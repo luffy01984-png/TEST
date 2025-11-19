@@ -660,7 +660,7 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
       <span class="text-red-600">Pause</span> Détente
     </h2>
     <p class="text-gray-600 mb-4 text-sm">
-      Tapez sur le jeu pour voler ! (Ne bloque pas le site)
+      Tapez sur le jeu pour voler !
     </p>
     
     <div class="relative inline-block w-full max-w-[350px] rounded-xl overflow-hidden border-4 border-gray-800 shadow-inner bg-gray-800 select-none" style="touch-action: none; -webkit-tap-highlight-color: transparent;">
@@ -683,27 +683,30 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
 
 <script>
 // ==================================================
-// 1. NETTOYAGE DU CHARGEMENT (Règle le bug de latence)
+// 1. CORRECTIF SCROLL & HEADER (C'est ici que ça se joue)
 // ==================================================
-// On s'assure que rien ne bloque le scroll au chargement
-document.documentElement.style.overflow = 'auto';
-document.body.style.overflow = 'auto';
 
-// Si un splash screen existe encore dans le HTML, on le cache immédiatement
+// On supprime toute contrainte de scroll qui casserait le menu "Sticky"
+// On met '' (vide) au lieu de 'auto' pour laisser le navigateur gérer le header
+document.documentElement.style.overflow = '';
+document.body.style.overflow = '';
+
+// On cache le vieux splash screen s'il existe encore
 const oldSplash = document.getElementById('splash');
-if(oldSplash) oldSplash.style.display = 'none';
-
+if(oldSplash) {
+    oldSplash.style.display = 'none';
+    oldSplash.style.opacity = '0';
+}
 
 // ==================================================
-// 2. FONCTIONNALITÉS DU SITE (Menus, Accordeon)
+// 2. FONCTIONNALITÉS DU SITE
 // ==================================================
 
-// Toggle Categories (Version optimisée)
+// Toggle Categories
 function toggleCategory(id) {
   const section = document.getElementById(id);
   const card = document.querySelector(`div[onclick="toggleCategory('${id}')"]`);
   
-  // Ferme les autres
   document.querySelectorAll('.partner-content').forEach(item => {
     if (item.id !== id) {
       item.classList.remove('active');
@@ -712,13 +715,11 @@ function toggleCategory(id) {
     }
   });
   
-  // Reset ombres
   document.querySelectorAll('.category-card').forEach(c => {
     c.classList.remove("shadow-xl", "shadow-red-500/50");
     c.classList.add("shadow-lg");
   });
   
-  // Bascule état
   const opening = !section.classList.contains('active');
   if (opening) {
     section.classList.add('active');
@@ -728,7 +729,6 @@ function toggleCategory(id) {
     if(card) {
       card.classList.remove("shadow-lg");
       card.classList.add("shadow-xl", "shadow-red-500/50");
-      // Scroll doux vers la carte
       setTimeout(() => {
          const offset = card.getBoundingClientRect().top + window.scrollY - 120;
          window.scrollTo({ top: offset, behavior: 'smooth' });
@@ -793,13 +793,12 @@ if(modal) {
   if(closeModalBtn) closeModalBtn.addEventListener('click', () => modal.classList.remove('active'));
 }
 
-
 // ==================================================
-// 3. JEU FLAPPY BIRD (ISOLÉ)
+// 3. JEU FLAPPY BIRD (ISOLÉ ET NON BLOQUANT)
 // ==================================================
 (function() {
   const cvs = document.getElementById("birdCanvas");
-  if(!cvs) return; // Sécurité
+  if(!cvs) return; 
   
   const ctx = cvs.getContext("2d");
   const overlay = document.getElementById("gameOverlay");
@@ -809,10 +808,8 @@ if(modal) {
   let score = 0;
   let gameState = { current: 0, getReady: 0, game: 1, over: 2 };
 
-  // Gestion des actions du jeu
   function action(e) {
-    // Si c'est un événement tactile ou clic, on empêche la propagation
-    // pour ne pas déclencher de scroll ou de clic ailleurs
+    // Empêche la propagation aux éléments parents (fixe le bug du mailto)
     if(e && e.type !== 'keydown') {
         e.preventDefault();
         e.stopPropagation();
@@ -839,15 +836,13 @@ if(modal) {
     }
   }
 
-  // Écouteurs d'événements uniquement sur le canvas
   cvs.addEventListener("mousedown", action);
   cvs.addEventListener("touchstart", action, {passive: false});
 
-  // Touche espace (optionnelle)
   window.addEventListener("keydown", (e) => {
     if(e.code === "Space") {
-      // Vérifie si le canvas est visible à l'écran pour éviter de bloquer le scroll inutilement
       const rect = cvs.getBoundingClientRect();
+      // Ne saute que si le jeu est visible à l'écran
       if(rect.top >= 0 && rect.bottom <= window.innerHeight) {
          e.preventDefault();
          action(e);
@@ -855,7 +850,6 @@ if(modal) {
     }
   });
 
-  // Objets Jeu
   const bird = {
     x: 50, y: 150, w: 30, h: 24, speed: 0, gravity: 0.25, jump: 4.6,
     draw: function() {
@@ -884,9 +878,9 @@ if(modal) {
       for(let i = 0; i < this.position.length; i++) {
         let p = this.position[i];
         ctx.fillStyle = "#4b5563"; 
-        ctx.fillRect(p.x, p.y, this.w, this.h); // Haut
-        ctx.fillRect(p.x, p.y + this.h + this.gap, this.w, this.h); // Bas
-        ctx.fillStyle = "#1f2937"; // Détails
+        ctx.fillRect(p.x, p.y, this.w, this.h); 
+        ctx.fillRect(p.x, p.y + this.h + this.gap, this.w, this.h); 
+        ctx.fillStyle = "#1f2937"; 
         ctx.fillRect(p.x-2, p.y+this.h-20, this.w+4, 20);
         ctx.fillRect(p.x-2, p.y+this.h+this.gap, this.w+4, 20);
       }
@@ -915,11 +909,9 @@ if(modal) {
 
   function loop() {
     bird.update(); pipes.update();
-    // Draw Background
     ctx.fillStyle = "#70c5ce"; ctx.fillRect(0, 0, cvs.width, cvs.height);
     ctx.fillStyle = "#dedede"; ctx.fillRect(0, cvs.height - 10, cvs.width, 10);
     pipes.draw(); bird.draw();
-    
     if(gameState.current == gameState.game) {
        ctx.fillStyle = "#FFF"; ctx.strokeStyle = "#000"; ctx.lineWidth = 2;
        ctx.font = "35px Impact"; ctx.fillText(score, cvs.width/2 - 10, 50); ctx.strokeText(score, cvs.width/2 - 10, 50);
