@@ -654,21 +654,44 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
 </div>
 </section>
 
+<section id="game-section" class="max-w-4xl mx-auto py-8 px-2 text-center mt-8 mb-12">
+  <div class="bg-white rounded-2xl shadow-xl p-4 border-t-4 border-red-600">
+    <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-4 flex justify-center items-center gap-2">
+      <span class="text-red-600">Pause</span> Détente
+    </h2>
+    <p class="text-gray-600 mb-4 text-sm md:text-base">
+      Tapez sur l'écran pour voler !<br>
+    </p>
+    
+    <div class="relative inline-block w-full max-w-[350px] rounded-xl overflow-hidden border-4 border-gray-800 shadow-inner bg-gray-800" style="touch-action: none;">
+      <canvas id="birdCanvas" width="320" height="480" class="w-full h-auto bg-sky-300 cursor-pointer block select-none"></canvas>
+      
+      <div id="gameOverlay" class="absolute inset-0 flex flex-col items-center justify-center bg-black/70 text-white pointer-events-none z-20">
+        <h3 class="text-3xl font-bold mb-2 tracking-widest" id="overlayTitle">START</h3>
+        <div class="w-16 h-1 bg-red-600 mb-4"></div>
+        <p class="text-lg animate-pulse font-mono">Taper pour jouer</p>
+        <p class="text-sm mt-6 text-gray-300 font-mono">Score: <span id="scoreDisplay">0</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="bg-gray-900 text-white text-center py-8 mt-auto">
+  <div class="max-w-7xl mx-auto px-4">
+    <p class="text-sm text-gray-400">© 2024 CSE Renault Trucks Bourg-en-Bresse.</p>
+  </div>
+</footer>
+
 <script>
-// ===== Splash screen avec option =====
-const SPLASH_ENABLED = false; // ← Mets à true pour réactiver le splashscreen
+// ===== Splash screen =====
+const SPLASH_ENABLED = true;
 
 document.addEventListener('DOMContentLoaded', () => {
   const splash = document.getElementById('splash');
-
   if (!SPLASH_ENABLED) {
-    // Désactivation temporaire : on masque directement
     splash.style.display = 'none';
-    document.body.style.overflow = 'auto';
     return;
   }
-
-  // Version active du splashscreen
   document.body.style.overflow = 'hidden';
   setTimeout(() => {
     splash.style.opacity = '0';
@@ -679,59 +702,238 @@ document.addEventListener('DOMContentLoaded', () => {
   }, 3000);
 });
 
-
-// ===== Toggle categories fluide et responsive =====
+// ===== Toggle categories =====
 function toggleCategory(id) {
   const section = document.getElementById(id);
-  const card = document.querySelector(`[onclick="toggleCategory('${id}')"]`);
+  const card = document.querySelector(`div[onclick="toggleCategory('${id}')"]`);
   
-  // Fermer toutes les autres catégories
   document.querySelectorAll('.partner-content').forEach(item => {
     if (item.id !== id) {
       item.classList.remove('active');
+      item.style.marginTop = "0";
+      item.style.maxHeight = null;
     }
   });
   
-  // Reset des ombres sur toutes les cartes
   document.querySelectorAll('.category-card').forEach(cardEl => {
     cardEl.classList.remove("shadow-red-500/50", "shadow-xl");
     cardEl.classList.add("shadow-lg");
   });
   
   const opening = !section.classList.contains('active');
-  section.classList.toggle('active');
   
   if (opening) {
-    // Carte active : ajouter ombre spéciale
-    card.classList.remove("shadow-lg");
-    card.classList.add("shadow-xl", "shadow-red-500/50");
-    
-    // Attendre que TOUTES les transitions soient terminées (fermeture + ouverture)
-    setTimeout(() => {
-      const header = document.querySelector('header');
-      const headerHeight = header ? header.offsetHeight : 0;
-      
-      // Position de la CARTE (pas du contenu)
-      const cardTop = card.getBoundingClientRect().top + window.scrollY;
-      
-      // Scroll pour que la carte soit visible sous le header
-      const scrollTarget = cardTop - headerHeight - 20; // 20px de marge
-      
-      window.scrollTo({ 
-        top: Math.max(0, scrollTarget), 
-        behavior: 'smooth' 
-      });
-    }, 600); // Augmenté à 600ms pour laisser le temps aux transitions CSS (0.5s max-height + marge)
-    
+    section.classList.add('active');
+    section.style.marginTop = "1rem";
+    setTimeout(() => { section.style.maxHeight = "5000px"; }, 10);
+
+    if(card) {
+        card.classList.remove("shadow-lg");
+        card.classList.add("shadow-xl", "shadow-red-500/50");
+        setTimeout(() => {
+            const header = document.querySelector('header');
+            const headerHeight = header ? header.offsetHeight : 0;
+            const cardTop = card.getBoundingClientRect().top + window.scrollY;
+            window.scrollTo({ top: Math.max(0, cardTop - headerHeight - 20), behavior: 'smooth' });
+        }, 300);
+    }
   } else {
-    // Carte désactivée : reset ombre
-    card.classList.remove("shadow-xl", "shadow-red-500/50");
-    card.classList.add("shadow-lg");
+    section.classList.remove('active');
+    section.style.marginTop = "0";
+    section.style.maxHeight = null;
   }
 }
 
+// --- SCRIPT JEU FLAPPY BIRD MOBILE OPTIMISÉ ---
+const cvs = document.getElementById("birdCanvas");
+const ctx = cvs.getContext("2d");
+const overlay = document.getElementById("gameOverlay");
+const overlayTitle = document.getElementById("overlayTitle");
+const scoreDisplay = document.getElementById("scoreDisplay");
 
-// ===== Modal =====
+let frames = 0;
+let score = 0;
+let gameState = { current: 0, getReady: 0, game: 1, over: 2 };
+
+function action(e) {
+  // Empêche le double déclenchement sur certains appareils
+  if (e && e.cancelable) e.preventDefault();
+  
+  switch(gameState.current) {
+    case gameState.getReady:
+      gameState.current = gameState.game;
+      overlay.style.display = "none";
+      break;
+    case gameState.game:
+      bird.flap();
+      break;
+    case gameState.over:
+      resetGame();
+      break;
+  }
+}
+
+// Gestionnaire Souris (PC)
+cvs.addEventListener("click", action);
+
+// Gestionnaire Tactile (Mobile) - Plus réactif que click
+cvs.addEventListener("touchstart", (e) => {
+    action(e); // Passe l'événement pour le preventDefault
+}, {passive: false});
+
+// Gestionnaire Clavier (Espace)
+window.addEventListener("keydown", (e) => {
+  if(e.code === "Space") {
+    e.preventDefault();
+    action();
+  }
+});
+
+// OISEAU (Camion)
+const bird = {
+  x: 50, y: 150, w: 30, h: 24,
+  speed: 0, gravity: 0.25, jump: 4.6,
+  
+  draw: function() {
+    ctx.fillStyle = "#dc2626"; 
+    ctx.fillRect(this.x, this.y, this.w, this.h);
+    ctx.fillStyle = "#FFF"; 
+    ctx.fillRect(this.x + 20, this.y + 2, 8, 10);
+    ctx.fillStyle = "#000"; 
+    ctx.beginPath();
+    ctx.arc(this.x + 8, this.y + 24, 5, 0, Math.PI*2);
+    ctx.arc(this.x + 24, this.y + 24, 5, 0, Math.PI*2);
+    ctx.fill();
+  },
+  
+  flap: function() { this.speed = -this.jump; },
+  
+  update: function() {
+    if(gameState.current == gameState.getReady) {
+      this.y = 150; 
+    } else {
+      this.speed += this.gravity;
+      this.y += this.speed;
+    }
+
+    if(this.y + this.h >= cvs.height - 10) { 
+      this.y = cvs.height - 10 - this.h;
+      if(gameState.current == gameState.game) {
+        gameState.current = gameState.over;
+        showGameOver();
+      }
+    }
+    
+    if(this.y < 0) {
+      this.y = 0;
+      this.speed = 0;
+    }
+  },
+  
+  reset: function() {
+    this.speed = 0;
+    this.y = 150;
+  }
+}
+
+// TUYAUX
+const pipes = {
+  position: [], w: 50, h: 400, gap: 110, dx: 2, // Gap légèrement augmenté pour mobile
+  
+  draw: function() {
+    for(let i = 0; i < this.position.length; i++) {
+      let p = this.position[i];
+      let topY = p.y;
+      let bottomY = p.y + this.h + this.gap;
+      
+      ctx.fillStyle = "#4b5563"; 
+      ctx.fillRect(p.x, topY, this.w, this.h);
+      ctx.fillRect(p.x, bottomY, this.w, this.h);
+      
+      ctx.fillStyle = "#1f2937"; 
+      ctx.fillRect(p.x - 2, topY + this.h - 20, this.w + 4, 20); 
+      ctx.fillRect(p.x - 2, bottomY, this.w + 4, 20); 
+    }
+  },
+  
+  update: function() {
+    if(gameState.current !== gameState.game) return;
+    
+    if(frames % 120 == 0) {
+      this.position.push({
+        x: cvs.width,
+        y: -150 * (Math.random() + 1)
+      });
+    }
+    
+    for(let i = 0; i < this.position.length; i++) {
+      let p = this.position[i];
+      p.x -= this.dx;
+      
+      if(bird.x + bird.w > p.x && bird.x < p.x + this.w && 
+         (bird.y < p.y + this.h || bird.y + bird.h > p.y + this.h + this.gap)) {
+           gameState.current = gameState.over;
+           showGameOver();
+      }
+      
+      if(p.x + this.w <= 0) {
+        this.position.shift();
+        score += 1;
+        scoreDisplay.innerText = score;
+      }
+    }
+  },
+  
+  reset: function() { this.position = []; }
+}
+
+function draw() {
+  ctx.fillStyle = "#70c5ce";
+  ctx.fillRect(0, 0, cvs.width, cvs.height);
+  ctx.fillStyle = "#dedede";
+  ctx.fillRect(0, cvs.height - 10, cvs.width, 10);
+  
+  pipes.draw();
+  bird.draw();
+  
+  if(gameState.current == gameState.game) {
+      ctx.fillStyle = "#FFF";
+      ctx.strokeStyle = "#000";
+      ctx.lineWidth = 2;
+      ctx.font = "35px Impact";
+      ctx.fillText(score, cvs.width/2 - 10, 50);
+      ctx.strokeText(score, cvs.width/2 - 10, 50);
+  }
+}
+
+function loop() {
+  bird.update();
+  pipes.update();
+  draw();
+  frames++;
+  requestAnimationFrame(loop);
+}
+
+function showGameOver() {
+  overlay.style.display = "flex";
+  overlayTitle.innerText = "PERDU !";
+  overlayTitle.classList.add("text-red-500");
+}
+
+function resetGame() {
+  bird.reset();
+  pipes.reset();
+  score = 0;
+  scoreDisplay.innerText = score;
+  frames = 0;
+  gameState.current = gameState.getReady;
+  overlayTitle.innerText = "RENAULT BIRD";
+  overlayTitle.classList.remove("text-red-500");
+}
+
+loop();
+
+// ===== Modal & Autres =====
 const modal = document.getElementById('imageModal');
 const modalImg = document.getElementById('modalImg');
 const closeModalBtn = modal.querySelector('button');
@@ -751,104 +953,50 @@ modalImg.addEventListener('click', closeModal);
 closeModalBtn.addEventListener('click', closeModal);
 modal.addEventListener('click', (e) => { if(e.target === modal) closeModal(); });
 window.addEventListener('popstate', () => { if(modal.classList.contains('active')) closeModal(); });
-  // PWA install banner
+
+// ===== Install Banner =====
+// (Code PWA existant conservé ici si nécessaire, raccourci pour clarté)
 let deferredPrompt;
 const installBanner = document.createElement('div');
-installBanner.style.cssText =
-  `position: fixed;
-   bottom: 20px; left: 20px; right: 20px;
-   background: #dc2626;
-   color: #fff;
-   padding: 12px 20px;
-   border-radius: 12px;
-   text-align: center;
-   font-weight: bold;
-   z-index: 10001;
-   cursor: pointer;
-   box-shadow: 0 4px 12px rgba(0,0,0,0.3);`;
-installBanner.textContent = "Installer l'application sur votre écran d'accueil";
-installBanner.style.display = 'none';
-
+installBanner.style.cssText = `position: fixed; bottom: 20px; left: 20px; right: 20px; background: #dc2626; color: #fff; padding: 12px; border-radius: 12px; text-align: center; font-weight: bold; z-index: 10001; display: none; cursor: pointer;`;
+installBanner.textContent = "Installer l'appli";
 document.body.appendChild(installBanner);
+window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredPrompt = e; if (!window.matchMedia('(display-mode: standalone)').matches) installBanner.style.display = 'block'; });
+installBanner.addEventListener('click', async () => { installBanner.style.display = 'none'; deferredPrompt.prompt(); });
 
-window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
-
-  // Ne pas afficher si déjà installé
-  if (!window.matchMedia('(display-mode: standalone)').matches) {
-    installBanner.style.display = 'block';
-  }
-});
-
-installBanner.addEventListener('click', async () => {
-  installBanner.style.display = 'none';
-  deferredPrompt.prompt();
-  await deferredPrompt.userChoice;
-  deferredPrompt = null;
-});
-
-window.addEventListener('appinstalled', () => {
-  installBanner.style.display = 'none';
-});
-
-// ===== Menu Partenaires / Mentions =====
+// ===== Menu =====
 document.querySelectorAll('nav a').forEach(link => {
   link.classList.add('nav-link');
   link.addEventListener('click', (e) => {
     e.preventDefault();
-    document.querySelectorAll('.nav-link').forEach(l => {
-      l.classList.remove('text-white');
-      l.classList.add('text-gray-400');
-      l.style.backgroundColor = 'transparent';
-      l.style.padding = '0';
-      l.style.borderRadius = '0';
-    });
-    link.classList.remove('text-gray-400');
-    link.classList.add('text-white');
-    link.style.backgroundColor = '#dc2626';
-    link.style.padding = '0.25rem 0.75rem';
-    link.style.borderRadius = '9999px';
-
-    if(link.textContent.includes("Partenaires")) {
-      document.getElementById('categories').scrollIntoView({behavior: 'smooth'});
-    } else if(link.textContent.includes("Mentions")) {
-      document.getElementById('mentions').scrollIntoView({behavior: 'smooth'});
-    }
+    document.querySelectorAll('.nav-link').forEach(l => { l.classList.remove('text-white'); l.classList.add('text-gray-400'); l.style.backgroundColor = 'transparent'; l.style.padding = '0'; });
+    link.classList.remove('text-gray-400'); link.classList.add('text-white'); link.style.backgroundColor = '#dc2626'; link.style.padding = '0.25rem 0.75rem';
+    if(link.textContent.includes("Partenaires")) document.getElementById('categories').scrollIntoView({behavior: 'smooth'});
+    else if(link.textContent.includes("Mentions")) document.getElementById('mentions').scrollIntoView({behavior: 'smooth'});
   });
 });
 
-// ===== Badge automatique nombre de partenaires =====
 document.querySelectorAll('.category-card').forEach(card => {
-  const id = card.getAttribute('onclick')?.match(/'(.+?)'/)?.[1];
-  if(id) {
-    const count = document.getElementById(id)?.querySelectorAll('.partner-link').length || 0;
-    const badge = document.createElement('div');
-    badge.className = "absolute top-2 right-2 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded-full shadow";
-    badge.textContent = count + " Partenaire" + (count > 1 ? "s" : "");
-    card.appendChild(badge);
+  const onclickAttr = card.getAttribute('onclick');
+  if(onclickAttr) {
+      const id = onclickAttr.match(/'(.+?)'/)?.[1];
+      if(id) {
+        const count = document.getElementById(id)?.querySelectorAll('.partner-link').length || 0;
+        const badge = document.createElement('div');
+        badge.className = "absolute top-2 right-2 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded-full shadow";
+        badge.textContent = count + (count > 1 ? " Partenaires" : " Partenaire");
+        card.appendChild(badge);
+      }
   }
 });
 
-// ===== Accordion =====
 document.querySelectorAll(".accordion-btn").forEach(btn => {
   btn.addEventListener("click", () => {
     const content = btn.nextElementSibling;
     const arrow = btn.querySelector(".arrow");
-
     document.querySelectorAll(".accordion-btn").forEach(b => { if(b !== btn) b.classList.remove("active"); });
-
-    if(content.classList.contains("open")) { 
-      content.style.maxHeight = null; 
-      content.classList.remove("open"); 
-      arrow.classList.remove("rotate"); 
-      btn.classList.remove("active");
-    } else { 
-      content.classList.add("open"); 
-      arrow.classList.add("rotate"); 
-      btn.classList.add("active");
-      requestAnimationFrame(() => { content.style.maxHeight = content.scrollHeight + "px"; }); 
-    }
+    if(content.classList.contains("open")) { content.style.maxHeight = null; content.classList.remove("open"); arrow.classList.remove("rotate"); btn.classList.remove("active"); }
+    else { content.classList.add("open"); arrow.classList.add("rotate"); btn.classList.add("active"); requestAnimationFrame(() => { content.style.maxHeight = content.scrollHeight + "px"; }); }
   });
 });
 </script>
