@@ -644,27 +644,27 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
   </div>
 
   <button class="accordion-btn">6. Contact <span class="arrow">▶</span></button>
-<div class="accordion-content">
-  <p>
-    Pour toute demande, vous pouvez contacter l’équipe du CSE par e-mail 
-    <a href="mailto:cserenaulttrucks@gmail.com" style="color: red; font-weight: bold;">
-      cserenaulttrucks@gmail.com
-    </a>
-  </p>
-</div>
-</section>
+  <div class="accordion-content">
+    <p>
+      Pour toute demande, vous pouvez contacter l’équipe du CSE par e-mail 
+      <a href="mailto:cserenaulttrucks@gmail.com" style="color: red; font-weight: bold;">
+        cserenaulttrucks@gmail.com
+      </a> </p>
+  </div>
+</section> <div class="h-12 w-full"></div>
 
-<section id="game-section" class="max-w-4xl mx-auto py-8 px-2 text-center mt-8 mb-12">
+<section id="game-section" class="max-w-4xl mx-auto py-8 px-2 text-center mb-12 relative z-10">
   <div class="bg-white rounded-2xl shadow-xl p-4 border-t-4 border-red-600">
     <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-4 flex justify-center items-center gap-2">
       <span class="text-red-600">Pause</span> Détente
     </h2>
-    <p class="text-gray-600 mb-4 text-sm md:text-base">
-      Tapez sur l'écran pour voler !<br>
+    <p class="text-gray-600 mb-4 text-sm">
+      Tapez sur le jeu pour voler !<br>
     </p>
     
-    <div class="relative inline-block w-full max-w-[350px] rounded-xl overflow-hidden border-4 border-gray-800 shadow-inner bg-gray-800" style="touch-action: none;">
-      <canvas id="birdCanvas" width="320" height="480" class="w-full h-auto bg-sky-300 cursor-pointer block select-none"></canvas>
+    <div class="relative inline-block w-full max-w-[350px] rounded-xl overflow-hidden border-4 border-gray-800 shadow-inner bg-gray-800 select-none" style="touch-action: none; -webkit-tap-highlight-color: transparent;">
+      
+      <canvas id="birdCanvas" width="320" height="480" class="w-full h-auto bg-sky-300 cursor-pointer block outline-none"></canvas>
       
       <div id="gameOverlay" class="absolute inset-0 flex flex-col items-center justify-center bg-black/70 text-white pointer-events-none z-20">
         <h3 class="text-3xl font-bold mb-2 tracking-widest" id="overlayTitle">START</h3>
@@ -676,7 +676,7 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
   </div>
 </section>
 
-<footer class="bg-gray-900 text-white text-center py-8 mt-auto">
+<footer class="bg-gray-900 text-white text-center py-8 mt-auto relative z-10">
   <div class="max-w-7xl mx-auto px-4">
     <p class="text-sm text-gray-400">© 2024 CSE Renault Trucks Bourg-en-Bresse.</p>
   </div>
@@ -705,6 +705,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // ===== Toggle categories =====
 function toggleCategory(id) {
   const section = document.getElementById(id);
+  // Correction sélecteur stricte
   const card = document.querySelector(`div[onclick="toggleCategory('${id}')"]`);
   
   document.querySelectorAll('.partner-content').forEach(item => {
@@ -744,194 +745,195 @@ function toggleCategory(id) {
   }
 }
 
-// --- SCRIPT JEU FLAPPY BIRD MOBILE OPTIMISÉ ---
-const cvs = document.getElementById("birdCanvas");
-const ctx = cvs.getContext("2d");
-const overlay = document.getElementById("gameOverlay");
-const overlayTitle = document.getElementById("overlayTitle");
-const scoreDisplay = document.getElementById("scoreDisplay");
+// --- SCRIPT JEU FLAPPY BIRD (Isolé du reste) ---
+(function() {
+  const cvs = document.getElementById("birdCanvas");
+  const ctx = cvs.getContext("2d");
+  const overlay = document.getElementById("gameOverlay");
+  const overlayTitle = document.getElementById("overlayTitle");
+  const scoreDisplay = document.getElementById("scoreDisplay");
 
-let frames = 0;
-let score = 0;
-let gameState = { current: 0, getReady: 0, game: 1, over: 2 };
+  let frames = 0;
+  let score = 0;
+  let gameState = { current: 0, getReady: 0, game: 1, over: 2 };
 
-function action(e) {
-  // Empêche le double déclenchement sur certains appareils
-  if (e && e.cancelable) e.preventDefault();
-  
-  switch(gameState.current) {
-    case gameState.getReady:
-      gameState.current = gameState.game;
-      overlay.style.display = "none";
-      break;
-    case gameState.game:
-      bird.flap();
-      break;
-    case gameState.over:
-      resetGame();
-      break;
-  }
-}
-
-// Gestionnaire Souris (PC)
-cvs.addEventListener("click", action);
-
-// Gestionnaire Tactile (Mobile) - Plus réactif que click
-cvs.addEventListener("touchstart", (e) => {
-    action(e); // Passe l'événement pour le preventDefault
-}, {passive: false});
-
-// Gestionnaire Clavier (Espace)
-window.addEventListener("keydown", (e) => {
-  if(e.code === "Space") {
-    e.preventDefault();
-    action();
-  }
-});
-
-// OISEAU (Camion)
-const bird = {
-  x: 50, y: 150, w: 30, h: 24,
-  speed: 0, gravity: 0.25, jump: 4.6,
-  
-  draw: function() {
-    ctx.fillStyle = "#dc2626"; 
-    ctx.fillRect(this.x, this.y, this.w, this.h);
-    ctx.fillStyle = "#FFF"; 
-    ctx.fillRect(this.x + 20, this.y + 2, 8, 10);
-    ctx.fillStyle = "#000"; 
-    ctx.beginPath();
-    ctx.arc(this.x + 8, this.y + 24, 5, 0, Math.PI*2);
-    ctx.arc(this.x + 24, this.y + 24, 5, 0, Math.PI*2);
-    ctx.fill();
-  },
-  
-  flap: function() { this.speed = -this.jump; },
-  
-  update: function() {
-    if(gameState.current == gameState.getReady) {
-      this.y = 150; 
-    } else {
-      this.speed += this.gravity;
-      this.y += this.speed;
-    }
-
-    if(this.y + this.h >= cvs.height - 10) { 
-      this.y = cvs.height - 10 - this.h;
-      if(gameState.current == gameState.game) {
-        gameState.current = gameState.over;
-        showGameOver();
-      }
+  function action(e) {
+    // Empêche absolument toute propagation vers les éléments parents (comme les liens mailto)
+    if(e) {
+      e.preventDefault();
+      e.stopPropagation();
     }
     
-    if(this.y < 0) {
-      this.y = 0;
+    switch(gameState.current) {
+      case gameState.getReady:
+        gameState.current = gameState.game;
+        overlay.style.display = "none";
+        break;
+      case gameState.game:
+        bird.flap();
+        break;
+      case gameState.over:
+        resetGame();
+        break;
+    }
+  }
+
+  // Événements Tactiles et Souris
+  // Utilisation de 'touchstart' avec passive: false pour garantir que preventDefault fonctionne
+  cvs.addEventListener("touchstart", action, {passive: false});
+  cvs.addEventListener("mousedown", action);
+
+  window.addEventListener("keydown", (e) => {
+    if(e.code === "Space") {
+      e.preventDefault();
+      action();
+    }
+  });
+
+  // OISEAU
+  const bird = {
+    x: 50, y: 150, w: 30, h: 24,
+    speed: 0, gravity: 0.25, jump: 4.6,
+    
+    draw: function() {
+      ctx.fillStyle = "#dc2626"; 
+      ctx.fillRect(this.x, this.y, this.w, this.h);
+      ctx.fillStyle = "#FFF"; 
+      ctx.fillRect(this.x + 20, this.y + 2, 8, 10);
+      ctx.fillStyle = "#000"; 
+      ctx.beginPath();
+      ctx.arc(this.x + 8, this.y + 24, 5, 0, Math.PI*2);
+      ctx.arc(this.x + 24, this.y + 24, 5, 0, Math.PI*2);
+      ctx.fill();
+    },
+    
+    flap: function() { this.speed = -this.jump; },
+    
+    update: function() {
+      if(gameState.current == gameState.getReady) {
+        this.y = 150; 
+      } else {
+        this.speed += this.gravity;
+        this.y += this.speed;
+      }
+
+      if(this.y + this.h >= cvs.height - 10) { 
+        this.y = cvs.height - 10 - this.h;
+        if(gameState.current == gameState.game) {
+          gameState.current = gameState.over;
+          showGameOver();
+        }
+      }
+      
+      if(this.y < 0) {
+        this.y = 0;
+        this.speed = 0;
+      }
+    },
+    
+    reset: function() {
       this.speed = 0;
+      this.y = 150;
     }
-  },
-  
-  reset: function() {
-    this.speed = 0;
-    this.y = 150;
   }
-}
 
-// TUYAUX
-const pipes = {
-  position: [], w: 50, h: 400, gap: 110, dx: 2, // Gap légèrement augmenté pour mobile
-  
-  draw: function() {
-    for(let i = 0; i < this.position.length; i++) {
-      let p = this.position[i];
-      let topY = p.y;
-      let bottomY = p.y + this.h + this.gap;
-      
-      ctx.fillStyle = "#4b5563"; 
-      ctx.fillRect(p.x, topY, this.w, this.h);
-      ctx.fillRect(p.x, bottomY, this.w, this.h);
-      
-      ctx.fillStyle = "#1f2937"; 
-      ctx.fillRect(p.x - 2, topY + this.h - 20, this.w + 4, 20); 
-      ctx.fillRect(p.x - 2, bottomY, this.w + 4, 20); 
-    }
-  },
-  
-  update: function() {
-    if(gameState.current !== gameState.game) return;
+  // TUYAUX
+  const pipes = {
+    position: [], w: 50, h: 400, gap: 115, dx: 2,
     
-    if(frames % 120 == 0) {
-      this.position.push({
-        x: cvs.width,
-        y: -150 * (Math.random() + 1)
-      });
-    }
+    draw: function() {
+      for(let i = 0; i < this.position.length; i++) {
+        let p = this.position[i];
+        let topY = p.y;
+        let bottomY = p.y + this.h + this.gap;
+        
+        ctx.fillStyle = "#4b5563"; 
+        ctx.fillRect(p.x, topY, this.w, this.h);
+        ctx.fillRect(p.x, bottomY, this.w, this.h);
+        
+        ctx.fillStyle = "#1f2937"; 
+        ctx.fillRect(p.x - 2, topY + this.h - 20, this.w + 4, 20); 
+        ctx.fillRect(p.x - 2, bottomY, this.w + 4, 20); 
+      }
+    },
     
-    for(let i = 0; i < this.position.length; i++) {
-      let p = this.position[i];
-      p.x -= this.dx;
+    update: function() {
+      if(gameState.current !== gameState.game) return;
       
-      if(bird.x + bird.w > p.x && bird.x < p.x + this.w && 
-         (bird.y < p.y + this.h || bird.y + bird.h > p.y + this.h + this.gap)) {
-           gameState.current = gameState.over;
-           showGameOver();
+      if(frames % 120 == 0) {
+        this.position.push({
+          x: cvs.width,
+          y: -150 * (Math.random() + 1)
+        });
       }
       
-      if(p.x + this.w <= 0) {
-        this.position.shift();
-        score += 1;
-        scoreDisplay.innerText = score;
+      for(let i = 0; i < this.position.length; i++) {
+        let p = this.position[i];
+        p.x -= this.dx;
+        
+        if(bird.x + bird.w > p.x && bird.x < p.x + this.w && 
+           (bird.y < p.y + this.h || bird.y + bird.h > p.y + this.h + this.gap)) {
+             gameState.current = gameState.over;
+             showGameOver();
+        }
+        
+        if(p.x + this.w <= 0) {
+          this.position.shift();
+          score += 1;
+          scoreDisplay.innerText = score;
+        }
       }
-    }
-  },
-  
-  reset: function() { this.position = []; }
-}
-
-function draw() {
-  ctx.fillStyle = "#70c5ce";
-  ctx.fillRect(0, 0, cvs.width, cvs.height);
-  ctx.fillStyle = "#dedede";
-  ctx.fillRect(0, cvs.height - 10, cvs.width, 10);
-  
-  pipes.draw();
-  bird.draw();
-  
-  if(gameState.current == gameState.game) {
-      ctx.fillStyle = "#FFF";
-      ctx.strokeStyle = "#000";
-      ctx.lineWidth = 2;
-      ctx.font = "35px Impact";
-      ctx.fillText(score, cvs.width/2 - 10, 50);
-      ctx.strokeText(score, cvs.width/2 - 10, 50);
+    },
+    
+    reset: function() { this.position = []; }
   }
-}
 
-function loop() {
-  bird.update();
-  pipes.update();
-  draw();
-  frames++;
-  requestAnimationFrame(loop);
-}
+  function draw() {
+    ctx.fillStyle = "#70c5ce";
+    ctx.fillRect(0, 0, cvs.width, cvs.height);
+    ctx.fillStyle = "#dedede";
+    ctx.fillRect(0, cvs.height - 10, cvs.width, 10);
+    
+    pipes.draw();
+    bird.draw();
+    
+    if(gameState.current == gameState.game) {
+        ctx.fillStyle = "#FFF";
+        ctx.strokeStyle = "#000";
+        ctx.lineWidth = 2;
+        ctx.font = "35px Impact";
+        ctx.fillText(score, cvs.width/2 - 10, 50);
+        ctx.strokeText(score, cvs.width/2 - 10, 50);
+    }
+  }
 
-function showGameOver() {
-  overlay.style.display = "flex";
-  overlayTitle.innerText = "PERDU !";
-  overlayTitle.classList.add("text-red-500");
-}
+  function loop() {
+    bird.update();
+    pipes.update();
+    draw();
+    frames++;
+    requestAnimationFrame(loop);
+  }
 
-function resetGame() {
-  bird.reset();
-  pipes.reset();
-  score = 0;
-  scoreDisplay.innerText = score;
-  frames = 0;
-  gameState.current = gameState.getReady;
-  overlayTitle.innerText = "RENAULT BIRD";
-  overlayTitle.classList.remove("text-red-500");
-}
+  function showGameOver() {
+    overlay.style.display = "flex";
+    overlayTitle.innerText = "PERDU !";
+    overlayTitle.classList.add("text-red-500");
+  }
 
-loop();
+  function resetGame() {
+    bird.reset();
+    pipes.reset();
+    score = 0;
+    scoreDisplay.innerText = score;
+    frames = 0;
+    gameState.current = gameState.getReady;
+    overlayTitle.innerText = "RENAULT BIRD";
+    overlayTitle.classList.remove("text-red-500");
+  }
+
+  loop();
+})();
 
 // ===== Modal & Autres =====
 const modal = document.getElementById('imageModal');
@@ -954,8 +956,8 @@ closeModalBtn.addEventListener('click', closeModal);
 modal.addEventListener('click', (e) => { if(e.target === modal) closeModal(); });
 window.addEventListener('popstate', () => { if(modal.classList.contains('active')) closeModal(); });
 
-// ===== Install Banner =====
-// (Code PWA existant conservé ici si nécessaire, raccourci pour clarté)
+// ===== Menu & Install Banner =====
+// (Code PWA simplifié)
 let deferredPrompt;
 const installBanner = document.createElement('div');
 installBanner.style.cssText = `position: fixed; bottom: 20px; left: 20px; right: 20px; background: #dc2626; color: #fff; padding: 12px; border-radius: 12px; text-align: center; font-weight: bold; z-index: 10001; display: none; cursor: pointer;`;
@@ -964,7 +966,6 @@ document.body.appendChild(installBanner);
 window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredPrompt = e; if (!window.matchMedia('(display-mode: standalone)').matches) installBanner.style.display = 'block'; });
 installBanner.addEventListener('click', async () => { installBanner.style.display = 'none'; deferredPrompt.prompt(); });
 
-// ===== Menu =====
 document.querySelectorAll('nav a').forEach(link => {
   link.classList.add('nav-link');
   link.addEventListener('click', (e) => {
@@ -976,20 +977,7 @@ document.querySelectorAll('nav a').forEach(link => {
   });
 });
 
-document.querySelectorAll('.category-card').forEach(card => {
-  const onclickAttr = card.getAttribute('onclick');
-  if(onclickAttr) {
-      const id = onclickAttr.match(/'(.+?)'/)?.[1];
-      if(id) {
-        const count = document.getElementById(id)?.querySelectorAll('.partner-link').length || 0;
-        const badge = document.createElement('div');
-        badge.className = "absolute top-2 right-2 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded-full shadow";
-        badge.textContent = count + (count > 1 ? " Partenaires" : " Partenaire");
-        card.appendChild(badge);
-      }
-  }
-});
-
+// ===== Accordion =====
 document.querySelectorAll(".accordion-btn").forEach(btn => {
   btn.addEventListener("click", () => {
     const content = btn.nextElementSibling;
