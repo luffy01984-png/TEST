@@ -613,17 +613,17 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
 </section>
 
 <!-- Mentions légales -->
-<section id="mentions" class="bg-white shadow-inner p-6 mt-8 rounded-xl relative z-10">
+<section id="mentions" class="bg-white shadow-inner p-6 mt-8 rounded-xl">
   <h2 class="text-2xl font-bold text-red-600 mb-4">Mentions légales</h2>
 
   <button class="accordion-btn">1. Éditeur du site <span class="arrow">▶</span></button>
   <div class="accordion-content">
-    <p>Renault Trucks CSE Bourg-en-Bresse<br>Président du CSE et Administrateur du site : <strong>Arnaud Christian</strong></p>
+    <p>Renault Trucks CSE Bourg-en-Bresse<br>Président du CSE et Administrateur du site : <strong>Arnaud Christian</strong><br></p>
   </div>
 
   <button class="accordion-btn">2. Conception et Realisation <span class="arrow">▶</span></button>
   <div class="accordion-content">
-    <p><strong>Bouaraba Arab UEP8</strong> - Développement, conception graphique, intégration et maintenance du site.</p>
+    <p><strong>Bouaraba Arab UEP8</strong> - Développement, conception graphique, intégration et maintenance du site.
   </div>
 
   <button class="accordion-btn">3. Hébergement du site <span class="arrow">▶</span></button>
@@ -633,7 +633,9 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
 
   <button class="accordion-btn">4. Propriété intellectuelle <span class="arrow">▶</span></button>
   <div class="accordion-content">
-    <p>L’ensemble des éléments du site sont la propriété exclusive du CSE.</p>
+    <p>L’ensemble des éléments du site (textes, images, graphismes, logo, etc.) sont la propriété exclusive du
+    <strong>CSE Renault Trucks Bourg-en-Bresse</strong>, sauf mention contraire. Toute reproduction, distribution ou
+    modification sans autorisation écrite est interdite.</p>
   </div>
 
   <button class="accordion-btn">5. Protection des données <span class="arrow">▶</span></button>
@@ -642,143 +644,213 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
   </div>
 
   <button class="accordion-btn">6. Contact <span class="arrow">▶</span></button>
-  <div class="accordion-content">
-    <p>
-      Pour toute demande, vous pouvez contacter l’équipe du CSE par e-mail 
-      <a href="mailto:cserenaulttrucks@gmail.com" style="color: red; font-weight: bold;">
-        cserenaulttrucks@gmail.com
-      </a>
-    </p>
-  </div>
+<div class="accordion-content">
+  <p>
+    Pour toute demande, vous pouvez contacter l’équipe du CSE par e-mail 
+    <a href="mailto:cserenaulttrucks@gmail.com" style="color: red; font-weight: bold;">
+      cserenaulttrucks@gmail.com
+    </a>
+  </p>
+</div>
 </section>
-
-<div class="h-12 w-full bg-transparent"></div>
-
-<section id="game-section" class="max-w-4xl mx-auto py-8 px-2 text-center mb-12 relative z-10">
-  <div class="bg-white rounded-2xl shadow-xl p-4 border-t-4 border-red-600">
-    <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-4 flex justify-center items-center gap-2">
-      <span class="text-red-600">Pause</span> Détente
-    </h2>
-    <p class="text-gray-600 mb-4 text-sm">
-      Tapez sur le jeu pour voler !
-    </p>
-    
-    <div class="relative inline-block w-full max-w-[350px] rounded-xl overflow-hidden border-4 border-gray-800 shadow-inner bg-gray-800 select-none" style="touch-action: none; -webkit-tap-highlight-color: transparent;">
-      <canvas id="birdCanvas" width="320" height="480" class="w-full h-auto bg-sky-300 cursor-pointer block outline-none"></canvas>
-      
-      <div id="gameOverlay" class="absolute inset-0 flex flex-col items-center justify-center bg-black/70 text-white pointer-events-none z-20">
-        <h3 class="text-3xl font-bold mb-2 tracking-widest" id="overlayTitle">START</h3>
-        <p class="text-lg animate-pulse font-mono">Taper pour jouer</p>
-        <p class="text-sm mt-6 text-gray-300 font-mono">Score: <span id="scoreDisplay">0</span></p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<footer class="bg-gray-900 text-white text-center py-8 mt-auto relative z-10">
-  <div class="max-w-7xl mx-auto px-4">
-    <p class="text-sm text-gray-400">© 2024 CSE Renault Trucks Bourg-en-Bresse.</p>
-  </div>
-</footer>
 
 <script>
-// ==================================================
-// 1. CORRECTIF HEADER STICKY & SCROLL
-// ==================================================
+// ===== Splash screen avec option =====
+const SPLASH_ENABLED = false; // ← Mets à true pour réactiver le splashscreen
 
-// On force le reset de l'overflow pour que le position:sticky CSS fonctionne
-document.body.style.overflow = 'visible';
-document.body.style.overflowX = 'hidden'; // Juste horizontal caché pour mobile
-document.documentElement.style.overflow = 'visible';
+document.addEventListener('DOMContentLoaded', () => {
+  const splash = document.getElementById('splash');
 
-// Désactivation immédiate du splash screen s'il traîne
-const oldSplash = document.getElementById('splash');
-if(oldSplash) {
-    oldSplash.style.display = 'none';
-}
+  if (!SPLASH_ENABLED) {
+    // Désactivation temporaire : on masque directement
+    splash.style.display = 'none';
+    document.body.style.overflow = 'auto';
+    return;
+  }
 
-// ==================================================
-// 2. LOGIQUE CATÉGORIES (CORRIGÉE POUR LE HEADER)
-// ==================================================
+  // Version active du splashscreen
+  document.body.style.overflow = 'hidden';
+  setTimeout(() => {
+    splash.style.opacity = '0';
+    setTimeout(() => {
+      splash.style.display = 'none';
+      document.body.style.overflow = 'auto';
+    }, 800);
+  }, 3000);
+});
 
+
+// ===== Toggle categories fluide et responsive =====
 function toggleCategory(id) {
   const section = document.getElementById(id);
-  const card = document.querySelector(`div[onclick="toggleCategory('${id}')"]`);
-  const header = document.querySelector('header');
+  const card = document.querySelector(`[onclick="toggleCategory('${id}')"]`);
   
-  // Calcul de la hauteur du header pour le décalage (environ 100px)
-  const headerOffset = header ? header.offsetHeight + 20 : 100;
-  
-  // Ferme les autres
+  // Fermer toutes les autres catégories
   document.querySelectorAll('.partner-content').forEach(item => {
     if (item.id !== id) {
       item.classList.remove('active');
-      item.style.marginTop = "0";
-      item.style.maxHeight = null;
     }
   });
   
-  // Reset ombres
-  document.querySelectorAll('.category-card').forEach(c => {
-    c.classList.remove("shadow-xl", "shadow-red-500/50");
-    c.classList.add("shadow-lg");
+  // Reset des ombres sur toutes les cartes
+  document.querySelectorAll('.category-card').forEach(cardEl => {
+    cardEl.classList.remove("shadow-red-500/50", "shadow-xl");
+    cardEl.classList.add("shadow-lg");
   });
   
-  // Ouverture / Fermeture
   const opening = !section.classList.contains('active');
+  section.classList.toggle('active');
   
   if (opening) {
-    section.classList.add('active');
-    section.style.marginTop = "1rem";
-    // Petit délai pour laisser le CSS s'appliquer
-    setTimeout(() => { section.style.maxHeight = "5000px"; }, 10);
+    // Carte active : ajouter ombre spéciale
+    card.classList.remove("shadow-lg");
+    card.classList.add("shadow-xl", "shadow-red-500/50");
     
-    if(card) {
-      card.classList.remove("shadow-lg");
-      card.classList.add("shadow-xl", "shadow-red-500/50");
+    // Attendre que TOUTES les transitions soient terminées (fermeture + ouverture)
+    setTimeout(() => {
+      const header = document.querySelector('header');
+      const headerHeight = header ? header.offsetHeight : 0;
       
-      // SCROLL CORRIGÉ : On prend la position, on enlève la taille du header
-      setTimeout(() => {
-         const elementPosition = card.getBoundingClientRect().top + window.scrollY;
-         const offsetPosition = elementPosition - headerOffset;
-         
-         window.scrollTo({
-            top: offsetPosition,
-            behavior: "smooth"
-         });
-      }, 300);
-    }
+      // Position de la CARTE (pas du contenu)
+      const cardTop = card.getBoundingClientRect().top + window.scrollY;
+      
+      // Scroll pour que la carte soit visible sous le header
+      const scrollTarget = cardTop - headerHeight - 20; // 20px de marge
+      
+      window.scrollTo({ 
+        top: Math.max(0, scrollTarget), 
+        behavior: 'smooth' 
+      });
+    }, 600); // Augmenté à 600ms pour laisser le temps aux transitions CSS (0.5s max-height + marge)
+    
   } else {
-    section.classList.remove('active');
-    section.style.marginTop = "0";
-    section.style.maxHeight = null;
+    // Carte désactivée : reset ombre
+    card.classList.remove("shadow-xl", "shadow-red-500/50");
+    card.classList.add("shadow-lg");
   }
 }
 
-// ==================================================
-// 3. AUTRES FONCTIONS (Accordéon, Menu, Modal)
-// ==================================================
 
-// Accordéon Mentions
-document.querySelectorAll(".accordion-btn").forEach(btn => {
-  btn.addEventListener("click", () => {
-    const content = btn.nextElementSibling;
-    const arrow = btn.querySelector(".arrow");
-    document.querySelectorAll(".accordion-btn").forEach(b => { if(b !== btn) b.classList.remove("active"); });
-    
-    if(content.classList.contains("open")) { 
-      content.style.maxHeight = null; 
-      content.classList.remove("open"); 
-      arrow.classList.remove("rotate"); 
-    } else { 
-      content.classList.add("open"); 
-      arrow.classList.add("rotate"); 
-      requestAnimationFrame(() => { content.style.maxHeight = content.scrollHeight + "px"; }); 
+// ===== Modal =====
+const modal = document.getElementById('imageModal');
+const modalImg = document.getElementById('modalImg');
+const closeModalBtn = modal.querySelector('button');
+
+function openModal(url) {
+  modalImg.src = url;
+  modal.classList.add('active');
+  history.pushState({ modalOpen: true }, "");
+}
+
+function closeModal() {
+  modal.classList.remove('active');
+  if(history.state && history.state.modalOpen) history.back();
+}
+
+modalImg.addEventListener('click', closeModal);
+closeModalBtn.addEventListener('click', closeModal);
+modal.addEventListener('click', (e) => { if(e.target === modal) closeModal(); });
+window.addEventListener('popstate', () => { if(modal.classList.contains('active')) closeModal(); });
+  // PWA install banner
+let deferredPrompt;
+const installBanner = document.createElement('div');
+installBanner.style.cssText =
+  `position: fixed;
+   bottom: 20px; left: 20px; right: 20px;
+   background: #dc2626;
+   color: #fff;
+   padding: 12px 20px;
+   border-radius: 12px;
+   text-align: center;
+   font-weight: bold;
+   z-index: 10001;
+   cursor: pointer;
+   box-shadow: 0 4px 12px rgba(0,0,0,0.3);`;
+installBanner.textContent = "Installer l'application sur votre écran d'accueil";
+installBanner.style.display = 'none';
+
+document.body.appendChild(installBanner);
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+
+  // Ne pas afficher si déjà installé
+  if (!window.matchMedia('(display-mode: standalone)').matches) {
+    installBanner.style.display = 'block';
+  }
+});
+
+installBanner.addEventListener('click', async () => {
+  installBanner.style.display = 'none';
+  deferredPrompt.prompt();
+  await deferredPrompt.userChoice;
+  deferredPrompt = null;
+});
+
+window.addEventListener('appinstalled', () => {
+  installBanner.style.display = 'none';
+});
+
+// ===== Menu Partenaires / Mentions =====
+document.querySelectorAll('nav a').forEach(link => {
+  link.classList.add('nav-link');
+  link.addEventListener('click', (e) => {
+    e.preventDefault();
+    document.querySelectorAll('.nav-link').forEach(l => {
+      l.classList.remove('text-white');
+      l.classList.add('text-gray-400');
+      l.style.backgroundColor = 'transparent';
+      l.style.padding = '0';
+      l.style.borderRadius = '0';
+    });
+    link.classList.remove('text-gray-400');
+    link.classList.add('text-white');
+    link.style.backgroundColor = '#dc2626';
+    link.style.padding = '0.25rem 0.75rem';
+    link.style.borderRadius = '9999px';
+
+    if(link.textContent.includes("Partenaires")) {
+      document.getElementById('categories').scrollIntoView({behavior: 'smooth'});
+    } else if(link.textContent.includes("Mentions")) {
+      document.getElementById('mentions').scrollIntoView({behavior: 'smooth'});
     }
   });
 });
 
-// Menu Navigation
-document.querySelectorAll('nav a').forEach(link => {
-  link.classList.add('nav-link');
-  link.addEventListener('click', (e) => {
+// ===== Badge automatique nombre de partenaires =====
+document.querySelectorAll('.category-card').forEach(card => {
+  const id = card.getAttribute('onclick')?.match(/'(.+?)'/)?.[1];
+  if(id) {
+    const count = document.getElementById(id)?.querySelectorAll('.partner-link').length || 0;
+    const badge = document.createElement('div');
+    badge.className = "absolute top-2 right-2 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded-full shadow";
+    badge.textContent = count + " Partenaire" + (count > 1 ? "s" : "");
+    card.appendChild(badge);
+  }
+});
+
+// ===== Accordion =====
+document.querySelectorAll(".accordion-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const content = btn.nextElementSibling;
+    const arrow = btn.querySelector(".arrow");
+
+    document.querySelectorAll(".accordion-btn").forEach(b => { if(b !== btn) b.classList.remove("active"); });
+
+    if(content.classList.contains("open")) { 
+      content.style.maxHeight = null; 
+      content.classList.remove("open"); 
+      arrow.classList.remove("rotate"); 
+      btn.classList.remove("active");
+    } else { 
+      content.classList.add("open"); 
+      arrow.classList.add("rotate"); 
+      btn.classList.add("active");
+      requestAnimationFrame(() => { content.style.maxHeight = content.scrollHeight + "px"; }); 
+    }
+  });
+});
+</script>
+</body>
+</html>
