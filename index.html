@@ -1,13 +1,7 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-5MRBF3NR');</script>
-<!-- End Google Tag Manager -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Avantages Partenaires | Renault Trucks CSE Bourg-en-Bresse</title>
@@ -315,11 +309,6 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
 </head>
 
 <body class="bg-gray-100 text-black">
-  <!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5MRBF3NR"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
-  
 
 <!-- Splash screen -->
 <div id="splash">
@@ -342,7 +331,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- Logo et texte -->
     <div class="flex items-center space-x-2">
       <img src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/Header.webp" alt="Logo Renault Trucks" class="h-20 sm:h-24 rounded-md">
-      <span class="text-xs font-bold text-red-600 uppercase tracking-widest hidden sm:inline">CE Bourg-en-Bresse</span>
+      <span class="text-xs font-bold text-red-600 uppercase tracking-widest hidden sm:inline">CSE Bourg-en-Bresse</span>
     </div>
 
     <!-- Navbar -->
@@ -548,11 +537,21 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
 
   <div id="culture" class="partner-content bg-white border border-gray-200 rounded-xl p-4 shadow-lg">
-    <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/declic-ludik.webp')">Déclic Ludik</div>
-    <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Librairie_papeterie.webp')">Librairie du Théâtre</div>
-    <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/montbarbon.webp')">Montbarbon</div>
+    <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/declic-ludik.webp')">
+      Déclic Ludik
+    </div>
+
+    <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Librairie_papeterie.webp')">
+      Librairie du Théâtre
+    </div>
+
+    <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/montbarbon.webp')">
+      Montbarbon
+    </div>
   </div>
-</div>      
+</div>    
+
+   
 
     <!-- QUOTIDIEN -->
     <div class="col-span-1">
@@ -569,9 +568,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/la%20rek1ke.webp')">La Rek1que</div>
         <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Shivaa.webp')">Shiva</div>
       </div>
-    </div>      
+    </div>   
+    
 
-  <!-- ENFANTS -->
+
+   <!-- ENFANTS -->
     <div class="col-span-1">
       <div class="category-card relative group cursor-pointer transform hover:scale-[1.02] transition duration-300 shadow-lg rounded-2xl overflow-hidden" onclick="toggleCategory('enfants-content')">
         <img src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/enfants.webp" alt="Enfants">
@@ -653,124 +654,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </p>
 </div>
 </section>
-  <div style="display:flex;justify-content:center;margin-top:40px;">
-    <canvas id="flappy" width="360" height="540" style="border:2px solid #222;border-radius:10px;max-width:100%;"></canvas>
-</div>
-
-<script>
-// Canvas setup
-const canvas = document.getElementById("flappy");
-const ctx = canvas.getContext("2d");
-
-// Bird
-let bird = {
-    x: 60,
-    y: 200,
-    r: 14,
-    velocity: 0,
-    gravity: 0.35,
-    jump: -7,
-    animationFrame: 0
-};
-
-// Pipes
-let pipes = [];
-let frame = 0;
-
-// Score
-let score = 0;
-let best = localStorage.getItem("best-score") || 0;
-
-// Sounds (générés en JS, pas de fichiers externes)
-function playBeep(frequency, duration = 120, volume = 0.3) {
-    const ctxAudio = new (window.AudioContext || window.webkitAudioContext)();
-    let o = ctxAudio.createOscillator();
-    let g = ctxAudio.createGain();
-    o.frequency.value = frequency;
-    o.type = "square";
-    o.connect(g);
-    g.connect(ctxAudio.destination);
-    g.gain.value = volume;
-    o.start();
-    o.stop(ctxAudio.currentTime + duration / 1000);
-}
-
-const sndJump = () => playBeep(600, 150);
-const sndPoint = () => playBeep(900, 120);
-const sndHit = () => playBeep(120, 300);
-
-// Controls
-document.addEventListener("keydown", e => {
-    if (e.code === "Space") bird.velocity = bird.jump, sndJump();
-});
-document.addEventListener("click", () => bird.velocity = bird.jump, sndJump());
-
-// Draw bird (simple sprite effet battement)
-function drawBird() {
-    ctx.fillStyle = "#f7d51d";
-    ctx.beginPath();
-    ctx.arc(bird.x, bird.y, bird.r, 0, Math.PI * 2);
-    ctx.fill();
-
-    // Eye
-    ctx.fillStyle = "#000";
-    ctx.beginPath();
-    ctx.arc(bird.x + 5, bird.y - 4, 3, 0, Math.PI * 2);
-    ctx.fill();
-
-    // Wing animation
-    let wingY = bird.y + (Math.sin(bird.animationFrame / 5) * 5);
-    ctx.fillStyle = "#e5b700";
-    ctx.beginPath();
-    ctx.ellipse(bird.x - 8, wingY, 8, 5, 0, 0, Math.PI * 2);
-    ctx.fill();
-}
-
-// Draw pipes
-function drawPipe(p) {
-    ctx.fillStyle = "#3dbb3d";
-    ctx.fillRect(p.x, 0, 50, p.top);
-
-    ctx.fillRect(p.x, p.bottom, 50, canvas.height - p.bottom);
-
-    // Borders
-    ctx.fillStyle = "#2a8b2a";
-    ctx.fillRect(p.x, p.top - 10, 50, 10);
-    ctx.fillRect(p.x, p.bottom, 50, 10);
-}
-
-// Collision detection
-function isColliding(p) {
-    if (
-        bird.x + bird.r > p.x &&
-        bird.x - bird.r < p.x + 50 &&
-        (bird.y - bird.r < p.top || bird.y + bird.r > p.bottom)
-    ) return true;
-    return false;
-}
-
-// GAME LOOP
-function gameLoop() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    // Background
-    ctx.fillStyle = "#70c5ce";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    // Bird physics
-    bird.velocity += bird.gravity;
-    bird.y += bird.velocity;
-    bird.animationFrame++;
-
-    drawBird();
-
-    // Score display
-    ctx.fillStyle = "black";
-    ctx.font = "26px Arial";
-    ctx.fillText("Score : " + score, 10, 35);
-    ctx.fillText("Best : " + best, 10, 65);
-
-
 
 <script>
 // ===== Splash screen avec option =====
@@ -969,57 +852,6 @@ document.querySelectorAll(".accordion-btn").forEach(btn => {
     }
   });
 });
-      // Spawn pipes
-    if (frame % 100 === 0) {
-        let topHeight = Math.random() * 220 + 50;
-        let gap = 140;
-
-        pipes.push({
-            x: canvas.width,
-            top: topHeight,
-            bottom: topHeight + gap,
-            passed: false
-        });
-    }
-
-    // Pipes movement
-    for (let i = pipes.length - 1; i >= 0; i--) {
-        let p = pipes[i];
-        p.x -= 3;
-
-        drawPipe(p);
-
-        if (isColliding(p)) {
-            sndHit();
-            alert("Game Over ! Score : " + score);
-            if (score > best) localStorage.setItem("best-score", score);
-            location.reload();
-        }
-
-        // Score
-        if (!p.passed && p.x + 50 < bird.x) {
-            score++;
-            p.passed = true;
-            sndPoint();
-        }
-
-        if (p.x < -60) pipes.splice(i, 1);
-    }
-
-    // Bird out of bounds
-    if (bird.y - bird.r < 0 || bird.y + bird.r > canvas.height) {
-        sndHit();
-        alert("Game Over ! Score : " + score);
-        if (score > best) localStorage.setItem("best-score", score);
-        location.reload();
-    }
-
-    frame++;
-    requestAnimationFrame(gameLoop);
-}
-
-gameLoop();
-</script>
 </script>
 </body>
 </html>
