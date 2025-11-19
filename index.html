@@ -770,57 +770,7 @@ function gameLoop() {
     ctx.fillText("Score : " + score, 10, 35);
     ctx.fillText("Best : " + best, 10, 65);
 
-    // Spawn pipes
-    if (frame % 100 === 0) {
-        let topHeight = Math.random() * 220 + 50;
-        let gap = 140;
 
-        pipes.push({
-            x: canvas.width,
-            top: topHeight,
-            bottom: topHeight + gap,
-            passed: false
-        });
-    }
-
-    // Pipes movement
-    for (let i = pipes.length - 1; i >= 0; i--) {
-        let p = pipes[i];
-        p.x -= 3;
-
-        drawPipe(p);
-
-        if (isColliding(p)) {
-            sndHit();
-            alert("Game Over ! Score : " + score);
-            if (score > best) localStorage.setItem("best-score", score);
-            location.reload();
-        }
-
-        // Score
-        if (!p.passed && p.x + 50 < bird.x) {
-            score++;
-            p.passed = true;
-            sndPoint();
-        }
-
-        if (p.x < -60) pipes.splice(i, 1);
-    }
-
-    // Bird out of bounds
-    if (bird.y - bird.r < 0 || bird.y + bird.r > canvas.height) {
-        sndHit();
-        alert("Game Over ! Score : " + score);
-        if (score > best) localStorage.setItem("best-score", score);
-        location.reload();
-    }
-
-    frame++;
-    requestAnimationFrame(gameLoop);
-}
-
-gameLoop();
-</script>
 
 <script>
 // ===== Splash screen avec option =====
@@ -1019,6 +969,57 @@ document.querySelectorAll(".accordion-btn").forEach(btn => {
     }
   });
 });
+      // Spawn pipes
+    if (frame % 100 === 0) {
+        let topHeight = Math.random() * 220 + 50;
+        let gap = 140;
+
+        pipes.push({
+            x: canvas.width,
+            top: topHeight,
+            bottom: topHeight + gap,
+            passed: false
+        });
+    }
+
+    // Pipes movement
+    for (let i = pipes.length - 1; i >= 0; i--) {
+        let p = pipes[i];
+        p.x -= 3;
+
+        drawPipe(p);
+
+        if (isColliding(p)) {
+            sndHit();
+            alert("Game Over ! Score : " + score);
+            if (score > best) localStorage.setItem("best-score", score);
+            location.reload();
+        }
+
+        // Score
+        if (!p.passed && p.x + 50 < bird.x) {
+            score++;
+            p.passed = true;
+            sndPoint();
+        }
+
+        if (p.x < -60) pipes.splice(i, 1);
+    }
+
+    // Bird out of bounds
+    if (bird.y - bird.r < 0 || bird.y + bird.r > canvas.height) {
+        sndHit();
+        alert("Game Over ! Score : " + score);
+        if (score > best) localStorage.setItem("best-score", score);
+        location.reload();
+    }
+
+    frame++;
+    requestAnimationFrame(gameLoop);
+}
+
+gameLoop();
+</script>
 </script>
 </body>
 </html>
