@@ -613,7 +613,7 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
 </section>
 
 <!-- Mentions légales -->
-<section id="mentions" class="bg-white shadow-inner p-6 mt-8 rounded-xl">
+<section id="mentions" class="bg-white shadow-inner p-6 mt-8 rounded-xl relative z-10">
   <h2 class="text-2xl font-bold text-red-600 mb-4">Mentions légales</h2>
 
   <button class="accordion-btn">1. Éditeur du site <span class="arrow">▶</span></button>
@@ -652,7 +652,7 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
   </div>
 </section>
 
-<div class="h-12 w-full"></div>
+<div class="h-12 w-full bg-transparent"></div>
 
 <section id="game-section" class="max-w-4xl mx-auto py-8 px-2 text-center mb-12 relative z-10">
   <div class="bg-white rounded-2xl shadow-xl p-4 border-t-4 border-red-600">
@@ -683,30 +683,33 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
 
 <script>
 // ==================================================
-// 1. CORRECTIF SCROLL & HEADER (C'est ici que ça se joue)
+// 1. CORRECTIF HEADER STICKY & SCROLL
 // ==================================================
 
-// On supprime toute contrainte de scroll qui casserait le menu "Sticky"
-// On met '' (vide) au lieu de 'auto' pour laisser le navigateur gérer le header
-document.documentElement.style.overflow = '';
-document.body.style.overflow = '';
+// On force le reset de l'overflow pour que le position:sticky CSS fonctionne
+document.body.style.overflow = 'visible';
+document.body.style.overflowX = 'hidden'; // Juste horizontal caché pour mobile
+document.documentElement.style.overflow = 'visible';
 
-// On cache le vieux splash screen s'il existe encore
+// Désactivation immédiate du splash screen s'il traîne
 const oldSplash = document.getElementById('splash');
 if(oldSplash) {
     oldSplash.style.display = 'none';
-    oldSplash.style.opacity = '0';
 }
 
 // ==================================================
-// 2. FONCTIONNALITÉS DU SITE
+// 2. LOGIQUE CATÉGORIES (CORRIGÉE POUR LE HEADER)
 // ==================================================
 
-// Toggle Categories
 function toggleCategory(id) {
   const section = document.getElementById(id);
   const card = document.querySelector(`div[onclick="toggleCategory('${id}')"]`);
+  const header = document.querySelector('header');
   
+  // Calcul de la hauteur du header pour le décalage (environ 100px)
+  const headerOffset = header ? header.offsetHeight + 20 : 100;
+  
+  // Ferme les autres
   document.querySelectorAll('.partner-content').forEach(item => {
     if (item.id !== id) {
       item.classList.remove('active');
@@ -715,23 +718,34 @@ function toggleCategory(id) {
     }
   });
   
+  // Reset ombres
   document.querySelectorAll('.category-card').forEach(c => {
     c.classList.remove("shadow-xl", "shadow-red-500/50");
     c.classList.add("shadow-lg");
   });
   
+  // Ouverture / Fermeture
   const opening = !section.classList.contains('active');
+  
   if (opening) {
     section.classList.add('active');
     section.style.marginTop = "1rem";
+    // Petit délai pour laisser le CSS s'appliquer
     setTimeout(() => { section.style.maxHeight = "5000px"; }, 10);
     
     if(card) {
       card.classList.remove("shadow-lg");
       card.classList.add("shadow-xl", "shadow-red-500/50");
+      
+      // SCROLL CORRIGÉ : On prend la position, on enlève la taille du header
       setTimeout(() => {
-         const offset = card.getBoundingClientRect().top + window.scrollY - 120;
-         window.scrollTo({ top: offset, behavior: 'smooth' });
+         const elementPosition = card.getBoundingClientRect().top + window.scrollY;
+         const offsetPosition = elementPosition - headerOffset;
+         
+         window.scrollTo({
+            top: offsetPosition,
+            behavior: "smooth"
+         });
       }, 300);
     }
   } else {
@@ -740,6 +754,10 @@ function toggleCategory(id) {
     section.style.maxHeight = null;
   }
 }
+
+// ==================================================
+// 3. AUTRES FONCTIONS (Accordéon, Menu, Modal)
+// ==================================================
 
 // Accordéon Mentions
 document.querySelectorAll(".accordion-btn").forEach(btn => {
@@ -764,163 +782,3 @@ document.querySelectorAll(".accordion-btn").forEach(btn => {
 document.querySelectorAll('nav a').forEach(link => {
   link.classList.add('nav-link');
   link.addEventListener('click', (e) => {
-    e.preventDefault();
-    document.querySelectorAll('.nav-link').forEach(l => { 
-      l.classList.remove('text-white'); l.classList.add('text-gray-400'); 
-      l.style.backgroundColor = 'transparent'; l.style.padding = '0';
-    });
-    link.classList.remove('text-gray-400'); link.classList.add('text-white'); 
-    link.style.backgroundColor = '#dc2626'; link.style.padding = '0.25rem 0.75rem';
-    
-    const targetId = link.getAttribute('href').substring(1);
-    const target = document.getElementById(targetId);
-    if(target) target.scrollIntoView({behavior: 'smooth'});
-  });
-});
-
-// Modal Image
-const modal = document.getElementById('imageModal');
-const modalImg = document.getElementById('modalImg');
-const closeModalBtn = modal ? modal.querySelector('button') : null;
-
-function openModal(url) {
-  if(!modal || !modalImg) return;
-  modalImg.src = url;
-  modal.classList.add('active');
-}
-if(modal) {
-  modal.addEventListener('click', (e) => { if(e.target === modal) modal.classList.remove('active'); });
-  if(closeModalBtn) closeModalBtn.addEventListener('click', () => modal.classList.remove('active'));
-}
-
-// ==================================================
-// 3. JEU FLAPPY BIRD (ISOLÉ ET NON BLOQUANT)
-// ==================================================
-(function() {
-  const cvs = document.getElementById("birdCanvas");
-  if(!cvs) return; 
-  
-  const ctx = cvs.getContext("2d");
-  const overlay = document.getElementById("gameOverlay");
-  const scoreDisplay = document.getElementById("scoreDisplay");
-
-  let frames = 0;
-  let score = 0;
-  let gameState = { current: 0, getReady: 0, game: 1, over: 2 };
-
-  function action(e) {
-    // Empêche la propagation aux éléments parents (fixe le bug du mailto)
-    if(e && e.type !== 'keydown') {
-        e.preventDefault();
-        e.stopPropagation();
-    }
-    
-    switch(gameState.current) {
-      case gameState.getReady:
-        gameState.current = gameState.game;
-        overlay.style.display = "none";
-        break;
-      case gameState.game:
-        bird.flap();
-        break;
-      case gameState.over:
-        bird.reset();
-        pipes.reset();
-        score = 0;
-        scoreDisplay.innerText = score;
-        frames = 0;
-        gameState.current = gameState.getReady;
-        document.getElementById("overlayTitle").innerText = "START";
-        document.getElementById("overlayTitle").classList.remove("text-red-500");
-        break;
-    }
-  }
-
-  cvs.addEventListener("mousedown", action);
-  cvs.addEventListener("touchstart", action, {passive: false});
-
-  window.addEventListener("keydown", (e) => {
-    if(e.code === "Space") {
-      const rect = cvs.getBoundingClientRect();
-      // Ne saute que si le jeu est visible à l'écran
-      if(rect.top >= 0 && rect.bottom <= window.innerHeight) {
-         e.preventDefault();
-         action(e);
-      }
-    }
-  });
-
-  const bird = {
-    x: 50, y: 150, w: 30, h: 24, speed: 0, gravity: 0.25, jump: 4.6,
-    draw: function() {
-      ctx.fillStyle = "#dc2626"; ctx.fillRect(this.x, this.y, this.w, this.h);
-      ctx.fillStyle = "#FFF"; ctx.fillRect(this.x + 20, this.y + 2, 8, 10);
-      ctx.fillStyle = "#000"; 
-      ctx.beginPath(); ctx.arc(this.x + 8, this.y + 24, 5, 0, Math.PI*2);
-      ctx.arc(this.x + 24, this.y + 24, 5, 0, Math.PI*2); ctx.fill();
-    },
-    flap: function() { this.speed = -this.jump; },
-    update: function() {
-      if(gameState.current == gameState.getReady) { this.y = 150; } 
-      else { this.speed += this.gravity; this.y += this.speed; }
-      if(this.y + this.h >= cvs.height - 10) { 
-        this.y = cvs.height - 10 - this.h;
-        if(gameState.current == gameState.game) { gameState.current = gameState.over; showLose(); }
-      }
-      if(this.y < 0) { this.y = 0; this.speed = 0; }
-    },
-    reset: function() { this.speed = 0; this.y = 150; }
-  };
-
-  const pipes = {
-    position: [], w: 50, h: 400, gap: 115, dx: 2,
-    draw: function() {
-      for(let i = 0; i < this.position.length; i++) {
-        let p = this.position[i];
-        ctx.fillStyle = "#4b5563"; 
-        ctx.fillRect(p.x, p.y, this.w, this.h); 
-        ctx.fillRect(p.x, p.y + this.h + this.gap, this.w, this.h); 
-        ctx.fillStyle = "#1f2937"; 
-        ctx.fillRect(p.x-2, p.y+this.h-20, this.w+4, 20);
-        ctx.fillRect(p.x-2, p.y+this.h+this.gap, this.w+4, 20);
-      }
-    },
-    update: function() {
-      if(gameState.current !== gameState.game) return;
-      if(frames % 120 == 0) { this.position.push({ x: cvs.width, y: -150 * (Math.random() + 1) }); }
-      for(let i = 0; i < this.position.length; i++) {
-        let p = this.position[i];
-        p.x -= this.dx;
-        if(bird.x + bird.w > p.x && bird.x < p.x + this.w && (bird.y < p.y + this.h || bird.y + bird.h > p.y + this.h + this.gap)) {
-           gameState.current = gameState.over; showLose();
-        }
-        if(p.x + this.w <= 0) { this.position.shift(); score++; scoreDisplay.innerText = score; }
-      }
-    },
-    reset: function() { this.position = []; }
-  };
-
-  function showLose() {
-    overlay.style.display = "flex";
-    const title = document.getElementById("overlayTitle");
-    title.innerText = "PERDU !";
-    title.classList.add("text-red-500");
-  }
-
-  function loop() {
-    bird.update(); pipes.update();
-    ctx.fillStyle = "#70c5ce"; ctx.fillRect(0, 0, cvs.width, cvs.height);
-    ctx.fillStyle = "#dedede"; ctx.fillRect(0, cvs.height - 10, cvs.width, 10);
-    pipes.draw(); bird.draw();
-    if(gameState.current == gameState.game) {
-       ctx.fillStyle = "#FFF"; ctx.strokeStyle = "#000"; ctx.lineWidth = 2;
-       ctx.font = "35px Impact"; ctx.fillText(score, cvs.width/2 - 10, 50); ctx.strokeText(score, cvs.width/2 - 10, 50);
-    }
-    frames++;
-    requestAnimationFrame(loop);
-  }
-  loop();
-})();
-</script>
-</body>
-</html>
