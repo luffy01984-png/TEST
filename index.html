@@ -730,6 +730,230 @@ function toggleCategory(id) {
     card.classList.add("shadow-lg");
   }
 }
+  // --- SCRIPT JEU FLAPPY BIRD ---
+  
+  const cvs = document.getElementById("birdCanvas");
+  const ctx = cvs.getContext("2d");
+  const overlay = document.getElementById("gameOverlay");
+  const overlayTitle = document.getElementById("overlayTitle");
+  const scoreDisplay = document.getElementById("scoreDisplay");
+
+  // Variables du jeu
+  let frames = 0;
+  let score = 0;
+  let gameState = { current: 0, getReady: 0, game: 1, over: 2 };
+  
+  // Contrôles
+  function action() {
+    switch(gameState.current) {
+      case gameState.getReady:
+        gameState.current = gameState.game;
+        overlay.style.display = "none";
+        break;
+      case gameState.game:
+        bird.flap();
+        break;
+      case gameState.over:
+        resetGame();
+        break;
+    }
+  }
+  
+  cvs.addEventListener("click", action);
+  window.addEventListener("keydown", (e) => {
+    if(e.code === "Space") {
+      e.preventDefault(); // Empêche le scroll
+      action();
+    }
+  });
+
+  // Objet Oiseau (Le camion/oiseau rouge)
+  const bird = {
+    x: 50,
+    y: 150,
+    w: 30,
+    h: 24, // Forme un peu rectangulaire type camion
+    radius: 12,
+    speed: 0,
+    gravity: 0.25,
+    jump: 4.6,
+    
+    draw: function() {
+      ctx.fillStyle = "#dc2626"; // Rouge Renault Trucks
+      ctx.fillRect(this.x, this.y, this.w, this.h);
+      
+      // Fenêtre du camion (blanc)
+      ctx.fillStyle = "#FFF";
+      ctx.fillRect(this.x + 20, this.y + 2, 8, 10);
+      
+      // Roues (noir)
+      ctx.fillStyle = "#000";
+      ctx.beginPath();
+      ctx.arc(this.x + 8, this.y + 24, 5, 0, Math.PI*2);
+      ctx.arc(this.x + 24, this.y + 24, 5, 0, Math.PI*2);
+      ctx.fill();
+    },
+    
+    flap: function() {
+      this.speed = -this.jump;
+    },
+    
+    update: function() {
+      // Si on est en phase de jeu
+      if(gameState.current == gameState.getReady) {
+        this.y = 150; // position départ
+      } else {
+        this.speed += this.gravity;
+        this.y += this.speed;
+      }
+
+      // Sol collision
+      if(this.y + this.h >= cvs.height - 10) { // -10 pour le sol
+        this.y = cvs.height - 10 - this.h;
+        if(gameState.current == gameState.game) {
+          gameState.current = gameState.over;
+          showGameOver();
+        }
+      }
+      
+      // Plafond collision
+      if(this.y < 0) {
+        this.y = 0;
+        this.speed = 0;
+      }
+    },
+    
+    reset: function() {
+      this.speed = 0;
+      this.y = 150;
+    }
+  }
+
+  // Objet Tuyaux (Obstacles)
+  const pipes = {
+    position: [],
+    w: 50,
+    h: 400,
+    gap: 100, // Espace pour passer
+    dx: 2, // Vitesse défilement
+    
+    draw: function() {
+      for(let i = 0; i < this.position.length; i++) {
+        let p = this.position[i];
+        let topY = p.y;
+        let bottomY = p.y + this.h + this.gap;
+        
+        // Tuyau Haut
+        ctx.fillStyle = "#4b5563"; // Gris foncé (plus industriel)
+        ctx.fillRect(p.x, topY, this.w, this.h);
+        
+        // Tuyau Bas
+        ctx.fillRect(p.x, bottomY, this.w, this.h);
+        
+        // Bordures Tuyaux (Détail)
+        ctx.fillStyle = "#1f2937"; 
+        ctx.fillRect(p.x - 2, topY + this.h - 20, this.w + 4, 20); // Bord haut
+        ctx.fillRect(p.x - 2, bottomY, this.w + 4, 20); // Bord bas
+      }
+    },
+    
+    update: function() {
+      if(gameState.current !== gameState.game) return;
+      
+      // Ajouter des tuyaux tous les 120 frames
+      if(frames % 120 == 0) {
+        this.position.push({
+          x: cvs.width,
+          y: -150 * (Math.random() + 1)
+        });
+      }
+      
+      for(let i = 0; i < this.position.length; i++) {
+        let p = this.position[i];
+        p.x -= this.dx;
+        
+        // Collision
+        let bottomPipeY = p.y + this.h + this.gap;
+        
+        // Logique collision rectangle simple
+        if(bird.x + bird.w > p.x && bird.x < p.x + this.w && 
+           (bird.y < p.y + this.h || bird.y + bird.h > bottomPipeY)) {
+             gameState.current = gameState.over;
+             showGameOver();
+        }
+        
+        // Supprimer tuyaux sortis
+        if(p.x + this.w <= 0) {
+          this.position.shift();
+          score += 1; // Point gagné
+          scoreDisplay.innerText = score;
+          // Faire le son score (optionnel)
+        }
+      }
+    },
+    
+    reset: function() {
+      this.position = [];
+    }
+  }
+
+  // Boucle de jeu
+  function draw() {
+    // Ciel / Fond
+    ctx.fillStyle = "#70c5ce";
+    ctx.fillRect(0, 0, cvs.width, cvs.height);
+    
+    // Sol
+    ctx.fillStyle = "#dedede";
+    ctx.fillRect(0, cvs.height - 10, cvs.width, 10);
+    
+    pipes.draw();
+    bird.draw();
+    
+    // Score en jeu
+    if(gameState.current == gameState.game) {
+        ctx.fillStyle = "#FFF";
+        ctx.strokeStyle = "#000";
+        ctx.lineWidth = 2;
+        ctx.font = "35px Impact";
+        ctx.fillText(score, cvs.width/2 - 10, 50);
+        ctx.strokeText(score, cvs.width/2 - 10, 50);
+    }
+  }
+
+  function update() {
+    bird.update();
+    pipes.update();
+  }
+
+  function loop() {
+    update();
+    draw();
+    frames++;
+    requestAnimationFrame(loop);
+  }
+
+  // Fonctions utilitaires
+  function showGameOver() {
+    overlay.style.display = "flex";
+    overlayTitle.innerText = "PERDU !";
+    overlayTitle.classList.add("text-red-500");
+  }
+
+  function resetGame() {
+    bird.reset();
+    pipes.reset();
+    score = 0;
+    scoreDisplay.innerText = score;
+    frames = 0;
+    gameState.current = gameState.getReady;
+    overlayTitle.innerText = "RENAULT BIRD";
+    overlayTitle.classList.remove("text-red-500");
+    // L'overlay reste affiché jusqu'au prochain clic
+  }
+
+  // Démarrage
+  loop();
 
 
 // ===== Modal =====
