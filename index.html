@@ -618,12 +618,12 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
 
   <button class="accordion-btn">1. Éditeur du site <span class="arrow">▶</span></button>
   <div class="accordion-content">
-    <p>Renault Trucks CSE Bourg-en-Bresse<br>Président du CSE et Administrateur du site : <strong>Arnaud Christian</strong><br></p>
+    <p>Renault Trucks CSE Bourg-en-Bresse<br>Président du CSE et Administrateur du site : <strong>Arnaud Christian</strong></p>
   </div>
 
   <button class="accordion-btn">2. Conception et Realisation <span class="arrow">▶</span></button>
   <div class="accordion-content">
-    <p><strong>Bouaraba Arab UEP8</strong> - Développement, conception graphique, intégration et maintenance du site.
+    <p><strong>Bouaraba Arab UEP8</strong> - Développement, conception graphique, intégration et maintenance du site.</p>
   </div>
 
   <button class="accordion-btn">3. Hébergement du site <span class="arrow">▶</span></button>
@@ -633,9 +633,7 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
 
   <button class="accordion-btn">4. Propriété intellectuelle <span class="arrow">▶</span></button>
   <div class="accordion-content">
-    <p>L’ensemble des éléments du site (textes, images, graphismes, logo, etc.) sont la propriété exclusive du
-    <strong>CSE Renault Trucks Bourg-en-Bresse</strong>, sauf mention contraire. Toute reproduction, distribution ou
-    modification sans autorisation écrite est interdite.</p>
+    <p>L’ensemble des éléments du site sont la propriété exclusive du CSE.</p>
   </div>
 
   <button class="accordion-btn">5. Protection des données <span class="arrow">▶</span></button>
@@ -649,9 +647,12 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
       Pour toute demande, vous pouvez contacter l’équipe du CSE par e-mail 
       <a href="mailto:cserenaulttrucks@gmail.com" style="color: red; font-weight: bold;">
         cserenaulttrucks@gmail.com
-      </a> </p>
+      </a>
+    </p>
   </div>
-</section> <div class="h-12 w-full"></div>
+</section>
+
+<div class="h-12 w-full"></div>
 
 <section id="game-section" class="max-w-4xl mx-auto py-8 px-2 text-center mb-12 relative z-10">
   <div class="bg-white rounded-2xl shadow-xl p-4 border-t-4 border-red-600">
@@ -659,16 +660,14 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
       <span class="text-red-600">Pause</span> Détente
     </h2>
     <p class="text-gray-600 mb-4 text-sm">
-      Tapez sur le jeu pour voler !<br>
+      Tapez sur le jeu pour voler ! (Ne bloque pas le site)
     </p>
     
     <div class="relative inline-block w-full max-w-[350px] rounded-xl overflow-hidden border-4 border-gray-800 shadow-inner bg-gray-800 select-none" style="touch-action: none; -webkit-tap-highlight-color: transparent;">
-      
       <canvas id="birdCanvas" width="320" height="480" class="w-full h-auto bg-sky-300 cursor-pointer block outline-none"></canvas>
       
       <div id="gameOverlay" class="absolute inset-0 flex flex-col items-center justify-center bg-black/70 text-white pointer-events-none z-20">
         <h3 class="text-3xl font-bold mb-2 tracking-widest" id="overlayTitle">START</h3>
-        <div class="w-16 h-1 bg-red-600 mb-4"></div>
         <p class="text-lg animate-pulse font-mono">Taper pour jouer</p>
         <p class="text-sm mt-6 text-gray-300 font-mono">Score: <span id="scoreDisplay">0</span></p>
       </div>
@@ -683,31 +682,28 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
 </footer>
 
 <script>
-// ===== Splash screen =====
-const SPLASH_ENABLED = true;
+// ==================================================
+// 1. NETTOYAGE DU CHARGEMENT (Règle le bug de latence)
+// ==================================================
+// On s'assure que rien ne bloque le scroll au chargement
+document.documentElement.style.overflow = 'auto';
+document.body.style.overflow = 'auto';
 
-document.addEventListener('DOMContentLoaded', () => {
-  const splash = document.getElementById('splash');
-  if (!SPLASH_ENABLED) {
-    splash.style.display = 'none';
-    return;
-  }
-  document.body.style.overflow = 'hidden';
-  setTimeout(() => {
-    splash.style.opacity = '0';
-    setTimeout(() => {
-      splash.style.display = 'none';
-      document.body.style.overflow = 'auto';
-    }, 800);
-  }, 3000);
-});
+// Si un splash screen existe encore dans le HTML, on le cache immédiatement
+const oldSplash = document.getElementById('splash');
+if(oldSplash) oldSplash.style.display = 'none';
 
-// ===== Toggle categories =====
+
+// ==================================================
+// 2. FONCTIONNALITÉS DU SITE (Menus, Accordeon)
+// ==================================================
+
+// Toggle Categories (Version optimisée)
 function toggleCategory(id) {
   const section = document.getElementById(id);
-  // Correction sélecteur stricte
   const card = document.querySelector(`div[onclick="toggleCategory('${id}')"]`);
   
+  // Ferme les autres
   document.querySelectorAll('.partner-content').forEach(item => {
     if (item.id !== id) {
       item.classList.remove('active');
@@ -716,27 +712,27 @@ function toggleCategory(id) {
     }
   });
   
-  document.querySelectorAll('.category-card').forEach(cardEl => {
-    cardEl.classList.remove("shadow-red-500/50", "shadow-xl");
-    cardEl.classList.add("shadow-lg");
+  // Reset ombres
+  document.querySelectorAll('.category-card').forEach(c => {
+    c.classList.remove("shadow-xl", "shadow-red-500/50");
+    c.classList.add("shadow-lg");
   });
   
+  // Bascule état
   const opening = !section.classList.contains('active');
-  
   if (opening) {
     section.classList.add('active');
     section.style.marginTop = "1rem";
     setTimeout(() => { section.style.maxHeight = "5000px"; }, 10);
-
+    
     if(card) {
-        card.classList.remove("shadow-lg");
-        card.classList.add("shadow-xl", "shadow-red-500/50");
-        setTimeout(() => {
-            const header = document.querySelector('header');
-            const headerHeight = header ? header.offsetHeight : 0;
-            const cardTop = card.getBoundingClientRect().top + window.scrollY;
-            window.scrollTo({ top: Math.max(0, cardTop - headerHeight - 20), behavior: 'smooth' });
-        }, 300);
+      card.classList.remove("shadow-lg");
+      card.classList.add("shadow-xl", "shadow-red-500/50");
+      // Scroll doux vers la carte
+      setTimeout(() => {
+         const offset = card.getBoundingClientRect().top + window.scrollY - 120;
+         window.scrollTo({ top: offset, behavior: 'smooth' });
+      }, 300);
     }
   } else {
     section.classList.remove('active');
@@ -745,23 +741,81 @@ function toggleCategory(id) {
   }
 }
 
-// --- SCRIPT JEU FLAPPY BIRD (Isolé du reste) ---
+// Accordéon Mentions
+document.querySelectorAll(".accordion-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const content = btn.nextElementSibling;
+    const arrow = btn.querySelector(".arrow");
+    document.querySelectorAll(".accordion-btn").forEach(b => { if(b !== btn) b.classList.remove("active"); });
+    
+    if(content.classList.contains("open")) { 
+      content.style.maxHeight = null; 
+      content.classList.remove("open"); 
+      arrow.classList.remove("rotate"); 
+    } else { 
+      content.classList.add("open"); 
+      arrow.classList.add("rotate"); 
+      requestAnimationFrame(() => { content.style.maxHeight = content.scrollHeight + "px"; }); 
+    }
+  });
+});
+
+// Menu Navigation
+document.querySelectorAll('nav a').forEach(link => {
+  link.classList.add('nav-link');
+  link.addEventListener('click', (e) => {
+    e.preventDefault();
+    document.querySelectorAll('.nav-link').forEach(l => { 
+      l.classList.remove('text-white'); l.classList.add('text-gray-400'); 
+      l.style.backgroundColor = 'transparent'; l.style.padding = '0';
+    });
+    link.classList.remove('text-gray-400'); link.classList.add('text-white'); 
+    link.style.backgroundColor = '#dc2626'; link.style.padding = '0.25rem 0.75rem';
+    
+    const targetId = link.getAttribute('href').substring(1);
+    const target = document.getElementById(targetId);
+    if(target) target.scrollIntoView({behavior: 'smooth'});
+  });
+});
+
+// Modal Image
+const modal = document.getElementById('imageModal');
+const modalImg = document.getElementById('modalImg');
+const closeModalBtn = modal ? modal.querySelector('button') : null;
+
+function openModal(url) {
+  if(!modal || !modalImg) return;
+  modalImg.src = url;
+  modal.classList.add('active');
+}
+if(modal) {
+  modal.addEventListener('click', (e) => { if(e.target === modal) modal.classList.remove('active'); });
+  if(closeModalBtn) closeModalBtn.addEventListener('click', () => modal.classList.remove('active'));
+}
+
+
+// ==================================================
+// 3. JEU FLAPPY BIRD (ISOLÉ)
+// ==================================================
 (function() {
   const cvs = document.getElementById("birdCanvas");
+  if(!cvs) return; // Sécurité
+  
   const ctx = cvs.getContext("2d");
   const overlay = document.getElementById("gameOverlay");
-  const overlayTitle = document.getElementById("overlayTitle");
   const scoreDisplay = document.getElementById("scoreDisplay");
 
   let frames = 0;
   let score = 0;
   let gameState = { current: 0, getReady: 0, game: 1, over: 2 };
 
+  // Gestion des actions du jeu
   function action(e) {
-    // Empêche absolument toute propagation vers les éléments parents (comme les liens mailto)
-    if(e) {
-      e.preventDefault();
-      e.stopPropagation();
+    // Si c'est un événement tactile ou clic, on empêche la propagation
+    // pour ne pas déclencher de scroll ou de clic ailleurs
+    if(e && e.type !== 'keydown') {
+        e.preventDefault();
+        e.stopPropagation();
     }
     
     switch(gameState.current) {
@@ -773,220 +827,108 @@ function toggleCategory(id) {
         bird.flap();
         break;
       case gameState.over:
-        resetGame();
+        bird.reset();
+        pipes.reset();
+        score = 0;
+        scoreDisplay.innerText = score;
+        frames = 0;
+        gameState.current = gameState.getReady;
+        document.getElementById("overlayTitle").innerText = "START";
+        document.getElementById("overlayTitle").classList.remove("text-red-500");
         break;
     }
   }
 
-  // Événements Tactiles et Souris
-  // Utilisation de 'touchstart' avec passive: false pour garantir que preventDefault fonctionne
-  cvs.addEventListener("touchstart", action, {passive: false});
+  // Écouteurs d'événements uniquement sur le canvas
   cvs.addEventListener("mousedown", action);
+  cvs.addEventListener("touchstart", action, {passive: false});
 
+  // Touche espace (optionnelle)
   window.addEventListener("keydown", (e) => {
     if(e.code === "Space") {
-      e.preventDefault();
-      action();
+      // Vérifie si le canvas est visible à l'écran pour éviter de bloquer le scroll inutilement
+      const rect = cvs.getBoundingClientRect();
+      if(rect.top >= 0 && rect.bottom <= window.innerHeight) {
+         e.preventDefault();
+         action(e);
+      }
     }
   });
 
-  // OISEAU
+  // Objets Jeu
   const bird = {
-    x: 50, y: 150, w: 30, h: 24,
-    speed: 0, gravity: 0.25, jump: 4.6,
-    
+    x: 50, y: 150, w: 30, h: 24, speed: 0, gravity: 0.25, jump: 4.6,
     draw: function() {
-      ctx.fillStyle = "#dc2626"; 
-      ctx.fillRect(this.x, this.y, this.w, this.h);
-      ctx.fillStyle = "#FFF"; 
-      ctx.fillRect(this.x + 20, this.y + 2, 8, 10);
+      ctx.fillStyle = "#dc2626"; ctx.fillRect(this.x, this.y, this.w, this.h);
+      ctx.fillStyle = "#FFF"; ctx.fillRect(this.x + 20, this.y + 2, 8, 10);
       ctx.fillStyle = "#000"; 
-      ctx.beginPath();
-      ctx.arc(this.x + 8, this.y + 24, 5, 0, Math.PI*2);
-      ctx.arc(this.x + 24, this.y + 24, 5, 0, Math.PI*2);
-      ctx.fill();
+      ctx.beginPath(); ctx.arc(this.x + 8, this.y + 24, 5, 0, Math.PI*2);
+      ctx.arc(this.x + 24, this.y + 24, 5, 0, Math.PI*2); ctx.fill();
     },
-    
     flap: function() { this.speed = -this.jump; },
-    
     update: function() {
-      if(gameState.current == gameState.getReady) {
-        this.y = 150; 
-      } else {
-        this.speed += this.gravity;
-        this.y += this.speed;
-      }
-
+      if(gameState.current == gameState.getReady) { this.y = 150; } 
+      else { this.speed += this.gravity; this.y += this.speed; }
       if(this.y + this.h >= cvs.height - 10) { 
         this.y = cvs.height - 10 - this.h;
-        if(gameState.current == gameState.game) {
-          gameState.current = gameState.over;
-          showGameOver();
-        }
+        if(gameState.current == gameState.game) { gameState.current = gameState.over; showLose(); }
       }
-      
-      if(this.y < 0) {
-        this.y = 0;
-        this.speed = 0;
-      }
+      if(this.y < 0) { this.y = 0; this.speed = 0; }
     },
-    
-    reset: function() {
-      this.speed = 0;
-      this.y = 150;
-    }
-  }
+    reset: function() { this.speed = 0; this.y = 150; }
+  };
 
-  // TUYAUX
   const pipes = {
     position: [], w: 50, h: 400, gap: 115, dx: 2,
-    
     draw: function() {
       for(let i = 0; i < this.position.length; i++) {
         let p = this.position[i];
-        let topY = p.y;
-        let bottomY = p.y + this.h + this.gap;
-        
         ctx.fillStyle = "#4b5563"; 
-        ctx.fillRect(p.x, topY, this.w, this.h);
-        ctx.fillRect(p.x, bottomY, this.w, this.h);
-        
-        ctx.fillStyle = "#1f2937"; 
-        ctx.fillRect(p.x - 2, topY + this.h - 20, this.w + 4, 20); 
-        ctx.fillRect(p.x - 2, bottomY, this.w + 4, 20); 
+        ctx.fillRect(p.x, p.y, this.w, this.h); // Haut
+        ctx.fillRect(p.x, p.y + this.h + this.gap, this.w, this.h); // Bas
+        ctx.fillStyle = "#1f2937"; // Détails
+        ctx.fillRect(p.x-2, p.y+this.h-20, this.w+4, 20);
+        ctx.fillRect(p.x-2, p.y+this.h+this.gap, this.w+4, 20);
       }
     },
-    
     update: function() {
       if(gameState.current !== gameState.game) return;
-      
-      if(frames % 120 == 0) {
-        this.position.push({
-          x: cvs.width,
-          y: -150 * (Math.random() + 1)
-        });
-      }
-      
+      if(frames % 120 == 0) { this.position.push({ x: cvs.width, y: -150 * (Math.random() + 1) }); }
       for(let i = 0; i < this.position.length; i++) {
         let p = this.position[i];
         p.x -= this.dx;
-        
-        if(bird.x + bird.w > p.x && bird.x < p.x + this.w && 
-           (bird.y < p.y + this.h || bird.y + bird.h > p.y + this.h + this.gap)) {
-             gameState.current = gameState.over;
-             showGameOver();
+        if(bird.x + bird.w > p.x && bird.x < p.x + this.w && (bird.y < p.y + this.h || bird.y + bird.h > p.y + this.h + this.gap)) {
+           gameState.current = gameState.over; showLose();
         }
-        
-        if(p.x + this.w <= 0) {
-          this.position.shift();
-          score += 1;
-          scoreDisplay.innerText = score;
-        }
+        if(p.x + this.w <= 0) { this.position.shift(); score++; scoreDisplay.innerText = score; }
       }
     },
-    
     reset: function() { this.position = []; }
-  }
+  };
 
-  function draw() {
-    ctx.fillStyle = "#70c5ce";
-    ctx.fillRect(0, 0, cvs.width, cvs.height);
-    ctx.fillStyle = "#dedede";
-    ctx.fillRect(0, cvs.height - 10, cvs.width, 10);
-    
-    pipes.draw();
-    bird.draw();
-    
-    if(gameState.current == gameState.game) {
-        ctx.fillStyle = "#FFF";
-        ctx.strokeStyle = "#000";
-        ctx.lineWidth = 2;
-        ctx.font = "35px Impact";
-        ctx.fillText(score, cvs.width/2 - 10, 50);
-        ctx.strokeText(score, cvs.width/2 - 10, 50);
-    }
+  function showLose() {
+    overlay.style.display = "flex";
+    const title = document.getElementById("overlayTitle");
+    title.innerText = "PERDU !";
+    title.classList.add("text-red-500");
   }
 
   function loop() {
-    bird.update();
-    pipes.update();
-    draw();
+    bird.update(); pipes.update();
+    // Draw Background
+    ctx.fillStyle = "#70c5ce"; ctx.fillRect(0, 0, cvs.width, cvs.height);
+    ctx.fillStyle = "#dedede"; ctx.fillRect(0, cvs.height - 10, cvs.width, 10);
+    pipes.draw(); bird.draw();
+    
+    if(gameState.current == gameState.game) {
+       ctx.fillStyle = "#FFF"; ctx.strokeStyle = "#000"; ctx.lineWidth = 2;
+       ctx.font = "35px Impact"; ctx.fillText(score, cvs.width/2 - 10, 50); ctx.strokeText(score, cvs.width/2 - 10, 50);
+    }
     frames++;
     requestAnimationFrame(loop);
   }
-
-  function showGameOver() {
-    overlay.style.display = "flex";
-    overlayTitle.innerText = "PERDU !";
-    overlayTitle.classList.add("text-red-500");
-  }
-
-  function resetGame() {
-    bird.reset();
-    pipes.reset();
-    score = 0;
-    scoreDisplay.innerText = score;
-    frames = 0;
-    gameState.current = gameState.getReady;
-    overlayTitle.innerText = "RENAULT BIRD";
-    overlayTitle.classList.remove("text-red-500");
-  }
-
   loop();
 })();
-
-// ===== Modal & Autres =====
-const modal = document.getElementById('imageModal');
-const modalImg = document.getElementById('modalImg');
-const closeModalBtn = modal.querySelector('button');
-
-function openModal(url) {
-  modalImg.src = url;
-  modal.classList.add('active');
-  history.pushState({ modalOpen: true }, "");
-}
-
-function closeModal() {
-  modal.classList.remove('active');
-  if(history.state && history.state.modalOpen) history.back();
-}
-
-modalImg.addEventListener('click', closeModal);
-closeModalBtn.addEventListener('click', closeModal);
-modal.addEventListener('click', (e) => { if(e.target === modal) closeModal(); });
-window.addEventListener('popstate', () => { if(modal.classList.contains('active')) closeModal(); });
-
-// ===== Menu & Install Banner =====
-// (Code PWA simplifié)
-let deferredPrompt;
-const installBanner = document.createElement('div');
-installBanner.style.cssText = `position: fixed; bottom: 20px; left: 20px; right: 20px; background: #dc2626; color: #fff; padding: 12px; border-radius: 12px; text-align: center; font-weight: bold; z-index: 10001; display: none; cursor: pointer;`;
-installBanner.textContent = "Installer l'appli";
-document.body.appendChild(installBanner);
-window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredPrompt = e; if (!window.matchMedia('(display-mode: standalone)').matches) installBanner.style.display = 'block'; });
-installBanner.addEventListener('click', async () => { installBanner.style.display = 'none'; deferredPrompt.prompt(); });
-
-document.querySelectorAll('nav a').forEach(link => {
-  link.classList.add('nav-link');
-  link.addEventListener('click', (e) => {
-    e.preventDefault();
-    document.querySelectorAll('.nav-link').forEach(l => { l.classList.remove('text-white'); l.classList.add('text-gray-400'); l.style.backgroundColor = 'transparent'; l.style.padding = '0'; });
-    link.classList.remove('text-gray-400'); link.classList.add('text-white'); link.style.backgroundColor = '#dc2626'; link.style.padding = '0.25rem 0.75rem';
-    if(link.textContent.includes("Partenaires")) document.getElementById('categories').scrollIntoView({behavior: 'smooth'});
-    else if(link.textContent.includes("Mentions")) document.getElementById('mentions').scrollIntoView({behavior: 'smooth'});
-  });
-});
-
-// ===== Accordion =====
-document.querySelectorAll(".accordion-btn").forEach(btn => {
-  btn.addEventListener("click", () => {
-    const content = btn.nextElementSibling;
-    const arrow = btn.querySelector(".arrow");
-    document.querySelectorAll(".accordion-btn").forEach(b => { if(b !== btn) b.classList.remove("active"); });
-    if(content.classList.contains("open")) { content.style.maxHeight = null; content.classList.remove("open"); arrow.classList.remove("rotate"); btn.classList.remove("active"); }
-    else { content.classList.add("open"); arrow.classList.add("rotate"); btn.classList.add("active"); requestAnimationFrame(() => { content.style.maxHeight = content.scrollHeight + "px"; }); }
-  });
-});
 </script>
 </body>
 </html>
