@@ -471,58 +471,83 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
       </div>
     </div>
 
-   <div class="category-card bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 mb-6">
-    
-    <div class="relative cursor-pointer group" onclick="toggleCategory('cat-maison')">
-    <img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" 
-         alt="Maison" class="w-full h-36 object-cover transition-transform duration-500 group-hover:scale-105">
-    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-4">
-        <h3 class="text-white text-xl font-bold flex items-center gap-2">
-            <span>🏠</span> Maison & Travaux
-        </h3>
+   <div id="cat-maison" class="partner-content list-layout bg-gray-50">
     </div>
-</div>
-
-<div id="cat-maison" class="partner-content list-layout bg-gray-50">
+   </div>  <-- Cette balise ferme le DIV précédent (cat-maison).
+        <-- 🚨 IL MANQUE LA BALISE QUI FERME LE CONTENEUR COL-SPAN-1 AUTOUR DE LA MAISON.
     
-    <button class="accordion-btn">
-        <span class="font-semibold">Equipement & Renovation</span>
-        <span class="arrow">▶</span>
-    </button>
-    <div class="accordion-content">
-        <div class="partner-grid">
-            <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/AfrEnergie.webp')">A.F Energies</div>
-            <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/chaleur%20et%20bois.webp')">Chaleur et bois</div>
-            <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/habitat%20confort.webp')">Habitat Confort</div>
-            <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/sikkens.webp')">Sikkens Solutions</div>
-            <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/DSCV.webp')">DSCV Frelons</div>
+    <div class="col-span-1">
+    ```
+
+En omettant le `</div>` qui ferme le conteneur `<div class="col-span-1">` de la catégorie "Maison & Travaux", le navigateur pense que ce `col-span-1` est toujours ouvert. Par conséquent, les catégories suivantes (**AUTOMOBILE**, **Prêt à Porter**, etc.) sont considérées comme du *contenu imbriqué* dans la colonne précédente, ce qui casse la grille de mise en page.
+
+---
+
+### 🛠️ Solution : Le Bloc "Maison & Travaux" Corrigé
+
+Pour résoudre ce problème de structure de grille, vous devez encapsuler la catégorie "Maison & Travaux" dans sa propre balise `col-span-1`.
+
+**Voici le bloc de code corrigé pour la catégorie "Maison & Travaux" (à insérer dans votre grille) :**
+
+```html
+<div class="col-span-1">
+    <div class="category-card bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 mb-6">
+        
+        <div class="relative cursor-pointer group" onclick="toggleCategory('cat-maison')">
+            <img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" 
+                 alt="Maison" class="w-full h-36 object-cover transition-transform duration-500 group-hover:scale-105">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-4">
+                <h3 class="text-white text-xl font-bold flex items-center gap-2">
+                    <span>🏠</span> Maison & Travaux
+                </h3>
+            </div>
+        </div>
+
+        <div id="cat-maison" class="partner-content list-layout bg-gray-50">
+            
+            <button class="accordion-btn">
+                <span class="font-semibold">Equipement & Renovation</span>
+                <span class="arrow">▶</span>
+            </button>
+            <div class="accordion-content">
+                <div class="partner-grid">
+                    <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/AfrEnergie.webp')">A.F Energies</div>
+                    <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/chaleur%20et%20bois.webp')">Chaleur et bois</div>
+                    <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/habitat%20confort.webp')">Habitat Confort</div>
+                    <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/sikkens.webp')">Sikkens Solutions</div>
+                    <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/DSCV.webp')">DSCV Frelons</div>
+                </div>
+            </div>
+
+            <button class="accordion-btn">
+                <span class="font-semibold">Cuisine/Electromenager</span>
+                <span class="arrow">▶</span>
+            </button>
+            <div class="accordion-content">
+                <div class="partner-grid">
+                    <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Conforama.webp')">Conforama</div>
+                    <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Cuisinella.webp')">Cuisinella</div>
+                    <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/ecocuisine.webp')">Ecocuisine</div>
+                    <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/schmidt.webp')">Schmidt</div>
+                </div>
+            </div>
+
+            <button class="accordion-btn">
+                <span class="font-semibold">🌻 Jardin & Extérieur</span>
+                <span class="arrow">▶</span>
+            </button>
+            <div class="accordion-content">
+                <div class="partner-grid">
+                    <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Arbres_Co.webp')">Arbres & CO</div>
+                    <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/michel%20parisot.webp')">Parisot Motoculture</div>
+                    <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Les%20coqs%20de%20Bresse.webp')">Les Coques de Bresse</div>
+                </div>
+            </div>
         </div>
     </div>
+</div> ```
 
-    <button class="accordion-btn">
-        <span class="font-semibold">Cuisine/Electromenager</span>
-        <span class="arrow">▶</span>
-    </button>
-    <div class="accordion-content">
-        <div class="partner-grid">
-            <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Conforama.webp')">Conforama</div>
-            <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Cuisinella.webp')">Cuisinella</div>
-            <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/ecocuisine.webp')">Ecocuisine</div>
-            <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/schmidt.webp')">Schmidt</div>
-        </div>
-    </div>
-
-    <button class="accordion-btn">
-        <span class="font-semibold">🌻 Jardin & Extérieur</span>
-        <span class="arrow">▶</span>
-    </button>
-    <div class="accordion-content">
-        <div class="partner-grid">
-            <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Arbres_Co.webp')">Arbres & CO</div>
-            <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/michel%20parisot.webp')">Parisot Motoculture</div>
-            <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Les%20coqs%20de%20Bresse.webp')">Les Coques de Bresse</div>
-    </div>
-   </div>
+En remplaçant votre ancien bloc Maison par celui-ci, les catégories suivantes (Automobile, Prêt-à-Porter, etc.) devraient reprendre leur place dans la grille.
   
   </div>
    </div>
