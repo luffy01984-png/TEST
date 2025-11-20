@@ -453,11 +453,11 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
 
     <!-- ARTISANS DU GOÛT -->
     <div class="col-span-1">
-      <div class="category-card relative group cursor-pointer transform hover:scale-[1.02] transition duration-300 shadow-lg rounded-2xl overflow-hidden" onclick="toggleCategory('gout-content')">
+    <div class="category-card relative group cursor-pointer transform hover:scale-[1.02] transition duration-300 shadow-lg rounded-2xl overflow-hidden" onclick="toggleCategory('gout-content')">
         <img src="https://images.unsplash.com/photo-1510626176961-4b57d4fbad03?w=800" alt="Artisans du Goût">
         <div class="absolute inset-0 bg-gray-900 bg-opacity-50 rounded-2xl flex items-center justify-center text-white text-xl font-bold"> ARTISANS DU GOÛT</div>
-      </div>
-      <div id="gout-content" class="partner-content bg-white border border-gray-200 rounded-xl p-4 shadow-lg">
+    </div>
+    <div id="gout-content" class="partner-content bg-white border border-gray-200 rounded-xl p-4 shadow-lg">
         <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/biocoop.webp')">Biocoop</div>
         <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/boucherie_andré.webp')">Boucherie André</div>
         <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Cerdon.webp')">Cerdon AOC Gabin Grobon</div>
@@ -466,32 +466,10 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
         <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/la_cezee.webp')">La Cézée</div>
         <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Les_pepites_bressanes_new.webp')">Les Pépites Bressanes</div>
         <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/lou%20pan.webp')">LouPan</div>
-        <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Monts%20et%20Terroir.webp')">Monts et Terroir</div>   
+        <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Monts%20et%20Terroir.webp')">Monts et Terroir</div>    
         <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Papilles_Ain_solites.webp')">Papilles Ain Solites</div>
-      </div>
     </div>
-
-   <div id="cat-maison" class="partner-content list-layout bg-gray-50">
-    </div>
-   </div>  <-- Cette balise ferme le DIV précédent (cat-maison).
-        <-- 🚨 IL MANQUE LA BALISE QUI FERME LE CONTENEUR COL-SPAN-1 AUTOUR DE LA MAISON.
-    
-    <div class="col-span-1">
-    ```
-
-En omettant le `</div>` qui ferme le conteneur `<div class="col-span-1">` de la catégorie "Maison & Travaux", le navigateur pense que ce `col-span-1` est toujours ouvert. Par conséquent, les catégories suivantes (**AUTOMOBILE**, **Prêt à Porter**, etc.) sont considérées comme du *contenu imbriqué* dans la colonne précédente, ce qui casse la grille de mise en page.
-
----
-
-### 🛠️ Solution : Le Bloc "Maison & Travaux" Corrigé
-
-Pour résoudre ce problème de structure de grille, vous devez encapsuler la catégorie "Maison & Travaux" dans sa propre balise `col-span-1`.
-
-**Voici le bloc de code corrigé pour la catégorie "Maison & Travaux" (à insérer dans votre grille) :**
-
-```html
-<div class="col-span-1">
-    <div class="category-card bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 mb-6">
+</div> <div class="col-span-1"> <div class="category-card bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 mb-6">
         
         <div class="relative cursor-pointer group" onclick="toggleCategory('cat-maison')">
             <img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" 
@@ -541,9 +519,13 @@ Pour résoudre ce problème de structure de grille, vous devez encapsuler la cat
                     <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Arbres_Co.webp')">Arbres & CO</div>
                     <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/michel%20parisot.webp')">Parisot Motoculture</div>
                     <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Les%20coqs%20de%20Bresse.webp')">Les Coques de Bresse</div>
-              
-  </div>
-   </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> ```
+
+Après avoir remplacé ce bloc, les catégories suivantes (**Automobile**, **Prêt-à-Porter**, etc.) devraient réapparaître correctement.
 
    <!-- AUTOMOBILE -->
     <div class="col-span-1">
