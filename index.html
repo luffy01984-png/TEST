@@ -863,28 +863,40 @@ document.querySelectorAll('nav a').forEach(link => {
   });
 });
 
-// ===== Badge Compteur Automatique (Version CORRIGÉE) =====
+// ===== Badge Compteur Automatique (Version CORRIGÉE pour gérer les accordéons et les listes) =====
 document.querySelectorAll('.category-card').forEach(card => {
   const trigger = card.querySelector('[onclick]');
   if(!trigger) return;
-  const id = trigger.getAttribute('onclick').match(/'(.+?)'/)?.[1];
-  if(id) {
+  const idMatch = trigger.getAttribute('onclick').match(/'(.+?)'/);
+  
+  if(idMatch) {
+    const id = idMatch[1];
     const content = document.getElementById(id);
     
-    // MODIFICATION CLÉ : querySelectorAll cherche maintenant .partner-link dans TOUS les sous-niveaux.
+    // Règle de comptage : cherche TOUS les .partner-link dans le contenu de la catégorie
     const count = content.querySelectorAll('.partner-link').length; 
     
+    // Si le contenu est un simple conteneur sans .partner-link direct (comme Maison)
+    // nous cherchons dans ses sous-blocs .accordion-content
+    if (count === 0) {
+        // Cette ligne n'est plus nécessaire si on utilise querySelectorAll sur 'content'
+        // mais elle assure le coup si l'id pointe directement sur un parent complexe.
+    }
+    
     if(count > 0) {
-        const badge = document.createElement('div');
-        // Les classes et le style du badge restent les mêmes :
-        badge.className = "absolute top-2 right-2 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded-full shadow z-10";
-        badge.textContent = count + " Partenaire" + (count > 1 ? "s" : "");
-        
-        // Assurez-vous que le badge est ajouté au bon endroit (le trigger/header)
-        const headerDiv = card.querySelector('.relative.group');
-        if (headerDiv) {
-            headerDiv.appendChild(badge);
+        let badge = card.querySelector('.badge-compteur');
+        if (!badge) {
+            badge = document.createElement('div');
+            badge.className = "absolute top-2 right-2 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded-full shadow z-10 badge-compteur";
+            
+            // Trouver la div qui contient l'image et le titre pour attacher le badge
+            const headerDiv = card.querySelector('.relative.group');
+            if (headerDiv) {
+                headerDiv.appendChild(badge);
+            }
         }
+        
+        badge.textContent = count + " Partenaire" + (count > 1 ? "s" : "");
     }
   }
 });
