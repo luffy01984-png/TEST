@@ -866,15 +866,29 @@ document.querySelectorAll('nav a').forEach(link => {
   });
 });
 
-// ===== Badge automatique nombre de partenaires =====
+// ===== Badge Compteur Automatique (Version CORRIGÉE) =====
 document.querySelectorAll('.category-card').forEach(card => {
-  const id = card.getAttribute('onclick')?.match(/'(.+?)'/)?.[1];
+  const trigger = card.querySelector('[onclick]');
+  if(!trigger) return;
+  const id = trigger.getAttribute('onclick').match(/'(.+?)'/)?.[1];
   if(id) {
-    const count = document.getElementById(id)?.querySelectorAll('.partner-link').length || 0;
-    const badge = document.createElement('div');
-    badge.className = "absolute top-2 right-2 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded-full shadow";
-    badge.textContent = count + " Partenaire" + (count > 1 ? "s" : "");
-    card.appendChild(badge);
+    const content = document.getElementById(id);
+    
+    // MODIFICATION CLÉ : querySelectorAll cherche maintenant .partner-link dans TOUS les sous-niveaux.
+    const count = content.querySelectorAll('.partner-link').length; 
+    
+    if(count > 0) {
+        const badge = document.createElement('div');
+        // Les classes et le style du badge restent les mêmes :
+        badge.className = "absolute top-2 right-2 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded-full shadow z-10";
+        badge.textContent = count + " Partenaire" + (count > 1 ? "s" : "");
+        
+        // Assurez-vous que le badge est ajouté au bon endroit (le trigger/header)
+        const headerDiv = card.querySelector('.relative.group');
+        if (headerDiv) {
+            headerDiv.appendChild(badge);
+        }
+    }
   }
 });
 
