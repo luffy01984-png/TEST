@@ -864,41 +864,39 @@ document.querySelectorAll('nav a').forEach(link => {
 });
 
 // ===== Badge Compteur Automatique (Version CORRIGÉE pour gérer les accordéons et les listes) =====
-document.querySelectorAll('.category-card').forEach(card => {
-  const trigger = card.querySelector('[onclick]');
-  if(!trigger) return;
-  const idMatch = trigger.getAttribute('onclick').match(/'(.+?)'/);
-  
-  if(idMatch) {
-    const id = idMatch[1];
-    const content = document.getElementById(id);
-    
-    // Règle de comptage : cherche TOUS les .partner-link dans le contenu de la catégorie
+document.querySelectorAll('[onclick^="toggleCategory"]').forEach(trigger => {
+    // 1. Détecter l'ID de la carte de contenu (ex: 'gout-content')
+    const idMatch = trigger.getAttribute('onclick').match(/'(.+?)'/);
+    if (!idMatch) return;
+
+    const contentId = idMatch[1];
+    const content = document.getElementById(contentId);
+
+    if (!content) return; 
+
+    // 2. Compter tous les partenaires, quelle que soit la profondeur (fonctionne pour les accordéons comme Maison)
     const count = content.querySelectorAll('.partner-link').length; 
     
-    // Si le contenu est un simple conteneur sans .partner-link direct (comme Maison)
-    // nous cherchons dans ses sous-blocs .accordion-content
-    if (count === 0) {
-        // Cette ligne n'est plus nécessaire si on utilise querySelectorAll sur 'content'
-        // mais elle assure le coup si l'id pointe directement sur un parent complexe.
-    }
-    
+    // 3. La div où nous voulons attacher le badge est le 'trigger' lui-même (la div qui a l'onclick)
+    let headerDiv = trigger; 
+
     if(count > 0) {
-        let badge = card.querySelector('.badge-compteur');
-        if (!badge) {
-            badge = document.createElement('div');
-            badge.className = "absolute top-2 right-2 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded-full shadow z-10 badge-compteur";
-            
-            // Trouver la div qui contient l'image et le titre pour attacher le badge
-            const headerDiv = card.querySelector('.relative.group');
-            if (headerDiv) {
-                headerDiv.appendChild(badge);
-            }
+        // Supprimer l'ancien badge s'il existe (pour éviter les doublons lors des rechargements)
+        let existingBadge = headerDiv.querySelector('.badge-compteur');
+        if (existingBadge) {
+            existingBadge.remove();
         }
+
+        // Créer et attacher le nouveau badge
+        let badge = document.createElement('div');
+        // Ajout de la classe badge-compteur pour un meilleur ciblage futur
+        badge.className = "absolute top-2 right-2 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded-full shadow z-10 badge-compteur";
+        
+        // Attacher le badge au déclencheur (la div qui a l'image/titre)
+        headerDiv.appendChild(badge);
         
         badge.textContent = count + " Partenaire" + (count > 1 ? "s" : "");
     }
-  }
 });
 
 // ===== Accordion =====
