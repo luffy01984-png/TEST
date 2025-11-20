@@ -344,9 +344,58 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
 </header>
 
 <script>
+  <script>
   // Sélection des liens
   const navPartenaires = document.getElementById('nav-partenaires');
   const navMentions = document.getElementById('nav-mentions');
+  const navDetente = document.getElementById('nav-detente');
+
+  // Gestion clic pour scroll et active
+  navPartenaires.addEventListener('click', () => {
+    navPartenaires.classList.add('active');
+    navMentions.classList.remove('active');
+    navDetente.classList.remove('active');
+    document.getElementById('categories').scrollIntoView({ behavior: 'smooth' });
+  });
+
+  navMentions.addEventListener('click', () => {
+    navMentions.classList.add('active');
+    navPartenaires.classList.remove('active');
+    navDetente.classList.remove('active');
+    document.getElementById('mentions').scrollIntoView({ behavior: 'smooth' });
+  });
+
+  navDetente.addEventListener('click', () => {
+    navDetente.classList.add('active');
+    navPartenaires.classList.remove('active');
+    navMentions.classList.remove('active');
+    document.getElementById('detente').scrollIntoView({ behavior: 'smooth' });
+  });
+
+  // Détection scroll pour active link automatique
+  const categoriesSection = document.getElementById('categories');
+  const mentionsSection = document.getElementById('mentions');
+  const detenteSection = document.getElementById('detente');
+
+  window.addEventListener('scroll', () => {
+    const scrollPos = window.scrollY + 150;
+    if (categoriesSection && mentionsSection && detenteSection) {
+      if (scrollPos >= detenteSection.offsetTop) {
+        navDetente.classList.add('active');
+        navMentions.classList.remove('active');
+        navPartenaires.classList.remove('active');
+      } else if (scrollPos >= mentionsSection.offsetTop) {
+        navMentions.classList.add('active');
+        navPartenaires.classList.remove('active');
+        navDetente.classList.remove('active');
+      } else if (scrollPos >= categoriesSection.offsetTop) {
+        navPartenaires.classList.add('active');
+        navMentions.classList.remove('active');
+        navDetente.classList.remove('active');
+      }
+    }
+  });
+</script>
 
   // Gestion clic pour scroll et active
   navPartenaires.addEventListener('click', () => {
