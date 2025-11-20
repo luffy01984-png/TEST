@@ -464,47 +464,64 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
     
     <!-- Sous-catégorie 1 -->
     <div class="accordion-btn w-full px-4 py-3 border-b border-gray-200 flex justify-between items-center cursor-pointer">
-      Jardin
-      <span class="arrow">▶</span>
+      <div class="col-span-1">
+  <!-- Carte principale TRAVAUX -->
+  <div class="category-card relative cursor-pointer transform hover:scale-[1.02] transition duration-300 shadow-lg rounded-2xl overflow-hidden"
+       onclick="toggleCategory('TRAVAUX-content')">
+    <img src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/maison_travaux.jpg" alt="Maison et déco">
+    <div class="absolute inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center text-white text-xl font-bold rounded-2xl">
+      MAISON / TRAVAUX
     </div>
-    <div class="submenu-wrapper hidden">
-      <div class="partner-link w-full px-4 py-2 border-b border-gray-100" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Arbres_Co.webp')">Arbres & Co</div>
-      <div class="partner-link w-full px-4 py-2 border-b border-gray-100" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/michel%20parisot.webp')">Parisot Motoculture</div>
-    </div>
+  </div>
 
-    <!-- Sous-catégorie 2 -->
-    <div class="accordion-btn w-full px-4 py-3 border-b border-gray-200 flex justify-between items-center cursor-pointer">
-      Chauffage / Énergie
-      <span class="arrow">▶</span>
-    </div>
-    <div class="submenu-wrapper hidden">
-      <div class="partner-link w-full px-4 py-2 border-b border-gray-100" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/AfrEnergie.webp')">A.F Energies</div>
-      <div class="partner-link w-full px-4 py-2 border-b border-gray-100" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/habitat%20confort.webp')">Habitat Confort</div>
-    </div>
+  <!-- Contenu sous-catégories -->
 
-    <!-- Sous-catégorie 3 -->
-    <div class="accordion-btn w-full px-4 py-3 border-b border-gray-200 flex justify-between items-center cursor-pointer">
-      Cuisines / Intérieur
-      <span class="arrow">▶</span>
-    </div>
-    <div class="submenu-wrapper hidden">
-      <div class="partner-link w-full px-4 py-2 border-b border-gray-100" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Conforama.webp')">Conforama</div>
-      <div class="partner-link w-full px-4 py-2 border-b border-gray-100" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Cuisinella.webp')">Cuisinella</div>
-      <div class="partner-link w-full px-4 py-2 border-b border-gray-100" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/ecocuisine.webp')">Ecocuisine</div>
-      <div class="partner-link w-full px-4 py-2 border-b border-gray-100" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/schmidt.webp')">Schmidt</div>
-    </div>
+  <div id="TRAVAUX-content" class="partner-content hidden bg-white border border-gray-200 rounded-xl p-4 shadow-lg mt-2">
 
-    <!-- Sous-catégorie 4 -->
-    <div class="accordion-btn w-full px-4 py-3 flex justify-between items-center cursor-pointer">
-      Divers
-      <span class="arrow">▶</span>
-    </div>
-    <div class="submenu-wrapper hidden">
-      <div class="partner-link w-full px-4 py-2 border-b border-gray-100" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/MirePoix.webp')">Mirepoix</div>
-      <div class="partner-link w-full px-4 py-2 border-b border-gray-100" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/sikkens.webp')">Sikkens Solutions</div>
-      <div class="partner-link w-full px-4 py-2 border-b border-gray-100" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/chaleur%20et%20bois.webp')">Chaleur & Bois</div>
-      <div class="partner-link w-full px-4 py-2 border-b border-gray-100" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Les%20coqs%20de%20Bresse.webp')">Les Coqs de Bresse</div>
-    </div>
+```
+<!-- Jardin -->
+<div class="accordion-btn flex justify-between items-center">
+  Jardin <span class="arrow">▶</span>
+</div>
+<div class="submenu-wrapper">
+  <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Arbres_Co.webp')">Arbres & Co</div>
+  <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/michel%20parisot.webp')">Parisot Motoculture</div>
+</div>
+
+<!-- Chauffage / Énergie -->
+<div class="accordion-btn flex justify-between items-center">
+  Chauffage / Énergie <span class="arrow">▶</span>
+</div>
+<div class="submenu-wrapper">
+  <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/AfrEnergie.webp')">A.F Energies</div>
+  <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/habitat%20confort.webp')">Habitat Confort</div>
+</div>
+
+<!-- Cuisines / Intérieur -->
+<div class="accordion-btn flex justify-between items-center">
+  Cuisines / Intérieur <span class="arrow">▶</span>
+</div>
+<div class="submenu-wrapper">
+  <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Conforama.webp')">Conforama</div>
+  <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Cuisinella.webp')">Cuisinella</div>
+  <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/ecocuisine.webp')">Ecocuisine</div>
+  <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/schmidt.webp')">Schmidt</div>
+</div>
+
+<!-- Divers -->
+<div class="accordion-btn flex justify-between items-center">
+  Divers <span class="arrow">▶</span>
+</div>
+<div class="submenu-wrapper">
+  <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/MirePoix.webp')">MirePoix</div>
+  <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/sikkens.webp')">Sikkens Solutions</div>
+  <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/chaleur%20et%20bois.webp')">Chaleur & Bois</div>
+  <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Les%20coqs%20de%20Bresse.webp')">Les Coqs de Bresse</div>
+</div>
+```
+
+  </div>
+</div>
 
   </div>
 </div>
