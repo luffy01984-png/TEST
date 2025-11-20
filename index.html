@@ -661,6 +661,28 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
   </div>
 </div>
 
+    <!-- HOTELS / VOYAGES -->
+<div class="col-span-1">
+  <div class="category-card relative group cursor-pointer transform hover:scale-[1.02] transition duration-300 shadow-lg rounded-2xl overflow-hidden" 
+       onclick="toggleCategory('travel-content')">
+    <img src="https://images.unsplash.com/photo-1501117716987-c8e1ecb210a0?auto=format&fit=crop&w=1200&q=80" 
+         alt="Hôtels et Voyages"
+         class="w-full h-36 md:h-44 lg:h-56 object-cover rounded-2xl">
+    <div class="absolute inset-0 bg-gray-900 bg-opacity-50 rounded-2xl flex items-center justify-center text-white text-xl font-bold">
+      HOTELS / VOYAGES
+    </div>
+  </div>
+
+  <div id="travel-content" class="partner-content bg-white border border-gray-200 rounded-xl p-4 shadow-lg">
+
+    <div class="partner-link" onclick="openModal('https://images.unsplash.com/photo-1518684079-3c830dcef090?auto=format&fit=crop&w=900&q=80')">Booking.com</div>
+    <div class="partner-link" onclick="openModal('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=900&q=80')">Airbnb</div>
+    <div class="partner-link" onclick="openModal('https://images.unsplash.com/photo-1504608245011-62d96d61fca3?auto=format&fit=crop&w=900&q=80')">Trivago </div>
+    <div class="partner-link" onclick="openModal('https://images.unsplash.com/photo-1526772662000-3f88f10405ff?auto=format&fit=crop&w=900&q=80')">Expedia</div>
+  </div>
+</div>
+
+
 <!-- FINANCEMENT -->
 <div class="col-span-1">
   <div class="category-card relative group cursor-pointer transform hover:scale-[1.02] transition duration-300 shadow-lg rounded-2xl overflow-hidden" 
