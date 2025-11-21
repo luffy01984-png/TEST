@@ -915,8 +915,10 @@ document.querySelectorAll('nav a').forEach(link => {
   });
 });
 </script>
-// ===== Badge Compteur Automatique (Version CORRIGÉE pour gérer les accordéons et les listes) =====
-document.querySelectorAll('[onclick^="toggleCategory"]').forEach(trigger => {
+/<!-- ===== Badge Compteur Automatique (Version CORRIGÉE pour gérer les accordéons et les listes) ===== -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('[onclick^="toggleCategory"]').forEach(trigger => {
     // 1. Détecter l'ID de la carte de contenu (ex: 'gout-content')
     const idMatch = trigger.getAttribute('onclick').match(/'(.+?)'/);
     if (!idMatch) return;
@@ -924,32 +926,34 @@ document.querySelectorAll('[onclick^="toggleCategory"]').forEach(trigger => {
     const contentId = idMatch[1];
     const content = document.getElementById(contentId);
 
-    if (!content) return; 
+    if (!content) return;
 
     // 2. Compter tous les partenaires, quelle que soit la profondeur (fonctionne pour les accordéons comme Maison)
-    const count = content.querySelectorAll('.partner-link').length; 
-    
+    const count = content.querySelectorAll('.partner-link').length;
+
     // 3. La div où nous voulons attacher le badge est le 'trigger' lui-même (la div qui a l'onclick)
-    let headerDiv = trigger; 
+    let headerDiv = trigger;
 
-    if(count > 0) {
-        // Supprimer l'ancien badge s'il existe (pour éviter les doublons lors des rechargements)
-        let existingBadge = headerDiv.querySelector('.badge-compteur');
-        if (existingBadge) {
-            existingBadge.remove();
-        }
+    if (count > 0) {
+      // Supprimer l'ancien badge s'il existe (pour éviter les doublons lors des rechargements)
+      let existingBadge = headerDiv.querySelector('.badge-compteur');
+      if (existingBadge) {
+        existingBadge.remove();
+      }
 
-        // Créer et attacher le nouveau badge
-        let badge = document.createElement('div');
-        // Ajout de la classe badge-compteur pour un meilleur ciblage futur
-        badge.className = "absolute top-2 right-2 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded-full shadow z-10 badge-compteur";
-        
-        // Attacher le badge au déclencheur (la div qui a l'image/titre)
-        headerDiv.appendChild(badge);
-        
-        badge.textContent = count + " Partenaire" + (count > 1 ? "s" : "");
+      // Créer et attacher le nouveau badge
+      let badge = document.createElement('div');
+      // Ajout de la classe badge-compteur pour un meilleur ciblage futur
+      badge.className = "absolute top-2 right-2 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded-full shadow z-10 badge-compteur";
+
+      // Attacher le badge au déclencheur (la div qui a l'image/titre)
+      headerDiv.appendChild(badge);
+
+      badge.textContent = count + " Partenaire" + (count > 1 ? "s" : "");
     }
+  });
 });
+</script>  <!-- ← Assurez-vous que cette fermeture est présente -->
 
 <script>
 // ===== Accordion (Version Modifiée pour l'Exclusivité) =====
