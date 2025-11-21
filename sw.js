@@ -1,5 +1,5 @@
 // ===== Service Worker Optimisé =====
-const CACHE_NAME = 'renault-trucks-cse-v1.5'; // Incrémentez à chaque mise à jour
+const CACHE_NAME = 'renault-trucks-cse-v1.6'; // Incrémentez à chaque mise à jour
 
 // Fichiers à pré-cacher (essentiels pour offline)
 const PRECACHE = [
