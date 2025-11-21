@@ -995,7 +995,7 @@ document.querySelectorAll(".accordion-btn").forEach(btn => {
 });
   if ('serviceWorker' in navigator) {
     // 1. Enregistrement du Service Worker (sw.js)
-    navigator.serviceWorker.register('/Renault-trucks-CE/sw.js').then(registration => {
+    navigator.serviceWorker.register('/TEST/sw.js').then(registration => {
       console.log('SW: Enregistré avec succès !');
       // Les mises à jour seront gérées par le SW grâce à skipWaiting/clients.claim
       // et par le listener ci-dessous.
