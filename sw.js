@@ -1,4 +1,4 @@
-const CACHE_NAME = 'renault-trucks-cse-v1.2'; // Version du cache (incrémentez pour forcer une mise à jour, ex: v2)
+const CACHE_NAME = 'renault-trucks-cse-v1.3'; // Version du cache (incrémentez pour forcer une mise à jour, ex: v2)
 
 // Liste des ressources à mettre en cache (ajoutez toutes vos ressources statiques ici)
 const urlsToCache = [
