@@ -1000,6 +1000,144 @@ document.querySelectorAll(".accordion-btn").forEach(btn => {
     }
   });
 });
+  <!-- Script d'auto-update - À placer avant </body> -->
+<script>
+// ========================================
+// SYSTÈME DE MISE À JOUR AUTOMATIQUE
+// ========================================
+
+if ('serviceWorker' in navigator) {
+  let refreshing = false;
+
+  // Détecter quand le Service Worker prend le contrôle
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    if (!refreshing) {
+      console.log("🔄 Nouveau Service Worker actif - Rechargement...");
+      refreshing = true;
+      window.location.reload();
+    }
+  });
+
+  // Recevoir les messages du Service Worker
+  navigator.serviceWorker.addEventListener('message', event => {
+    if (event.data && event.data.type === 'SW_UPDATED') {
+      console.log("✅ Mise à jour disponible:", event.data.version);
+      showUpdateNotification();
+      setTimeout(() => window.location.reload(), 2000);
+    }
+  });
+
+  // Enregistrer le Service Worker
+  navigator.serviceWorker.register('/sw.js')
+    .then(registration => {
+      console.log("✅ Service Worker enregistré");
+
+      // Vérifier les mises à jour toutes les 30 secondes
+      setInterval(() => {
+        console.log("🔍 Vérification des mises à jour...");
+        registration.update();
+      }, 30000);
+
+      // Vérifier aussi quand la fenêtre reprend le focus
+      window.addEventListener('focus', () => {
+        console.log("👀 Focus récupéré - Vérification des mises à jour");
+        registration.update();
+      });
+
+      // Gérer les nouveaux Service Workers en attente
+      registration.addEventListener('updatefound', () => {
+        const newWorker = registration.installing;
+        console.log("🆕 Nouveau Service Worker détecté");
+
+        newWorker.addEventListener('statechange', () => {
+          if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+            console.log("⚡ Nouvelle version disponible - Application...");
+            newWorker.postMessage({ type: 'SKIP_WAITING' });
+          }
+        });
+      });
+    })
+    .catch(error => {
+      console.error("❌ Erreur Service Worker:", error);
+    });
+}
+
+// Fonction pour afficher une notification de mise à jour
+function showUpdateNotification() {
+  if (document.getElementById('update-notification')) return;
+
+  const notification = document.createElement('div');
+  notification.id = 'update-notification';
+  notification.style.cssText = `
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 15px 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    z-index: 10000;
+    font-family: 'Inter', Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    animation: slideIn 0.5s ease-out;
+  `;
+  
+  notification.innerHTML = `
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+      <path d="M9 12l2 2 4-4"/>
+    </svg>
+    <span>Mise à jour disponible...</span>
+  `;
+  
+  document.body.appendChild(notification);
+
+  // Ajouter l'animation CSS
+  if (!document.getElementById('update-notification-style')) {
+    const style = document.createElement('style');
+    style.id = 'update-notification-style';
+    style.textContent = `
+      @keyframes slideIn {
+        from {
+          transform: translateX(400px);
+          opacity: 0;
+        }
+        to {
+          transform: translateX(0);
+          opacity: 1;
+        }
+      }
+      @keyframes fadeOut {
+        from {
+          opacity: 1;
+        }
+        to {
+          opacity: 0;
+          transform: translateX(400px);
+        }
+      }
+    `;
+    document.head.appendChild(style);
+  }
+
+  setTimeout(() => {
+    notification.style.animation = 'fadeOut 0.5s ease-out';
+    setTimeout(() => notification.remove(), 500);
+  }, 1500);
+}
+
+// Vérifier immédiatement au chargement
+window.addEventListener('load', () => {
+  if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+    console.log("🔄 Page chargée - Service Worker actif");
+  }
+});
+</script>
 </script>
 </body>
 </html>
