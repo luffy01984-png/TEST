@@ -993,6 +993,32 @@ document.querySelectorAll(".accordion-btn").forEach(btn => {
     }
   });
 });
+  <script>
+  if ('serviceWorker' in navigator) {
+    // 1. Enregistrement du Service Worker (sw.js)
+    navigator.serviceWorker.register('/sw.js').then(registration => {
+      console.log('SW: Enregistré avec succès !');
+      // Les mises à jour seront gérées par le SW grâce à skipWaiting/clients.claim
+      // et par le listener ci-dessous.
+    }).catch(error => {
+      console.error('SW: Échec de l\'enregistrement :', error);
+    });
+
+    // 2. Écouteur clé : Détecte quand un NOUVEAU Service Worker prend le contrôle
+    let refreshing = false;
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+      // Cette vérification empêche les boucles de rechargement.
+      if (!refreshing) {
+        refreshing = true;
+        console.log("SW: Nouvelle version détectée, rechargement automatique...");
+        // 🔄 Force le rechargement pour charger le nouveau HTML/DOM
+        window.location.reload(); 
+      }
+    });
+  }
+</script>
+</body>
+</html>
 </script>
 </body>
 </html>
