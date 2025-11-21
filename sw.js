@@ -1,78 +1,69 @@
-const CACHE_NAME = 'renault-trucks-cse-v2'; // Incrémentez à chaque update
+// ===== Service Worker Optimisé =====
+const CACHE_NAME = 'renault-trucks-cse-v1.5'; // Incrémentez à chaque mise à jour
 
-// Ressources à pré-cacher (offline)
+// Fichiers à pré-cacher (essentiels pour offline)
 const PRECACHE = [
   '/',
   '/index.html',
   '/manifest.json',
-
-  // CDN
+  '/assets/style.css',
+  '/assets/app.js',
   'https://cdn.tailwindcss.com',
   'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap',
-
-  // Images principales (optionnel)
   'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/Header.webp',
   'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/elecctra.webp'
 ];
 
-// INSTALLATION — Pré-cache les fichiers essentiels
+// Installation : pré-cache des fichiers essentiels
 self.addEventListener('install', event => {
-  console.log('SW: Installation…');
-
   event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => {
-      console.log('SW: Pré-cache…');
-      return cache.addAll(PRECACHE);
-    })
+    caches.open(CACHE_NAME)
+      .then(cache => cache.addAll(PRECACHE))
   );
-
-  self.skipWaiting(); // Active immédiatement la nouvelle version
+  self.skipWaiting(); // Activation immédiate
 });
 
-// ACTIVATION — Supprime les anciens caches
+// Activation : suppression des anciens caches
 self.addEventListener('activate', event => {
-  console.log('SW: Activation…');
-
   event.waitUntil(
     caches.keys().then(keys =>
       Promise.all(
         keys.map(key => {
-          if (key !== CACHE_NAME) {
-            console.log('SW: Suppression cache obsolete :', key);
-            return caches.delete(key);
-          }
+          if (key !== CACHE_NAME) return caches.delete(key);
         })
       )
     )
   );
-
-  self.clients.claim();
+  self.clients.claim(); // Prend le contrôle des pages ouvertes
 });
 
-// FETCH — Stratégie Network First
+// Fetch : Network-first pour HTML, CSS, JS ; Cache-first pour images et polices
 self.addEventListener('fetch', event => {
-  event.respondWith(
-    fetch(event.request)
-      .then(response => {
-        // Si OK → mise à jour du cache
-        if (response && response.status === 200 && response.type === 'basic') {
-          const clone = response.clone();
-          caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
-        }
-        return response;
-      })
-      .catch(() => {
-        // Hors-ligne → fallback cache
-        return caches.match(event.request).then(cached => {
-          return cached || caches.match('/index.html');
-        });
-      })
-  );
+  const request = event.request;
+  const url = new URL(request.url);
+
+  // Network-first pour fichiers critiques
+  if (request.destination === 'document' || 
+      request.destination === 'script' || 
+      request.destination === 'style') {
+
+    event.respondWith(
+      fetch(request).then(networkResponse => {
+        // Mise à jour du cache
+        caches.open(CACHE_NAME).then(cache => cache.put(request, networkResponse.clone()));
+        return networkResponse;
+      }).catch(() => caches.match(request))
+    );
+
+  } else {
+    // Cache-first pour images et fonts
+    event.respondWith(
+      caches.match(request).then(cached => cached || fetch(request))
+    );
+  }
 });
 
-// Gestion manuelle (rarement utile)
+// Gestion du rechargement automatique lors de la mise à jour
 self.addEventListener('message', event => {
-  if (event.data?.type === 'SKIP_WAITING') {
-    self.skipWaiting();
-  }
+  if (event.data?.type === 'SKIP_WAITING') self.skipWaiting();
 });
