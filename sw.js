@@ -1,4 +1,4 @@
-const CACHE_NAME = "renault-cse-cache-v3.5";
+const CACHE_NAME = "renault-cse-cache-v3.4";
 const ESSENTIALS_CACHE = [
 "/",
 "/index.html",
@@ -62,4 +62,11 @@ caches.keys().then(keys =>
 Promise.all(keys.map(key => !cacheWhitelist.includes(key) && caches.delete(key)))
 )
 );
+});
+
+// Message pour activation immédiate
+self.addEventListener('message', event => {
+if (event.data && event.data.type === 'SKIP_WAITING') {
+self.skipWaiting();
+}
 });
