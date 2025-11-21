@@ -439,7 +439,7 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
     </div>
   </div>
   <div id="resto-content" class="partner-content bg-white border border-gray-200 rounded-xl p-4 shadow-lg">
-    <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/buffetpizza.webp')">AllPizza&Pasta Buffet</div>    
+    <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/buffetpizza.webp')">AllPizza&Pasta Buffet</div>
     <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Bollyfood.webp')">BollyFood</div>
     <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/food%20truck%20fermier.webp')">Food Truck Fermier</div>
     <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/LeLoft.webp')">Le Loft</div>
@@ -913,11 +913,9 @@ document.querySelectorAll('nav a').forEach(link => {
     }
   });
 });
-</script>
-/<!-- ===== Badge Compteur Automatique (Version CORRIGÉE pour gérer les accordéons et les listes) ===== -->
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll('[onclick^="toggleCategory"]').forEach(trigger => {
+
+// ===== Badge Compteur Automatique (Version CORRIGÉE pour gérer les accordéons et les listes) =====
+document.querySelectorAll('[onclick^="toggleCategory"]').forEach(trigger => {
     // 1. Détecter l'ID de la carte de contenu (ex: 'gout-content')
     const idMatch = trigger.getAttribute('onclick').match(/'(.+?)'/);
     if (!idMatch) return;
@@ -925,52 +923,54 @@ document.addEventListener('DOMContentLoaded', () => {
     const contentId = idMatch[1];
     const content = document.getElementById(contentId);
 
-    if (!content) return;
+    if (!content) return; 
 
     // 2. Compter tous les partenaires, quelle que soit la profondeur (fonctionne pour les accordéons comme Maison)
-    const count = content.querySelectorAll('.partner-link').length;
-
+    const count = content.querySelectorAll('.partner-link').length; 
+    
     // 3. La div où nous voulons attacher le badge est le 'trigger' lui-même (la div qui a l'onclick)
-    let headerDiv = trigger;
+    let headerDiv = trigger; 
 
-    if (count > 0) {
-      // Supprimer l'ancien badge s'il existe (pour éviter les doublons lors des rechargements)
-      let existingBadge = headerDiv.querySelector('.badge-compteur');
-      if (existingBadge) {
-        existingBadge.remove();
-      }
+    if(count > 0) {
+        // Supprimer l'ancien badge s'il existe (pour éviter les doublons lors des rechargements)
+        let existingBadge = headerDiv.querySelector('.badge-compteur');
+        if (existingBadge) {
+            existingBadge.remove();
+        }
 
-      // Créer et attacher le nouveau badge
-      let badge = document.createElement('div');
-      // Ajout de la classe badge-compteur pour un meilleur ciblage futur
-      badge.className = "absolute top-2 right-2 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded-full shadow z-10 badge-compteur";
-
-      // Attacher le badge au déclencheur (la div qui a l'image/titre)
-      headerDiv.appendChild(badge);
-
-      badge.textContent = count + " Partenaire" + (count > 1 ? "s" : "");
+        // Créer et attacher le nouveau badge
+        let badge = document.createElement('div');
+        // Ajout de la classe badge-compteur pour un meilleur ciblage futur
+        badge.className = "absolute top-2 right-2 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded-full shadow z-10 badge-compteur";
+        
+        // Attacher le badge au déclencheur (la div qui a l'image/titre)
+        headerDiv.appendChild(badge);
+        
+        badge.textContent = count + " Partenaire" + (count > 1 ? "s" : "");
     }
-  });
 });
-</script>  <!-- ← Assurez-vous que cette fermeture est présente -->
 
-<script>
 // ===== Accordion (Version Modifiée pour l'Exclusivité) =====
 document.querySelectorAll(".accordion-btn").forEach(btn => {
   btn.addEventListener("click", () => {
     const content = btn.nextElementSibling;
 
-    // 1. GESTION DE L'EXCLUSIVITÉ
+    // 1. GESTION DE L'EXCLUSIVITÉ (Fermeture des autres)
     document.querySelectorAll(".accordion-btn").forEach(otherBtn => {
       const otherContent = otherBtn.nextElementSibling;
+      
+      // Si ce n'est pas le bouton cliqué ET que son contenu est ouvert
       if (otherBtn !== btn && otherContent.classList.contains("open")) {
         otherContent.style.maxHeight = null;
         otherContent.classList.remove("open");
+        
+        // Retirer les classes des boutons et flèches des autres onglets
         otherBtn.classList.remove("active");
         const otherArrow = otherBtn.querySelector(".arrow");
         if (otherArrow) otherArrow.classList.remove("rotate");
       }
     });
+    // FIN GESTION EXCLUSIVITÉ
 
     // 2. OUVERTURE / FERMETURE DU BOUTON CLIQUÉ
     const arrow = btn.querySelector(".arrow");
@@ -986,42 +986,12 @@ document.querySelectorAll(".accordion-btn").forEach(btn => {
       content.classList.add("open"); 
       if (arrow) arrow.classList.add("rotate"); 
       btn.classList.add("active");
+      
+      // On utilise requestAnimationFrame pour une lecture correcte de scrollHeight
       requestAnimationFrame(() => { content.style.maxHeight = content.scrollHeight + "px"; }); 
     }
   });
 });
-    // ===== LOGIQUE DE DÉTECTION ET DE NOTIFICATION DES MISES À JOUR =====
-    if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-            navigator.serviceWorker.register('/service-worker.js')
-                .then(registration => {
-                    console.log('SW enregistré:', registration.scope);
-                    
-                    // Détecte lorsqu'un nouveau Service Worker est en cours d'installation
-                    registration.addEventListener('updatefound', () => {
-                        const newWorker = registration.installing;
-                        
-                        // Surveille le changement d'état du nouveau SW
-                        newWorker.addEventListener('statechange', () => {
-                            // Si le nouveau SW est installé (grâce à skipWaiting)
-                            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                                
-                                console.log('Nouvelle version de l\'application disponible.');
-
-                                // Demande à l'utilisateur de rafraîchir pour voir la nouvelle version
-                                if (confirm('Une mise à jour importante est disponible. Voulez-vous la voir maintenant ?')) {
-                                     window.location.reload();
-                                }
-                            }
-                        });
-                    });
-                })
-                .catch(error => {
-                    console.error('Échec de l\'enregistrement du SW:', error);
-                });
-        });
-    }
-    // ======================================================================
 </script>
 </body>
 </html>
