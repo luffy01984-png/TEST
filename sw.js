@@ -1,82 +1,89 @@
-const CACHE_NAME = "renault-cse-cache-v3.6"; // Changez ce numéro pour déclencher la mise à jour chez l'utilisateur
-const ESSENTIALS_CACHE = [
-  "/",
-  "/index.html",
-  "/manifest.json",
-  "https://cdn.tailwindcss.com",
-  "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
-];
-const IMAGE_CACHE = "renault-images-cache-v1";
-const MAX_IMAGE_ITEMS = 50; 
+const CACHE_NAME = 'renault-trucks-cse-v1'; // Version du cache (incrémentez pour forcer une mise à jour, ex: v2)
 
-// INSTALL
-self.addEventListener("install", event => {
+// Liste des ressources à mettre en cache (ajoutez toutes vos ressources statiques ici)
+const urlsToCache = [
+  '/', // Page d'accueil
+  '/index.html', // Votre index.html
+  '/manifest.json', // Votre manifest PWA
+  'https://cdn.tailwindcss.com', // Tailwind CSS
+  'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap', // Polices Google
+  // Ajoutez toutes vos images statiques (ex: celles de GitHub Raw), par exemple :
+  'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/Header.webp',
+  'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/elecctra.webp',
+  // ... et toutes les autres ressources (images partenaires, etc.). Utilisez un script pour générer cette liste si elle est longue.
+];
+
+// Installation : Met en cache les ressources
+self.addEventListener('install', event => {
+  console.log('SW: Installation en cours...');
   event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => cache.addAll(ESSENTIALS_CACHE))
+    caches.open(CACHE_NAME)
+      .then(cache => {
+        console.log('SW: Mise en cache des ressources...');
+        return cache.addAll(urlsToCache);
+      })
+      .catch(error => {
+        console.error('SW: Erreur lors de la mise en cache :', error);
+      })
   );
+  self.skipWaiting(); // Force l'activation immédiate du nouveau SW
 });
 
-// FETCH
-self.addEventListener("fetch", event => {
-  const requestUrl = new URL(event.request.url);
+// Activation : Nettoie les anciens caches et prend le contrôle
+self.addEventListener('activate', event => {
+  console.log('SW: Activation en cours...');
+  event.waitUntil(
+    caches.keys().then(cacheNames => {
+      return Promise.all(
+        cacheNames.map(cacheName => {
+          if (cacheName !== CACHE_NAME) {
+            console.log('SW: Suppression de l\'ancien cache :', cacheName);
+            return caches.delete(cacheName);
+          }
+        })
+      );
+    })
+  );
+  self.clients.claim(); // Prend le contrôle de toutes les pages ouvertes
+});
 
-  // Stratégie de cache
-  if (requestUrl.origin === location.origin || event.request.destination === "image") {
-    event.respondWith(
-      fetch(event.request)
-        .then(networkResponse => {
-          // Mise en cache des essentiels
-          if (ESSENTIALS_CACHE.includes(event.request.url)) {
-            caches.open(CACHE_NAME).then(cache => cache.put(event.request, networkResponse.clone()));
-          } 
-          // Mise en cache des images avec limite
-          else if (event.request.destination === "image") {
-            caches.open(IMAGE_CACHE).then(async cache => {
-              await cache.put(event.request, networkResponse.clone());
-              limitCacheSize(IMAGE_CACHE, MAX_IMAGE_ITEMS);
+// Fetch : Sert depuis le cache ou le réseau
+self.addEventListener('fetch', event => {
+  event.respondWith(
+    caches.match(event.request)
+      .then(response => {
+        if (response) {
+          console.log('SW: Ressource servie depuis le cache :', event.request.url);
+          return response;
+        }
+        // Sinon, récupère depuis le réseau et met en cache si possible
+        return fetch(event.request).then(networkResponse => {
+          // Met en cache les nouvelles ressources (optionnel, pour les ressources dynamiques)
+          if (networkResponse.ok && event.request.url.startsWith('https://raw.githubusercontent.com')) {
+            const responseClone = networkResponse.clone();
+            caches.open(CACHE_NAME).then(cache => {
+              cache.put(event.request, responseClone);
             });
           }
           return networkResponse;
-        })
-        .catch(() => {
-          // Fallback en cas de hors connexion
-          if (event.request.destination === "image") {
-            return caches.match(event.request, { cacheName: IMAGE_CACHE });
-          }
-          return caches.match(event.request, { cacheName: CACHE_NAME });
-        })
-    );
-  }
-});
-
-// Fonction de limitation du cache
-async function limitCacheSize(cacheName, maxItems) {
-  const cache = await caches.open(cacheName);
-  const keys = await cache.keys();
-  if (keys.length > maxItems) {
-    await cache.delete(keys[0]);
-    limitCacheSize(cacheName, maxItems);
-  }
-}
-
-// ACTIVATE
-self.addEventListener("activate", event => {
-  const cacheWhitelist = [CACHE_NAME, IMAGE_CACHE];
-  event.waitUntil(
-    Promise.all([
-      // Nettoyage des vieux caches
-      caches.keys().then(keys =>
-        Promise.all(keys.map(key => !cacheWhitelist.includes(key) && caches.delete(key)))
-      ),
-      // MODIFICATION ICI : Force le SW à prendre le contrôle immédiat des pages ouvertes
-      self.clients.claim()
-    ])
+        }).catch(() => {
+          // Fallback si hors ligne (par exemple, une page d'erreur)
+          console.log('SW: Réseau indisponible, fallback...');
+          return caches.match('/index.html'); // Ou une page de fallback
+        });
+      })
   );
 });
 
-// Message pour activation immédiate (SKIP_WAITING)
+// Gestion des messages (pour forcer la mise à jour)
 self.addEventListener('message', event => {
   if (event.data && event.data.type === 'SKIP_WAITING') {
+    console.log('SW: Mise à jour forcée...');
     self.skipWaiting();
+  }
+  if (event.data && event.data.type === 'UPDATE_CACHE') {
+    // Logique pour mettre à jour le cache manuellement (si besoin)
+    console.log('SW: Mise à jour du cache demandée...');
+    // Ici, vous pourriez recharger les ressources critiques
   }
 });
