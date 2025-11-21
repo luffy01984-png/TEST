@@ -994,9 +994,10 @@ document.querySelectorAll(".accordion-btn").forEach(btn => {
   });
 });
   if ('serviceWorker' in navigator) {
-    // 1. Enregistrement du Service Worker (sw.js)
-    navigator.serviceWorker.register('/TEST/sw.js').then(registration => {
-      console.log('SW: Enregistré avec succès !');
+  navigator.serviceWorker.register('/TEST/sw.js')
+    .then(() => console.log('Service Worker enregistré ✔'))
+    .catch(err => console.error('Erreur SW ❌', err));
+}
       // Les mises à jour seront gérées par le SW grâce à skipWaiting/clients.claim
       // et par le listener ci-dessous.
     }).catch(error => {
