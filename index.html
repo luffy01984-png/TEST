@@ -993,6 +993,45 @@ document.querySelectorAll(".accordion-btn").forEach(btn => {
     }
   });
 });
-</script>
+ </script>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      let newWorker;
+      let refreshing = false;
+
+      // Si le service worker change (mise à jour effectuée), on recharge la page
+      navigator.serviceWorker.addEventListener('controllerchange', () => {
+        if (refreshing) return;
+        refreshing = true;
+        window.location.reload();
+      });
+
+      navigator.serviceWorker.register('/sw.js').then(reg => {
+        // Cas 1 : Une mise à jour attend déjà
+        if (reg.waiting) {
+          sendSkipWaiting(reg.waiting);
+          return;
+        }
+
+        // Cas 2 : Une nouvelle mise à jour est détectée
+        reg.addEventListener('updatefound', () => {
+          newWorker = reg.installing;
+
+          newWorker.addEventListener('statechange', () => {
+            // Si le nouveau SW est installé et qu'il y a déjà un SW actif
+            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+              sendSkipWaiting(newWorker);
+            }
+          });
+        });
+      });
+
+      function sendSkipWaiting(worker) {
+        worker.postMessage({ type: 'SKIP_WAITING' });
+      }
+    }
+  </script>
+
 </body>
 </html>
