@@ -992,29 +992,22 @@ document.querySelectorAll(".accordion-btn").forEach(btn => {
     }
   });
 });
-  if ('serviceWorker' in navigator) {
+ if ('serviceWorker' in navigator) {
+  // Enregistrement du SW
   navigator.serviceWorker.register('/TEST/sw.js')
     .then(() => console.log('Service Worker enregistré ✔'))
-    .catch(err => console.error('Erreur SW ❌', err));
-}
-      // Les mises à jour seront gérées par le SW grâce à skipWaiting/clients.claim
-      // et par le listener ci-dessous.
-    }).catch(error => {
-      console.error('SW: Échec de l\'enregistrement :', error);
-    });
+    .catch(err => console.error('SW: Échec de l\'enregistrement ❌', err));
 
-    // 2. Écouteur clé : Détecte quand un NOUVEAU Service Worker prend le contrôle
-    let refreshing = false;
-    navigator.serviceWorker.addEventListener('controllerchange', () => {
-      // Cette vérification empêche les boucles de rechargement.
-      if (!refreshing) {
-        refreshing = true;
-        console.log("SW: Nouvelle version détectée, rechargement automatique...");
-        // 🔄 Force le rechargement pour charger le nouveau HTML/DOM
-        window.location.reload(); 
-      }
-    });
-  }
+  // Détecte quand un nouveau SW prend le contrôle
+  let refreshing = false;
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    if (!refreshing) {
+      refreshing = true;
+      console.log("SW: Nouvelle version détectée, rechargement automatique...");
+      window.location.reload();
+    }
+  });
+}
 </script>
 </body>
 </html>
