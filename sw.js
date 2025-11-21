@@ -1,4 +1,4 @@
-const CACHE_NAME = "renault-cse-cache-v3.3";
+const CACHE_NAME = "renault-cse-cache-v3.4";
 const ESSENTIALS_CACHE = [
 "/",
 "/index.html",
