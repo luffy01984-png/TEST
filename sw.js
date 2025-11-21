@@ -1,4 +1,4 @@
-const CACHE_NAME = "renault-cse-cache-v3"; // Incrémentez à chaque mise à jour
+const CACHE_NAME = "renault-cse-cache-v3.1"; // Incrémentez à chaque mise à jour
 const urlsToCache = [
   "/", 
   "/index.html", 
