@@ -1,4 +1,4 @@
-const CACHE_NAME = "renault-cse-cache-v4"; // incrémentez à chaque mise à jour
+const CACHE_NAME = "renault-cse-cache-v5"; // Incrémentez à chaque mise à jour
 const urlsToCache = [
   "/", 
   "/index.html", 
@@ -88,6 +88,7 @@ const urlsToCache = [
 
   // PARTENAIRES QUOTIDIEN
   "https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/a%20fleur%20de%20pot.webp",
+  "https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Ainterjob.webp",
   "https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Ca-cree-.webp",
   "https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/cigusto.webp",
   "https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/ConceptOptique.webp",
@@ -102,9 +103,13 @@ const urlsToCache = [
   "https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/espace_passon_new.webp",
   "https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/food%20animo.webp",
 
-  // PARTENAIRES HOTELS/VOYAGES
+  // PARTENAIRES HOTELS/VOYAGES/FINANCEMENT
+  "https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/hymosti.webp",
+  "https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/La_centrale_de_finacement.webp",
+  "https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Meilleur-taux.webp",
   "https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Greethotel.webp",
   "https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Bollyfood.webp",
+  "https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Marrakech.webp",
   "https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/CarrelageBressan.webp",
   "https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Defi01.webp",
   "https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Irripiscine.webp",
@@ -115,44 +120,106 @@ const urlsToCache = [
 
 // INSTALL
 self.addEventListener("install", event => {
+  console.log("🔧 Service Worker: Installation...");
   event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => cache.addAll(urlsToCache))
+    caches.open(CACHE_NAME).then(cache => {
+      console.log("📦 Cache ouvert, ajout des ressources...");
+      return cache.addAll(urlsToCache);
+    })
   );
+  // Force le nouveau SW à devenir actif immédiatement
   self.skipWaiting();
 });
 
 // ACTIVATE
 self.addEventListener("activate", event => {
+  console.log("✅ Service Worker: Activation...");
   const cacheWhitelist = [CACHE_NAME];
   event.waitUntil(
     caches.keys().then(keyList =>
       Promise.all(
         keyList.map(key => {
-          if (!cacheWhitelist.includes(key)) return caches.delete(key);
+          if (!cacheWhitelist.includes(key)) {
+            console.log("🗑️ Suppression ancien cache:", key);
+            return caches.delete(key);
+          }
         })
       )
     )
   );
+  // Prendre le contrôle immédiatement de toutes les pages
   self.clients.claim();
+  
+  // Notifier tous les clients qu'une mise à jour est disponible
+  self.clients.matchAll().then(clients => {
+    clients.forEach(client => {
+      client.postMessage({
+        type: 'SW_UPDATED',
+        version: CACHE_NAME
+      });
+    });
+  });
 });
 
-// FETCH
+// FETCH - Stratégie Network First pour HTML, Cache First pour le reste
 self.addEventListener("fetch", event => {
-  if (event.request.mode === "navigate") {
-    // Network First pour HTML
+  const url = new URL(event.request.url);
+  
+  // Pour les pages HTML: toujours essayer le réseau en premier
+  if (event.request.mode === "navigate" || event.request.destination === "document") {
     event.respondWith(
-      fetch(event.request)
+      fetch(event.request, { cache: 'no-cache' })
         .then(response => {
+          // Mettre en cache la nouvelle version
           const copy = response.clone();
-          caches.open(CACHE_NAME).then(cache => cache.put(event.request, copy));
+          caches.open(CACHE_NAME).then(cache => {
+            cache.put(event.request, copy);
+          });
           return response;
         })
-        .catch(() => caches.match(event.request))
+        .catch(() => {
+          // Si pas de réseau, utiliser le cache
+          return caches.match(event.request);
+        })
     );
-  } else {
-    // Cache First pour images/CSS/JS
+  } 
+  // Pour les assets (images, CSS, JS): Cache First avec mise à jour en arrière-plan
+  else {
     event.respondWith(
-      caches.match(event.request).then(response => response || fetch(event.request))
+      caches.match(event.request).then(cachedResponse => {
+        // Retourner le cache immédiatement si disponible
+        if (cachedResponse) {
+          // Mais mettre à jour le cache en arrière-plan
+          fetch(event.request).then(response => {
+            if (response && response.status === 200) {
+              caches.open(CACHE_NAME).then(cache => {
+                cache.put(event.request, response);
+              });
+            }
+          }).catch(() => {});
+          
+          return cachedResponse;
+        }
+        
+        // Si pas en cache, aller chercher sur le réseau
+        return fetch(event.request).then(response => {
+          if (response && response.status === 200) {
+            const copy = response.clone();
+            caches.open(CACHE_NAME).then(cache => {
+              cache.put(event.request, copy);
+            });
+          }
+          return response;
+        });
+      })
     );
+  }
+});
+
+// MESSAGE - Forcer le rechargement quand demandé
+self.addEventListener('message', event => {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    console.log("⚡ Forcer l'activation du nouveau Service Worker");
+    self.skipWaiting();
   }
 });
