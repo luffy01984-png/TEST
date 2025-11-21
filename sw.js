@@ -1,4 +1,4 @@
-const CACHE_NAME = "renault-cse-cache-v3.4"; // Changez ce numéro pour déclencher la mise à jour chez l'utilisateur
+const CACHE_NAME = "renault-cse-cache-v3.5"; // Changez ce numéro pour déclencher la mise à jour chez l'utilisateur
 const ESSENTIALS_CACHE = [
   "/",
   "/index.html",
