@@ -1001,7 +1001,7 @@ document.querySelectorAll(".accordion-btn").forEach(btn => {
   navigator.serviceWorker.addEventListener('controllerchange', () => {
     if (!refreshing) {
       refreshing = true;
-      console.log('SW: Nouvelle version détectée, rechargement automatique...');
+      console.log('SW: Nouvelle version détectée, rechargement automatique…');
       window.location.reload();
     }
   });
