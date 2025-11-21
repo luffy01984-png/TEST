@@ -1,4 +1,4 @@
-const CACHE_NAME = "renault-cse-cache-v4"; // Changez V4 en V5, V6, etc., pour forcer une nouvelle mise à jour
+const CACHE_NAME = "renault-cse-cache-v5"; // Changez V4 en V5, V6, etc., pour forcer une nouvelle mise à jour
 
 const urlsToCache = [
   "/", 
