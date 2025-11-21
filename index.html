@@ -992,6 +992,40 @@ document.querySelectorAll(".accordion-btn").forEach(btn => {
     }
   });
 });
+  <script>
+    // ===== LOGIQUE DE DÉTECTION ET DE NOTIFICATION DES MISES À JOUR =====
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/service-worker.js')
+                .then(registration => {
+                    console.log('SW enregistré:', registration.scope);
+                    
+                    // Détecte lorsqu'un nouveau Service Worker est en cours d'installation
+                    registration.addEventListener('updatefound', () => {
+                        const newWorker = registration.installing;
+                        
+                        // Surveille le changement d'état du nouveau SW
+                        newWorker.addEventListener('statechange', () => {
+                            // Si le nouveau SW est installé (grâce à skipWaiting)
+                            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                                
+                                console.log('Nouvelle version de l\'application disponible.');
+
+                                // Demande à l'utilisateur de rafraîchir pour voir la nouvelle version
+                                if (confirm('Une mise à jour importante est disponible. Voulez-vous la voir maintenant ?')) {
+                                     window.location.reload();
+                                }
+                            }
+                        });
+                    });
+                })
+                .catch(error => {
+                    console.error('Échec de l\'enregistrement du SW:', error);
+                });
+        });
+    }
+    // ======================================================================
+</script>
 </script>
 </body>
 </html>
