@@ -1,4 +1,4 @@
-const CACHE_NAME = 'renault-trucks-cse-v1.9'; // Incrémentez à chaque update
+const CACHE_NAME = 'renault-trucks-cse-v2'; // Incrémentez à chaque update
 
 // Ressources à pré-cacher (offline)
 const PRECACHE = [
