@@ -951,27 +951,23 @@ document.querySelectorAll('[onclick^="toggleCategory"]').forEach(trigger => {
     }
 });
 
+<script>
 // ===== Accordion (Version Modifiée pour l'Exclusivité) =====
 document.querySelectorAll(".accordion-btn").forEach(btn => {
   btn.addEventListener("click", () => {
     const content = btn.nextElementSibling;
 
-    // 1. GESTION DE L'EXCLUSIVITÉ (Fermeture des autres)
+    // 1. GESTION DE L'EXCLUSIVITÉ
     document.querySelectorAll(".accordion-btn").forEach(otherBtn => {
       const otherContent = otherBtn.nextElementSibling;
-      
-      // Si ce n'est pas le bouton cliqué ET que son contenu est ouvert
       if (otherBtn !== btn && otherContent.classList.contains("open")) {
         otherContent.style.maxHeight = null;
         otherContent.classList.remove("open");
-        
-        // Retirer les classes des boutons et flèches des autres onglets
         otherBtn.classList.remove("active");
         const otherArrow = otherBtn.querySelector(".arrow");
         if (otherArrow) otherArrow.classList.remove("rotate");
       }
     });
-    // FIN GESTION EXCLUSIVITÉ
 
     // 2. OUVERTURE / FERMETURE DU BOUTON CLIQUÉ
     const arrow = btn.querySelector(".arrow");
@@ -987,13 +983,13 @@ document.querySelectorAll(".accordion-btn").forEach(btn => {
       content.classList.add("open"); 
       if (arrow) arrow.classList.add("rotate"); 
       btn.classList.add("active");
-      
-      // On utilise requestAnimationFrame pour une lecture correcte de scrollHeight
       requestAnimationFrame(() => { content.style.maxHeight = content.scrollHeight + "px"; }); 
     }
   });
 });
-  <script>
+</script>
+
+<script>
     // ===== LOGIQUE DE DÉTECTION ET DE NOTIFICATION DES MISES À JOUR =====
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
@@ -1026,7 +1022,6 @@ document.querySelectorAll(".accordion-btn").forEach(btn => {
         });
     }
     // ======================================================================
-</script>
 </script>
 </body>
 </html>
