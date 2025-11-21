@@ -994,17 +994,15 @@ document.querySelectorAll(".accordion-btn").forEach(btn => {
   });
 });
  if ('serviceWorker' in navigator) {
-  // Enregistrement du SW
   navigator.serviceWorker.register('/TEST/sw.js')
     .then(() => console.log('Service Worker enregistré ✔'))
-    .catch(err => console.error('SW: Échec de l\'enregistrement ❌', err));
+    .catch(err => console.error('SW: Échec ❌', err));
 
-  // Détecte quand un nouveau SW prend le contrôle
   let refreshing = false;
   navigator.serviceWorker.addEventListener('controllerchange', () => {
     if (!refreshing) {
       refreshing = true;
-      console.log("SW: Nouvelle version détectée, rechargement automatique...");
+      console.log('SW: Nouvelle version détectée, rechargement automatique...');
       window.location.reload();
     }
   });
