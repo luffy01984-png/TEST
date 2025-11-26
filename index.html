@@ -1008,6 +1008,399 @@ document.querySelectorAll(".accordion-btn").forEach(btn => {
     }
   });
 }
+
+/* STYLES JEU CAMION */
+#gameSection {
+  background: white;
+  padding: 2rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  max-width: 6xl;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#gameContainer {
+  position: relative;
+  width: 100%;
+  max-width: 800px;
+  height: 300px;
+  margin: 2rem auto;
+  background: linear-gradient(180deg, #87ceeb 0%, #e0f6ff 100%);
+  border: 3px solid #dc2626;
+  border-radius: 1rem;
+  overflow: hidden;
+  touch-action: none;
+}
+
+@media (max-width: 640px) {
+  #gameContainer {
+    height: 250px;
+    max-width: 100%;
+  }
+}
+
+canvas#gameCanvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.game-controls {
+  text-align: center;
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+}
+
+.game-info {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #1f2937;
+}
+
+.game-score {
+  color: #dc2626;
+}
+
+.game-btn {
+  background: #dc2626;
+  color: white;
+  border: none;
+  padding: 0.75rem 2rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s;
+  font-size: 1rem;
+}
+
+.game-btn:hover {
+  background: #b91c1c;
+}
+
+.game-btn:active {
+  transform: scale(0.98);
+}
+
+.mobile-buttons {
+  display: none;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+@media (max-width: 640px) {
+  .mobile-buttons {
+    display: flex;
+  }
+}
+
+.mobile-btn {
+  background: #dc2626;
+  color: white;
+  border: none;
+  padding: 1rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 700;
+  font-size: 1.25rem;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  transition: background 0.2s;
+  flex: 1;
+  max-width: 120px;
+}
+
+.mobile-btn:active {
+  background: #b91c1c;
+  transform: scale(0.95);
+}
+
+.instructions {
+  background: #fee2e2;
+  border-left: 4px solid #dc2626;
+  padding: 1rem;
+  margin: 1rem 0;
+  border-radius: 0.5rem;
+  font-size: 0.9rem;
+  color: #1f2937;
+}
+</style>
+</head>
+
+<body class="bg-gray-100 text-black">
+
+<!-- JEU CAMION RENAULT TRUCKS -->
+<section id="gameSection">
+  <h2 class="text-3xl font-bold text-center mb-4 text-gray-800">🎮 Jeu du Camion Renault Trucks</h2>
+  
+  <div class="instructions">
+    <strong>📖 Instructions :</strong><br>
+    <strong>Ordinateur :</strong> Appuyez sur <strong>ESPACE</strong> ou <strong>FLÈCHE HAUT</strong> pour sauter<br>
+    <strong>Téléphone :</strong> Utilisez les boutons <strong>SAUTER</strong> ou <strong>TOUCHEZ</strong> l'écran<br>
+    Évitez les obstacles et marquez des points!
+  </div>
+
+  <div id="gameContainer">
+    <canvas id="gameCanvas"></canvas>
+  </div>
+
+  <div class="game-controls">
+    <div class="game-info">
+      Score: <span class="game-score" id="scoreDisplay">0</span>
+    </div>
+    <button class="game-btn" id="startBtn">🎮 Démarrer le jeu</button>
+    <div class="mobile-buttons">
+      <button class="mobile-btn" id="jumpBtn">SAUTER</button>
+      <button class="mobile-btn" id="touchBtn">TOUCHEZ</button>
+    </div>
+  </div>
+</section>
+
+<script>
+// ===== JEU CAMION RENAULT TRUCKS =====
+const canvas = document.getElementById('gameCanvas');
+const ctx = canvas.getContext('2d');
+
+// Dimensionner le canvas
+function resizeCanvas() {
+  const container = document.getElementById('gameContainer');
+  canvas.width = container.offsetWidth;
+  canvas.height = container.offsetHeight;
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+// États du jeu
+const gameState = {
+  running: false,
+  gameOver: false,
+  score: 0,
+  truckY: 0,
+  truckVelocity: 0,
+  gravity: 0.6,
+  jumpForce: 15,
+  obstacles: [],
+  obstacleSpeed: 8,
+  spawnRate: 0.02
+};
+
+// Position initiale du camion
+gameState.truckY = canvas.height - 80;
+
+// Fonction pour dessiner le camion
+function drawTruck(x, y) {
+  const truckWidth = 50;
+  const truckHeight = 40;
+  
+  ctx.fillStyle = '#dc2626';
+  ctx.fillRect(x, y, truckWidth, truckHeight);
+  
+  // Cabine du camion
+  ctx.fillStyle = '#b91c1c';
+  ctx.fillRect(x + 5, y + 5, 20, 20);
+  
+  // Fenêtre
+  ctx.fillStyle = '#87ceeb';
+  ctx.fillRect(x + 8, y + 8, 10, 10);
+  
+  // Roues
+  ctx.fillStyle = '#000';
+  ctx.beginPath();
+  ctx.arc(x + 15, y + truckHeight, 6, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.beginPath();
+  ctx.arc(x + 35, y + truckHeight, 6, 0, Math.PI * 2);
+  ctx.fill();
+}
+
+// Fonction pour dessiner un obstacle
+function drawObstacle(x, y, width, height) {
+  ctx.fillStyle = '#4b5563';
+  ctx.fillRect(x, y, width, height);
+  
+  // Détails de l'obstacle
+  ctx.fillStyle = '#2d3142';
+  ctx.fillRect(x + 5, y + 5, width - 10, height - 10);
+}
+
+// Fonction pour faire sauter le camion
+function jump() {
+  if (gameState.truckY === gameState.groundLevel && gameState.running) {
+    gameState.truckVelocity = -gameState.jumpForce;
+  }
+}
+
+// Fonction pour mettre à jour le jeu
+function update() {
+  if (!gameState.running) return;
+  
+  const groundLevel = canvas.height - 80;
+  gameState.groundLevel = groundLevel;
+  
+  // Physique du camion
+  gameState.truckVelocity += gameState.gravity;
+  gameState.truckY += gameState.truckVelocity;
+  
+  // Collision avec le sol
+  if (gameState.truckY >= groundLevel) {
+    gameState.truckY = groundLevel;
+    gameState.truckVelocity = 0;
+  }
+  
+  // Spawn obstacles
+  if (Math.random() < gameState.spawnRate) {
+    gameState.obstacles.push({
+      x: canvas.width,
+      y: groundLevel,
+      width: 30,
+      height: 40
+    });
+    gameState.spawnRate = Math.max(0.01, gameState.spawnRate - 0.0001);
+  }
+  
+  // Mettre à jour les obstacles
+  gameState.obstacles = gameState.obstacles.filter(obs => {
+    obs.x -= gameState.obstacleSpeed;
+    
+    // Vérifier collision
+    const truckX = 30;
+    const truckWidth = 50;
+    const truckHeight = 40;
+    
+    if (truckX < obs.x + obs.width &&
+        truckX + truckWidth > obs.x &&
+        gameState.truckY < obs.y + obs.height &&
+        gameState.truckY + truckHeight > obs.y) {
+      endGame();
+      return false;
+    }
+    
+    // Score
+    if (obs.x < 30 && obs.x > 20) {
+      gameState.score += 10;
+      gameState.obstacleSpeed += 0.3;
+      document.getElementById('scoreDisplay').textContent = gameState.score;
+    }
+    
+    return obs.x > -50;
+  });
+}
+
+// Fonction pour dessiner
+function draw() {
+  // Ciel dégradé
+  const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+  gradient.addColorStop(0, '#87ceeb');
+  gradient.addColorStop(1, '#e0f6ff');
+  ctx.fillStyle = gradient;
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  
+  // Sol
+  ctx.fillStyle = '#8B7355';
+  ctx.fillRect(0, canvas.height - 40, canvas.width, 40);
+  
+  // Herbe
+  ctx.fillStyle = '#228B22';
+  ctx.fillRect(0, canvas.height - 42, canvas.width, 2);
+  
+  // Camion
+  drawTruck(30, gameState.truckY);
+  
+  // Obstacles
+  gameState.obstacles.forEach(obs => {
+    drawObstacle(obs.x, obs.y, obs.width, obs.height);
+  });
+  
+  // Score en haut
+  ctx.fillStyle = '#1f2937';
+  ctx.font = 'bold 24px Arial';
+  ctx.fillText(`Score: ${gameState.score}`, 20, 35);
+  
+  // Game Over
+  if (gameState.gameOver) {
+    ctx.fillStyle = 'rgba(0,0,0,0.7)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    
+    ctx.fillStyle = '#fff';
+    ctx.font = 'bold 40px Arial';
+    ctx.textAlign = 'center';
+    ctx.fillText('GAME OVER', canvas.width / 2, canvas.height / 2 - 30);
+    
+    ctx.font = 'bold 24px Arial';
+    ctx.fillText(`Score Final: ${gameState.score}`, canvas.width / 2, canvas.height / 2 + 20);
+    ctx.textAlign = 'left';
+  }
+}
+
+// Fonction pour terminer le jeu
+function endGame() {
+  gameState.running = false;
+  gameState.gameOver = true;
+  document.getElementById('startBtn').textContent = '🎮 Recommencer';
+}
+
+// Fonction pour démarrer le jeu
+function startGame() {
+  gameState.running = true;
+  gameState.gameOver = false;
+  gameState.score = 0;
+  gameState.truckY = canvas.height - 80;
+  gameState.truckVelocity = 0;
+  gameState.obstacles = [];
+  gameState.obstacleSpeed = 8;
+  gameState.spawnRate = 0.02;
+  document.getElementById('scoreDisplay').textContent = '0';
+  document.getElementById('startBtn').textContent = '⏸ En cours...';
+  
+  gameLoop();
+}
+
+// Boucle de jeu
+function gameLoop() {
+  update();
+  draw();
+  
+  if (gameState.running || gameState.gameOver) {
+    requestAnimationFrame(gameLoop);
+  }
+}
+
+// Bouton de démarrage
+document.getElementById('startBtn').addEventListener('click', () => {
+  if (!gameState.running && !gameState.gameOver) {
+    startGame();
+  } else if (gameState.gameOver) {
+    startGame();
+  }
+});
+
+// Contrôles clavier
+document.addEventListener('keydown', (e) => {
+  if (e.code === 'Space' || e.code === 'ArrowUp') {
+    e.preventDefault();
+    jump();
+  }
+});
+
+// Contrôles tactiles et boutons mobiles
+document.getElementById('jumpBtn').addEventListener('click', jump);
+document.getElementById('touchBtn').addEventListener('click', jump);
+
+canvas.addEventListener('click', jump);
+canvas.addEventListener('touchstart', (e) => {
+  e.preventDefault();
+  jump();
+});
+
+// Démarrage du jeu au chargement
+gameLoop();
 </script>
+
 </body>
 </html>
