@@ -1021,14 +1021,16 @@ if ('serviceWorker' in navigator) {
 }
 </script>
 
-<!-- ❄️ Neige pendant 7 secondes -->
+<!-- ❄️ Neige continue uniquement dans le hero -->
 <script src="https://cdn.jsdelivr.net/gh/hcodes/snowflakes/dist/snowflakes.min.js"></script>
 <script>
-  const snow = new Snowflakes(); // démarre la neige
-  setTimeout(() => {
-    snow.destroy();               // arrête la neige après 7 secondes
-    console.log("Neige arrêtée après 7 secondes ❄️⛔");
-  }, 7000);
+  // Sélectionne ton hero (remplace #hero par l'ID ou la classe exacte)
+  const hero = document.querySelector('#hero'); 
+
+  if (hero) {
+    // Crée la neige uniquement dans le hero
+    new Snowflakes({ target: hero });
+  }
 </script>
 <!-- ❄️ Fin de la neige -->
 
