@@ -1000,11 +1000,12 @@ document.querySelectorAll(".accordion-btn").forEach(btn => {
       btn.classList.add("active");
       
       // On utilise requestAnimationFrame pour une lecture correcte de scrollHeight
-      requestAnimationFrame(() => { content.style.maxHeight = content.scrollHeight + "px"; }); 
-    }
-  });
+requestAnimationFrame(() => { content.style.maxHeight = content.scrollHeight + "px"; }); 
+}
 });
- if ('serviceWorker' in navigator) {
+});
+
+if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('/Renault-trucks-CE/service-worker.js')
     .then(() => console.log('Service Worker enregistré ✔'))
     .catch(err => console.error('SW: Échec ❌', err));
@@ -1019,5 +1020,13 @@ document.querySelectorAll(".accordion-btn").forEach(btn => {
   });
 }
 </script>
+
+<!-- ❄️ Ajout de la neige ici -->
+<script src="https://cdn.jsdelivr.net/gh/hcodes/snowflakes/dist/snowflakes.min.js"></script>
+<script>
+  new Snowflakes();
+</script>
+<!-- ❄️ Fin de l’ajout -->
+
 </body>
 </html>
