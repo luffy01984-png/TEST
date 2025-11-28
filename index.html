@@ -1019,16 +1019,12 @@ if ('serviceWorker' in navigator) {
     }
   });
 }
+</script>
+
+<!-- ❄️ Ajout de la neige ici -->
 <script src="https://cdn.jsdelivr.net/gh/hcodes/snowflakes/dist/snowflakes.min.js"></script>
 <script>
-  // Lance la neige
-  const snow = new Snowflakes();
-
-  // Arrête après 7 secondes (7000 ms)
-  setTimeout(() => {
-    snow.destroy();
-    console.log("Neige arrêtée après 7 secondes ❄️⛔");
-  }, 7000);
+  new Snowflakes();
 </script>
 <!-- ❄️ Fin de l’ajout -->
 
