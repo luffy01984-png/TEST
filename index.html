@@ -1021,12 +1021,16 @@ if ('serviceWorker' in navigator) {
 }
 </script>
 
-<!-- ❄️ Ajout de la neige ici -->
+<!-- ❄️ Neige pendant 7 secondes -->
 <script src="https://cdn.jsdelivr.net/gh/hcodes/snowflakes/dist/snowflakes.min.js"></script>
 <script>
-  new Snowflakes();
+  const snow = new Snowflakes(); // démarre la neige
+  setTimeout(() => {
+    snow.destroy();               // arrête la neige après 7 secondes
+    console.log("Neige arrêtée après 7 secondes ❄️⛔");
+  }, 7000);
 </script>
-<!-- ❄️ Fin de l’ajout -->
+<!-- ❄️ Fin de la neige -->
 
 </body>
 </html>
