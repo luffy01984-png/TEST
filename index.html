@@ -10,26 +10,7 @@
 <meta name="theme-color" content="#dc2626">
 
 <style>
-  /* --- EFFET NEIGE --- */
-  .snowflake {
-    position: absolute;
-    top: -20px;
-    color: white;
-    font-size: 1em;
-    opacity: 0.8;
-    pointer-events: none;
-    z-index: 10;
-    animation: fall linear forwards;
-  }
-
-  @keyframes fall {
-    to {
-      transform: translateY(120vh) rotate(360deg);
-    }
-  }
-  /* ------------------- */
-
-  /* Permet d'afficher les sous-catégories en liste verticale */
+  /* Permet d'afficher les sous-catégories en liste verticale (comme les mentions) */
 .partner-content.list-layout.active {
     display: flex;
     flex-direction: column;
@@ -52,6 +33,7 @@
     }
 }
 body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#f3f4f6; }
+
 
 /* Partner content toggle */
 .partner-content { 
@@ -114,43 +96,46 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
   align-items:center; 
   z-index:10000; 
   transition: opacity 0.3s ease;
-  padding: 10px;
+  padding: 10px; /* Réduit sur mobile */
 }
 #imageModal.active { display:flex; }
 #imageModal img { 
-  max-width:100%; 
-  max-height:85%;
-  width: 100%;
-  height: auto;
+  max-width:100%; /* Augmenté pour mobile */
+  max-height:85%; /* Augmenté pour mobile */
+  width: 100%; /* Prend toute la largeur disponible */
+  height: auto; /* Garde les proportions */
   border-radius:12px; 
   box-shadow:0 0 20px rgba(0,0,0,0.5); 
   cursor: zoom-out;
   object-fit: contain;
 }
 
+/* Sur tablette et desktop, garder une taille plus raisonnable */
 @media (min-width: 768px) {
-  #imageModal { padding: 20px; }
+  #imageModal {
+    padding: 20px;
+  }
   #imageModal img {
     max-width: 90%;
     max-height: 80%;
-    width: auto;
+    width: auto; /* Retour à la taille normale */
   }
 }
 
 #imageModal button { 
   position:absolute; 
-  top:10px;
+  top:10px; /* Ajusté pour mobile */
   right:10px; 
   background:#dc2626; 
   color:#fff; 
   border:none; 
-  padding:10px 20px;
+  padding:10px 20px; /* Légèrement réduit sur mobile */
   border-radius:8px; 
   cursor:pointer; 
   font-weight:bold;
-  font-size: 0.9rem;
+  font-size: 0.9rem; /* Légèrement plus petit sur mobile */
   transition: background 0.2s;
-  z-index: 10001;
+  z-index: 10001; /* Pour être au-dessus de l'image */
 }
 
 @media (min-width: 768px) {
@@ -162,7 +147,9 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
   }
 }
 
-#imageModal button:hover { background: #b91c1c; }
+#imageModal button:hover {
+  background: #b91c1c;
+}
 
 /* Category cards */
 .category-card img { 
@@ -230,6 +217,7 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
 }
 
 /* Responsive grid for partner-content */
+/* Mobile et Tablette: 2 colonnes */
 .partner-content.active {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -238,11 +226,18 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
   align-items: start;
 }
 
+/* Tablette: même disposition mais espacement augmenté */
 @media (min-width: 768px) {
-  .partner-content.active { gap: 1rem; }
+  .partner-content.active {
+    gap: 1rem;
+  }
 }
+
+/* Desktop: 2 colonnes avec plus d'espace */
 @media (min-width: 1024px) {
-  .partner-content.active { gap: 1.5rem; }
+  .partner-content.active {
+    gap: 1.5rem;
+  }
 }
 
 /* Badge nombre partenaires */
@@ -283,7 +278,9 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
   background: #b91c1c;
   transform: translateY(-3px);
 }
-#scrollTopBtn.show { display: flex; }
+#scrollTopBtn.show {
+  display: flex;
+}
 
 /* Amélioration visuelle des cartes catégories */
 .category-card {
@@ -302,26 +299,33 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
   background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
   transition: left 0.5s;
 }
-.category-card:hover::before { left: 100%; }
+.category-card:hover::before {
+  left: 100%;
+}
 </style>
 </head>
 
 <body class="bg-gray-100 text-black">
 
+<!-- Modal -->
 <div id="imageModal">
   <button aria-label="Fermer">✕ Fermer</button>
   <img id="modalImg" src="" alt="Partenaire">
 </div>
 
+<!-- Scroll to top button -->
 <button id="scrollTopBtn" aria-label="Retour en haut">↑</button>
 
+<!-- HEADER -->
 <header class="bg-white shadow-xl sticky top-0 z-50">
   <div class="max-w-7xl mx-auto flex justify-between items-center px-4 py-3">
+    <!-- Logo et texte -->
     <div class="flex items-center space-x-2">
       <img src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/Header.webp" alt="Logo Renault Trucks" class="h-20 sm:h-24 rounded-md">
       <span class="text-xs font-bold text-red-600 uppercase tracking-widest hidden sm:inline">CSE Bourg-en-Bresse</span>
     </div>
 
+    <!-- Navbar -->
     <nav class="flex items-center space-x-2 sm:space-x-4 text-sm">
       <a href="#categories" class="nav-link" id="nav-partenaires">Partenaires</a>
       <a href="#mentions" class="nav-link" id="nav-mentions">Mentions</a>
@@ -366,35 +370,36 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
 </script>
 
 
-<section id="hero-section" class="relative overflow-hidden bg-gradient-to-b from-red-700 to-red-600 text-white text-center py-12 px-4 shadow-md">
-  
-  <div class="relative z-20">
-      <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight">
-        Vos Avantages <span class="text-red-100">CSE Renault Trucks</span>
-      </h1>
-      <p class="text-red-200 mt-1 text-sm uppercase tracking-wider"><strong>Bourg-en-Bresse</strong></p>
-      <p class="text-white mt-2 max-w-xl mx-auto text-lg font-light">
-        Cliquez sur une catégorie pour découvrir toutes les offres exclusives négociées par votre Comité d'Entreprise.*Sur présentation du badge.
-      </p>
-
-      <div class="bg-white text-red-600 text-center py-4 px-4 mt-6 rounded-lg shadow-lg">
-        <h2 class="text-2xl font-bold uppercase tracking-wide">
-          🎉 Nouveaux Partenaires !
-        </h2>
-        <p class="text-lg mt-1 font-semibold">
-          1001Pizzas – PIZZA : <span class="bg-red-100 px-1 rounded text-red-800">8€50</span>
-          Optique Lafayette :  <span class="bg-red-100 px-1 rounded text-red-800">-7%</span>
-        </p>
-      </div>
-  </div>
+<!-- HERO -->
+<section class="bg-white text-gray-900 text-center py-12 px-4 shadow-md">
+  <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight">
+    Vos Avantages <span class="text-red-600">CSE Renault Trucks</span>
+  </h1>
+  <p class="text-black-400 mt-1 text-sm uppercase tracking-wider"><strong>Bourg-en-Bresse</strong></p>
+  <p class="text-gray-600 mt-2 max-w-xl mx-auto text-lg font-light">
+    Cliquez sur une catégorie pour découvrir toutes les offres exclusives négociées par votre Comité d'Entreprise.*Sur présentation du badge.
+    <!-- PROMO BOX -->
+<section class="bg-red-600 text-white text-center py-4 px-4 mt-6 rounded-lg shadow-lg">
+  <h2 class="text-2xl font-bold uppercase tracking-wide">
+    🎉 Nouveaux Partenaires !
+  </h2>
+  <p class="text-lg mt-1 font-semibold">
+    1001Pizzas – PIZZA : <span class="text-yellow-300">8€50</span>
+    Optique Lafayette :  <span class="text-yellow-300">-7%</span>
+  </p>
+</section>
+  </p>
 </section>
 
+<!-- CATEGORIES -->
 <section id="categories" class="max-w-6xl mx-auto py-4 px-4">
   <h2 class="text-2xl font-bold text-center mb-10 text-gray-800 flex items-center justify-center gap-2">
+    <!-- Flèche gauche -->
     <svg class="w-10 h-10 text-red-600 animate-bounce cursor-pointer" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" onclick="document.getElementById('categories').scrollIntoView({behavior: 'smooth'});">
       <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path>
     </svg>
     Catégories d'Offres
+    <!-- Flèche droite -->
     <svg class="w-10 h-10 text-red-600 animate-bounce cursor-pointer" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" onclick="document.getElementById('categories').scrollIntoView({behavior: 'smooth'});">
       <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path>
     </svg>
@@ -402,7 +407,8 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
 
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 
-       <div class="col-span-1">
+       <!-- RESTAURANTS -->
+<div class="col-span-1">
   <div class="category-card relative group cursor-pointer transform hover:scale-[1.02] transition duration-300 shadow-lg rounded-2xl overflow-hidden"
        onclick="toggleCategory('resto-content')">
     <img src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/Restaurant.webp" 
@@ -428,6 +434,7 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
   </div>
 </div>
 
+<!-- ARTISANS DU GOÛT -->
 <div class="col-span-1">
   <div class="category-card relative group cursor-pointer transform hover:scale-[1.02] transition duration-300 shadow-lg rounded-2xl overflow-hidden" 
        onclick="toggleCategory('gout-content')">
@@ -454,6 +461,7 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
   </div>
 </div>
 
+<!-- MAISON & TRAVAUX -->
 <div class="col-span-1">
   <div class="category-card relative group cursor-pointer transform hover:scale-[1.02] transition duration-300 shadow-lg rounded-2xl overflow-hidden" 
        onclick="toggleCategory('cat-maison')">
@@ -521,6 +529,7 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
   </div>
 </div>
 
+<!-- AUTOMOBILE -->
 <div class="col-span-1">
   <div class="category-card relative group cursor-pointer transform hover:scale-[1.02] transition duration-300 shadow-lg rounded-2xl overflow-hidden" 
        onclick="toggleCategory('auto-content')">
@@ -544,6 +553,7 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
   </div>
 </div>
 
+<!-- PRÊT-À-PORTER -->
 <div class="col-span-1">
   <div class="category-card relative group cursor-pointer transform hover:scale-[1.02] transition duration-300 shadow-lg rounded-2xl overflow-hidden"
        onclick="toggleCategory('vetement-lingerie')">
@@ -561,6 +571,7 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
   </div>
 </div>
 
+<!-- BEAUTÉ / BIEN-ÊTRE -->
 <div class="col-span-1">
   <div class="category-card relative group cursor-pointer transform hover:scale-[1.02] transition duration-300 shadow-lg rounded-2xl overflow-hidden"
        onclick="toggleCategory('beaute-bienetre')">
@@ -580,6 +591,7 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
   </div>
 </div>
 
+<!-- CULTURE / LOISIRS -->
 <div class="col-span-1">
   <div class="category-card relative group cursor-pointer transform hover:scale-[1.02] transition duration-300 shadow-lg rounded-2xl overflow-hidden"
        onclick="toggleCategory('culture')">
@@ -599,6 +611,7 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
   </div>
 </div>    
 
+<!-- QUOTIDIEN -->
 <div class="col-span-1">
   <div class="category-card relative group cursor-pointer transform hover:scale-[1.02] transition duration-300 shadow-lg rounded-2xl overflow-hidden" 
        onclick="toggleCategory('quotidien-content')">
@@ -615,141 +628,342 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
     <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Ca-cree-.webp')">Ca Crée Ca Cause</div>    
     <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/ConceptOptique.webp')">Concept_Optique</div>
     <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Optiquelafayette.webp')">Optique LAFAYETTE</div>
-    
+    <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/la%20rek1ke.webp')">La Rek1que</div>
+    <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Shivaa.webp')">Shiva</div>
+  </div>
+</div>   
+
+<!-- AUTOUR DE L'ENFANT -->
+<div class="col-span-1">
+  <div class="category-card relative group cursor-pointer transform hover:scale-[1.02] transition duration-300 shadow-lg rounded-2xl overflow-hidden" 
+       onclick="toggleCategory('enfants-content')">
+    <img src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/enfants.webp" 
+         alt="Enfants"
+         class="w-full h-36 md:h-44 lg:h-56 object-cover rounded-2xl">
+    <div class="absolute inset-0 bg-gray-900 bg-opacity-50 rounded-2xl flex items-center justify-center text-white text-xl font-bold">
+      AUTOUR DE L'ENFANT
+    </div>
+  </div>
+  <div id="enfants-content" class="partner-content bg-white border border-gray-200 rounded-xl p-4 shadow-lg">
+    <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/KingJouet.webp')">KingJouet</div>
+    <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/ludylucky.webp')">LudiLucky</div>
   </div>
 </div>
 
+<!-- ANIMAUX -->
+<div class="col-span-1">
+  <div class="category-card relative group cursor-pointer transform hover:scale-[1.02] transition duration-300 shadow-lg rounded-2xl overflow-hidden" 
+       onclick="toggleCategory('animal-content')">
+    <img src="https://images.unsplash.com/photo-1592194996308-7b43878e84a6?w=800" 
+         alt="Animaux"
+         class="w-full h-36 md:h-44 lg:h-56 object-cover rounded-2xl">
+    <div class="absolute inset-0 bg-gray-900 bg-opacity-50 rounded-2xl flex items-center justify-center text-white text-xl font-bold">
+      ANIMAUX
+    </div>
+  </div>
+  <div id="animal-content" class="partner-content bg-white border border-gray-200 rounded-xl p-4 shadow-lg">
+    <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/espace_passon_new.webp')">Espace Passion Animalerie</div>
+    <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/food%20animo.webp')">Food Animo</div>        
+  </div>
 </div>
+
+    <!-- HOTELS / VOYAGES -->
+<div class="col-span-1">
+  <div class="category-card relative group cursor-pointer transform hover:scale-[1.02] transition duration-300 shadow-lg rounded-2xl overflow-hidden" 
+       onclick="toggleCategory('travel-content')">
+    <img src="https://maybanton.com/wp-content/uploads/2023/05/valise-voyage-luxe-hotel-chambre.jpeg" 
+         alt="Hôtels et Voyages"
+         class="w-full h-36 md:h-44 lg:h-56 object-cover rounded-2xl">
+    <div class="absolute inset-0 bg-gray-900 bg-opacity-50 rounded-2xl flex items-center justify-center text-white text-xl font-bold">
+      HOTELS / VOYAGES
+    </div>
+  </div>
+
+  <div id="travel-content" class="partner-content bg-white border border-gray-200 rounded-xl p-4 shadow-lg">
+
+    <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Greethotel.webp')">Greet Hotels</div>
+    <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Le-griffon.webp')">Le Griffon d'Or</div>    
+  </div>
+</div>
+
+
+  </div>
 </section>
 
-<section id="mentions" class="max-w-6xl mx-auto py-12 px-4 mt-8 bg-gray-50 border-t border-gray-200">
-  <h2 class="text-2xl font-bold text-center mb-6 text-gray-800">Mentions Légales</h2>
-  <div class="text-sm text-gray-600 space-y-4 max-w-3xl mx-auto">
-    <p><strong>Editeur :</strong> CSE Renault Trucks Bourg-en-Bresse</p>
-    <p><strong>Hébergement :</strong> GitHub Pages</p>
-    <p><strong>Responsabilité :</strong> Les offres sont soumises aux conditions des partenaires. Le CSE ne peut être tenu responsable des modifications.</p>
-    <p class="text-center mt-8 text-xs text-gray-400">© 2024 CSE Renault Trucks. Tous droits réservés.</p>
+<!-- Mentions légales -->
+<section id="mentions" class="bg-white shadow-inner p-6 mt-8 rounded-xl">
+  <h2 class="text-2xl font-bold text-red-600 mb-4">Mentions légales</h2>
+
+  <button class="accordion-btn">1. Éditeur du site <span class="arrow">▶</span></button>
+  <div class="accordion-content">
+    <p>Renault Trucks CSE Bourg-en-Bresse<br>Secretaire du CSE : <strong>Arnaud Christian</strong><br></p>
   </div>
+
+  <button class="accordion-btn">2. Conception et Realisation <span class="arrow">▶</span></button>
+  <div class="accordion-content">
+    <p><strong>Bouaraba Arab UEP8</strong> - Développement, conception graphique, intégration et maintenance du site.
+  </div>
+
+  <button class="accordion-btn">3. Hébergement du site <span class="arrow">▶</span></button>
+  <div class="accordion-content">
+    <p>GitHub Pages – Hébergement statique</p>
+  </div>
+
+  <button class="accordion-btn">4. Propriété intellectuelle <span class="arrow">▶</span></button>
+  <div class="accordion-content">
+    <p>L’ensemble des éléments du site (textes, images, graphismes, logo, etc.) sont la propriété exclusive du
+    <strong>CSE Renault Trucks Bourg-en-Bresse</strong>, sauf mention contraire. Toute reproduction, distribution ou
+    modification sans autorisation écrite est interdite.</p>
+  </div>
+
+  <button class="accordion-btn">5. Protection des données <span class="arrow">▶</span></button>
+  <div class="accordion-content">
+    <p>Aucune donnée personnelle n’est collectée, aucun cookie n’est utilisé.</p>
+  </div>
+
+  <button class="accordion-btn">6. Contact <span class="arrow">▶</span></button>
+<div class="accordion-content">
+  <p>
+    Pour toute demande, vous pouvez contacter l’équipe du CSE par e-mail 
+    <a href="mailto:cserenaulttrucks@gmail.com" style="color: red; font-weight: bold;">
+      cserenaulttrucks@gmail.com
+    </a>
+  </p>
+</div>
 </section>
 
 <script>
-// --- SCRIPT POUR LA NEIGE ---
-function createSnowflake() {
-  const hero = document.getElementById('hero-section');
-  if (!hero) return; // Sécurité
-  
-  const snowflake = document.createElement('div');
-  snowflake.classList.add('snowflake');
-  snowflake.innerHTML = '❄'; 
-  
-  // Position aléatoire sur la largeur
-  snowflake.style.left = Math.random() * 100 + '%';
-  
-  // Taille aléatoire
-  const size = Math.random() * 1.5 + 0.5 + 'em';
-  snowflake.style.fontSize = size;
-  
-  // Durée de chute aléatoire (entre 3s et 8s)
-  snowflake.style.animationDuration = Math.random() * 5 + 3 + 's';
-  
-  // Opacité aléatoire
-  snowflake.style.opacity = Math.random() * 0.5 + 0.3;
 
-  hero.appendChild(snowflake);
-
-  // Supprimer le flocon après l'animation
-  setTimeout(() => {
-    snowflake.remove();
-  }, 8000); 
+// ===== Toggle categories fluide et responsive =====
+function toggleCategory(id) {
+  const section = document.getElementById(id);
+  const card = document.querySelector(`[onclick="toggleCategory('${id}')"]`);
+  
+  // Fermer toutes les autres catégories
+  document.querySelectorAll('.partner-content').forEach(item => {
+    if (item.id !== id) {
+      item.classList.remove('active');
+    }
+  });
+  
+  // Reset des ombres sur toutes les cartes
+  document.querySelectorAll('.category-card').forEach(cardEl => {
+    cardEl.classList.remove("shadow-red-500/50", "shadow-xl");
+    cardEl.classList.add("shadow-lg");
+  });
+  
+  const opening = !section.classList.contains('active');
+  section.classList.toggle('active');
+  
+  if (opening) {
+    // Carte active : ajouter ombre spéciale
+    card.classList.remove("shadow-lg");
+    card.classList.add("shadow-xl", "shadow-red-500/50");
+    
+    // Attendre que TOUTES les transitions soient terminées (fermeture + ouverture)
+    setTimeout(() => {
+      const header = document.querySelector('header');
+      const headerHeight = header ? header.offsetHeight : 0;
+      
+      // Position de la CARTE (pas du contenu)
+      const cardTop = card.getBoundingClientRect().top + window.scrollY;
+      
+      // Scroll pour que la carte soit visible sous le header
+      const scrollTarget = cardTop - headerHeight - 20; // 20px de marge
+      
+      window.scrollTo({ 
+        top: Math.max(0, scrollTarget), 
+        behavior: 'smooth' 
+      });
+    }, 600); // Augmenté à 600ms pour laisser le temps aux transitions CSS (0.5s max-height + marge)
+    
+  } else {
+    // Carte désactivée : reset ombre
+    card.classList.remove("shadow-xl", "shadow-red-500/50");
+    card.classList.add("shadow-lg");
+  }
 }
 
-// Générer un flocon tous les 200ms
-setInterval(createSnowflake, 200);
-// ----------------------------
 
-
-// Modal Logic
+// ===== Modal =====
 const modal = document.getElementById('imageModal');
 const modalImg = document.getElementById('modalImg');
-const closeBtn = modal.querySelector('button');
+const closeModalBtn = modal.querySelector('button');
 
-function openModal(src) {
-  modalImg.src = src;
+function openModal(url) {
+  modalImg.src = url;
   modal.classList.add('active');
-  document.body.style.overflow = 'hidden'; 
+  history.pushState({ modalOpen: true }, "");
 }
 
 function closeModal() {
   modal.classList.remove('active');
-  modalImg.src = '';
-  document.body.style.overflow = '';
+  if(history.state && history.state.modalOpen) history.back();
 }
 
-closeBtn.addEventListener('click', closeModal);
-modal.addEventListener('click', (e) => {
-  if (e.target === modal) closeModal();
+modalImg.addEventListener('click', closeModal);
+closeModalBtn.addEventListener('click', closeModal);
+modal.addEventListener('click', (e) => { if(e.target === modal) closeModal(); });
+window.addEventListener('popstate', () => { if(modal.classList.contains('active')) closeModal(); });
+  // PWA install banner
+let deferredPrompt;
+const installBanner = document.createElement('div');
+installBanner.style.cssText =
+  `position: fixed;
+   bottom: 20px; left: 20px; right: 20px;
+   background: #dc2626;
+   color: #fff;
+   padding: 12px 20px;
+   border-radius: 12px;
+   text-align: center;
+   font-weight: bold;
+   z-index: 10001;
+   cursor: pointer;
+   box-shadow: 0 4px 12px rgba(0,0,0,0.3);`;
+installBanner.textContent = "Installer l'application sur votre écran d'accueil";
+installBanner.style.display = 'none';
+
+document.body.appendChild(installBanner);
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+
+  // Ne pas afficher si déjà installé
+  if (!window.matchMedia('(display-mode: standalone)').matches) {
+    installBanner.style.display = 'block';
+  }
 });
 
-// Toggle Category Logic (Accordion effect)
-function toggleCategory(id) {
-  const content = document.getElementById(id);
-  const isActive = content.classList.contains('active');
-  
-  // Close all others
-  document.querySelectorAll('.partner-content').forEach(el => {
-    el.classList.remove('active');
-    el.style.maxHeight = '0';
-    el.style.marginTop = '0';
-    el.style.opacity = '0';
-  });
+installBanner.addEventListener('click', async () => {
+  installBanner.style.display = 'none';
+  deferredPrompt.prompt();
+  await deferredPrompt.userChoice;
+  deferredPrompt = null;
+});
 
-  // Toggle clicked
-  if (!isActive) {
-    content.classList.add('active');
-    // On laisse le CSS gérer le max-height via la classe active
-    content.style.maxHeight = '5000px'; 
-    content.style.marginTop = '1rem';
-    content.style.opacity = '1';
-    
-    setTimeout(() => {
-      content.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 300);
-  }
-}
+window.addEventListener('appinstalled', () => {
+  installBanner.style.display = 'none';
+});
 
-// Sub-Accordion Logic for Maison & Travaux
-document.querySelectorAll('.accordion-btn').forEach(btn => {
-  btn.addEventListener('click', function() {
-    // Toggle current
-    this.classList.toggle('active');
-    const content = this.nextElementSibling;
-    const arrow = this.querySelector('.arrow');
-    
-    if (content.style.maxHeight && content.style.maxHeight !== '0px') {
-       content.style.maxHeight = '0';
-       content.classList.remove('open');
-       arrow.classList.remove('rotate');
-    } else {
-       content.classList.add('open');
-       content.style.maxHeight = content.scrollHeight + "px";
-       arrow.classList.add('rotate');
+// ===== Menu Partenaires / Mentions =====
+document.querySelectorAll('nav a').forEach(link => {
+  link.classList.add('nav-link');
+  link.addEventListener('click', (e) => {
+    e.preventDefault();
+    document.querySelectorAll('.nav-link').forEach(l => {
+      l.classList.remove('text-white');
+      l.classList.add('text-gray-400');
+      l.style.backgroundColor = 'transparent';
+      l.style.padding = '0';
+      l.style.borderRadius = '0';
+    });
+    link.classList.remove('text-gray-400');
+    link.classList.add('text-white');
+    link.style.backgroundColor = '#dc2626';
+    link.style.padding = '0.25rem 0.75rem';
+    link.style.borderRadius = '9999px';
+
+    if(link.textContent.includes("Partenaires")) {
+      document.getElementById('categories').scrollIntoView({behavior: 'smooth'});
+    } else if(link.textContent.includes("Mentions")) {
+      document.getElementById('mentions').scrollIntoView({behavior: 'smooth'});
     }
   });
 });
 
-// Scroll to top
-const scrollTopBtn = document.getElementById('scrollTopBtn');
-window.addEventListener('scroll', () => {
-  if (window.scrollY > 300) {
-    scrollTopBtn.classList.add('show');
-  } else {
-    scrollTopBtn.classList.remove('show');
-  }
-});
-scrollTopBtn.addEventListener('click', () => {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+// ===== Badge Compteur Automatique (Version CORRIGÉE pour gérer les accordéons et les listes) =====
+document.querySelectorAll('[onclick^="toggleCategory"]').forEach(trigger => {
+    // 1. Détecter l'ID de la carte de contenu (ex: 'gout-content')
+    const idMatch = trigger.getAttribute('onclick').match(/'(.+?)'/);
+    if (!idMatch) return;
+
+    const contentId = idMatch[1];
+    const content = document.getElementById(contentId);
+
+    if (!content) return; 
+
+    // 2. Compter tous les partenaires, quelle que soit la profondeur (fonctionne pour les accordéons comme Maison)
+    const count = content.querySelectorAll('.partner-link').length; 
+    
+    // 3. La div où nous voulons attacher le badge est le 'trigger' lui-même (la div qui a l'onclick)
+    let headerDiv = trigger; 
+
+    if(count > 0) {
+        // Supprimer l'ancien badge s'il existe (pour éviter les doublons lors des rechargements)
+        let existingBadge = headerDiv.querySelector('.badge-compteur');
+        if (existingBadge) {
+            existingBadge.remove();
+        }
+
+        // Créer et attacher le nouveau badge
+        let badge = document.createElement('div');
+        // Ajout de la classe badge-compteur pour un meilleur ciblage futur
+        badge.className = "absolute top-2 right-2 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded-full shadow z-10 badge-compteur";
+        
+        // Attacher le badge au déclencheur (la div qui a l'image/titre)
+        headerDiv.appendChild(badge);
+        
+        badge.textContent = count + " Partenaire" + (count > 1 ? "s" : "");
+    }
 });
 
+// ===== Accordion (Version Modifiée pour l'Exclusivité) =====
+document.querySelectorAll(".accordion-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const content = btn.nextElementSibling;
+
+    // 1. GESTION DE L'EXCLUSIVITÉ (Fermeture des autres)
+    document.querySelectorAll(".accordion-btn").forEach(otherBtn => {
+      const otherContent = otherBtn.nextElementSibling;
+      
+      // Si ce n'est pas le bouton cliqué ET que son contenu est ouvert
+      if (otherBtn !== btn && otherContent.classList.contains("open")) {
+        otherContent.style.maxHeight = null;
+        otherContent.classList.remove("open");
+        
+        // Retirer les classes des boutons et flèches des autres onglets
+        otherBtn.classList.remove("active");
+        const otherArrow = otherBtn.querySelector(".arrow");
+        if (otherArrow) otherArrow.classList.remove("rotate");
+      }
+    });
+    // FIN GESTION EXCLUSIVITÉ
+
+    // 2. OUVERTURE / FERMETURE DU BOUTON CLIQUÉ
+    const arrow = btn.querySelector(".arrow");
+
+    if(content.classList.contains("open")) { 
+      // Fermeture
+      content.style.maxHeight = null; 
+      content.classList.remove("open"); 
+      if (arrow) arrow.classList.remove("rotate");
+      btn.classList.remove("active");
+    } else { 
+      // Ouverture
+      content.classList.add("open"); 
+      if (arrow) arrow.classList.add("rotate"); 
+      btn.classList.add("active");
+      
+      // On utilise requestAnimationFrame pour une lecture correcte de scrollHeight
+      requestAnimationFrame(() => { content.style.maxHeight = content.scrollHeight + "px"; }); 
+    }
+  });
+});
+ if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/Renault-trucks-CE/service-worker.js')
+    .then(() => console.log('Service Worker enregistré ✔'))
+    .catch(err => console.error('SW: Échec ❌', err));
+
+  let refreshing = false;
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    if (!refreshing) {
+      refreshing = true;
+      console.log('SW: Nouvelle version détectée, rechargement automatique…');
+      window.location.reload();
+    }
+  });
+}
 </script>
 </body>
 </html>
