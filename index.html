@@ -69,7 +69,7 @@
     }
   }
 
-  /* ===== CARTES CATÉGORIES ===== */
+  /* ===== CATÉGORIES MODERNES AVEC ACCORDÉON ===== */
   .categories-container {
     max-width: 1400px;
     margin: 0 auto;
@@ -78,101 +78,68 @@
     margin-bottom: 2rem;
   }
 
-  .categories-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 1rem;
-    margin-top: 1rem;
-  }
-
-  @media (max-width: 768px) {
-    .categories-grid {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 0.75rem;
-    }
-  }
-
-  .category-card-click {
+  .category-section-modern {
     background: white;
-    border: 2px solid #e5e7eb;
-    border-radius: 16px;
-    padding: 2rem 1rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-align: center;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    position: relative;
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    margin-bottom: 1.5rem;
     overflow: hidden;
+    border: 2px solid #e5e7eb;
+    transition: all 0.3s ease;
   }
 
-  .category-card-click::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, #dc2626, #b91c1c);
-    transform: scaleX(0);
+  .category-section-modern:hover {
+    border-color: #dc2626;
+    box-shadow: 0 8px 30px rgba(220, 38, 38, 0.15);
+  }
+
+  .category-header-modern {
+    padding: 1.5rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(135deg, #f9fafb 0%, #ffffff 100%);
+    transition: all 0.3s ease;
+  }
+
+  .category-header-modern:hover {
+    background: linear-gradient(135deg, #fee2e2 0%, #fef2f2 100%);
+  }
+
+  .category-header-modern.active {
+    background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+    color: white;
+  }
+
+  .category-header-modern h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .category-header-modern .arrow {
+    font-size: 1.2rem;
     transition: transform 0.3s ease;
   }
 
-  .category-card-click:hover {
-    border-color: #dc2626;
-    transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(220, 38, 38, 0.2);
+  .category-header-modern.active .arrow {
+    transform: rotate(90deg);
   }
 
-  .category-card-click:hover::before {
-    transform: scaleX(1);
+  .category-content-modern {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    background: #f9fafb;
   }
 
-  .category-card-click h3 {
-    color: #1f2937;
-    font-weight: 700;
-    font-size: 1.1rem;
-    margin: 0;
-  }
-
-  .category-card-click .emoji {
-    font-size: 2.5rem;
-    margin-bottom: 0.5rem;
-    display: block;
-  }
-
-  /* ===== CONTENU PARTENAIRES ===== */
-  .partners-section {
-    display: none;
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 1rem;
-    background: white;
-    border-radius: 16px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-    margin-top: 2rem;
-    margin-bottom: 2rem;
-    animation: fadeIn 0.4s ease;
-  }
-
-  .partners-section.active {
-    display: block;
-  }
-
-  .back-btn {
-    background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
-    color: white;
-    border: none;
-    padding: 0.75rem 1.5rem;
-    border-radius: 8px;
-    font-weight: 600;
-    cursor: pointer;
-    margin-bottom: 1.5rem;
-    transition: all 0.3s ease;
-  }
-
-  .back-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(220, 38, 38, 0.3);
+  .category-content-modern.open {
+    max-height: 5000px;
+    padding: 1.5rem;
   }
 
   @keyframes fadeIn {
@@ -433,7 +400,7 @@
     z-index: 10000;
   }
 
-  /* ===== JEU CAMION ===== */
+  /* ===== JEU CAMION (STYLE DINO CHROME) ===== */
   .game-container {
     max-width: 800px;
     margin: 3rem auto;
@@ -446,13 +413,15 @@
   #gameCanvas {
     width: 100%;
     max-width: 600px;
-    height: 200px;
-    border: 3px solid #dc2626;
-    border-radius: 12px;
-    background: #f3f4f6;
+    height: 150px;
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    background: #ffffff;
     display: block;
     margin: 0 auto;
     touch-action: none;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
   }
 
   .game-controls {
@@ -482,6 +451,14 @@
     font-size: 1.5rem;
     font-weight: 700;
     color: #dc2626;
+    margin-bottom: 1rem;
+    font-family: 'Courier New', monospace;
+  }
+
+  .game-instructions {
+    text-align: center;
+    color: #6b7280;
+    font-size: 0.9rem;
     margin-bottom: 1rem;
   }
 </style>
@@ -553,66 +530,11 @@
 
 <!-- CATEGORIES -->
 <section id="categories" class="categories-container">
-  <h2 class="text-2xl md:text-3xl font-bold text-center mb-4 text-gray-800">
+  <h2 class="text-2xl md:text-3xl font-bold text-center mb-6 text-gray-800">
     Catégories d'Offres
   </h2>
-  <p class="text-center text-gray-600 mb-4">Cliquez sur une catégorie pour voir les partenaires</p>
 
-  <!-- Grille des catégories -->
-  <div class="categories-grid">
-    <div class="category-card-click" onclick="showPartners('resto')">
-      <span class="emoji">🍽️</span>
-      <h3>Restaurants</h3>
-    </div>
-    <div class="category-card-click" onclick="showPartners('gout')">
-      <span class="emoji">🥖</span>
-      <h3>Artisans du Goût</h3>
-    </div>
-    <div class="category-card-click" onclick="showPartners('maison')">
-      <span class="emoji">🏠</span>
-      <h3>Maison & Travaux</h3>
-    </div>
-    <div class="category-card-click" onclick="showPartners('auto')">
-      <span class="emoji">🚗</span>
-      <h3>Automobile</h3>
-    </div>
-    <div class="category-card-click" onclick="showPartners('vetement')">
-      <span class="emoji">👔</span>
-      <h3>Prêt-à-Porter</h3>
-    </div>
-    <div class="category-card-click" onclick="showPartners('beaute')">
-      <span class="emoji">💅</span>
-      <h3>Beauté / Bien-être</h3>
-    </div>
-    <div class="category-card-click" onclick="showPartners('culture')">
-      <span class="emoji">🎭</span>
-      <h3>Culture / Loisirs</h3>
-    </div>
-    <div class="category-card-click" onclick="showPartners('quotidien')">
-      <span class="emoji">🛍️</span>
-      <h3>Quotidien</h3>
-    </div>
-    <div class="category-card-click" onclick="showPartners('enfants')">
-      <span class="emoji">👶</span>
-      <h3>Autour de l'Enfant</h3>
-    </div>
-    <div class="category-card-click" onclick="showPartners('animaux')">
-      <span class="emoji">🐾</span>
-      <h3>Animaux</h3>
-    </div>
-    <div class="category-card-click" onclick="showPartners('voyages')">
-      <span class="emoji">✈️</span>
-      <h3>Hôtels / Voyages</h3>
-    </div>
-  </div>
-</section>
-
-<!-- SECTION PARTENAIRES (masquée par défaut) -->
-<section id="partners-section" class="partners-section">
-  <button class="back-btn" onclick="hidePartners()">← Retour aux catégories</button>
-  <h2 id="partners-title" class="text-2xl md:text-3xl font-bold text-center mb-4 text-gray-800"></h2>
-  
-  <div id="partners-content"></div>
+  <div id="categories-list"></div>
 </section>
 
 
@@ -834,40 +756,77 @@ const partnersData = {
   }
 };
 
-// ===== AFFICHER LES PARTENAIRES =====
-function showPartners(categoryId) {
-  const category = partnersData[categoryId];
-  if (!category) return;
+// ===== AFFICHER TOUTES LES CATÉGORIES =====
+function renderAllCategories() {
+  const categoriesList = document.getElementById('categories-list');
+  if (!categoriesList) return;
 
-  const partnersSection = document.getElementById('partners-section');
-  const partnersTitle = document.getElementById('partners-title');
-  const partnersContent = document.getElementById('partners-content');
-  const categoriesSection = document.getElementById('categories');
-
-  // Masquer les catégories
-  categoriesSection.style.display = 'none';
-  
-  // Afficher la section partenaires
-  partnersTitle.textContent = category.title;
-  partnersContent.innerHTML = '';
-
-  if (category.subcategories) {
-    // Catégorie avec sous-catégories (Maison & Travaux)
-    const subcategorySection = document.createElement('div');
-    subcategorySection.className = 'subcategory-section';
+  Object.keys(partnersData).forEach(categoryId => {
+    const category = partnersData[categoryId];
     
-    category.subcategories.forEach((subcat, index) => {
-      const btn = document.createElement('button');
-      btn.className = 'subcategory-btn';
-      btn.innerHTML = `<span>${subcat.name}</span><span>▶</span>`;
+    const section = document.createElement('div');
+    section.className = 'category-section-modern';
+    
+    const header = document.createElement('div');
+    header.className = 'category-header-modern';
+    header.innerHTML = `
+      <h3>${category.title}</h3>
+      <span class="arrow">▶</span>
+    `;
+    
+    const content = document.createElement('div');
+    content.className = 'category-content-modern';
+    
+    if (category.subcategories) {
+      // Catégorie avec sous-catégories
+      const subcategorySection = document.createElement('div');
+      subcategorySection.className = 'subcategory-section';
       
-      const content = document.createElement('div');
-      content.className = 'subcategory-content';
+      category.subcategories.forEach(subcat => {
+        const subBtn = document.createElement('button');
+        subBtn.className = 'subcategory-btn';
+        subBtn.innerHTML = `<span>${subcat.name}</span><span>▶</span>`;
+        
+        const subContent = document.createElement('div');
+        subContent.className = 'subcategory-content';
+        
+        const grid = document.createElement('div');
+        grid.className = 'partners-grid';
+        
+        subcat.partners.forEach(partner => {
+          const card = document.createElement('div');
+          card.className = 'partner-card-new';
+          card.onclick = () => openModal(partner.url);
+          card.innerHTML = `<h3>${partner.name}</h3>`;
+          grid.appendChild(card);
+        });
+        
+        subContent.appendChild(grid);
+        subcategorySection.appendChild(subBtn);
+        subcategorySection.appendChild(subContent);
+        
+        subBtn.addEventListener('click', () => {
+          const arrow = subBtn.querySelector('span:last-child');
+          subContent.classList.toggle('open');
+          subBtn.classList.toggle('active');
+          
+          if (subContent.classList.contains('open')) {
+            arrow.style.transform = 'rotate(90deg)';
+            subContent.style.maxHeight = subContent.scrollHeight + 'px';
+          } else {
+            arrow.style.transform = 'rotate(0deg)';
+            subContent.style.maxHeight = '0';
+          }
+        });
+      });
       
+      content.appendChild(subcategorySection);
+    } else {
+      // Catégorie simple
       const grid = document.createElement('div');
       grid.className = 'partners-grid';
       
-      subcat.partners.forEach(partner => {
+      category.partners.forEach(partner => {
         const card = document.createElement('div');
         card.className = 'partner-card-new';
         card.onclick = () => openModal(partner.url);
@@ -876,54 +835,27 @@ function showPartners(categoryId) {
       });
       
       content.appendChild(grid);
-      subcategorySection.appendChild(btn);
-      subcategorySection.appendChild(content);
+    }
+    
+    // Gestion du clic sur le header
+    header.addEventListener('click', () => {
+      const arrow = header.querySelector('.arrow');
+      content.classList.toggle('open');
+      header.classList.toggle('active');
       
-      // Gestion du clic
-      btn.addEventListener('click', () => {
-        const arrow = btn.querySelector('span:last-child');
-        content.classList.toggle('open');
-        btn.classList.toggle('active');
-        
-        if (content.classList.contains('open')) {
-          arrow.style.transform = 'rotate(90deg)';
-          content.style.maxHeight = content.scrollHeight + 'px';
-        } else {
-          arrow.style.transform = 'rotate(0deg)';
-          content.style.maxHeight = '0';
-        }
-      });
+      if (content.classList.contains('open')) {
+        arrow.style.transform = 'rotate(90deg)';
+        content.style.maxHeight = content.scrollHeight + 'px';
+      } else {
+        arrow.style.transform = 'rotate(0deg)';
+        content.style.maxHeight = '0';
+      }
     });
     
-    partnersContent.appendChild(subcategorySection);
-  } else {
-    // Catégorie simple avec liste de partenaires
-    const grid = document.createElement('div');
-    grid.className = 'partners-grid';
-    
-    category.partners.forEach(partner => {
-      const card = document.createElement('div');
-      card.className = 'partner-card-new';
-      card.onclick = () => openModal(partner.url);
-      card.innerHTML = `<h3>${partner.name}</h3>`;
-      grid.appendChild(card);
-    });
-    
-    partnersContent.appendChild(grid);
-  }
-
-  partnersSection.classList.add('active');
-  partnersSection.scrollIntoView({ behavior: 'smooth' });
-}
-
-// ===== MASQUER LES PARTENAIRES =====
-function hidePartners() {
-  const partnersSection = document.getElementById('partners-section');
-  const categoriesSection = document.getElementById('categories');
-  
-  partnersSection.classList.remove('active');
-  categoriesSection.style.display = 'block';
-  categoriesSection.scrollIntoView({ behavior: 'smooth' });
+    section.appendChild(header);
+    section.appendChild(content);
+    categoriesList.appendChild(section);
+  });
 }
 
 // ===== GESTION DES SOUS-CATÉGORIES (ACCORDÉON) =====
@@ -1022,6 +954,12 @@ document.addEventListener('DOMContentLoaded', () => {
       }, 800);
     }, 3000);
   }
+
+  // Afficher toutes les catégories
+  renderAllCategories();
+  
+  // Initialiser le jeu
+  initGame();
 });
 
 // ===== SERVICE WORKER =====
@@ -1031,10 +969,11 @@ if ('serviceWorker' in navigator) {
     .catch(err => console.error('SW: Échec ❌', err));
 }
 
-// ===== JEU CAMION =====
-let game = null;
+// ===== JEU CAMION (STYLE DINO CHROME) =====
 let gameRunning = false;
 let gameScore = 0;
+let gameSpeed = 0;
+let gameFrame = 0;
 
 function initGame() {
   const canvas = document.getElementById('gameCanvas');
@@ -1042,51 +981,95 @@ function initGame() {
   
   const ctx = canvas.getContext('2d');
   canvas.width = 600;
-  canvas.height = 200;
+  canvas.height = 150;
 
+  const GROUND_Y = 120;
+  const TRUCK_X = 50;
+
+  // Camion
   const truck = {
-    x: 50,
-    y: 150,
+    x: TRUCK_X,
+    y: GROUND_Y - 30,
     width: 40,
     height: 30,
-    jumping: false,
-    jumpSpeed: 0,
-    gravity: 0.8
+    jumpVelocity: 0,
+    isJumping: false,
+    frame: 0
   };
 
+  // Obstacles (cactus)
   const obstacles = [];
-  let obstacleSpeed = 3;
-  let obstacleTimer = 0;
-  let gameSpeed = 0;
+  let nextObstacleTime = 0;
+
+  // Nuages
+  const clouds = [
+    { x: 200, y: 30, width: 30, height: 20 },
+    { x: 400, y: 20, width: 40, height: 25 },
+    { x: 600, y: 35, width: 35, height: 22 }
+  ];
+
+  // Sol qui défile
+  let groundX = 0;
 
   function drawTruck() {
     ctx.fillStyle = '#dc2626';
+    // Corps du camion
     ctx.fillRect(truck.x, truck.y, truck.width, truck.height);
-    // Roues
-    ctx.fillStyle = '#1f2937';
-    ctx.fillRect(truck.x + 5, truck.y + truck.height, 8, 8);
-    ctx.fillRect(truck.x + truck.width - 13, truck.y + truck.height, 8, 8);
     // Cabine
     ctx.fillStyle = '#991b1b';
-    ctx.fillRect(truck.x + 25, truck.y - 10, 15, 15);
+    ctx.fillRect(truck.x + 25, truck.y - 15, 15, 15);
+    // Roues
+    ctx.fillStyle = '#1f2937';
+    ctx.beginPath();
+    ctx.arc(truck.x + 10, truck.y + truck.height, 6, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(truck.x + truck.width - 10, truck.y + truck.height, 6, 0, Math.PI * 2);
+    ctx.fill();
+    
+    // Animation de course (légère oscillation)
+    if (!truck.isJumping) {
+      truck.frame++;
+      if (truck.frame % 10 < 5) {
+        truck.y = GROUND_Y - 30;
+      } else {
+        truck.y = GROUND_Y - 29;
+      }
+    }
   }
 
   function drawObstacle(obs) {
-    ctx.fillStyle = '#6b7280';
+    ctx.fillStyle = '#22c55e';
+    // Cactus simple
     ctx.fillRect(obs.x, obs.y, obs.width, obs.height);
+    // Petites branches
+    ctx.fillRect(obs.x - 5, obs.y + 10, 8, 12);
+    ctx.fillRect(obs.x + obs.width - 3, obs.y + 15, 8, 10);
+  }
+
+  function drawCloud(cloud) {
+    ctx.fillStyle = '#e5e7eb';
+    ctx.beginPath();
+    ctx.arc(cloud.x, cloud.y, cloud.width / 2, 0, Math.PI * 2);
+    ctx.arc(cloud.x + cloud.width / 3, cloud.y, cloud.height / 2, 0, Math.PI * 2);
+    ctx.arc(cloud.x + cloud.width / 1.5, cloud.y, cloud.width / 2.5, 0, Math.PI * 2);
+    ctx.fill();
   }
 
   function drawGround() {
-    ctx.fillStyle = '#9ca3af';
-    ctx.fillRect(0, 180, canvas.width, 20);
-    // Lignes de route
-    ctx.strokeStyle = '#ffffff';
+    // Sol
+    ctx.fillStyle = '#f3f4f6';
+    ctx.fillRect(0, GROUND_Y, canvas.width, canvas.height - GROUND_Y);
+    
+    // Lignes qui défilent
+    ctx.strokeStyle = '#d1d5db';
     ctx.lineWidth = 2;
-    ctx.setLineDash([10, 10]);
+    ctx.setLineDash([20, 20]);
     ctx.beginPath();
-    ctx.moveTo(0, 190);
-    ctx.lineTo(canvas.width, 190);
+    ctx.moveTo(groundX % 40, GROUND_Y + 5);
+    ctx.lineTo(canvas.width + (groundX % 40), GROUND_Y + 5);
     ctx.stroke();
+    ctx.setLineDash([]);
   }
 
   function update() {
@@ -1094,104 +1077,162 @@ function initGame() {
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Sol animé
-    gameSpeed += 0.1;
+    // Mise à jour de la vitesse
+    gameSpeed += 0.001;
+    gameFrame++;
+
+    // Sol qui défile
+    groundX -= 5 + gameSpeed * 10;
     drawGround();
 
-    // Mise à jour du camion
-    if (truck.jumping) {
-      truck.y -= truck.jumpSpeed;
-      truck.jumpSpeed -= truck.gravity;
-      if (truck.y >= 150) {
-        truck.y = 150;
-        truck.jumping = false;
-        truck.jumpSpeed = 0;
+    // Nuages
+    clouds.forEach(cloud => {
+      cloud.x -= 1 + gameSpeed * 2;
+      if (cloud.x + cloud.width < 0) {
+        cloud.x = canvas.width + Math.random() * 100;
+        cloud.y = 20 + Math.random() * 30;
+      }
+      drawCloud(cloud);
+    });
+
+    // Physique du camion
+    if (truck.isJumping) {
+      truck.y += truck.jumpVelocity;
+      truck.jumpVelocity += 0.8; // Gravité
+      
+      if (truck.y >= GROUND_Y - 30) {
+        truck.y = GROUND_Y - 30;
+        truck.isJumping = false;
+        truck.jumpVelocity = 0;
       }
     }
 
     drawTruck();
 
     // Génération d'obstacles
-    obstacleTimer++;
-    if (obstacleTimer > 60 - Math.floor(gameSpeed / 10)) {
+    nextObstacleTime--;
+    if (nextObstacleTime <= 0) {
+      const minTime = Math.max(60 - Math.floor(gameSpeed * 50), 30);
+      const maxTime = Math.max(120 - Math.floor(gameSpeed * 30), 60);
+      nextObstacleTime = Math.floor(Math.random() * (maxTime - minTime) + minTime);
+      
+      const obstacleHeight = 20 + Math.random() * 25;
       obstacles.push({
         x: canvas.width,
-        y: 150,
-        width: 20,
-        height: 30
+        y: GROUND_Y - obstacleHeight,
+        width: 12 + Math.random() * 8,
+        height: obstacleHeight
       });
-      obstacleTimer = 0;
     }
 
     // Mise à jour des obstacles
     for (let i = obstacles.length - 1; i >= 0; i--) {
-      obstacles[i].x -= obstacleSpeed + gameSpeed / 5;
-      drawObstacle(obstacles[i]);
+      const obs = obstacles[i];
+      obs.x -= 5 + gameSpeed * 10;
+      
+      drawObstacle(obs);
 
       // Collision
-      if (truck.x < obstacles[i].x + obstacles[i].width &&
-          truck.x + truck.width > obstacles[i].x &&
-          truck.y < obstacles[i].y + obstacles[i].height &&
-          truck.y + truck.height > obstacles[i].y) {
+      if (truck.x + truck.width > obs.x &&
+          truck.x < obs.x + obs.width &&
+          truck.y + truck.height > obs.y &&
+          truck.y < obs.y + obs.height) {
         gameOver();
         return;
       }
 
-      // Supprimer les obstacles hors écran
-      if (obstacles[i].x + obstacles[i].width < 0) {
+      // Supprimer obstacle hors écran
+      if (obs.x + obs.width < 0) {
         obstacles.splice(i, 1);
-        gameScore++;
-        document.getElementById('gameScore').textContent = `Score: ${gameScore}`;
       }
+    }
+
+    // Score qui augmente avec le temps (comme Dino)
+    if (gameFrame % 5 === 0) {
+      gameScore++;
+      document.getElementById('gameScore').textContent = `Score: ${gameScore}`;
     }
 
     requestAnimationFrame(update);
   }
 
   function jump() {
-    if (!truck.jumping && gameRunning) {
-      truck.jumping = true;
-      truck.jumpSpeed = 15;
+    if (!truck.isJumping && gameRunning) {
+      truck.isJumping = true;
+      truck.jumpVelocity = -12;
     }
   }
 
   function startGame() {
     gameRunning = true;
     gameScore = 0;
-    obstacles.length = 0;
-    truck.y = 150;
-    truck.jumping = false;
     gameSpeed = 0;
-    obstacleTimer = 0;
+    gameFrame = 0;
+    obstacles.length = 0;
+    nextObstacleTime = 60;
+    truck.y = GROUND_Y - 30;
+    truck.isJumping = false;
+    truck.jumpVelocity = 0;
+    groundX = 0;
+    
+    // Réinitialiser les nuages
+    clouds[0] = { x: 200, y: 30, width: 30, height: 20 };
+    clouds[1] = { x: 400, y: 20, width: 40, height: 25 };
+    clouds[2] = { x: 600, y: 35, width: 35, height: 22 };
+    
     document.getElementById('gameScore').textContent = 'Score: 0';
     document.getElementById('startBtn').style.display = 'none';
     document.getElementById('restartBtn').style.display = 'none';
+    
     update();
   }
 
   function gameOver() {
     gameRunning = false;
     document.getElementById('restartBtn').style.display = 'inline-block';
+    
     ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = '#fff';
     ctx.font = 'bold 24px Poppins';
     ctx.textAlign = 'center';
-    ctx.fillText('Game Over!', canvas.width / 2, canvas.height / 2);
+    ctx.fillText('GAME OVER', canvas.width / 2, canvas.height / 2 - 10);
     ctx.font = '18px Poppins';
-    ctx.fillText(`Score: ${gameScore}`, canvas.width / 2, canvas.height / 2 + 30);
+    ctx.fillText(`Score: ${gameScore}`, canvas.width / 2, canvas.height / 2 + 20);
   }
 
   // Contrôles
-  canvas.addEventListener('click', jump);
-  canvas.addEventListener('touchstart', (e) => {
-    e.preventDefault();
-    jump();
-  });
+  function handleJump(e) {
+    if (e) e.preventDefault();
+    if (!gameRunning) {
+      startGame();
+    } else {
+      jump();
+    }
+  }
+
+  // Écran de démarrage
+  function drawStartScreen() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drawGround();
+    clouds.forEach(c => drawCloud(c));
+    drawTruck();
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.3)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = '#6b7280';
+    ctx.font = '16px Poppins';
+    ctx.textAlign = 'center';
+    ctx.fillText('Appuyez sur ESPACE pour commencer', canvas.width / 2, canvas.height / 2);
+  }
+
+  // Afficher l'écran de démarrage
+  drawStartScreen();
+
+  canvas.addEventListener('click', handleJump);
+  canvas.addEventListener('touchstart', handleJump);
   document.addEventListener('keydown', (e) => {
     if (e.code === 'Space' || e.code === 'ArrowUp') {
-      e.preventDefault();
-      jump();
+      handleJump(e);
     }
   });
 
@@ -1206,7 +1247,7 @@ function initGame() {
   <h2 class="text-2xl md:text-3xl font-bold text-center mb-4 text-gray-800">
     🎮 Jeu du Camion
   </h2>
-  <p class="text-center text-gray-600 mb-4">Cliquez ou appuyez sur Espace pour sauter par-dessus les obstacles !</p>
+  <p class="game-instructions">Appuyez sur ESPACE, flèche HAUT, ou cliquez/touchez l'écran pour sauter</p>
   
   <div class="game-score" id="gameScore">Score: 0</div>
   <canvas id="gameCanvas"></canvas>
@@ -1216,12 +1257,5 @@ function initGame() {
     <button class="game-btn" id="restartBtn" style="display: none;">Rejouer</button>
   </div>
 </section>
-
-<script>
-// Initialiser le jeu au chargement
-document.addEventListener('DOMContentLoaded', () => {
-  initGame();
-});
-</script>
 </body>
 </html>
