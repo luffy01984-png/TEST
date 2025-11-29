@@ -1,1261 +1,906 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" class="scroll-smooth">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Avantages Partenaires | Renault Trucks CSE Bourg-en-Bresse</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#1a1a2e">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Avantages Partenaires | Renault Trucks CSE Bourg-en-Bresse</title>
+  <meta name="description"
+    content="Découvrez les avantages et offres partenaires du CSE Renault Trucks Bourg-en-Bresse.">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#dc2626">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
 
-<style>
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-
-  body {
-    font-family: 'Poppins', sans-serif;
-    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-    color: #2d3748;
-    overflow-x: hidden;
-    min-height: 100vh;
-  }
-
-  /* ===== HEADER NOUVEAU STYLE ===== */
-  header {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(20px);
-    border-bottom: 2px solid rgba(220, 38, 38, 0.2);
-    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
-  }
-
-  /* ===== HERO NOUVEAU STYLE ===== */
-  .hero-new {
-    background: linear-gradient(135deg, #dc2626 0%, #b91c1c 50%, #991b1b 100%);
-    position: relative;
-    padding: 2rem 1rem;
-    text-align: center;
-    overflow: hidden;
-    color: white;
-  }
-
-  .hero-new::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
-    pointer-events: none;
-  }
-
-  .hero-title-new {
-    font-size: 2.5rem;
-    font-weight: 800;
-    color: #ffffff;
-    margin-bottom: 0.5rem;
-    position: relative;
-    z-index: 1;
-    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
-  }
-
-  @media (max-width: 768px) {
-    .hero-title-new {
-      font-size: 2rem;
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f8fafc;
     }
-  }
 
-  /* ===== CATÉGORIES MODERNES AVEC ACCORDÉON ===== */
-  .categories-container {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 1rem;
-    margin-top: 2rem;
-    margin-bottom: 2rem;
-  }
-
-  .category-section-modern {
-    background: white;
-    border-radius: 20px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-    margin-bottom: 1.5rem;
-    overflow: hidden;
-    border: 2px solid #e5e7eb;
-    transition: all 0.3s ease;
-  }
-
-  .category-section-modern:hover {
-    border-color: #dc2626;
-    box-shadow: 0 8px 30px rgba(220, 38, 38, 0.15);
-  }
-
-  .category-header-modern {
-    padding: 1.5rem;
-    cursor: pointer;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: linear-gradient(135deg, #f9fafb 0%, #ffffff 100%);
-    transition: all 0.3s ease;
-  }
-
-  .category-header-modern:hover {
-    background: linear-gradient(135deg, #fee2e2 0%, #fef2f2 100%);
-  }
-
-  .category-header-modern.active {
-    background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
-    color: white;
-  }
-
-  .category-header-modern h3 {
-    font-size: 1.5rem;
-    font-weight: 700;
-    margin: 0;
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-  }
-
-  .category-header-modern .arrow {
-    font-size: 1.2rem;
-    transition: transform 0.3s ease;
-  }
-
-  .category-header-modern.active .arrow {
-    transform: rotate(90deg);
-  }
-
-  .category-content-modern {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    background: #f9fafb;
-  }
-
-  .category-content-modern.open {
-    max-height: 5000px;
-    padding: 1.5rem;
-  }
-
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
     }
-    to {
-      opacity: 1;
-      transform: translateY(0);
+
+    ::-webkit-scrollbar-track {
+      background: #f1f1f1;
     }
-  }
 
-  /* ===== CARTES PARTENAIRES NOUVELLES ===== */
-  .partners-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 0.75rem;
-    margin-top: 1rem;
-  }
-
-  @media (max-width: 768px) {
-    .partners-grid {
-      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-      gap: 0.5rem;
+    ::-webkit-scrollbar-thumb {
+      background: #dc2626;
+      border-radius: 4px;
     }
-  }
 
-  .partner-card-new {
-    background: #ffffff;
-    border: 2px solid #e5e7eb;
-    border-radius: 12px;
-    padding: 1rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #b91c1c;
+    }
 
-  .partner-card-new::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, #dc2626, #b91c1c);
-    transform: scaleX(0);
-    transition: transform 0.3s ease;
-  }
+    /* Hero Pattern */
+    .hero-pattern {
+      background-color: #dc2626;
+      background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
 
-  .partner-card-new:hover {
-    background: #fef2f2;
-    border-color: #dc2626;
-    transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(220, 38, 38, 0.2);
-  }
+    /* Category Accordion Transitions */
+    .category-content-modern {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
 
-  .partner-card-new:hover::before {
-    transform: scaleX(1);
-  }
+    .category-header-modern {
+      cursor: pointer;
+      padding: 1.5rem;
+      background: white;
+      border-bottom: 1px solid #f3f4f6;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.3s ease;
+    }
 
-  .partner-card-new h3 {
-    color: #1f2937;
-    font-weight: 600;
-    font-size: 0.95rem;
-    text-align: center;
-    margin: 0;
-    line-height: 1.3;
-  }
+    .category-header-modern:hover {
+      background-color: #fef2f2;
+    }
 
-  /* ===== SOUS-CATÉGORIES (ACCORDÉON) ===== */
-  .subcategory-section {
-    margin-top: 1rem;
-  }
+    .category-header-modern.active {
+      background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+      color: white;
+    }
 
-  .subcategory-btn {
-    width: 100%;
-    padding: 0.75rem 1rem;
-    background: #f9fafb;
-    border: 2px solid #e5e7eb;
-    border-radius: 8px;
-    color: #1f2937;
-    font-weight: 600;
-    cursor: pointer;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 0.5rem;
-    transition: all 0.3s ease;
-    font-size: 0.9rem;
-  }
+    /* Glassmorphism for Modal */
+    .glass-modal {
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(10px);
+    }
 
-  .subcategory-btn:hover {
-    background: #fee2e2;
-    border-color: #dc2626;
-    color: #dc2626;
-  }
+    /* Animations */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
 
-  .subcategory-btn.active {
-    background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
-    border-color: #dc2626;
-    color: #fff;
-  }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
 
-  .subcategory-content {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.4s ease;
-    margin-bottom: 0.5rem;
-  }
-
-  .subcategory-content.open {
-    max-height: 2000px;
-    padding: 0.5rem 0;
-  }
-
-  /* ===== MODAL ===== */
-  #imageModal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.98);
-    justify-content: center;
-    align-items: center;
-    z-index: 10000;
-    backdrop-filter: blur(20px);
-  }
-
-  #imageModal.active {
-    display: flex;
-  }
-
-  #imageModal img {
-    max-width: 90%;
-    max-height: 90%;
-    border-radius: 20px;
-    box-shadow: 0 20px 60px rgba(220, 38, 38, 0.5);
-  }
-
-  #imageModal button {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
-    color: white;
-    border: none;
-    padding: 12px 24px;
-    border-radius: 50px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: all 0.3s ease;
-  }
-
-  #imageModal button:hover {
-    transform: scale(1.1);
-  }
-
-  /* ===== SCROLL TO TOP ===== */
-  #scrollTopBtn {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
-    color: white;
-    border: none;
-    border-radius: 50%;
-    width: 60px;
-    height: 60px;
-    display: none;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    box-shadow: 0 4px 20px rgba(220, 38, 38, 0.6);
-    z-index: 1000;
-    transition: all 0.3s ease;
-    font-size: 1.5rem;
-  }
-
-  #scrollTopBtn:hover {
-    transform: translateY(-5px) scale(1.1);
-  }
-
-  #scrollTopBtn.show {
-    display: flex;
-  }
-
-  /* ===== PROMO BOX ===== */
-  .promo-box-new {
-    background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
-    border: 2px solid #dc2626;
-    border-radius: 12px;
-    padding: 1rem;
-    margin: 1rem auto;
-    max-width: 800px;
-    box-shadow: 0 4px 15px rgba(220, 38, 38, 0.2);
-  }
-
-  /* ===== MENTIONS LÉGALES ===== */
-  .mentions-section {
-    max-width: 1000px;
-    margin: 2rem auto;
-    padding: 1.5rem;
-    background: white;
-    border-radius: 12px;
-    border: 2px solid #e5e7eb;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-  }
-
-  /* ===== NAVIGATION ===== */
-  .nav-link-new {
-    color: #6b7280;
-    text-decoration: none;
-    font-weight: 600;
-    padding: 0.5rem 1.25rem;
-    border-radius: 8px;
-    transition: all 0.3s ease;
-    position: relative;
-  }
-
-  .nav-link-new::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    width: 0;
-    height: 2px;
-    background: #dc2626;
-    transition: all 0.3s ease;
-    transform: translateX(-50%);
-  }
-
-  .nav-link-new:hover,
-  .nav-link-new.active {
-    color: #dc2626;
-  }
-
-  .nav-link-new:hover::after,
-  .nav-link-new.active::after {
-    width: 80%;
-  }
-
-  /* ===== SPLASH SCREEN ===== */
-  #splash {
-    position: fixed;
-    inset: 0;
-    width: 100vw;
-    height: 100vh;
-    background: #1a1a2e;
-    display: none;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    z-index: 10000;
-  }
-
-  /* ===== JEU CAMION (STYLE DINO CHROME) ===== */
-  .game-container {
-    max-width: 800px;
-    margin: 3rem auto;
-    padding: 2rem;
-    background: white;
-    border-radius: 16px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-  }
-
-  #gameCanvas {
-    width: 100%;
-    max-width: 600px;
-    height: 150px;
-    border: 2px solid #e5e7eb;
-    border-radius: 8px;
-    background: #ffffff;
-    display: block;
-    margin: 0 auto;
-    touch-action: none;
-    image-rendering: pixelated;
-    image-rendering: crisp-edges;
-  }
-
-  .game-controls {
-    text-align: center;
-    margin-top: 1rem;
-  }
-
-  .game-btn {
-    background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
-    color: white;
-    border: none;
-    padding: 0.75rem 2rem;
-    border-radius: 8px;
-    font-weight: 600;
-    cursor: pointer;
-    margin: 0.5rem;
-    transition: all 0.3s ease;
-  }
-
-  .game-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(220, 38, 38, 0.3);
-  }
-
-  .game-score {
-    text-align: center;
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #dc2626;
-    margin-bottom: 1rem;
-    font-family: 'Courier New', monospace;
-  }
-
-  .game-instructions {
-    text-align: center;
-    color: #6b7280;
-    font-size: 0.9rem;
-    margin-bottom: 1rem;
-  }
-</style>
+    .animate-fade-in {
+      animation: fadeIn 0.5s ease-out forwards;
+    }
+  </style>
 </head>
 
-<body>
+<body class="text-gray-800 antialiased">
 
-<!-- Splash screen -->
-<div id="splash">
-  <span style="color: #fff; font-size: 2rem; margin-bottom: 1rem; font-weight: bold;">VOTRE CSE VOUS PROPOSE</span>
-  <img src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/elecctra.webp" alt="Splash" style="width: 70vw; max-width: 500px;">
-</div>
-
-<!-- Modal -->
-<div id="imageModal">
-  <button aria-label="Fermer">✕ Fermer</button>
-  <img id="modalImg" src="" alt="Partenaire">
-</div>
-
-<!-- Scroll to top button -->
-<button id="scrollTopBtn" aria-label="Retour en haut">↑</button>
-
-<!-- HEADER -->
-<header class="sticky top-0 z-50">
-  <div class="max-w-7xl mx-auto flex justify-between items-center px-4 py-4">
-    <div class="flex items-center space-x-3">
-      <img src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/Header.webp" alt="Logo Renault Trucks" class="h-16 sm:h-20 rounded-lg">
-      <span class="text-xs font-bold text-red-600 uppercase tracking-widest hidden sm:inline">CSE Bourg-en-Bresse</span>
-    </div>
-    <nav class="flex items-center space-x-4 text-sm">
-      <a href="#categories" class="nav-link-new" id="nav-partenaires">Partenaires</a>
-      <a href="#mentions" class="nav-link-new" id="nav-mentions">Mentions</a>
-    </nav>
+  <!-- Splash screen -->
+  <div id="splash" class="fixed inset-0 bg-[#1a1a2e] z-[100] flex flex-col justify-center items-center hidden">
+    <span class="text-white text-3xl font-bold mb-4">VOTRE CSE VOUS PROPOSE</span>
+    <img src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/elecctra.webp" alt="Splash"
+      class="w-[70vw] max-w-[500px] object-contain">
   </div>
-</header>
 
-<!-- HERO NOUVEAU -->
-<section class="hero-new">
-  <div style="position: relative; z-index: 1;">
-    <h1 class="hero-title-new">
-      Vos Avantages CSE Renault Trucks
-    </h1>
-    <p class="text-lg md:text-xl mb-2 text-white opacity-90">
-      Bourg-en-Bresse
-    </p>
-    <p class="text-base md:text-lg mb-3 max-w-2xl mx-auto text-white opacity-80">
-      Découvrez toutes les offres exclusives négociées par votre Comité d'Entreprise
-    </p>
-    <p class="text-xs md:text-sm mb-3 text-white opacity-70 italic">
-      *Sur présentation du badge
-    </p>
-    
-    <!-- PROMO BOX -->
-    <div class="promo-box-new">
-      <h2 class="text-xl md:text-2xl font-bold mb-2 text-white">
-        🎉 Nouveaux Partenaires !
-      </h2>
-      <div class="flex flex-wrap justify-center gap-2 text-sm md:text-base">
-        <span class="bg-yellow-500 bg-opacity-90 px-3 py-1 rounded-lg font-bold text-gray-900">
-          1001Pizzas : 8€50
-        </span>
-        <span class="bg-yellow-500 bg-opacity-90 px-3 py-1 rounded-lg font-bold text-gray-900">
-          Optique Lafayette : -7%
-        </span>
+  <!-- Modal -->
+  <div id="imageModal" class="glass-modal fixed inset-0 z-[60] hidden justify-center items-center p-4">
+    <button id="closeModalBtn"
+      class="absolute top-4 right-4 bg-red-600 text-white px-6 py-2 rounded-full font-bold hover:bg-red-700 transition-transform hover:scale-105 shadow-lg z-50">
+      ✕ Fermer
+    </button>
+    <img id="modalImg" src="" alt="Partenaire"
+      class="max-w-full max-h-[90vh] rounded-xl shadow-2xl object-contain animate-fade-in">
+  </div>
+
+  <!-- Scroll to top button -->
+  <button id="scrollTopBtn"
+    class="hidden fixed bottom-8 right-8 bg-red-600 text-white w-14 h-14 rounded-full justify-center items-center shadow-lg hover:bg-red-700 hover:-translate-y-1 transition-all z-40"
+    aria-label="Retour en haut">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+    </svg>
+  </button>
+
+  <!-- HEADER -->
+  <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-red-100 shadow-sm">
+    <div class="max-w-7xl mx-auto flex justify-between items-center px-4 py-3">
+      <div class="flex items-center gap-4">
+        <img src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/Header.webp"
+          alt="Logo Renault Trucks" class="h-12 sm:h-16 rounded-lg shadow-sm">
+        <div class="hidden sm:flex flex-col">
+          <span class="text-lg font-bold text-gray-900 leading-tight">CSE Renault Trucks</span>
+          <span class="text-xs font-bold text-red-600 uppercase tracking-widest">Bourg-en-Bresse</span>
+        </div>
       </div>
+      <nav class="flex items-center gap-2 sm:gap-6 text-sm font-medium">
+        <a href="#categories" id="nav-partenaires"
+          class="text-gray-600 hover:text-red-600 transition-colors px-3 py-2 rounded-lg hover:bg-red-50">Partenaires</a>
+        <a href="#mentions" id="nav-mentions"
+          class="text-gray-600 hover:text-red-600 transition-colors px-3 py-2 rounded-lg hover:bg-red-50">Infos</a>
+      </nav>
     </div>
-  </div>
-</section>
+  </header>
 
-<!-- CATEGORIES -->
-<section id="categories" class="categories-container">
-  <h2 class="text-2xl md:text-3xl font-bold text-center mb-6 text-gray-800">
-    Catégories d'Offres
-  </h2>
+  <!-- HERO SECTION -->
+  <section class="hero-pattern relative text-white py-16 px-4 overflow-hidden">
+    <div class="max-w-4xl mx-auto text-center relative z-10">
+      <h1 class="text-4xl md:text-6xl font-extrabold mb-4 tracking-tight drop-shadow-md">
+        Vos Avantages CSE
+      </h1>
+      <p class="text-xl md:text-2xl mb-8 text-red-100 font-light">
+        Découvrez les offres exclusives négociées pour vous.
+      </p>
 
-  <div id="categories-list"></div>
-</section>
+      <!-- PROMO BOX -->
+      <div
+        class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-6 max-w-2xl mx-auto transform hover:scale-[1.02] transition-transform duration-300">
+        <h2 class="text-xl font-bold mb-4 flex items-center justify-center gap-2">
+          <span>🎉</span> Nouveaux Partenaires
+        </h2>
+        <div class="flex flex-wrap justify-center gap-3">
+          <span class="bg-yellow-400 text-yellow-900 px-4 py-1.5 rounded-full font-bold text-sm shadow-sm">
+            🍕 1001Pizzas : 8€50
+          </span>
+          <span class="bg-yellow-400 text-yellow-900 px-4 py-1.5 rounded-full font-bold text-sm shadow-sm">
+            👓 Optique Lafayette : -7%
+          </span>
+        </div>
+      </div>
 
+      <p class="mt-6 text-sm opacity-75 italic">*Sur présentation du badge Renault Trucks</p>
+    </div>
 
-<!-- Mentions légales -->
-<section id="mentions" class="mentions-section">
-  <h2 class="text-2xl font-bold text-center mb-4 text-gray-800">Mentions légales</h2>
+    <!-- Decorative background elements -->
+    <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-transparent to-black/20 pointer-events-none">
+    </div>
+  </section>
 
-  <button class="subcategory-btn">
-    <span>1. Éditeur du site</span>
-    <span>▶</span>
-  </button>
-  <div class="subcategory-content">
-    <p class="text-gray-700">Renault Trucks CSE Bourg-en-Bresse<br>Secretaire du CSE : <strong>Arnaud Christian</strong></p>
-  </div>
+  <!-- MAIN CONTENT -->
+  <main class="max-w-7xl mx-auto px-4 py-12 space-y-16">
 
-  <button class="subcategory-btn">
-    <span>2. Conception et Realisation</span>
-    <span>▶</span>
-  </button>
-  <div class="subcategory-content">
-    <p class="text-gray-700"><strong>Bouaraba Arab UEP8</strong> - Développement, conception graphique, intégration et maintenance du site.</p>
-  </div>
+    <!-- CATEGORIES -->
+    <section id="categories">
+      <div class="text-center mb-10">
+        <h2 class="text-3xl font-bold text-gray-900 mb-2">Catégories d'Offres</h2>
+        <div class="w-20 h-1 bg-red-600 mx-auto rounded-full"></div>
+      </div>
 
-  <button class="subcategory-btn">
-    <span>3. Hébergement du site</span>
-    <span>▶</span>
-  </button>
-  <div class="subcategory-content">
-    <p class="text-gray-700">GitHub Pages – Hébergement statique</p>
-  </div>
+      <div id="categories-list" class="space-y-4">
+        <!-- Categories will be injected here by script.js -->
+      </div>
+    </section>
 
-  <button class="subcategory-btn">
-    <span>4. Propriété intellectuelle</span>
-    <span>▶</span>
-  </button>
-  <div class="subcategory-content">
-    <p class="text-gray-700">L'ensemble des éléments du site (textes, images, graphismes, logo, etc.) sont la propriété exclusive du <strong>CSE Renault Trucks Bourg-en-Bresse</strong>, sauf mention contraire. Toute reproduction, distribution ou modification sans autorisation écrite est interdite.</p>
-  </div>
+    <!-- GAME SECTION -->
+    <section id="jeu"
+      class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 md:p-8 text-center max-w-3xl mx-auto">
+      <h2 class="text-2xl font-bold text-gray-800 mb-2">🎮 Pause Détente</h2>
+      <p class="text-gray-500 mb-6 text-sm">Aidez le camion à livrer les pièces ! (Espace pour sauter)</p>
 
-  <button class="subcategory-btn">
-    <span>5. Protection des données</span>
-    <span>▶</span>
-  </button>
-  <div class="subcategory-content">
-    <p class="text-gray-700">Aucune donnée personnelle n'est collectée, aucun cookie n'est utilisé.</p>
-  </div>
+      <div class="relative bg-gray-50 rounded-xl overflow-hidden border-2 border-gray-200 mb-4">
+        <div class="absolute top-4 right-4 font-mono text-xl font-bold text-red-600 z-10" id="gameScore">Score: 0</div>
+        <canvas id="gameCanvas" class="w-full block mx-auto"></canvas>
+      </div>
 
-  <button class="subcategory-btn">
-    <span>6. Contact</span>
-    <span>▶</span>
-  </button>
-  <div class="subcategory-content">
-    <p class="text-gray-700">
-      Pour toute demande, vous pouvez contacter l'équipe du CSE par e-mail 
-      <a href="mailto:cserenaulttrucks@gmail.com" style="color: #dc2626; font-weight: bold;">
-        cserenaulttrucks@gmail.com
-      </a>
-    </p>
-  </div>
-</section>
+      <div class="flex justify-center gap-4">
+        <button id="startBtn"
+          class="bg-red-600 text-white px-8 py-2.5 rounded-lg font-bold hover:bg-red-700 transition-colors shadow-md">
+          Jouer
+        </button>
+        <button id="restartBtn"
+          class="bg-gray-800 text-white px-8 py-2.5 rounded-lg font-bold hover:bg-gray-900 transition-colors shadow-md hidden">
+          Rejouer
+        </button>
+      </div>
+    </section>
 
-<script>
-// ===== DONNÉES DES PARTENAIRES =====
-const partnersData = {
-  resto: {
-    title: '🍽️ Restaurants',
-    partners: [
-      { name: '1001 Pizzas', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/1001pizza.webp' },
-      { name: 'AllPizza&Pasta Buffet', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/buffetpizza.webp' },
-      { name: 'Au Bureau', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/AuBureau.webp' },
-      { name: 'BollyFood', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Bollyfood.webp' },
-      { name: 'COCO Bresil', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/CoCoBresil.webp' },
-      { name: 'Food Truck Fermier', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/food%20truck%20fermier.webp' },
-      { name: 'Le Loft', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/LeLoft.webp' },
-      { name: 'Le Marrakech', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Lemarrakech1.webp' },
-      { name: 'Leon', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Leon.webp' },
-      { name: 'Pasta&Pizza', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Pasta%26Pizza.webp' },
-      { name: "Rod's", url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Rods.webp' },
-      { name: 'WokAna', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/WokAna.webp' }
-    ]
-  },
-  gout: {
-    title: '🥖 Artisans du Goût',
-    partners: [
-      { name: "Boucherie André", url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/boucherie_andré.webp' },
-      { name: 'Café Allombert', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/CafeAllombert.webp' },
-      { name: 'Cerdon AOC Gabin Grobon', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Cerdon.webp' },
-      { name: "Grain d'pain", url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Graindpainnew.webp' },
-      { name: 'Janny fruits', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/janny%20fruits.webp' },
-      { name: 'La Mie Caline', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/lamiecaline.webp' },
-      { name: 'Les Pépites Bressanes', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Les_pepites_bressanes_new.webp' },
-      { name: 'LouPan', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Loupannew.webp' },
-      { name: 'Monts et Terroir', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Monts%20et%20Terroir.webp' },
-      { name: 'Mouret Traiteur', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Mouret.webp' },
-      { name: 'Paella de Valencia', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/La-Paella.webp' },
-      { name: 'Papilles Ain Solites', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Papilles_Ain_solites.webp' }
-    ]
-  },
-  maison: {
-    title: '🏠 Maison & Travaux',
-    subcategories: [
-      {
-        name: 'Achat & Financement',
+    <!-- MENTIONS LEGALES -->
+    <section id="mentions" class="bg-gray-50 rounded-2xl p-8 border border-gray-200">
+      <h2 class="text-2xl font-bold text-center mb-8 text-gray-800">Informations & Contact</h2>
+
+      <div class="grid md:grid-cols-2 gap-8">
+        <div>
+          <h3 class="font-bold text-lg mb-2 text-red-600">Contact CSE</h3>
+          <p class="text-gray-600 mb-4">
+            Pour toute demande, contactez l'équipe du CSE :<br>
+            <a href="mailto:cserenaulttrucks@gmail.com"
+              class="font-medium text-gray-900 hover:text-red-600 underline decoration-red-300 decoration-2 underline-offset-2">cserenaulttrucks@gmail.com</a>
+          </p>
+
+          <h3 class="font-bold text-lg mb-2 text-red-600">Éditeur</h3>
+          <p class="text-gray-600">
+            Renault Trucks CSE Bourg-en-Bresse<br>
+            Secrétaire : Arnaud Christian
+          </p>
+        </div>
+
+        <div>
+          <h3 class="font-bold text-lg mb-2 text-red-600">Crédits</h3>
+          <p class="text-gray-600 mb-4">
+            Conception : <strong>Bouaraba Arab UEP8</strong><br>
+            Hébergement : GitHub Pages
+          </p>
+
+          <h3 class="font-bold text-lg mb-2 text-red-600">Données</h3>
+          <p class="text-gray-600">
+            Aucun cookie de traçage. Aucune donnée personnelle collectée.
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-gray-900 text-white py-8 text-center text-sm opacity-90">
+    <p>&copy; 2024 CSE Renault Trucks Bourg-en-Bresse. Tous droits réservés.</p>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script>
+    // ===== DONNÉES DES PARTENAIRES =====
+    const partnersData = {
+      resto: {
+        title: '🍽️ Restaurants',
         partners: [
-          { name: 'Himosty', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/hymosti.webp' },
-          { name: 'La centrale du Financement', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/lacentralefinancenew.webp' },
-          { name: 'MeilleurTaux', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Meilleur-taux.webp' }
+          { name: '1001 Pizzas', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/1001pizza.webp' },
+          { name: 'AllPizza&Pasta Buffet', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/buffetpizza.webp' },
+          { name: 'Au Bureau', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/AuBureau.webp' },
+          { name: 'BollyFood', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Bollyfood.webp' },
+          { name: 'COCO Bresil', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/CoCoBresil.webp' },
+          { name: 'Food Truck Fermier', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/food%20truck%20fermier.webp' },
+          { name: 'Le Loft', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/LeLoft.webp' },
+          { name: 'Le Marrakech', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Lemarrakech1.webp' },
+          { name: 'Leon', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Leon.webp' },
+          { name: 'Pasta&Pizza', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Pasta%26Pizza.webp' },
+          { name: "Rod's", url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Rods.webp' },
+          { name: 'WokAna', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/WokAna.webp' }
         ]
       },
-      {
-        name: 'Equipement & Renovation',
+      gout: {
+        title: '🥖 Artisans du Goût',
         partners: [
-          { name: 'A.F Energies', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/AfrEnergie.webp' },
-          { name: 'Carrelage BRESSAN', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/CarrelageBressan.webp' },
-          { name: 'Chaleur et bois', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/chaleur%20et%20bois.webp' },
-          { name: 'Habitat Confort', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/habitat%20confort.webp' },
-          { name: 'Home Elec', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Homeelec.webp' },
-          { name: 'Pia Gazil', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/PiaGazil.webp' },
-          { name: 'Sikkens Solutions', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/sikkens.webp' }
+          { name: "Boucherie André", url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/boucherie_andré.webp' },
+          { name: 'Café Allombert', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/CafeAllombert.webp' },
+          { name: 'Cerdon AOC Gabin Grobon', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Cerdon.webp' },
+          { name: "Grain d'pain", url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Graindpainnew.webp' },
+          { name: 'Janny fruits', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/janny%20fruits.webp' },
+          { name: 'La Mie Caline', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/lamiecaline.webp' },
+          { name: 'Les Pépites Bressanes', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Les_pepites_bressanes_new.webp' },
+          { name: 'LouPan', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Loupannew.webp' },
+          { name: 'Monts et Terroir', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Monts%20et%20Terroir.webp' },
+          { name: 'Mouret Traiteur', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Mouret.webp' },
+          { name: 'Paella de Valencia', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/La-Paella.webp' },
+          { name: 'Papilles Ain Solites', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Papilles_Ain_solites.webp' }
         ]
       },
-      {
-        name: 'Cuisine/Electromenager',
-        partners: [
-          { name: 'Conforama', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Conforama.webp' },
-          { name: 'Cuisinella', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Cuisinella.webp' },
-          { name: 'Ecocuisine', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/ecocuisine.webp' },
-          { name: 'ID Plan', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Idplan.webp' },
-          { name: 'Schmidt', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/schmidt.webp' }
+      maison: {
+        title: '🏠 Maison & Travaux',
+        subcategories: [
+          {
+            name: 'Achat & Financement',
+            partners: [
+              { name: 'Himosty', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/hymosti.webp' },
+              { name: 'La centrale du Financement', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/lacentralefinancenew.webp' },
+              { name: 'MeilleurTaux', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Meilleur-taux.webp' }
+            ]
+          },
+          {
+            name: 'Equipement & Renovation',
+            partners: [
+              { name: 'A.F Energies', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/AfrEnergie.webp' },
+              { name: 'Carrelage BRESSAN', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/CarrelageBressan.webp' },
+              { name: 'Chaleur et bois', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/chaleur%20et%20bois.webp' },
+              { name: 'Habitat Confort', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/habitat%20confort.webp' },
+              { name: 'Home Elec', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Homeelec.webp' },
+              { name: 'Pia Gazil', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/PiaGazil.webp' },
+              { name: 'Sikkens Solutions', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/sikkens.webp' }
+            ]
+          },
+          {
+            name: 'Cuisine/Electromenager',
+            partners: [
+              { name: 'Conforama', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Conforama.webp' },
+              { name: 'Cuisinella', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Cuisinella.webp' },
+              { name: 'Ecocuisine', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/ecocuisine.webp' },
+              { name: 'ID Plan', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Idplan.webp' },
+              { name: 'Schmidt', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/schmidt.webp' }
+            ]
+          },
+          {
+            name: '🌻 Jardin & Extérieur',
+            partners: [
+              { name: 'Arbres & CO', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Arbres_Co.webp' },
+              { name: 'DSCV Frelons', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/DSCV.webp' },
+              { name: 'Fred Multi Services', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/FredMultiServices.webp' },
+              { name: 'IrriPiscine', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Irripiscine.webp' },
+              { name: 'Les Coques de Bresse', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Les%20coqs%20de%20Bresse.webp' },
+              { name: 'Parisot Motoculture', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/michel%20parisot.webp' }
+            ]
+          }
         ]
       },
-      {
-        name: '🌻 Jardin & Extérieur',
+      auto: {
+        title: '🚗 Automobile',
         partners: [
-          { name: 'Arbres & CO', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Arbres_Co.webp' },
-          { name: 'DSCV Frelons', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/DSCV.webp' },
-          { name: 'Fred Multi Services', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/FredMultiServices.webp' },
-          { name: 'IrriPiscine', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Irripiscine.webp' },
-          { name: 'Les Coques de Bresse', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Les%20coqs%20de%20Bresse.webp' },
-          { name: 'Parisot Motoculture', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/michel%20parisot.webp' }
+          { name: '0€ PareBrise', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/images/0%E2%82%AC_PareBrise.webp' },
+          { name: '123 Parebrise', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/123%20parebrise.webp' },
+          { name: 'APC', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/apc.webp' },
+          { name: 'Autosur', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Autosur_new.webp' },
+          { name: 'CtEasy.com', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/CtEasy.com.webp' },
+          { name: 'Renault', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/renault.webp' },
+          { name: 'RJ Auto Services', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/RJAuto.webp' },
+          { name: 'Speedy', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Speedynew.webp' },
+          { name: 'Vulco', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Vulco.webp' }
+        ]
+      },
+      vetement: {
+        title: '👔 Prêt-à-Porter',
+        partners: [
+          { name: 'Bello', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Bello.webp' },
+          { name: 'Dessous_Dessus', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Dessous_dessus.webp' },
+          { name: 'Gambetta', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Gambetta.webp' }
+        ]
+      },
+      beaute: {
+        title: '💅 Beauté / Bien-être',
+        partners: [
+          { name: '15th Avenue Coiffure', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/15thAvenuenew.webp' },
+          { name: 'Galerie102', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Gallerie%20102.webp' },
+          { name: 'Glow Ritual', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/GlowRitual.webp' },
+          { name: 'Le Salon des Hommes', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/LeSalondeshommes.webp' },
+          { name: 'Renaissance Coiffure', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Renaissance.webp' }
+        ]
+      },
+      culture: {
+        title: '🎭 Culture / Loisirs',
+        partners: [
+          { name: 'Déclic Ludik', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/declic-ludik.webp' },
+          { name: 'Défi01', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Defi01.webp' },
+          { name: 'La Tannerie', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/LaTannerie.webp' },
+          { name: 'Librairie du Théâtre', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Librairie_papeterie.webp' },
+          { name: 'Montbarbon', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Montbarbonnew.webp' }
+        ]
+      },
+      quotidien: {
+        title: '🛍️ Quotidien',
+        partners: [
+          { name: 'A Fleur de pot', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/a%20fleur%20de%20pot.webp' },
+          { name: "Ainter'Job", url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Ainterjob.webp' },
+          { name: 'Ca Crée Ca Cause', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Ca-cree-.webp' },
+          { name: 'Concept_Optique', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/ConceptOptique.webp' },
+          { name: 'Optique LAFAYETTE', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Optiquelafayette.webp' },
+          { name: 'La Rek1que', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/la%20rek1ke.webp' },
+          { name: 'Shiva', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Shivaa.webp' }
+        ]
+      },
+      enfants: {
+        title: '👶 Autour de l\'Enfant',
+        partners: [
+          { name: 'KingJouet', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/KingJouet.webp' },
+          { name: 'LudiLucky', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/ludylucky.webp' }
+        ]
+      },
+      animaux: {
+        title: '🐾 Animaux',
+        partners: [
+          { name: 'Espace Passion Animalerie', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/espace_passon_new.webp' },
+          { name: 'Food Animo', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/food%20animo.webp' }
+        ]
+      },
+      voyages: {
+        title: '✈️ Hôtels / Voyages',
+        partners: [
+          { name: 'Greet Hotels', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Greethotel.webp' },
+          { name: 'Le Griffon d\'Or', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Le-griffon.webp' }
         ]
       }
-    ]
-  },
-  auto: {
-    title: '🚗 Automobile',
-    partners: [
-      { name: '0€ PareBrise', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/images/0%E2%82%AC_PareBrise.webp' },
-      { name: '123 Parebrise', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/123%20parebrise.webp' },
-      { name: 'APC', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/apc.webp' },
-      { name: 'Autosur', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Autosur_new.webp' },
-      { name: 'CtEasy.com', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/CtEasy.com.webp' },
-      { name: 'Renault', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/renault.webp' },
-      { name: 'RJ Auto Services', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/RJAuto.webp' },
-      { name: 'Speedy', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Speedynew.webp' },
-      { name: 'Vulco', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Vulco.webp' }
-    ]
-  },
-  vetement: {
-    title: '👔 Prêt-à-Porter',
-    partners: [
-      { name: 'Bello', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Bello.webp' },
-      { name: 'Dessous_Dessus', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Dessous_dessus.webp' },
-      { name: 'Gambetta', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Gambetta.webp' }
-    ]
-  },
-  beaute: {
-    title: '💅 Beauté / Bien-être',
-    partners: [
-      { name: '15th Avenue Coiffure', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/15thAvenuenew.webp' },
-      { name: 'Galerie102', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Gallerie%20102.webp' },
-      { name: 'Glow Ritual', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/GlowRitual.webp' },
-      { name: 'Le Salon des Hommes', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/LeSalondeshommes.webp' },
-      { name: 'Renaissance Coiffure', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Renaissance.webp' }
-    ]
-  },
-  culture: {
-    title: '🎭 Culture / Loisirs',
-    partners: [
-      { name: 'Déclic Ludik', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/declic-ludik.webp' },
-      { name: 'Défi01', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Defi01.webp' },
-      { name: 'La Tannerie', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/LaTannerie.webp' },
-      { name: 'Librairie du Théâtre', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Librairie_papeterie.webp' },
-      { name: 'Montbarbon', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Montbarbonnew.webp' }
-    ]
-  },
-  quotidien: {
-    title: '🛍️ Quotidien',
-    partners: [
-      { name: 'A Fleur de pot', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/a%20fleur%20de%20pot.webp' },
-      { name: "Ainter'Job", url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Ainterjob.webp' },
-      { name: 'Ca Crée Ca Cause', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Ca-cree-.webp' },
-      { name: 'Concept_Optique', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/ConceptOptique.webp' },
-      { name: 'Optique LAFAYETTE', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Optiquelafayette.webp' },
-      { name: 'La Rek1que', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/la%20rek1ke.webp' },
-      { name: 'Shiva', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Shivaa.webp' }
-    ]
-  },
-  enfants: {
-    title: '👶 Autour de l\'Enfant',
-    partners: [
-      { name: 'KingJouet', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/KingJouet.webp' },
-      { name: 'LudiLucky', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/ludylucky.webp' }
-    ]
-  },
-  animaux: {
-    title: '🐾 Animaux',
-    partners: [
-      { name: 'Espace Passion Animalerie', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/espace_passon_new.webp' },
-      { name: 'Food Animo', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/food%20animo.webp' }
-    ]
-  },
-  voyages: {
-    title: '✈️ Hôtels / Voyages',
-    partners: [
-      { name: 'Greet Hotels', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Greethotel.webp' },
-      { name: 'Le Griffon d\'Or', url: 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Le-griffon.webp' }
-    ]
-  }
-};
+    };
 
-// ===== AFFICHER TOUTES LES CATÉGORIES =====
-function renderAllCategories() {
-  const categoriesList = document.getElementById('categories-list');
-  if (!categoriesList) return;
+    // ===== AFFICHER TOUTES LES CATÉGORIES =====
+    function renderAllCategories() {
+      const categoriesList = document.getElementById('categories-list');
+      if (!categoriesList) return;
 
-  Object.keys(partnersData).forEach(categoryId => {
-    const category = partnersData[categoryId];
-    
-    const section = document.createElement('div');
-    section.className = 'category-section-modern';
-    
-    const header = document.createElement('div');
-    header.className = 'category-header-modern';
-    header.innerHTML = `
-      <h3>${category.title}</h3>
-      <span class="arrow">▶</span>
-    `;
-    
-    const content = document.createElement('div');
-    content.className = 'category-content-modern';
-    
-    if (category.subcategories) {
-      // Catégorie avec sous-catégories
-      const subcategorySection = document.createElement('div');
-      subcategorySection.className = 'subcategory-section';
-      
-      category.subcategories.forEach(subcat => {
-        const subBtn = document.createElement('button');
-        subBtn.className = 'subcategory-btn';
-        subBtn.innerHTML = `<span>${subcat.name}</span><span>▶</span>`;
-        
-        const subContent = document.createElement('div');
-        subContent.className = 'subcategory-content';
-        
-        const grid = document.createElement('div');
-        grid.className = 'partners-grid';
-        
-        subcat.partners.forEach(partner => {
-          const card = document.createElement('div');
-          card.className = 'partner-card-new';
-          card.onclick = () => openModal(partner.url);
-          card.innerHTML = `<h3>${partner.name}</h3>`;
-          grid.appendChild(card);
-        });
-        
-        subContent.appendChild(grid);
-        subcategorySection.appendChild(subBtn);
-        subcategorySection.appendChild(subContent);
-        
-        subBtn.addEventListener('click', () => {
-          const arrow = subBtn.querySelector('span:last-child');
-          subContent.classList.toggle('open');
-          subBtn.classList.toggle('active');
-          
-          if (subContent.classList.contains('open')) {
+      Object.keys(partnersData).forEach(categoryId => {
+        const category = partnersData[categoryId];
+
+        const section = document.createElement('div');
+        section.className = 'category-section-modern group';
+
+        const header = document.createElement('div');
+        header.className = 'category-header-modern';
+        header.innerHTML = `
+          <h3 class="text-xl font-bold flex items-center gap-3">
+            ${category.title}
+          </h3>
+          <span class="arrow transition-transform duration-300">▶</span>
+        `;
+
+        const content = document.createElement('div');
+        content.className = 'category-content-modern';
+
+        if (category.subcategories) {
+          // Catégorie avec sous-catégories
+          const subcategorySection = document.createElement('div');
+          subcategorySection.className = 'subcategory-section space-y-2';
+
+          category.subcategories.forEach(subcat => {
+            const subBtn = document.createElement('button');
+            subBtn.className = 'subcategory-btn w-full text-left p-3 rounded-lg bg-gray-50 hover:bg-red-50 transition-colors flex justify-between items-center font-medium';
+            subBtn.innerHTML = `<span>${subcat.name}</span><span class="transition-transform duration-300">▶</span>`;
+
+            const subContent = document.createElement('div');
+            subContent.className = 'subcategory-content hidden';
+
+            const grid = document.createElement('div');
+            grid.className = 'partners-grid grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 mt-4';
+
+            subcat.partners.forEach(partner => {
+              const card = createPartnerCard(partner);
+              grid.appendChild(card);
+            });
+
+            subContent.appendChild(grid);
+            subcategorySection.appendChild(subBtn);
+            subcategorySection.appendChild(subContent);
+
+            subBtn.addEventListener('click', () => {
+              const arrow = subBtn.querySelector('span:last-child');
+              subContent.classList.toggle('hidden');
+              subBtn.classList.toggle('active');
+
+              if (!subContent.classList.contains('hidden')) {
+                arrow.style.transform = 'rotate(90deg)';
+              } else {
+                arrow.style.transform = 'rotate(0deg)';
+              }
+            });
+          });
+
+          content.appendChild(subcategorySection);
+        } else {
+          // Catégorie simple
+          const grid = document.createElement('div');
+          grid.className = 'partners-grid grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4';
+
+          category.partners.forEach(partner => {
+            const card = createPartnerCard(partner);
+            grid.appendChild(card);
+          });
+
+          content.appendChild(grid);
+        }
+
+        // Gestion du clic sur le header
+        header.addEventListener('click', () => {
+          const arrow = header.querySelector('.arrow');
+          content.classList.toggle('open');
+          header.classList.toggle('active');
+
+          if (content.classList.contains('open')) {
             arrow.style.transform = 'rotate(90deg)';
-            subContent.style.maxHeight = subContent.scrollHeight + 'px';
+            content.style.maxHeight = content.scrollHeight + 'px';
           } else {
             arrow.style.transform = 'rotate(0deg)';
-            subContent.style.maxHeight = '0';
+            content.style.maxHeight = '0';
           }
         });
+
+        section.appendChild(header);
+        section.appendChild(content);
+        categoriesList.appendChild(section);
       });
-      
-      content.appendChild(subcategorySection);
-    } else {
-      // Catégorie simple
-      const grid = document.createElement('div');
-      grid.className = 'partners-grid';
-      
-      category.partners.forEach(partner => {
-        const card = document.createElement('div');
-        card.className = 'partner-card-new';
-        card.onclick = () => openModal(partner.url);
-        card.innerHTML = `<h3>${partner.name}</h3>`;
-        grid.appendChild(card);
+    }
+
+    function createPartnerCard(partner) {
+      const card = document.createElement('div');
+      card.className = 'partner-card-new bg-white p-4 rounded-xl shadow-sm hover:shadow-md transition-all cursor-pointer border border-gray-100 hover:border-red-200 flex items-center justify-center text-center h-24';
+      card.onclick = () => openModal(partner.url);
+      card.innerHTML = `<h3 class="font-semibold text-gray-800 text-sm">${partner.name}</h3>`;
+      return card;
+    }
+
+    // ===== MODAL =====
+    const modal = document.getElementById('imageModal');
+    const modalImg = document.getElementById('modalImg');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+
+    function openModal(url) {
+      if (!modal || !modalImg) return;
+      modalImg.src = url;
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      history.pushState({ modalOpen: true }, "");
+    }
+
+    function closeModal() {
+      if (!modal) return;
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      if (history.state && history.state.modalOpen) history.back();
+    }
+
+    if (modal) {
+      modalImg.addEventListener('click', closeModal);
+      if (closeModalBtn) closeModalBtn.addEventListener('click', closeModal);
+      modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+    }
+    window.addEventListener('popstate', () => { if (modal && !modal.classList.contains('hidden')) closeModal(); });
+
+    // ===== NAVIGATION =====
+    const navPartenaires = document.getElementById('nav-partenaires');
+    const navMentions = document.getElementById('nav-mentions');
+
+    if (navPartenaires) {
+      navPartenaires.addEventListener('click', (e) => {
+        e.preventDefault();
+        document.getElementById('categories').scrollIntoView({ behavior: 'smooth' });
       });
-      
-      content.appendChild(grid);
     }
-    
-    // Gestion du clic sur le header
-    header.addEventListener('click', () => {
-      const arrow = header.querySelector('.arrow');
-      content.classList.toggle('open');
-      header.classList.toggle('active');
-      
-      if (content.classList.contains('open')) {
-        arrow.style.transform = 'rotate(90deg)';
-        content.style.maxHeight = content.scrollHeight + 'px';
-      } else {
-        arrow.style.transform = 'rotate(0deg)';
-        content.style.maxHeight = '0';
-      }
-    });
-    
-    section.appendChild(header);
-    section.appendChild(content);
-    categoriesList.appendChild(section);
-  });
-}
 
-// ===== GESTION DES SOUS-CATÉGORIES (ACCORDÉON) =====
-document.querySelectorAll('.subcategory-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const content = btn.nextElementSibling;
-    const arrow = btn.querySelector('span:last-child');
-    
-    // Fermer les autres
-    document.querySelectorAll('.subcategory-content').forEach(c => {
-      if (c !== content) {
-        c.classList.remove('open');
-        c.previousElementSibling.classList.remove('active');
-        c.previousElementSibling.querySelector('span:last-child').style.transform = 'rotate(0deg)';
-      }
-    });
-    
-    // Toggle l'actuel
-    content.classList.toggle('open');
-    btn.classList.toggle('active');
-    
-    if (content.classList.contains('open')) {
-      arrow.style.transform = 'rotate(90deg)';
-      content.style.maxHeight = content.scrollHeight + 'px';
-    } else {
-      arrow.style.transform = 'rotate(0deg)';
-      content.style.maxHeight = '0';
+    if (navMentions) {
+      navMentions.addEventListener('click', (e) => {
+        e.preventDefault();
+        document.getElementById('mentions').scrollIntoView({ behavior: 'smooth' });
+      });
     }
-  });
-});
 
-// ===== MODAL =====
-const modal = document.getElementById('imageModal');
-const modalImg = document.getElementById('modalImg');
-const closeModalBtn = modal.querySelector('button');
+    // ===== SCROLL TO TOP =====
+    const scrollTopBtn = document.getElementById('scrollTopBtn');
+    if (scrollTopBtn) {
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) {
+          scrollTopBtn.classList.remove('hidden');
+          scrollTopBtn.classList.add('flex');
+        } else {
+          scrollTopBtn.classList.add('hidden');
+          scrollTopBtn.classList.remove('flex');
+        }
+      });
 
-function openModal(url) {
-  modalImg.src = url;
-  modal.classList.add('active');
-  history.pushState({ modalOpen: true }, "");
-}
-
-function closeModal() {
-  modal.classList.remove('active');
-  if(history.state && history.state.modalOpen) history.back();
-}
-
-modalImg.addEventListener('click', closeModal);
-closeModalBtn.addEventListener('click', closeModal);
-modal.addEventListener('click', (e) => { if(e.target === modal) closeModal(); });
-window.addEventListener('popstate', () => { if(modal.classList.contains('active')) closeModal(); });
-
-// ===== NAVIGATION =====
-const navPartenaires = document.getElementById('nav-partenaires');
-const navMentions = document.getElementById('nav-mentions');
-
-navPartenaires.addEventListener('click', (e) => {
-  e.preventDefault();
-  navPartenaires.classList.add('active');
-  navMentions.classList.remove('active');
-  document.getElementById('categories').scrollIntoView({ behavior: 'smooth' });
-});
-
-navMentions.addEventListener('click', (e) => {
-  e.preventDefault();
-  navMentions.classList.add('active');
-  navPartenaires.classList.remove('active');
-  document.getElementById('mentions').scrollIntoView({ behavior: 'smooth' });
-});
-
-// ===== SCROLL TO TOP =====
-const scrollTopBtn = document.getElementById('scrollTopBtn');
-window.addEventListener('scroll', () => {
-  if (window.scrollY > 300) {
-    scrollTopBtn.classList.add('show');
-  } else {
-    scrollTopBtn.classList.remove('show');
-  }
-});
-
-scrollTopBtn.addEventListener('click', () => {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-});
-
-// ===== SPLASH SCREEN =====
-const SPLASH_ENABLED = false;
-document.addEventListener('DOMContentLoaded', () => {
-  const splash = document.getElementById('splash');
-  if (!SPLASH_ENABLED) {
-    splash.style.display = 'none';
-  } else {
-    setTimeout(() => {
-      splash.style.opacity = '0';
-      setTimeout(() => {
-        splash.style.display = 'none';
-      }, 800);
-    }, 3000);
-  }
-
-  // Afficher toutes les catégories
-  renderAllCategories();
-  
-  // Initialiser le jeu
-  initGame();
-});
-
-// ===== SERVICE WORKER =====
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/Renault-trucks-CE/service-worker.js')
-    .then(() => console.log('Service Worker enregistré ✔'))
-    .catch(err => console.error('SW: Échec ❌', err));
-}
-
-// ===== JEU CAMION (STYLE DINO CHROME) =====
-let gameRunning = false;
-let gameScore = 0;
-let gameSpeed = 0;
-let gameFrame = 0;
-
-function initGame() {
-  const canvas = document.getElementById('gameCanvas');
-  if (!canvas) return;
-  
-  const ctx = canvas.getContext('2d');
-  canvas.width = 600;
-  canvas.height = 150;
-
-  const GROUND_Y = 120;
-  const TRUCK_X = 50;
-
-  // Camion
-  const truck = {
-    x: TRUCK_X,
-    y: GROUND_Y - 30,
-    width: 40,
-    height: 30,
-    jumpVelocity: 0,
-    isJumping: false,
-    frame: 0
-  };
-
-  // Obstacles (cactus)
-  const obstacles = [];
-  let nextObstacleTime = 0;
-
-  // Nuages
-  const clouds = [
-    { x: 200, y: 30, width: 30, height: 20 },
-    { x: 400, y: 20, width: 40, height: 25 },
-    { x: 600, y: 35, width: 35, height: 22 }
-  ];
-
-  // Sol qui défile
-  let groundX = 0;
-
-  function drawTruck() {
-    ctx.fillStyle = '#dc2626';
-    // Corps du camion
-    ctx.fillRect(truck.x, truck.y, truck.width, truck.height);
-    // Cabine
-    ctx.fillStyle = '#991b1b';
-    ctx.fillRect(truck.x + 25, truck.y - 15, 15, 15);
-    // Roues
-    ctx.fillStyle = '#1f2937';
-    ctx.beginPath();
-    ctx.arc(truck.x + 10, truck.y + truck.height, 6, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.beginPath();
-    ctx.arc(truck.x + truck.width - 10, truck.y + truck.height, 6, 0, Math.PI * 2);
-    ctx.fill();
-    
-    // Animation de course (légère oscillation)
-    if (!truck.isJumping) {
-      truck.frame++;
-      if (truck.frame % 10 < 5) {
-        truck.y = GROUND_Y - 30;
-      } else {
-        truck.y = GROUND_Y - 29;
-      }
+      scrollTopBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
     }
-  }
 
-  function drawObstacle(obs) {
-    ctx.fillStyle = '#22c55e';
-    // Cactus simple
-    ctx.fillRect(obs.x, obs.y, obs.width, obs.height);
-    // Petites branches
-    ctx.fillRect(obs.x - 5, obs.y + 10, 8, 12);
-    ctx.fillRect(obs.x + obs.width - 3, obs.y + 15, 8, 10);
-  }
+    // ===== JEU CAMION (STYLE DINO CHROME) =====
+    let gameRunning = false;
+    let gameScore = 0;
+    let gameSpeed = 0;
+    let gameFrame = 0;
+    let animationId;
 
-  function drawCloud(cloud) {
-    ctx.fillStyle = '#e5e7eb';
-    ctx.beginPath();
-    ctx.arc(cloud.x, cloud.y, cloud.width / 2, 0, Math.PI * 2);
-    ctx.arc(cloud.x + cloud.width / 3, cloud.y, cloud.height / 2, 0, Math.PI * 2);
-    ctx.arc(cloud.x + cloud.width / 1.5, cloud.y, cloud.width / 2.5, 0, Math.PI * 2);
-    ctx.fill();
-  }
+    function initGame() {
+      const canvas = document.getElementById('gameCanvas');
+      if (!canvas) return;
 
-  function drawGround() {
-    // Sol
-    ctx.fillStyle = '#f3f4f6';
-    ctx.fillRect(0, GROUND_Y, canvas.width, canvas.height - GROUND_Y);
-    
-    // Lignes qui défilent
-    ctx.strokeStyle = '#d1d5db';
-    ctx.lineWidth = 2;
-    ctx.setLineDash([20, 20]);
-    ctx.beginPath();
-    ctx.moveTo(groundX % 40, GROUND_Y + 5);
-    ctx.lineTo(canvas.width + (groundX % 40), GROUND_Y + 5);
-    ctx.stroke();
-    ctx.setLineDash([]);
-  }
+      const ctx = canvas.getContext('2d');
+      // Responsive canvas
+      const container = canvas.parentElement;
+      canvas.width = Math.min(600, container.clientWidth - 40);
+      canvas.height = 150;
 
-  function update() {
-    if (!gameRunning) return;
+      const GROUND_Y = 120;
+      const TRUCK_X = 50;
 
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+      // Camion
+      const truck = {
+        x: TRUCK_X,
+        y: GROUND_Y - 30,
+        width: 40,
+        height: 30,
+        jumpVelocity: 0,
+        isJumping: false,
+        frame: 0
+      };
 
-    // Mise à jour de la vitesse
-    gameSpeed += 0.001;
-    gameFrame++;
+      // Obstacles (cactus)
+      const obstacles = [];
+      let nextObstacleTime = 0;
 
-    // Sol qui défile
-    groundX -= 5 + gameSpeed * 10;
-    drawGround();
+      // Nuages
+      const clouds = [
+        { x: 200, y: 30, width: 30, height: 20 },
+        { x: 400, y: 20, width: 40, height: 25 },
+        { x: 600, y: 35, width: 35, height: 22 }
+      ];
 
-    // Nuages
-    clouds.forEach(cloud => {
-      cloud.x -= 1 + gameSpeed * 2;
-      if (cloud.x + cloud.width < 0) {
-        cloud.x = canvas.width + Math.random() * 100;
-        cloud.y = 20 + Math.random() * 30;
+      // Sol qui défile
+      let groundX = 0;
+
+      function drawTruck() {
+        ctx.fillStyle = '#dc2626';
+        // Corps du camion
+        ctx.fillRect(truck.x, truck.y, truck.width, truck.height);
+        // Cabine
+        ctx.fillStyle = '#991b1b';
+        ctx.fillRect(truck.x + 25, truck.y - 15, 15, 15);
+        // Roues
+        ctx.fillStyle = '#1f2937';
+        ctx.beginPath();
+        ctx.arc(truck.x + 10, truck.y + truck.height, 6, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(truck.x + truck.width - 10, truck.y + truck.height, 6, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Animation de course (légère oscillation)
+        if (!truck.isJumping) {
+          truck.frame++;
+          if (truck.frame % 10 < 5) {
+            truck.y = GROUND_Y - 30;
+          } else {
+            truck.y = GROUND_Y - 29;
+          }
+        }
       }
-      drawCloud(cloud);
-    });
 
-    // Physique du camion
-    if (truck.isJumping) {
-      truck.y += truck.jumpVelocity;
-      truck.jumpVelocity += 0.8; // Gravité
-      
-      if (truck.y >= GROUND_Y - 30) {
+      function drawObstacle(obs) {
+        ctx.fillStyle = '#22c55e';
+        // Cactus simple
+        ctx.fillRect(obs.x, obs.y, obs.width, obs.height);
+        // Petites branches
+        ctx.fillRect(obs.x - 5, obs.y + 10, 8, 12);
+        ctx.fillRect(obs.x + obs.width - 3, obs.y + 15, 8, 10);
+      }
+
+      function drawCloud(cloud) {
+        ctx.fillStyle = '#e5e7eb';
+        ctx.beginPath();
+        ctx.arc(cloud.x, cloud.y, cloud.width / 2, 0, Math.PI * 2);
+        ctx.arc(cloud.x + cloud.width / 3, cloud.y, cloud.height / 2, 0, Math.PI * 2);
+        ctx.arc(cloud.x + cloud.width / 1.5, cloud.y, cloud.width / 2.5, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      function drawGround() {
+        // Sol
+        ctx.fillStyle = '#f3f4f6';
+        ctx.fillRect(0, GROUND_Y, canvas.width, canvas.height - GROUND_Y);
+
+        // Lignes qui défilent
+        ctx.strokeStyle = '#d1d5db';
+        ctx.lineWidth = 2;
+        ctx.setLineDash([20, 20]);
+        ctx.beginPath();
+        ctx.moveTo(groundX % 40, GROUND_Y + 5);
+        ctx.lineTo(canvas.width + (groundX % 40), GROUND_Y + 5);
+        ctx.stroke();
+        ctx.setLineDash([]);
+      }
+
+      function update() {
+        if (!gameRunning) return;
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Mise à jour de la vitesse
+        gameSpeed += 0.001;
+        gameFrame++;
+
+        // Sol qui défile
+        groundX -= 5 + gameSpeed * 10;
+        drawGround();
+
+        // Nuages
+        clouds.forEach(cloud => {
+          cloud.x -= 1 + gameSpeed * 2;
+          if (cloud.x + cloud.width < 0) {
+            cloud.x = canvas.width + Math.random() * 100;
+            cloud.y = 20 + Math.random() * 30;
+          }
+          drawCloud(cloud);
+        });
+
+        // Physique du camion
+        if (truck.isJumping) {
+          truck.y += truck.jumpVelocity;
+          truck.jumpVelocity += 0.8; // Gravité
+
+          if (truck.y >= GROUND_Y - 30) {
+            truck.y = GROUND_Y - 30;
+            truck.isJumping = false;
+            truck.jumpVelocity = 0;
+          }
+        }
+
+        drawTruck();
+
+        // Génération d'obstacles
+        nextObstacleTime--;
+        if (nextObstacleTime <= 0) {
+          const minTime = Math.max(60 - Math.floor(gameSpeed * 50), 30);
+          const maxTime = Math.max(120 - Math.floor(gameSpeed * 30), 60);
+          nextObstacleTime = Math.floor(Math.random() * (maxTime - minTime) + minTime);
+
+          const obstacleHeight = 20 + Math.random() * 25;
+          obstacles.push({
+            x: canvas.width,
+            y: GROUND_Y - obstacleHeight,
+            width: 12 + Math.random() * 8,
+            height: obstacleHeight
+          });
+        }
+
+        // Mise à jour des obstacles
+        for (let i = obstacles.length - 1; i >= 0; i--) {
+          const obs = obstacles[i];
+          obs.x -= 5 + gameSpeed * 10;
+
+          drawObstacle(obs);
+
+          // Collision
+          if (truck.x + truck.width > obs.x &&
+            truck.x < obs.x + obs.width &&
+            truck.y + truck.height > obs.y &&
+            truck.y < obs.y + obs.height) {
+            gameOver();
+            return;
+          }
+
+          // Supprimer obstacle hors écran
+          if (obs.x + obs.width < 0) {
+            obstacles.splice(i, 1);
+          }
+        }
+
+        // Score qui augmente avec le temps (comme Dino)
+        if (gameFrame % 5 === 0) {
+          gameScore++;
+          document.getElementById('gameScore').textContent = `Score: ${gameScore}`;
+        }
+
+        animationId = requestAnimationFrame(update);
+      }
+
+      function jump() {
+        if (!truck.isJumping && gameRunning) {
+          truck.isJumping = true;
+          truck.jumpVelocity = -12;
+        }
+      }
+
+      function startGame() {
+        if (gameRunning) return;
+        gameRunning = true;
+        gameScore = 0;
+        gameSpeed = 0;
+        gameFrame = 0;
+        obstacles.length = 0;
+        nextObstacleTime = 60;
         truck.y = GROUND_Y - 30;
         truck.isJumping = false;
         truck.jumpVelocity = 0;
-      }
-    }
+        groundX = 0;
 
-    drawTruck();
+        // Réinitialiser les nuages
+        clouds[0] = { x: 200, y: 30, width: 30, height: 20 };
+        clouds[1] = { x: 400, y: 20, width: 40, height: 25 };
+        clouds[2] = { x: 600, y: 35, width: 35, height: 22 };
 
-    // Génération d'obstacles
-    nextObstacleTime--;
-    if (nextObstacleTime <= 0) {
-      const minTime = Math.max(60 - Math.floor(gameSpeed * 50), 30);
-      const maxTime = Math.max(120 - Math.floor(gameSpeed * 30), 60);
-      nextObstacleTime = Math.floor(Math.random() * (maxTime - minTime) + minTime);
-      
-      const obstacleHeight = 20 + Math.random() * 25;
-      obstacles.push({
-        x: canvas.width,
-        y: GROUND_Y - obstacleHeight,
-        width: 12 + Math.random() * 8,
-        height: obstacleHeight
-      });
-    }
+        document.getElementById('gameScore').textContent = 'Score: 0';
+        document.getElementById('startBtn').style.display = 'none';
+        document.getElementById('restartBtn').style.display = 'none';
 
-    // Mise à jour des obstacles
-    for (let i = obstacles.length - 1; i >= 0; i--) {
-      const obs = obstacles[i];
-      obs.x -= 5 + gameSpeed * 10;
-      
-      drawObstacle(obs);
-
-      // Collision
-      if (truck.x + truck.width > obs.x &&
-          truck.x < obs.x + obs.width &&
-          truck.y + truck.height > obs.y &&
-          truck.y < obs.y + obs.height) {
-        gameOver();
-        return;
+        update();
       }
 
-      // Supprimer obstacle hors écran
-      if (obs.x + obs.width < 0) {
-        obstacles.splice(i, 1);
+      function gameOver() {
+        gameRunning = false;
+        cancelAnimationFrame(animationId);
+        document.getElementById('restartBtn').style.display = 'inline-block';
+
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = '#fff';
+        ctx.font = 'bold 24px Poppins';
+        ctx.textAlign = 'center';
+        ctx.fillText('GAME OVER', canvas.width / 2, canvas.height / 2 - 10);
+        ctx.font = '18px Poppins';
+        ctx.fillText(`Score: ${gameScore}`, canvas.width / 2, canvas.height / 2 + 20);
       }
+
+      // Contrôles
+      function handleJump(e) {
+        if (e.type === 'keydown' && e.code !== 'Space' && e.code !== 'ArrowUp') return;
+        if (e.type === 'click' || e.type === 'touchstart') {
+          // prevent default only for touch/click on canvas to avoid scrolling
+          if (e.target === canvas) e.preventDefault();
+        }
+
+        if (!gameRunning) {
+          startGame();
+        } else {
+          jump();
+        }
+      }
+
+      // Écran de démarrage
+      function drawStartScreen() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        drawGround();
+        clouds.forEach(c => drawCloud(c));
+        drawTruck();
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.3)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = '#6b7280';
+        ctx.font = '16px Poppins';
+        ctx.textAlign = 'center';
+        ctx.fillText('Appuyez pour commencer', canvas.width / 2, canvas.height / 2);
+      }
+
+      // Afficher l'écran de démarrage
+      drawStartScreen();
+
+      canvas.addEventListener('click', handleJump);
+      canvas.addEventListener('touchstart', handleJump);
+      document.addEventListener('keydown', handleJump);
+
+      // Boutons
+      const startBtn = document.getElementById('startBtn');
+      const restartBtn = document.getElementById('restartBtn');
+
+      if (startBtn) startBtn.addEventListener('click', startGame);
+      if (restartBtn) restartBtn.addEventListener('click', startGame);
     }
 
-    // Score qui augmente avec le temps (comme Dino)
-    if (gameFrame % 5 === 0) {
-      gameScore++;
-      document.getElementById('gameScore').textContent = `Score: ${gameScore}`;
-    }
+    // ===== INITIALIZATION =====
+    document.addEventListener('DOMContentLoaded', () => {
+      // Splash Screen
+      const splash = document.getElementById('splash');
+      const SPLASH_ENABLED = false; // Set to true to enable
 
-    requestAnimationFrame(update);
-  }
+      if (splash) {
+        if (SPLASH_ENABLED) {
+          splash.classList.remove('hidden');
+          splash.classList.add('flex');
+          setTimeout(() => {
+            splash.style.opacity = '0';
+            splash.style.transition = 'opacity 0.8s ease';
+            setTimeout(() => {
+              splash.classList.add('hidden');
+              splash.classList.remove('flex');
+            }, 800);
+          }, 3000);
+        } else {
+          splash.classList.add('hidden');
+        }
+      }
 
-  function jump() {
-    if (!truck.isJumping && gameRunning) {
-      truck.isJumping = true;
-      truck.jumpVelocity = -12;
-    }
-  }
+      renderAllCategories();
 
-  function startGame() {
-    gameRunning = true;
-    gameScore = 0;
-    gameSpeed = 0;
-    gameFrame = 0;
-    obstacles.length = 0;
-    nextObstacleTime = 60;
-    truck.y = GROUND_Y - 30;
-    truck.isJumping = false;
-    truck.jumpVelocity = 0;
-    groundX = 0;
-    
-    // Réinitialiser les nuages
-    clouds[0] = { x: 200, y: 30, width: 30, height: 20 };
-    clouds[1] = { x: 400, y: 20, width: 40, height: 25 };
-    clouds[2] = { x: 600, y: 35, width: 35, height: 22 };
-    
-    document.getElementById('gameScore').textContent = 'Score: 0';
-    document.getElementById('startBtn').style.display = 'none';
-    document.getElementById('restartBtn').style.display = 'none';
-    
-    update();
-  }
+      // Init game
+      initGame();
 
-  function gameOver() {
-    gameRunning = false;
-    document.getElementById('restartBtn').style.display = 'inline-block';
-    
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = '#fff';
-    ctx.font = 'bold 24px Poppins';
-    ctx.textAlign = 'center';
-    ctx.fillText('GAME OVER', canvas.width / 2, canvas.height / 2 - 10);
-    ctx.font = '18px Poppins';
-    ctx.fillText(`Score: ${gameScore}`, canvas.width / 2, canvas.height / 2 + 20);
-  }
-
-  // Contrôles
-  function handleJump(e) {
-    if (e) e.preventDefault();
-    if (!gameRunning) {
-      startGame();
-    } else {
-      jump();
-    }
-  }
-
-  // Écran de démarrage
-  function drawStartScreen() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    drawGround();
-    clouds.forEach(c => drawCloud(c));
-    drawTruck();
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.3)';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = '#6b7280';
-    ctx.font = '16px Poppins';
-    ctx.textAlign = 'center';
-    ctx.fillText('Appuyez sur ESPACE pour commencer', canvas.width / 2, canvas.height / 2);
-  }
-
-  // Afficher l'écran de démarrage
-  drawStartScreen();
-
-  canvas.addEventListener('click', handleJump);
-  canvas.addEventListener('touchstart', handleJump);
-  document.addEventListener('keydown', (e) => {
-    if (e.code === 'Space' || e.code === 'ArrowUp') {
-      handleJump(e);
-    }
-  });
-
-  // Boutons
-  document.getElementById('startBtn').addEventListener('click', startGame);
-  document.getElementById('restartBtn').addEventListener('click', startGame);
-}
-</script>
-
-<!-- JEU CAMION -->
-<section id="jeu" class="game-container">
-  <h2 class="text-2xl md:text-3xl font-bold text-center mb-4 text-gray-800">
-    🎮 Jeu du Camion
-  </h2>
-  <p class="game-instructions">Appuyez sur ESPACE, flèche HAUT, ou cliquez/touchez l'écran pour sauter</p>
-  
-  <div class="game-score" id="gameScore">Score: 0</div>
-  <canvas id="gameCanvas"></canvas>
-  
-  <div class="game-controls">
-    <button class="game-btn" id="startBtn">Commencer</button>
-    <button class="game-btn" id="restartBtn" style="display: none;">Rejouer</button>
-  </div>
-</section>
+      // Service Worker
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/Renault-trucks-CE/service-worker.js')
+          .then(() => console.log('Service Worker enregistré ✔'))
+          .catch(err => console.error('SW: Échec ❌', err));
+      }
+    });
+  </script>
 </body>
+
 </html>
