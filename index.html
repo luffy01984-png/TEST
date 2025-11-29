@@ -1000,12 +1000,11 @@ document.querySelectorAll(".accordion-btn").forEach(btn => {
       btn.classList.add("active");
       
       // On utilise requestAnimationFrame pour une lecture correcte de scrollHeight
-requestAnimationFrame(() => { content.style.maxHeight = content.scrollHeight + "px"; }); 
-}
+      requestAnimationFrame(() => { content.style.maxHeight = content.scrollHeight + "px"; }); 
+    }
+  });
 });
-});
-
-if ('serviceWorker' in navigator) {
+ if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('/Renault-trucks-CE/service-worker.js')
     .then(() => console.log('Service Worker enregistré ✔'))
     .catch(err => console.error('SW: Échec ❌', err));
@@ -1020,19 +1019,5 @@ if ('serviceWorker' in navigator) {
   });
 }
 </script>
-
-<!-- ❄️ Neige continue uniquement dans le hero -->
-<script src="https://cdn.jsdelivr.net/gh/hcodes/snowflakes/dist/snowflakes.min.js"></script>
-<script>
-  // Sélectionne ton hero (remplace #hero par l'ID ou la classe exacte)
-  const hero = document.querySelector('#hero'); 
-
-  if (hero) {
-    // Crée la neige uniquement dans le hero
-    new Snowflakes({ target: hero });
-  }
-</script>
-<!-- ❄️ Fin de la neige -->
-
 </body>
 </html>
