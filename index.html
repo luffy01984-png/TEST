@@ -69,10 +69,16 @@
   .hero-section {
     position: relative;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #dc2626 100%);
-    padding: 6rem 1rem;
+    padding: 3rem 1rem 4rem 1rem;
     text-align: center;
     overflow: hidden;
     color: white;
+  }
+
+  @media (min-width: 768px) {
+    .hero-section {
+      padding: 4rem 1rem 5rem 1rem;
+    }
   }
 
   .hero-content {
@@ -146,6 +152,13 @@
     height: 250px; 
     object-fit: cover; 
     transition: transform 0.4s ease;
+  }
+
+  /* Sur mobile (2 colonnes), réduire la hauteur des images */
+  @media (max-width: 767px) {
+    .category-card img {
+      height: 180px;
+    }
   }
 
   .category-card:hover img {
@@ -604,7 +617,7 @@
     </span>
   </h2>
 
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+  <div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
 
        <!-- RESTAURANTS -->
 <div class="col-span-1">
