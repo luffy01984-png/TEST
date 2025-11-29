@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -33,35 +32,21 @@
         gap: 1rem;
     }
 }
-body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#f3f4f6; perspective: 1000px; }
+body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#f3f4f6; }
 
 
-/* Partner content toggle (MISE À JOUR 3D) */
+/* Partner content toggle */
 .partner-content { 
-  max-height: 0; 
-  overflow: hidden; 
-  opacity: 0; 
-  transition: max-height 0.5s ease, opacity 0.4s ease, margin-top 0.4s ease, transform 0.5s ease-out; /* AJOUT DE transform */
-  margin-top: 0; 
-  /* Transformation 3D initiale (cachée et légèrement penchée vers l'arrière) */
-  transform: translateY(-30px) rotateX(-10deg);
-  transform-origin: top center;
+  max-height: 0; 
+  overflow: hidden; 
+  opacity: 0; 
+  transition: max-height 0.5s ease, opacity 0.4s ease, margin-top 0.4s ease; 
+  margin-top: 0; 
 }
 .partner-content.active { 
-  opacity: 1; 
-  margin-top: 1rem; 
-  max-height: 5000px;
-  /* Retour à l'état normal */
-  transform: translateY(0) rotateX(0deg); 
-}
-
-/* AJOUT: Définir la perspective sur le corps ou le conteneur principal pour que la 3D fonctionne */
-body { 
-  font-family: 'Inter', sans-serif; 
-  margin:0; 
-  padding:0; 
-  background-color:#f3f4f6; 
-  perspective: 1000px; /* Nécessaire pour l'effet de profondeur 3D */
+  opacity: 1; 
+  margin-top: 1rem; 
+  max-height: 5000px;
 }
 
 /* Partner links */
