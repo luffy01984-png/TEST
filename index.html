@@ -18,26 +18,28 @@
 
   body {
     font-family: 'Poppins', sans-serif;
-    background: #0f0f1e;
-    color: #e0e0e0;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    color: #2d3748;
     overflow-x: hidden;
+    min-height: 100vh;
   }
 
   /* ===== HEADER NOUVEAU STYLE ===== */
   header {
-    background: rgba(26, 26, 46, 0.95);
+    background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(20px);
-    border-bottom: 2px solid rgba(220, 38, 38, 0.3);
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+    border-bottom: 2px solid rgba(220, 38, 38, 0.2);
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
   }
 
   /* ===== HERO NOUVEAU STYLE ===== */
   .hero-new {
-    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    background: linear-gradient(135deg, #dc2626 0%, #b91c1c 50%, #991b1b 100%);
     position: relative;
     padding: 2rem 1rem;
     text-align: center;
     overflow: hidden;
+    color: white;
   }
 
   .hero-new::before {
@@ -47,20 +49,18 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: radial-gradient(circle at 50% 50%, rgba(220, 38, 38, 0.1) 0%, transparent 70%);
+    background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
     pointer-events: none;
   }
 
   .hero-title-new {
     font-size: 2.5rem;
     font-weight: 800;
-    background: linear-gradient(135deg, #fff 0%, #dc2626 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: #ffffff;
     margin-bottom: 0.5rem;
     position: relative;
     z-index: 1;
+    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
   }
 
   @media (max-width: 768px) {
@@ -74,6 +74,11 @@
     max-width: 1400px;
     margin: 0 auto;
     padding: 1rem;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    margin-top: 2rem;
+    margin-bottom: 2rem;
   }
 
   .tabs-nav {
@@ -81,16 +86,16 @@
     flex-wrap: wrap;
     gap: 0.5rem;
     margin-bottom: 1rem;
-    border-bottom: 2px solid rgba(220, 38, 38, 0.2);
+    border-bottom: 2px solid #e5e7eb;
     padding-bottom: 0.75rem;
   }
 
   .tab-btn {
     padding: 0.5rem 1rem;
-    background: rgba(255, 255, 255, 0.05);
+    background: #f3f4f6;
     border: 2px solid transparent;
     border-radius: 8px;
-    color: #b0b0b0;
+    color: #6b7280;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -99,25 +104,10 @@
     font-size: 0.9rem;
   }
 
-  .tab-btn::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(220, 38, 38, 0.3), transparent);
-    transition: left 0.5s ease;
-  }
-
-  .tab-btn:hover::before {
-    left: 100%;
-  }
-
   .tab-btn:hover {
-    background: rgba(220, 38, 38, 0.1);
+    background: #fee2e2;
     border-color: rgba(220, 38, 38, 0.3);
-    color: #fff;
+    color: #dc2626;
     transform: translateY(-2px);
   }
 
@@ -125,7 +115,7 @@
     background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
     color: #fff;
     border-color: #dc2626;
-    box-shadow: 0 4px 20px rgba(220, 38, 38, 0.4);
+    box-shadow: 0 4px 15px rgba(220, 38, 38, 0.3);
   }
 
   .tab-content {
@@ -164,15 +154,15 @@
   }
 
   .partner-card-new {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(220, 38, 38, 0.2);
+    background: #ffffff;
+    border: 2px solid #e5e7eb;
     border-radius: 12px;
     padding: 1rem;
     cursor: pointer;
     transition: all 0.3s ease;
-    backdrop-filter: blur(10px);
     position: relative;
     overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   }
 
   .partner-card-new::before {
@@ -188,10 +178,10 @@
   }
 
   .partner-card-new:hover {
-    background: rgba(220, 38, 38, 0.1);
-    border-color: rgba(220, 38, 38, 0.5);
+    background: #fef2f2;
+    border-color: #dc2626;
     transform: translateY(-5px);
-    box-shadow: 0 10px 30px rgba(220, 38, 38, 0.3);
+    box-shadow: 0 8px 25px rgba(220, 38, 38, 0.2);
   }
 
   .partner-card-new:hover::before {
@@ -199,7 +189,7 @@
   }
 
   .partner-card-new h3 {
-    color: #fff;
+    color: #1f2937;
     font-weight: 600;
     font-size: 0.95rem;
     text-align: center;
@@ -215,10 +205,10 @@
   .subcategory-btn {
     width: 100%;
     padding: 0.75rem 1rem;
-    background: rgba(220, 38, 38, 0.1);
-    border: 1px solid rgba(220, 38, 38, 0.3);
+    background: #f9fafb;
+    border: 2px solid #e5e7eb;
     border-radius: 8px;
-    color: #fff;
+    color: #1f2937;
     font-weight: 600;
     cursor: pointer;
     display: flex;
@@ -230,13 +220,15 @@
   }
 
   .subcategory-btn:hover {
-    background: rgba(220, 38, 38, 0.2);
-    border-color: rgba(220, 38, 38, 0.5);
+    background: #fee2e2;
+    border-color: #dc2626;
+    color: #dc2626;
   }
 
   .subcategory-btn.active {
-    background: rgba(220, 38, 38, 0.3);
+    background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
     border-color: #dc2626;
+    color: #fff;
   }
 
   .subcategory-content {
@@ -326,13 +318,13 @@
 
   /* ===== PROMO BOX ===== */
   .promo-box-new {
-    background: linear-gradient(135deg, rgba(220, 38, 38, 0.2) 0%, rgba(184, 28, 28, 0.2) 100%);
-    border: 2px solid rgba(220, 38, 38, 0.4);
+    background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+    border: 2px solid #dc2626;
     border-radius: 12px;
     padding: 1rem;
     margin: 1rem auto;
     max-width: 800px;
-    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 15px rgba(220, 38, 38, 0.2);
   }
 
   /* ===== MENTIONS LÉGALES ===== */
@@ -340,14 +332,15 @@
     max-width: 1000px;
     margin: 2rem auto;
     padding: 1.5rem;
-    background: rgba(255, 255, 255, 0.03);
+    background: white;
     border-radius: 12px;
-    border: 1px solid rgba(220, 38, 38, 0.2);
+    border: 2px solid #e5e7eb;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   }
 
   /* ===== NAVIGATION ===== */
   .nav-link-new {
-    color: #b0b0b0;
+    color: #6b7280;
     text-decoration: none;
     font-weight: 600;
     padding: 0.5rem 1.25rem;
@@ -370,7 +363,7 @@
 
   .nav-link-new:hover,
   .nav-link-new.active {
-    color: #fff;
+    color: #dc2626;
   }
 
   .nav-link-new:hover::after,
@@ -416,7 +409,7 @@
   <div class="max-w-7xl mx-auto flex justify-between items-center px-4 py-4">
     <div class="flex items-center space-x-3">
       <img src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/Header.webp" alt="Logo Renault Trucks" class="h-16 sm:h-20 rounded-lg">
-      <span class="text-xs font-bold text-red-500 uppercase tracking-widest hidden sm:inline">CSE Bourg-en-Bresse</span>
+      <span class="text-xs font-bold text-red-600 uppercase tracking-widest hidden sm:inline">CSE Bourg-en-Bresse</span>
     </div>
     <nav class="flex items-center space-x-4 text-sm">
       <a href="#categories" class="nav-link-new" id="nav-partenaires">Partenaires</a>
@@ -431,13 +424,13 @@
     <h1 class="hero-title-new">
       Vos Avantages CSE Renault Trucks
     </h1>
-    <p class="text-lg md:text-xl mb-2 text-gray-300">
+    <p class="text-lg md:text-xl mb-2 text-white opacity-90">
       Bourg-en-Bresse
     </p>
-    <p class="text-base md:text-lg mb-3 max-w-2xl mx-auto text-gray-400">
+    <p class="text-base md:text-lg mb-3 max-w-2xl mx-auto text-white opacity-80">
       Découvrez toutes les offres exclusives négociées par votre Comité d'Entreprise
     </p>
-    <p class="text-xs md:text-sm mb-3 text-gray-500 italic">
+    <p class="text-xs md:text-sm mb-3 text-white opacity-70 italic">
       *Sur présentation du badge
     </p>
     
@@ -460,7 +453,7 @@
 
 <!-- CATEGORIES AVEC ONGLETS -->
 <section id="categories" class="tabs-container">
-  <h2 class="text-2xl md:text-3xl font-bold text-center mb-4 text-white">
+  <h2 class="text-2xl md:text-3xl font-bold text-center mb-4 text-gray-800">
     Catégories d'Offres
   </h2>
 
@@ -824,14 +817,14 @@
 
 <!-- Mentions légales -->
 <section id="mentions" class="mentions-section">
-  <h2 class="text-2xl font-bold text-center mb-4 text-white">Mentions légales</h2>
+  <h2 class="text-2xl font-bold text-center mb-4 text-gray-800">Mentions légales</h2>
 
   <button class="subcategory-btn">
     <span>1. Éditeur du site</span>
     <span>▶</span>
   </button>
   <div class="subcategory-content">
-    <p class="text-gray-300">Renault Trucks CSE Bourg-en-Bresse<br>Secretaire du CSE : <strong>Arnaud Christian</strong></p>
+    <p class="text-gray-700">Renault Trucks CSE Bourg-en-Bresse<br>Secretaire du CSE : <strong>Arnaud Christian</strong></p>
   </div>
 
   <button class="subcategory-btn">
@@ -839,7 +832,7 @@
     <span>▶</span>
   </button>
   <div class="subcategory-content">
-    <p class="text-gray-300"><strong>Bouaraba Arab UEP8</strong> - Développement, conception graphique, intégration et maintenance du site.</p>
+    <p class="text-gray-700"><strong>Bouaraba Arab UEP8</strong> - Développement, conception graphique, intégration et maintenance du site.</p>
   </div>
 
   <button class="subcategory-btn">
@@ -847,7 +840,7 @@
     <span>▶</span>
   </button>
   <div class="subcategory-content">
-    <p class="text-gray-300">GitHub Pages – Hébergement statique</p>
+    <p class="text-gray-700">GitHub Pages – Hébergement statique</p>
   </div>
 
   <button class="subcategory-btn">
@@ -855,7 +848,7 @@
     <span>▶</span>
   </button>
   <div class="subcategory-content">
-    <p class="text-gray-300">L'ensemble des éléments du site (textes, images, graphismes, logo, etc.) sont la propriété exclusive du <strong>CSE Renault Trucks Bourg-en-Bresse</strong>, sauf mention contraire. Toute reproduction, distribution ou modification sans autorisation écrite est interdite.</p>
+    <p class="text-gray-700">L'ensemble des éléments du site (textes, images, graphismes, logo, etc.) sont la propriété exclusive du <strong>CSE Renault Trucks Bourg-en-Bresse</strong>, sauf mention contraire. Toute reproduction, distribution ou modification sans autorisation écrite est interdite.</p>
   </div>
 
   <button class="subcategory-btn">
@@ -863,7 +856,7 @@
     <span>▶</span>
   </button>
   <div class="subcategory-content">
-    <p class="text-gray-300">Aucune donnée personnelle n'est collectée, aucun cookie n'est utilisé.</p>
+    <p class="text-gray-700">Aucune donnée personnelle n'est collectée, aucun cookie n'est utilisé.</p>
   </div>
 
   <button class="subcategory-btn">
@@ -871,7 +864,7 @@
     <span>▶</span>
   </button>
   <div class="subcategory-content">
-    <p class="text-gray-300">
+    <p class="text-gray-700">
       Pour toute demande, vous pouvez contacter l'équipe du CSE par e-mail 
       <a href="mailto:cserenaulttrucks@gmail.com" style="color: #dc2626; font-weight: bold;">
         cserenaulttrucks@gmail.com
