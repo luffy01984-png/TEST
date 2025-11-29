@@ -10,26 +10,26 @@
 <meta name="theme-color" content="#dc2626">
 
 <style>
-  /* --- AJOUT POUR LA NEIGE --- */
+  /* --- EFFET NEIGE --- */
   .snowflake {
     position: absolute;
     top: -20px;
     color: white;
     font-size: 1em;
     opacity: 0.8;
-    pointer-events: none; /* La souris passe au travers */
+    pointer-events: none;
     z-index: 10;
     animation: fall linear forwards;
   }
 
   @keyframes fall {
     to {
-      transform: translateY(120vh) rotate(360deg); /* Tombe plus bas que le hero pour être sûr */
+      transform: translateY(120vh) rotate(360deg);
     }
   }
-  /* --------------------------- */
+  /* ------------------- */
 
-  /* Permet d'afficher les sous-catégories en liste verticale (comme les mentions) */
+  /* Permet d'afficher les sous-catégories en liste verticale */
 .partner-content.list-layout.active {
     display: flex;
     flex-direction: column;
@@ -114,46 +114,43 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
   align-items:center; 
   z-index:10000; 
   transition: opacity 0.3s ease;
-  padding: 10px; /* Réduit sur mobile */
+  padding: 10px;
 }
 #imageModal.active { display:flex; }
 #imageModal img { 
-  max-width:100%; /* Augmenté pour mobile */
-  max-height:85%; /* Augmenté pour mobile */
-  width: 100%; /* Prend toute la largeur disponible */
-  height: auto; /* Garde les proportions */
+  max-width:100%; 
+  max-height:85%;
+  width: 100%;
+  height: auto;
   border-radius:12px; 
   box-shadow:0 0 20px rgba(0,0,0,0.5); 
   cursor: zoom-out;
   object-fit: contain;
 }
 
-/* Sur tablette et desktop, garder une taille plus raisonnable */
 @media (min-width: 768px) {
-  #imageModal {
-    padding: 20px;
-  }
+  #imageModal { padding: 20px; }
   #imageModal img {
     max-width: 90%;
     max-height: 80%;
-    width: auto; /* Retour à la taille normale */
+    width: auto;
   }
 }
 
 #imageModal button { 
   position:absolute; 
-  top:10px; /* Ajusté pour mobile */
+  top:10px;
   right:10px; 
   background:#dc2626; 
   color:#fff; 
   border:none; 
-  padding:10px 20px; /* Légèrement réduit sur mobile */
+  padding:10px 20px;
   border-radius:8px; 
   cursor:pointer; 
   font-weight:bold;
-  font-size: 0.9rem; /* Légèrement plus petit sur mobile */
+  font-size: 0.9rem;
   transition: background 0.2s;
-  z-index: 10001; /* Pour être au-dessus de l'image */
+  z-index: 10001;
 }
 
 @media (min-width: 768px) {
@@ -165,9 +162,7 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
   }
 }
 
-#imageModal button:hover {
-  background: #b91c1c;
-}
+#imageModal button:hover { background: #b91c1c; }
 
 /* Category cards */
 .category-card img { 
@@ -235,7 +230,6 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
 }
 
 /* Responsive grid for partner-content */
-/* Mobile et Tablette: 2 colonnes */
 .partner-content.active {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -244,18 +238,11 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
   align-items: start;
 }
 
-/* Tablette: même disposition mais espacement augmenté */
 @media (min-width: 768px) {
-  .partner-content.active {
-    gap: 1rem;
-  }
+  .partner-content.active { gap: 1rem; }
 }
-
-/* Desktop: 2 colonnes avec plus d'espace */
 @media (min-width: 1024px) {
-  .partner-content.active {
-    gap: 1.5rem;
-  }
+  .partner-content.active { gap: 1.5rem; }
 }
 
 /* Badge nombre partenaires */
@@ -296,9 +283,7 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
   background: #b91c1c;
   transform: translateY(-3px);
 }
-#scrollTopBtn.show {
-  display: flex;
-}
+#scrollTopBtn.show { display: flex; }
 
 /* Amélioration visuelle des cartes catégories */
 .category-card {
@@ -317,18 +302,11 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
   background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
   transition: left 0.5s;
 }
-.category-card:hover::before {
-  left: 100%;
-}
+.category-card:hover::before { left: 100%; }
 </style>
 </head>
 
 <body class="bg-gray-100 text-black">
-
-<div id="splash">
-  <span>VOTRE CSE VOUS PROPOSE</span>
-  <img src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/elecctra.webp" alt="Splash">
-</div>
 
 <div id="imageModal">
   <button aria-label="Fermer">✕ Fermer</button>
@@ -658,11 +636,11 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
 // --- SCRIPT POUR LA NEIGE ---
 function createSnowflake() {
   const hero = document.getElementById('hero-section');
-  if (!hero) return; // Sécurité si le hero n'existe pas
+  if (!hero) return; // Sécurité
   
   const snowflake = document.createElement('div');
   snowflake.classList.add('snowflake');
-  snowflake.innerHTML = '❄'; // Ou '•' pour des points simples
+  snowflake.innerHTML = '❄'; 
   
   // Position aléatoire sur la largeur
   snowflake.style.left = Math.random() * 100 + '%';
@@ -679,10 +657,10 @@ function createSnowflake() {
 
   hero.appendChild(snowflake);
 
-  // Supprimer le flocon après l'animation pour ne pas surcharger le DOM
+  // Supprimer le flocon après l'animation
   setTimeout(() => {
     snowflake.remove();
-  }, 8000); // Doit correspondre ou dépasser la durée max de l'animation
+  }, 8000); 
 }
 
 // Générer un flocon tous les 200ms
@@ -729,7 +707,6 @@ function toggleCategory(id) {
   if (!isActive) {
     content.classList.add('active');
     // On laisse le CSS gérer le max-height via la classe active
-    // Mais on peut forcer un recalcul si besoin, ici CSS suffit pour le grid
     content.style.maxHeight = '5000px'; 
     content.style.marginTop = '1rem';
     content.style.opacity = '1';
