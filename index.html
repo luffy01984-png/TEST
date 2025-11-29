@@ -53,31 +53,6 @@
 }
 body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#f3f4f6; }
 
-/* Splash screen */
-#splash {
-  position: fixed; inset: 0; width: 100vw; height: 100vh;
-  background: #dc2626; display: none; flex-direction: column; justify-content: center; align-items: center;
-  z-index: 10000; transition: opacity 0.8s ease;
-}
-#splash span {
-  color: #fff;
-  font-size: 2rem;
-  margin-bottom: 1rem;
-  font-weight: bold;
-  text-align: center;
-}
-#splash img {
-  width: 70vw;
-  max-width: 500px;
-  height: auto;
-  object-fit: contain;
-  animation: zoomIn 2s ease-in-out forwards;
-}
-@keyframes zoomIn {
-  0% { transform: scale(0.9); opacity: 0.8; }
-  100% { transform: scale(1); opacity: 1; }
-}
-
 /* Partner content toggle */
 .partner-content { 
   max-height: 0; 
@@ -714,19 +689,6 @@ function createSnowflake() {
 setInterval(createSnowflake, 200);
 // ----------------------------
 
-
-// Splash screen logic
-window.addEventListener('load', () => {
-  const splash = document.getElementById('splash');
-  if(!sessionStorage.getItem('splashShown')){
-     splash.style.display = 'flex';
-     setTimeout(() => {
-       splash.style.opacity = '0';
-       setTimeout(() => { splash.style.display = 'none'; }, 800);
-     }, 2500);
-     sessionStorage.setItem('splashShown', 'true');
-  }
-});
 
 // Modal Logic
 const modal = document.getElementById('imageModal');
