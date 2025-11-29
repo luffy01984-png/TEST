@@ -302,6 +302,43 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
 .category-card:hover::before {
   left: 100%;
 }
+
+/* ===== STYLES FLOCONS DE NEIGE ===== */
+.snowflakes-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.snowflake {
+  position: absolute;
+  top: -10px;
+  color: #dc2626;
+  font-size: 1em;
+  font-family: Arial, sans-serif;
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+  opacity: 0.8;
+  animation: fall linear infinite;
+}
+
+@keyframes fall {
+  0% {
+    transform: translateY(0) rotate(0deg);
+  }
+  100% {
+    transform: translateY(100vh) rotate(360deg);
+  }
+}
+
+/* Positionnement du hero en relatif pour les flocons */
+#hero-section {
+  position: relative;
+}
 </style>
 </head>
 
@@ -333,62 +370,32 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
   </div>
 </header>
 
-<script>
-  // Sélection des liens
-  const navPartenaires = document.getElementById('nav-partenaires');
-  const navMentions = document.getElementById('nav-mentions');
-
-  // Gestion clic pour scroll et active
-  navPartenaires.addEventListener('click', () => {
-    navPartenaires.classList.add('active');
-    navMentions.classList.remove('active');
-    document.getElementById('categories').scrollIntoView({ behavior: 'smooth' });
-  });
-
-  navMentions.addEventListener('click', () => {
-    navMentions.classList.add('active');
-    navPartenaires.classList.remove('active');
-    document.getElementById('mentions').scrollIntoView({ behavior: 'smooth' });
-  });
-
-  // Détection scroll pour active link automatique
-  const categoriesSection = document.getElementById('categories');
-  const mentionsSection = document.getElementById('mentions');
-
-  window.addEventListener('scroll', () => {
-    const scrollPos = window.scrollY + 150; // Ajuste pour le header sticky
-    if (categoriesSection && mentionsSection) {
-      if (scrollPos >= mentionsSection.offsetTop) {
-        navMentions.classList.add('active');
-        navPartenaires.classList.remove('active');
-      } else if (scrollPos >= categoriesSection.offsetTop) {
-        navPartenaires.classList.add('active');
-        navMentions.classList.remove('active');
-      }
-    }
-  });
-</script>
-
-
-<!-- HERO -->
-<section class="bg-white text-gray-900 text-center py-12 px-4 shadow-md">
-  <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight">
-    Vos Avantages <span class="text-red-600">CSE Renault Trucks</span>
-  </h1>
-  <p class="text-black-400 mt-1 text-sm uppercase tracking-wider"><strong>Bourg-en-Bresse</strong></p>
-  <p class="text-gray-600 mt-2 max-w-xl mx-auto text-lg font-light">
-    Cliquez sur une catégorie pour découvrir toutes les offres exclusives négociées par votre Comité d'Entreprise.*Sur présentation du badge.
+<!-- HERO avec flocons de neige -->
+<section id="hero-section" class="bg-white text-gray-900 text-center py-12 px-4 shadow-md">
+  <!-- Conteneur des flocons -->
+  <div class="snowflakes-container" id="snowflakes"></div>
+  
+  <!-- Contenu du hero (z-index supérieur pour être au-dessus des flocons) -->
+  <div style="position: relative; z-index: 2;">
+    <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight">
+      Vos Avantages <span class="text-red-600">CSE Renault Trucks</span>
+    </h1>
+    <p class="text-black-400 mt-1 text-sm uppercase tracking-wider"><strong>Bourg-en-Bresse</strong></p>
+    <p class="text-gray-600 mt-2 max-w-xl mx-auto text-lg font-light">
+      Cliquez sur une catégorie pour découvrir toutes les offres exclusives négociées par votre Comité d'Entreprise.*Sur présentation du badge.
+    </p>
+    
     <!-- PROMO BOX -->
-<section class="bg-red-600 text-white text-center py-4 px-4 mt-6 rounded-lg shadow-lg">
-  <h2 class="text-2xl font-bold uppercase tracking-wide">
-    🎉 Nouveaux Partenaires !
-  </h2>
-  <p class="text-lg mt-1 font-semibold">
-    Mille et une Pizzas: <span class="text-yellow-300">8€50</span>
-    Optique Lafayette :  <span class="text-yellow-300">-7%</span>
-  </p>
-</section>
-  </p>
+    <div class="bg-red-600 text-white text-center py-4 px-4 mt-6 rounded-lg shadow-lg">
+      <h2 class="text-2xl font-bold uppercase tracking-wide">
+        🎉 Nouveaux Partenaires !
+      </h2>
+      <p class="text-lg mt-1 font-semibold">
+        1001Pizzas – PIZZA : <span class="text-yellow-300">8€50</span>
+        Optique Lafayette :  <span class="text-yellow-300">-7%</span>
+      </p>
+    </div>
+  </div>
 </section>
 
 <!-- CATEGORIES -->
@@ -523,12 +530,11 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
         <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/FredMultiServices.webp')">Fred Multi Services</div>
         <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Irripiscine.webp')">IrriPiscine</div>
         <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Les%20coqs%20de%20Bresse.webp')">Les Coques de Bresse</div>
-        <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/michel%20parisot.webp')">Parisot Motoculture</div>        
-      </div>
-    </div>
+<div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/michel%20parisot.webp')">Parisot Motoculture</div>
+</div>
+</div>
   </div>
 </div>
-
 <!-- AUTOMOBILE -->
 <div class="col-span-1">
   <div class="category-card relative group cursor-pointer transform hover:scale-[1.02] transition duration-300 shadow-lg rounded-2xl overflow-hidden" 
@@ -552,7 +558,6 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
     <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Vulco.webp')">Vulco</div>
   </div>
 </div>
-
 <!-- PRÊT-À-PORTER -->
 <div class="col-span-1">
   <div class="category-card relative group cursor-pointer transform hover:scale-[1.02] transition duration-300 shadow-lg rounded-2xl overflow-hidden"
@@ -570,7 +575,6 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
     <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Gambetta.webp')">Gambetta</div>        
   </div>
 </div>
-
 <!-- BEAUTÉ / BIEN-ÊTRE -->
 <div class="col-span-1">
   <div class="category-card relative group cursor-pointer transform hover:scale-[1.02] transition duration-300 shadow-lg rounded-2xl overflow-hidden"
@@ -590,7 +594,6 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
     <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Renaissance.webp')">Renaissance Coiffure</div>
   </div>
 </div>
-
 <!-- CULTURE / LOISIRS -->
 <div class="col-span-1">
   <div class="category-card relative group cursor-pointer transform hover:scale-[1.02] transition duration-300 shadow-lg rounded-2xl overflow-hidden"
@@ -610,7 +613,6 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
     <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Montbarbonnew.webp')">Montbarbon</div>
   </div>
 </div>    
-
 <!-- QUOTIDIEN -->
 <div class="col-span-1">
   <div class="category-card relative group cursor-pointer transform hover:scale-[1.02] transition duration-300 shadow-lg rounded-2xl overflow-hidden" 
@@ -632,7 +634,6 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
     <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Shivaa.webp')">Shiva</div>
   </div>
 </div>   
-
 <!-- AUTOUR DE L'ENFANT -->
 <div class="col-span-1">
   <div class="category-card relative group cursor-pointer transform hover:scale-[1.02] transition duration-300 shadow-lg rounded-2xl overflow-hidden" 
@@ -649,7 +650,6 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
     <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/ludylucky.webp')">LudiLucky</div>
   </div>
 </div>
-
 <!-- ANIMAUX -->
 <div class="col-span-1">
   <div class="category-card relative group cursor-pointer transform hover:scale-[1.02] transition duration-300 shadow-lg rounded-2xl overflow-hidden" 
@@ -666,8 +666,7 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
     <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/food%20animo.webp')">Food Animo</div>        
   </div>
 </div>
-
-    <!-- HOTELS / VOYAGES -->
+<!-- HOTELS / VOYAGES -->
 <div class="col-span-1">
   <div class="category-card relative group cursor-pointer transform hover:scale-[1.02] transition duration-300 shadow-lg rounded-2xl overflow-hidden" 
        onclick="toggleCategory('travel-content')">
@@ -678,75 +677,126 @@ body { font-family: 'Inter', sans-serif; margin:0; padding:0; background-color:#
       HOTELS / VOYAGES
     </div>
   </div>
-
   <div id="travel-content" class="partner-content bg-white border border-gray-200 rounded-xl p-4 shadow-lg">
-
-    <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Greethotel.webp')">Greet Hotels</div>
-    <div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Le-griffon.webp')">Le Griffon d'Or</div>    
+<div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Greethotel.webp')">Greet Hotels</div>
+<div class="partner-link" onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Le-griffon.webp')">Le Griffon d'Or</div>
   </div>
 </div>
-
-
   </div>
 </section>
-
 <!-- Mentions légales -->
 <section id="mentions" class="bg-white shadow-inner p-6 mt-8 rounded-xl">
   <h2 class="text-2xl font-bold text-red-600 mb-4">Mentions légales</h2>
-
-  <button class="accordion-btn">1. Éditeur du site <span class="arrow">▶</span></button>
+<button class="accordion-btn">1. Éditeur du site <span class="arrow">▶</span></button>
   <div class="accordion-content">
-    <p>Renault Trucks CSE Bourg-en-Bresse<br>Secrétaire du CSE et créateur des plaquettes promotionnelles : <strong>Arnaud Christian</strong><br></p>
+    <p>Renault Trucks CSE Bourg-en-Bresse<br>Secretaire du CSE : <strong>Arnaud Christian</strong><br></p>
   </div>
-
-  <button class="accordion-btn">2. Conception et Realisation <span class="arrow">▶</span></button>
+<button class="accordion-btn">2. Conception et Realisation <span class="arrow">▶</span></button>
   <div class="accordion-content">
     <p><strong>Bouaraba Arab UEP8</strong> - Développement, conception graphique, intégration et maintenance du site.
   </div>
-
-  <button class="accordion-btn">3. Hébergement du site <span class="arrow">▶</span></button>
+<button class="accordion-btn">3. Hébergement du site <span class="arrow">▶</span></button>
   <div class="accordion-content">
     <p>GitHub Pages – Hébergement statique</p>
   </div>
-
-  <button class="accordion-btn">4. Propriété intellectuelle <span class="arrow">▶</span></button>
+<button class="accordion-btn">4. Propriété intellectuelle <span class="arrow">▶</span></button>
   <div class="accordion-content">
-    <p>L’ensemble des éléments du site (textes, images, graphismes, logo, etc.) sont la propriété exclusive du
+    <p>L'ensemble des éléments du site (textes, images, graphismes, logo, etc.) sont la propriété exclusive du
     <strong>CSE Renault Trucks Bourg-en-Bresse</strong>, sauf mention contraire. Toute reproduction, distribution ou
     modification sans autorisation écrite est interdite.</p>
   </div>
-
-  <button class="accordion-btn">5. Protection des données <span class="arrow">▶</span></button>
+<button class="accordion-btn">5. Protection des données <span class="arrow">▶</span></button>
   <div class="accordion-content">
-    <p>Aucune donnée personnelle n’est collectée, aucun cookie n’est utilisé.</p>
+    <p>Aucune donnée personnelle n'est collectée, aucun cookie n'est utilisé.</p>
   </div>
-
-  <button class="accordion-btn">6. Contact <span class="arrow">▶</span></button>
+<button class="accordion-btn">6. Contact <span class="arrow">▶</span></button>
 <div class="accordion-content">
   <p>
-    Pour toute demande, vous pouvez contacter l’équipe du CSE par e-mail 
+    Pour toute demande, vous pouvez contacter l'équipe du CSE par e-mail 
     <a href="mailto:cserenaulttrucks@gmail.com" style="color: red; font-weight: bold;">
       cserenaulttrucks@gmail.com
     </a>
   </p>
 </div>
 </section>
-
 <script>
+// ===== GÉNÉRATION DES FLOCONS DE NEIGE =====
+function createSnowflakes() {
+  const container = document.getElementById('snowflakes');
+  const snowflakeCount = 50; // Nombre de flocons
+  
+  for (let i = 0; i < snowflakeCount; i++) {
+    const snowflake = document.createElement('div');
+    snowflake.classList.add('snowflake');
+    snowflake.textContent = '❄';
+    
+    // Position horizontale aléatoire
+    snowflake.style.left = Math.random() * 100 + '%';
+    
+    // Taille aléatoire
+    const size = Math.random() * 1.5 + 0.5;
+    snowflake.style.fontSize = size + 'em';
+    
+    // Durée d'animation aléatoire
+    const duration = Math.random() * 10 + 10; // Entre 10 et 20 secondes
+    snowflake.style.animationDuration = duration + 's';
+    
+    // Délai de départ aléatoire
+    snowflake.style.animationDelay = Math.random() * 10 + 's';
+    
+    // Opacité aléatoire
+    snowflake.style.opacity = Math.random() * 0.6 + 0.4;
+    
+    container.appendChild(snowflake);
+  }
+}
+
+// Appeler la fonction au chargement de la page
+window.addEventListener('DOMContentLoaded', createSnowflakes);
+
+// ===== NAVIGATION HEADER =====
+const navPartenaires = document.getElementById('nav-partenaires');
+const navMentions = document.getElementById('nav-mentions');
+
+navPartenaires.addEventListener('click', () => {
+  navPartenaires.classList.add('active');
+  navMentions.classList.remove('active');
+  document.getElementById('categories').scrollIntoView({ behavior: 'smooth' });
+});
+
+navMentions.addEventListener('click', () => {
+  navMentions.classList.add('active');
+  navPartenaires.classList.remove('active');
+  document.getElementById('mentions').scrollIntoView({ behavior: 'smooth' });
+});
+
+const categoriesSection = document.getElementById('categories');
+const mentionsSection = document.getElementById('mentions');
+
+window.addEventListener('scroll', () => {
+  const scrollPos = window.scrollY + 150;
+  if (categoriesSection && mentionsSection) {
+    if (scrollPos >= mentionsSection.offsetTop) {
+      navMentions.classList.add('active');
+      navPartenaires.classList.remove('active');
+    } else if (scrollPos >= categoriesSection.offsetTop) {
+      navPartenaires.classList.add('active');
+      navMentions.classList.remove('active');
+    }
+  }
+});
 
 // ===== Toggle categories fluide et responsive =====
 function toggleCategory(id) {
   const section = document.getElementById(id);
   const card = document.querySelector(`[onclick="toggleCategory('${id}')"]`);
   
-  // Fermer toutes les autres catégories
   document.querySelectorAll('.partner-content').forEach(item => {
     if (item.id !== id) {
       item.classList.remove('active');
     }
   });
   
-  // Reset des ombres sur toutes les cartes
   document.querySelectorAll('.category-card').forEach(cardEl => {
     cardEl.classList.remove("shadow-red-500/50", "shadow-xl");
     cardEl.classList.add("shadow-lg");
@@ -756,34 +806,26 @@ function toggleCategory(id) {
   section.classList.toggle('active');
   
   if (opening) {
-    // Carte active : ajouter ombre spéciale
     card.classList.remove("shadow-lg");
     card.classList.add("shadow-xl", "shadow-red-500/50");
     
-    // Attendre que TOUTES les transitions soient terminées (fermeture + ouverture)
     setTimeout(() => {
       const header = document.querySelector('header');
       const headerHeight = header ? header.offsetHeight : 0;
-      
-      // Position de la CARTE (pas du contenu)
       const cardTop = card.getBoundingClientRect().top + window.scrollY;
-      
-      // Scroll pour que la carte soit visible sous le header
-      const scrollTarget = cardTop - headerHeight - 20; // 20px de marge
+      const scrollTarget = cardTop - headerHeight - 20;
       
       window.scrollTo({ 
         top: Math.max(0, scrollTarget), 
         behavior: 'smooth' 
       });
-    }, 600); // Augmenté à 600ms pour laisser le temps aux transitions CSS (0.5s max-height + marge)
+    }, 600);
     
   } else {
-    // Carte désactivée : reset ombre
     card.classList.remove("shadow-xl", "shadow-red-500/50");
     card.classList.add("shadow-lg");
   }
 }
-
 
 // ===== Modal =====
 const modal = document.getElementById('imageModal');
@@ -805,7 +847,8 @@ modalImg.addEventListener('click', closeModal);
 closeModalBtn.addEventListener('click', closeModal);
 modal.addEventListener('click', (e) => { if(e.target === modal) closeModal(); });
 window.addEventListener('popstate', () => { if(modal.classList.contains('active')) closeModal(); });
-  // PWA install banner
+
+// PWA install banner
 let deferredPrompt;
 const installBanner = document.createElement('div');
 installBanner.style.cssText =
@@ -829,7 +872,6 @@ window.addEventListener('beforeinstallprompt', (e) => {
   e.preventDefault();
   deferredPrompt = e;
 
-  // Ne pas afficher si déjà installé
   if (!window.matchMedia('(display-mode: standalone)').matches) {
     installBanner.style.display = 'block';
   }
@@ -846,35 +888,8 @@ window.addEventListener('appinstalled', () => {
   installBanner.style.display = 'none';
 });
 
-// ===== Menu Partenaires / Mentions =====
-document.querySelectorAll('nav a').forEach(link => {
-  link.classList.add('nav-link');
-  link.addEventListener('click', (e) => {
-    e.preventDefault();
-    document.querySelectorAll('.nav-link').forEach(l => {
-      l.classList.remove('text-white');
-      l.classList.add('text-gray-400');
-      l.style.backgroundColor = 'transparent';
-      l.style.padding = '0';
-      l.style.borderRadius = '0';
-    });
-    link.classList.remove('text-gray-400');
-    link.classList.add('text-white');
-    link.style.backgroundColor = '#dc2626';
-    link.style.padding = '0.25rem 0.75rem';
-    link.style.borderRadius = '9999px';
-
-    if(link.textContent.includes("Partenaires")) {
-      document.getElementById('categories').scrollIntoView({behavior: 'smooth'});
-    } else if(link.textContent.includes("Mentions")) {
-      document.getElementById('mentions').scrollIntoView({behavior: 'smooth'});
-    }
-  });
-});
-
-// ===== Badge Compteur Automatique (Version CORRIGÉE pour gérer les accordéons et les listes) =====
+// ===== Badge Compteur Automatique =====
 document.querySelectorAll('[onclick^="toggleCategory"]').forEach(trigger => {
-    // 1. Détecter l'ID de la carte de contenu (ex: 'gout-content')
     const idMatch = trigger.getAttribute('onclick').match(/'(.+?)'/);
     if (!idMatch) return;
 
@@ -883,74 +898,62 @@ document.querySelectorAll('[onclick^="toggleCategory"]').forEach(trigger => {
 
     if (!content) return; 
 
-    // 2. Compter tous les partenaires, quelle que soit la profondeur (fonctionne pour les accordéons comme Maison)
     const count = content.querySelectorAll('.partner-link').length; 
     
-    // 3. La div où nous voulons attacher le badge est le 'trigger' lui-même (la div qui a l'onclick)
     let headerDiv = trigger; 
 
     if(count > 0) {
-        // Supprimer l'ancien badge s'il existe (pour éviter les doublons lors des rechargements)
         let existingBadge = headerDiv.querySelector('.badge-compteur');
         if (existingBadge) {
             existingBadge.remove();
         }
 
-        // Créer et attacher le nouveau badge
         let badge = document.createElement('div');
-        // Ajout de la classe badge-compteur pour un meilleur ciblage futur
         badge.className = "absolute top-2 right-2 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded-full shadow z-10 badge-compteur";
         
-        // Attacher le badge au déclencheur (la div qui a l'image/titre)
         headerDiv.appendChild(badge);
         
         badge.textContent = count + " Partenaire" + (count > 1 ? "s" : "");
     }
 });
 
-// ===== Accordion (Version Modifiée pour l'Exclusivité) =====
+// ===== Accordion =====
 document.querySelectorAll(".accordion-btn").forEach(btn => {
   btn.addEventListener("click", () => {
     const content = btn.nextElementSibling;
 
-    // 1. GESTION DE L'EXCLUSIVITÉ (Fermeture des autres)
     document.querySelectorAll(".accordion-btn").forEach(otherBtn => {
       const otherContent = otherBtn.nextElementSibling;
       
-      // Si ce n'est pas le bouton cliqué ET que son contenu est ouvert
       if (otherBtn !== btn && otherContent.classList.contains("open")) {
         otherContent.style.maxHeight = null;
         otherContent.classList.remove("open");
         
-        // Retirer les classes des boutons et flèches des autres onglets
         otherBtn.classList.remove("active");
         const otherArrow = otherBtn.querySelector(".arrow");
         if (otherArrow) otherArrow.classList.remove("rotate");
       }
     });
-    // FIN GESTION EXCLUSIVITÉ
 
-    // 2. OUVERTURE / FERMETURE DU BOUTON CLIQUÉ
     const arrow = btn.querySelector(".arrow");
 
     if(content.classList.contains("open")) { 
-      // Fermeture
       content.style.maxHeight = null; 
       content.classList.remove("open"); 
       if (arrow) arrow.classList.remove("rotate");
       btn.classList.remove("active");
     } else { 
-      // Ouverture
       content.classList.add("open"); 
       if (arrow) arrow.classList.add("rotate"); 
       btn.classList.add("active");
       
-      // On utilise requestAnimationFrame pour une lecture correcte de scrollHeight
       requestAnimationFrame(() => { content.style.maxHeight = content.scrollHeight + "px"; }); 
     }
   });
 });
- if ('serviceWorker' in navigator) {
+
+// Service Worker
+if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('/Renault-trucks-CE/service-worker.js')
     .then(() => console.log('Service Worker enregistré ✔'))
     .catch(err => console.error('SW: Échec ❌', err));
@@ -965,211 +968,5 @@ document.querySelectorAll(".accordion-btn").forEach(btn => {
   });
 }
 </script>
-  <!-- ========= FLAPPY BIRD COMPLET ========= -->
-
-<style>
-    #gameContainer {
-        margin: 50px auto;
-        text-align: center;
-        max-width: 450px;
-    }
-
-    #gameCanvas {
-        width: 90vw;
-        height: 135vw;
-        max-width: 420px;
-        max-height: 630px;
-        background: #4ec0ca url('https://i.imgur.com/CeW7zFJ.png');
-        background-size: cover;
-        display: block;
-        margin: auto;
-        box-shadow: 0 0 20px #0006;
-        border-radius: 10px;
-    }
-
-    #mobileFlapBtn {
-        position: fixed;
-        bottom: 30px;
-        right: 30px;
-        width: 80px;
-        height: 80px;
-        border-radius: 50%;
-        font-size: 25px;
-        border: none;
-        background: #ffcc00;
-        box-shadow: 0 0 15px #0006;
-        z-index: 9999;
-    }
-
-    #restartBtn {
-        margin-top: 20px;
-        padding: 12px 25px;
-        font-size: 20px;
-        border: none;
-        border-radius: 10px;
-        background: #ff4444;
-        color: white;
-        cursor: pointer;
-        display: none;
-    }
-
-    #scoreBar {
-        font-family: "Press Start 2P", monospace;
-        font-size: 28px;
-        color: white;
-        margin-bottom: 20px;
-    }
-</style>
-
-<!-- Police arcade -->
-<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-
-<div id="gameContainer">
-    <img src=" TON_LOGO.png " alt="Logo" style="width:180px; margin-bottom:20px;">
-
-    <div id="scoreBar">0</div>
-
-    <canvas id="gameCanvas"></canvas>
-
-    <button id="restartBtn">Rejouer</button>
-</div>
-
-<button id="mobileFlapBtn">🐤</button>
-
-<script>
-const canvas = document.getElementById("gameCanvas");
-const ctx = canvas.getContext("2d");
-const scoreBar = document.getElementById("scoreBar");
-const restartBtn = document.getElementById("restartBtn");
-
-// Canvas interne fixe (meilleure physique)
-canvas.width = 400;
-canvas.height = 600;
-
-// Sprite oiseau
-const birdImg = new Image();
-birdImg.src = "https://i.imgur.com/3Wb7bpU.png";
-
-let bird, pipes, frameCount, score, gameOver;
-
-function resetGame() {
-    bird = {
-        x: 80,
-        y: 150,
-        width: 40,
-        height: 30,
-        gravity: 0.5,
-        velocity: 0,
-        jump: -8
-    };
-
-    pipes = [];
-    frameCount = 0;
-    score = 0;
-    gameOver = false;
-
-    restartBtn.style.display = "none";
-    scoreBar.textContent = 0;
-    gameLoop();
-}
-
-function drawBird() {
-    ctx.drawImage(birdImg, bird.x, bird.y, bird.width, bird.height);
-}
-
-function drawPipes() {
-    ctx.fillStyle = "green";
-    pipes.forEach(pipe => {
-        ctx.fillRect(pipe.x, 0, pipe.width, pipe.top);
-        ctx.fillRect(pipe.x, pipe.top + pipe.gap, pipe.width, canvas.height - pipe.top - pipe.gap);
-    });
-}
-
-function updateBird() {
-    bird.velocity += bird.gravity;
-    bird.y += bird.velocity;
-
-    if (bird.y + bird.height > canvas.height || bird.y < 0) {
-        gameOver = true;
-    }
-}
-
-function updatePipes() {
-    if (frameCount % 100 === 0) {
-        const topHeight = Math.random() * 250 + 50;
-        pipes.push({
-            x: canvas.width,
-            top: topHeight,
-            width: 60,
-            gap: 160,
-            passed: false
-        });
-    }
-
-    pipes.forEach(pipe => {
-        pipe.x -= 2;
-
-        if (!pipe.passed && pipe.x + pipe.width < bird.x) {
-            pipe.passed = true;
-            score++;
-            scoreBar.textContent = score;
-        }
-
-        if (
-            bird.x < pipe.x + pipe.width &&
-            bird.x + bird.width > pipe.x &&
-            (bird.y < pipe.top || bird.y + bird.height > pipe.top + pipe.gap)
-        ) {
-            gameOver = true;
-        }
-    });
-
-    pipes = pipes.filter(p => p.x + p.width > 0);
-}
-
-function gameLoop() {
-    if (gameOver) {
-        ctx.fillStyle = "rgba(0,0,0,0.6)";
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-        ctx.fillStyle = "white";
-        ctx.font = "36px 'Press Start 2P'";
-        ctx.fillText("PERDU", 110, 250);
-
-        restartBtn.style.display = "inline-block";
-        return;
-    }
-
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    drawBird();
-    drawPipes();
-    updateBird();
-    updatePipes();
-
-    frameCount++;
-    requestAnimationFrame(gameLoop);
-}
-
-function flap() {
-    if (!gameOver) {
-        bird.velocity = bird.jump;
-    }
-}
-
-document.addEventListener("keydown", e => {
-    if (e.code === "Space") flap();
-});
-
-canvas.addEventListener("touchstart", flap);
-document.getElementById("mobileFlapBtn").addEventListener("touchstart", flap);
-restartBtn.addEventListener("click", resetGame);
-
-birdImg.onload = resetGame;
-</script>
-
-<!-- ========= FIN FLAPPY BIRD ========= -->
-
-
 </body>
 </html>
