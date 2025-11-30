@@ -835,7 +835,7 @@ const closeModalBtn = modal.querySelector('button');
 function openModal(url) {
   modalImg.src = url;
   modal.classList.add('active');
-  history.pushState({ modalOpen: true }, "");
+  history.replaceState({ modalOpen: true }, "");
 }
 
 function closeModal() {
