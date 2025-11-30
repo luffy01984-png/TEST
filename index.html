@@ -457,7 +457,11 @@
     <!-- PROMO BOX -->
     <section class="relative z-20 bg-red-600 text-white text-center py-4 px-4 mt-6 rounded-lg shadow-lg">
       <h2 class="text-2xl font-bold uppercase tracking-wide">
-        BONNE VACANCE ! RDV en 2026 pour de nouveaux partenaires !
+        🎉 Nouveaux Partenaires !
+      </h2>
+      <p class="text-lg mt-1 font-semibold">
+        Mille et une Pizzas: <span class="text-yellow-300">8€50</span>
+        Optique Lafayette : <span class="text-yellow-300">-7%</span>
       </p>
     </section>
   </section>
@@ -1241,6 +1245,307 @@
       });
     }
   </script>
+
+  <!-- TRUCK JUMP GAME -->
+  <section class="bg-gradient-to-br from-gray-800 to-gray-900 py-12 px-4 mt-12">
+    <div class="max-w-4xl mx-auto">
+      <h2 class="text-3xl font-bold text-center mb-6 text-white">🚚 Truck Jump Game</h2>
+      <p class="text-center text-gray-300 mb-6">Press SPACE or TAP to jump! Avoid the obstacles!</p>
+
+      <div class="relative bg-gray-700 rounded-xl overflow-hidden shadow-2xl" style="max-width: 800px; margin: 0 auto;">
+        <canvas id="gameCanvas" width="800" height="300" class="w-full block"></canvas>
+        <div id="gameOver"
+          class="absolute inset-0 bg-black bg-opacity-80 flex flex-col items-center justify-center hidden">
+          <h3 class="text-4xl font-bold text-red-600 mb-4">Game Over!</h3>
+          <p class="text-2xl text-white mb-6">Score: <span id="finalScore">0</span></p>
+          <button id="restartBtn"
+            class="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-8 rounded-lg transition">
+            Restart Game
+          </button>
+        </div>
+      </div>
+
+      <div class="text-center mt-4">
+        <p class="text-white text-xl">Score: <span id="score" class="font-bold text-yellow-300">0</span></p>
+        <p class="text-white text-xl mt-2">High Score: <span id="highScore" class="font-bold text-green-300">0</span>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <style>
+    #gameCanvas {
+      image-rendering: pixelated;
+      image-rendering: -moz-crisp-edges;
+      image-rendering: crisp-edges;
+    }
+  </style>
+
+  <script>
+    // Truck Jump Game
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+    const gameOverDiv = document.getElementById('gameOver');
+    const restartBtn = document.getElementById('restartBtn');
+    const scoreDisplay = document.getElementById('score');
+    const finalScoreDisplay = document.getElementById('finalScore');
+    const highScoreDisplay = document.getElementById('highScore');
+
+    // Game variables
+    let gameRunning = false;
+    let score = 0;
+    let highScore = localStorage.getItem('truckGameHighScore') || 0;
+    highScoreDisplay.textContent = highScore;
+
+    // Truck object
+    const truck = {
+      x: 50,
+      y: 200,
+      width: 60,
+      height: 40,
+      velocityY: 0,
+      gravity: 0.6,
+      jumpPower: -12,
+      isJumping: false,
+      color: '#dc2626'
+    };
+
+    // Obstacles array
+    let obstacles = [];
+    let obstacleSpeed = 5;
+    let obstacleTimer = 0;
+    let obstacleInterval = 100;
+
+    // Ground
+    const ground = {
+      y: 240,
+      height: 60
+    };
+
+    // Draw truck (simple rectangle representation)
+    function drawTruck() {
+      // Truck body
+      ctx.fillStyle = truck.color;
+      ctx.fillRect(truck.x, truck.y, truck.width, truck.height);
+
+      // Truck cabin
+      ctx.fillStyle = '#b91c1c';
+      ctx.fillRect(truck.x + 35, truck.y - 15, 25, 15);
+
+      // Wheels
+      ctx.fillStyle = '#1f2937';
+      ctx.beginPath();
+      ctx.arc(truck.x + 15, truck.y + truck.height, 8, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.beginPath();
+      ctx.arc(truck.x + 45, truck.y + truck.height, 8, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    // Draw obstacle
+    function drawObstacle(obs) {
+      ctx.fillStyle = '#fbbf24';
+      ctx.fillRect(obs.x, obs.y, obs.width, obs.height);
+
+      // Add warning stripes
+      ctx.fillStyle = '#000';
+      for (let i = 0; i < obs.height; i += 10) {
+        ctx.fillRect(obs.x, obs.y + i, obs.width, 5);
+      }
+    }
+
+    // Draw ground
+    function drawGround() {
+      ctx.fillStyle = '#374151';
+      ctx.fillRect(0, ground.y, canvas.width, ground.height);
+
+      // Road lines
+      ctx.strokeStyle = '#fff';
+      ctx.lineWidth = 2;
+      ctx.setLineDash([20, 15]);
+      ctx.beginPath();
+      ctx.moveTo(0, ground.y + 10);
+      ctx.lineTo(canvas.width, ground.y + 10);
+      ctx.stroke();
+      ctx.setLineDash([]);
+    }
+
+    // Draw sky
+    function drawSky() {
+      const gradient = ctx.createLinearGradient(0, 0, 0, ground.y);
+      gradient.addColorStop(0, '#1e3a8a');
+      gradient.addColorStop(1, '#3b82f6');
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, canvas.width, ground.y);
+    }
+
+    // Jump function
+    function jump() {
+      if (!truck.isJumping && gameRunning) {
+        truck.velocityY = truck.jumpPower;
+        truck.isJumping = true;
+      }
+    }
+
+    // Update truck physics
+    function updateTruck() {
+      truck.velocityY += truck.gravity;
+      truck.y += truck.velocityY;
+
+      // Ground collision
+      if (truck.y + truck.height >= ground.y) {
+        truck.y = ground.y - truck.height;
+        truck.velocityY = 0;
+        truck.isJumping = false;
+      }
+    }
+
+    // Create obstacle
+    function createObstacle() {
+      const height = 30 + Math.random() * 30;
+      obstacles.push({
+        x: canvas.width,
+        y: ground.y - height,
+        width: 20,
+        height: height
+      });
+    }
+
+    // Update obstacles
+    function updateObstacles() {
+      obstacleTimer++;
+      if (obstacleTimer > obstacleInterval) {
+        createObstacle();
+        obstacleTimer = 0;
+        obstacleInterval = 60 + Math.random() * 80;
+      }
+
+      for (let i = obstacles.length - 1; i >= 0; i--) {
+        obstacles[i].x -= obstacleSpeed;
+
+        // Remove off-screen obstacles
+        if (obstacles[i].x + obstacles[i].width < 0) {
+          obstacles.splice(i, 1);
+          score++;
+          scoreDisplay.textContent = score;
+
+          // Increase difficulty
+          if (score % 10 === 0) {
+            obstacleSpeed += 0.5;
+          }
+        }
+      }
+    }
+
+    // Check collision
+    function checkCollision() {
+      for (let obs of obstacles) {
+        if (truck.x < obs.x + obs.width &&
+          truck.x + truck.width > obs.x &&
+          truck.y < obs.y + obs.height &&
+          truck.y + truck.height > obs.y) {
+          return true;
+        }
+      }
+      return false;
+    }
+
+    // Game over
+    function endGame() {
+      gameRunning = false;
+      gameOverDiv.classList.remove('hidden');
+      finalScoreDisplay.textContent = score;
+
+      // Update high score
+      if (score > highScore) {
+        highScore = score;
+        localStorage.setItem('truckGameHighScore', highScore);
+        highScoreDisplay.textContent = highScore;
+      }
+    }
+
+    // Reset game
+    function resetGame() {
+      truck.y = 200;
+      truck.velocityY = 0;
+      truck.isJumping = false;
+      obstacles = [];
+      obstacleSpeed = 5;
+      obstacleTimer = 0;
+      score = 0;
+      scoreDisplay.textContent = score;
+      gameOverDiv.classList.add('hidden');
+      gameRunning = true;
+      gameLoop();
+    }
+
+    // Main game loop
+    function gameLoop() {
+      if (!gameRunning) return;
+
+      // Clear canvas
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Draw everything
+      drawSky();
+      drawGround();
+      drawTruck();
+
+      obstacles.forEach(obs => drawObstacle(obs));
+
+      // Update
+      updateTruck();
+      updateObstacles();
+
+      // Check collision
+      if (checkCollision()) {
+        endGame();
+        return;
+      }
+
+      requestAnimationFrame(gameLoop);
+    }
+
+    // Event listeners
+    document.addEventListener('keydown', (e) => {
+      if (e.code === 'Space') {
+        e.preventDefault();
+        if (!gameRunning) {
+          resetGame();
+        } else {
+          jump();
+        }
+      }
+    });
+
+    // Touch support for mobile
+    canvas.addEventListener('touchstart', (e) => {
+      e.preventDefault();
+      if (!gameRunning) {
+        resetGame();
+      } else {
+        jump();
+      }
+    });
+
+    // Click support
+    canvas.addEventListener('click', () => {
+      if (!gameRunning) {
+        resetGame();
+      } else {
+        jump();
+      }
+    });
+
+    restartBtn.addEventListener('click', resetGame);
+
+    // Start message
+    ctx.fillStyle = '#fff';
+    ctx.font = 'bold 24px Inter, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('Press SPACE or TAP to Start!', canvas.width / 2, canvas.height / 2);
+  </script>
+
 </body>
 
 </html>
