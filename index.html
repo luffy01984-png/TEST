@@ -1540,10 +1540,40 @@
     restartBtn.addEventListener('click', resetGame);
 
     // Start message
-    ctx.fillStyle = '#fff';
-    ctx.font = 'bold 24px Inter, sans-serif';
-    ctx.textAlign = 'center';
-    ctx.fillText('Press SPACE or TAP to Start!', canvas.width / 2, canvas.height / 2);
+    function drawStartMessage() {
+      ctx.fillStyle = '#fff';
+      ctx.font = 'bold 24px Inter, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('Press SPACE or TAP to Start!', canvas.width / 2, canvas.height / 2);
+    }
+
+    // Resize handling
+    function resizeGame() {
+      const containerWidth = document.querySelector('.max-w-4xl').offsetWidth;
+      // On mobile, use full width minus padding. On desktop, cap at 800.
+      const newWidth = Math.min(window.innerWidth - 32, 800);
+
+      canvas.width = newWidth;
+      // Height stays 300 for gameplay consistency
+
+      // Redraw if game not running
+      if (!gameRunning) {
+        drawSky();
+        drawGround();
+        drawTruck();
+        drawStartMessage();
+      }
+    }
+
+    // Initial resize
+    window.addEventListener('resize', resizeGame);
+    resizeGame(); // Call once on load
+
+    // Initial draw
+    drawSky();
+    drawGround();
+    drawTruck();
+    drawStartMessage();
   </script>
 
 </body>
