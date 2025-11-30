@@ -832,21 +832,36 @@ const modal = document.getElementById('imageModal');
 const modalImg = document.getElementById('modalImg');
 const closeModalBtn = modal.querySelector('button');
 
+let modalOpen = false;
+
 function openModal(url) {
   modalImg.src = url;
   modal.classList.add('active');
-  history.replaceState({ modalOpen: true }, "");
+  modalOpen = true;
 }
 
 function closeModal() {
   modal.classList.remove('active');
-  if(history.state && history.state.modalOpen) history.back();
+  modalOpen = false;
 }
+
+// Fermer modal quand on appuie sur Retour
+window.addEventListener('popstate', () => {
+  if (modalOpen) {
+    closeModal();
+
+    // IMPORTANT : replacer un état pour éviter un retour supplémentaire
+    history.pushState(null, "");
+  }
+});
+
+// Ajouter un état dès le chargement pour pouvoir intercepter Retour
+history.pushState(null, "");
 
 modalImg.addEventListener('click', closeModal);
 closeModalBtn.addEventListener('click', closeModal);
-modal.addEventListener('click', (e) => { if(e.target === modal) closeModal(); });
-window.addEventListener('popstate', () => { if(modal.classList.contains('active')) closeModal(); });
+modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+
 
 // PWA install banner
 let deferredPrompt;
