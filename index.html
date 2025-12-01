@@ -361,6 +361,16 @@
     .category-card:hover::before {
       left: 100%;
     }
+
+    /* Angle Effect for Active Card */
+    .card-active-angle {
+      transform: perspective(1000px) rotateX(2deg) rotateY(-2deg) scale(1.02);
+      box-shadow: -10px 10px 20px rgba(0, 0, 0, 0.2), 0 0 15px rgba(220, 38, 38, 0.6) !important;
+      /* Ombre portée + Glow rouge */
+      z-index: 20;
+      border: 2px solid #dc2626;
+      transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
   </style>
 </head>
 
@@ -946,7 +956,8 @@
     <button class="accordion-btn">1. Éditeur du site <span class="arrow">▶</span></button>
     <div class="accordion-content">
       <p>Renault Trucks CSE Bourg-en-Bresse<br>Secrétaire du CSE et créateur des plaquettes promotionnelles :
-        <strong>Arnaud Christian</strong><br></p>
+        <strong>Arnaud Christian</strong><br>
+      </p>
     </div>
 
     <button class="accordion-btn">2. Conception et Realisation <span class="arrow">▶</span></button>
@@ -997,9 +1008,9 @@
         }
       });
 
-      // Reset des ombres sur toutes les cartes
+      // Reset des ombres et de l'effet angle sur toutes les cartes
       document.querySelectorAll('.category-card').forEach(cardEl => {
-        cardEl.classList.remove("shadow-red-500/50", "shadow-xl");
+        cardEl.classList.remove("shadow-red-500/50", "shadow-xl", "card-active-angle");
         cardEl.classList.add("shadow-lg");
       });
 
@@ -1007,9 +1018,9 @@
       section.classList.toggle('active');
 
       if (opening) {
-        // Carte active : ajouter ombre spéciale
+        // Carte active : ajouter ombre spéciale et effet angle
         card.classList.remove("shadow-lg");
-        card.classList.add("shadow-xl", "shadow-red-500/50");
+        card.classList.add("shadow-xl", "shadow-red-500/50", "card-active-angle");
 
         // Attendre que TOUTES les transitions soient terminées (fermeture + ouverture)
         setTimeout(() => {
@@ -1029,8 +1040,8 @@
         }, 600); // Augmenté à 600ms pour laisser le temps aux transitions CSS (0.5s max-height + marge)
 
       } else {
-        // Carte désactivée : reset ombre
-        card.classList.remove("shadow-xl", "shadow-red-500/50");
+        // Carte désactivée : reset ombre et angle
+        card.classList.remove("shadow-xl", "shadow-red-500/50", "card-active-angle");
         card.classList.add("shadow-lg");
       }
     }
