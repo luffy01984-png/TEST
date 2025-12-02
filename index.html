@@ -802,272 +802,281 @@
     </div>
 
     <button class="accordion-btn">6. Contact <span class="arrow">▶</span></button>
-    <div class="accordion-content">
-      <p>
-        Pour toute demande, vous pouvez contacter l’équipe du CSE par e-mail
-        <a href="mailto:cserenaulttrucks@gmail.com" style="color: red; font-weight: bold;">
-          cserenaulttrucks@gmail.com
-        </a>
+<div class="accordion-content">
+  <p>
+    Pour toute demande, vous pouvez contacter l'équipe du CSE par e-mail 
+    <a href="mailto:cserenaulttrucks@gmail.com" style="color: red; font-weight: bold;">
+      cserenaulttrucks@gmail.com
+    </a>
+  </p>
+</div>
+</section>
+
+<!-- MINI JEU DOODLE JUMP -->
+<section class="bg-gradient-to-b from-gray-100 to-gray-200 py-8 px-4 mt-8">
+  <div class="max-w-md mx-auto">
+    <h2 class="text-2xl font-bold text-center mb-4 text-red-600">🎮 Mini-Jeu : Jump CSE !</h2>
+    
+    <!-- Contrôles du jeu -->
+    <div class="bg-white rounded-xl p-4 mb-4 shadow-lg">
+      <div class="flex justify-between items-center mb-3">
+        <div class="text-sm font-bold">Score: <span id="gameScore" class="text-red-600">0</span></div>
+        <div class="text-sm font-bold">Record: <span id="gameHighScore" class="text-red-600">0</span></div>
+      </div>
+      
+      <!-- Sélecteur de personnage -->
+      <div class="mb-3">
+        <label class="text-sm font-semibold block mb-2">Choisis ton personnage:</label>
+        <div class="flex gap-2 justify-center">
+          <button onclick="changeCharacter('🚛')" class="character-btn text-3xl p-2 bg-gray-100 rounded-lg hover:bg-red-100 transition">🚛</button>
+          <button onclick="changeCharacter('🏃')" class="character-btn text-3xl p-2 bg-gray-100 rounded-lg hover:bg-red-100 transition">🏃</button>
+          <button onclick="changeCharacter('🐱')" class="character-btn text-3xl p-2 bg-gray-100 rounded-lg hover:bg-red-100 transition">🐱</button>
+          <button onclick="changeCharacter('🦊')" class="character-btn text-3xl p-2 bg-gray-100 rounded-lg hover:bg-red-100 transition">🦊</button>
+          <button onclick="changeCharacter('🚀')" class="character-btn text-3xl p-2 bg-gray-100 rounded-lg hover:bg-red-100 transition">🚀</button>
+          <button onclick="changeCharacter('⚽')" class="character-btn text-3xl p-2 bg-gray-100 rounded-lg hover:bg-red-100 transition">⚽</button>
+        </div>
+      </div>
+      
+      <button onclick="startGame()" id="startBtn" class="w-full bg-red-600 text-white font-bold py-3 rounded-lg hover:bg-red-700 transition">
+        Démarrer
+      </button>
+    </div>
+    
+    <!-- Canvas du jeu -->
+    <div class="relative bg-gradient-to-b from-blue-300 to-blue-100 rounded-xl shadow-2xl overflow-hidden">
+      <canvas id="gameCanvas" width="350" height="500" class="w-full block"></canvas>
+      <div id="gameOverScreen" class="absolute inset-0 bg-black bg-opacity-80 flex flex-col items-center justify-center hidden">
+        <div class="text-white text-center">
+          <h3 class="text-3xl font-bold mb-2">Game Over!</h3>
+          <p class="text-xl mb-4">Score: <span id="finalScore" class="text-yellow-300">0</span></p>
+          <button onclick="startGame()" class="bg-red-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-red-700 transition">
+            Rejouer
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Instructions -->
+    <div class="bg-white rounded-xl p-4 mt-4 shadow-lg">
+      <p class="text-sm text-center text-gray-600">
+        <strong>Comment jouer:</strong> Penche ton téléphone à gauche/droite ou utilise les flèches du clavier pour déplacer le personnage. Saute sur les plateformes pour monter le plus haut possible !
       </p>
     </div>
-  </section>
+  </div>
+</section>
 
-  <script>
+<script>
+// ===== DOODLE JUMP GAME =====
+const canvas = document.getElementById('gameCanvas');
+const ctx = canvas.getContext('2d');
+const gameOverScreen = document.getElementById('gameOverScreen');
+const scoreDisplay = document.getElementById('gameScore');
+const highScoreDisplay = document.getElementById('gameHighScore');
+const finalScoreDisplay = document.getElementById('finalScore');
+const startBtn = document.getElementById('startBtn');
 
-    // ===== Toggle categories fluide et responsive =====
-    function toggleCategory(id) {
-      const section = document.getElementById(id);
-      const card = document.querySelector(`[onclick="toggleCategory('${id}')"]`);
+let gameRunning = false;
+let score = 0;
+let highScore = localStorage.getItem('jumpHighScore') || 0;
+highScoreDisplay.textContent = highScore;
 
-      // Fermer toutes les autres catégories
-      document.querySelectorAll('.partner-content').forEach(item => {
-        if (item.id !== id) {
-          item.classList.remove('active');
+// Personnage
+let player = {
+  x: canvas.width / 2 - 15,
+  y: canvas.height - 150,
+  width: 30,
+  height: 30,
+  velocityY: 0,
+  velocityX: 0,
+  gravity: 0.4,
+  jumpPower: -12,
+  character: '🚛'
+};
+
+// Plateformes
+let platforms = [];
+const platformWidth = 70;
+const platformHeight = 12;
+let cameraY = 0;
+
+// Accéléromètre
+let tiltX = 0;
+
+function initGame() {
+  platforms = [];
+  score = 0;
+  cameraY = 0;
+  player.x = canvas.width / 2 - 15;
+  player.y = canvas.height - 150;
+  player.velocityY = 0;
+  player.velocityX = 0;
+  
+  // Créer plateformes initiales
+  for(let i = 0; i < 8; i++) {
+    platforms.push({
+      x: Math.random() * (canvas.width - platformWidth),
+      y: canvas.height - 100 - (i * 70),
+      width: platformWidth,
+      height: platformHeight
+    });
+  }
+}
+
+function startGame() {
+  if(gameRunning) return;
+  gameRunning = true;
+  gameOverScreen.classList.add('hidden');
+  startBtn.textContent = 'En cours...';
+  startBtn.disabled = true;
+  initGame();
+  gameLoop();
+  
+  // Démarrer l'accéléromètre sur mobile
+  if(typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
+    DeviceOrientationEvent.requestPermission()
+      .then(response => {
+        if(response === 'granted') {
+          window.addEventListener('deviceorientation', handleTilt);
         }
       });
+  } else {
+    window.addEventListener('deviceorientation', handleTilt);
+  }
+}
 
-      // Reset des ombres sur toutes les cartes
-      document.querySelectorAll('.category-card').forEach(cardEl => {
-        cardEl.classList.remove("shadow-red-500/50", "shadow-xl");
-        cardEl.classList.add("shadow-lg");
-      });
+function handleTilt(event) {
+  if(!gameRunning) return;
+  tiltX = event.gamma || 0; // Inclinaison gauche/droite (-90 à 90)
+  player.velocityX = tiltX / 10; // Sensibilité
+}
 
-      const opening = !section.classList.contains('active');
-      section.classList.toggle('active');
+// Contrôles clavier
+const keys = {};
+window.addEventListener('keydown', (e) => { keys[e.key] = true; });
+window.addEventListener('keyup', (e) => { keys[e.key] = false; });
 
-      if (opening) {
-        // Carte active : ajouter ombre spéciale
-        card.classList.remove("shadow-lg");
-        card.classList.add("shadow-xl", "shadow-red-500/50");
-
-        // Attendre que TOUTES les transitions soient terminées (fermeture + ouverture)
-        setTimeout(() => {
-          const header = document.querySelector('header');
-          const headerHeight = header ? header.offsetHeight : 0;
-
-          // Position de la CARTE (pas du contenu)
-          const cardTop = card.getBoundingClientRect().top + window.scrollY;
-
-          // Scroll pour que la carte soit visible sous le header
-          const scrollTarget = cardTop - headerHeight - 20; // 20px de marge
-
-          window.scrollTo({
-            top: Math.max(0, scrollTarget),
-            behavior: 'smooth'
-          });
-        }, 600); // Augmenté à 600ms pour laisser le temps aux transitions CSS (0.5s max-height + marge)
-
-      } else {
-        // Carte désactivée : reset ombre
-        card.classList.remove("shadow-xl", "shadow-red-500/50");
-        card.classList.add("shadow-lg");
-      }
-    }
-
-
-    // ===== Modal =====
-    const modal = document.getElementById('imageModal');
-    const modalImg = document.getElementById('modalImg');
-    const closeModalBtn = modal.querySelector('button');
-
-    function openModal(url) {
-      modalImg.src = url;
-      modal.classList.add('active');
-      history.pushState({ modalOpen: true }, "");
-    }
-
-    function closeModal() {
-      modal.classList.remove('active');
-    }
-
-    // Snow effect logic
-    const heroSection = document.getElementById('hero');
-    if (heroSection) {
-      function createSnowflake() {
-        const snowflake = document.createElement('div');
-        snowflake.classList.add('snowflake');
-        snowflake.innerHTML = '❄';
-        snowflake.style.left = Math.random() * 100 + '%';
-        snowflake.style.animationDuration = Math.random() * 4 + 3 + 's'; // 3-7s fall time
-        snowflake.style.opacity = Math.random() * 0.6 + 0.4; // 0.4-1.0 opacity
-        snowflake.style.fontSize = Math.random() * 15 + 15 + 'px'; // 15-30px size
-
-        heroSection.appendChild(snowflake);
-
-        // Remove after animation to prevent DOM overflow
-        setTimeout(() => {
-          snowflake.remove();
-        }, 7000);
-      }
-      // Create a snowflake every 150ms for denser snow
-      setInterval(createSnowflake, 150);
-    }
-    if (history.state && history.state.modalOpen) history.back();
-
-    modalImg.addEventListener('click', closeModal);
-    closeModalBtn.addEventListener('click', closeModal);
-    modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
-    window.addEventListener('popstate', () => { if (modal.classList.contains('active')) closeModal(); });
-    // PWA install banner
-    let deferredPrompt;
-    const installBanner = document.createElement('div');
-    installBanner.style.cssText =
-      `position: fixed;
-   bottom: 20px; left: 20px; right: 20px;
-   background: #dc2626;
-   color: #fff;
-   padding: 12px 20px;
-   border-radius: 12px;
-   text-align: center;
-   font-weight: bold;
-   z-index: 10001;
-   cursor: pointer;
-   box-shadow: 0 4px 12px rgba(0,0,0,0.3);`;
-    installBanner.textContent = "Installer l'application sur votre écran d'accueil";
-    installBanner.style.display = 'none';
-
-    document.body.appendChild(installBanner);
-
-    window.addEventListener('beforeinstallprompt', (e) => {
-      e.preventDefault();
-      deferredPrompt = e;
-
-      // Ne pas afficher si déjà installé
-      if (!window.matchMedia('(display-mode: standalone)').matches) {
-        installBanner.style.display = 'block';
+function updatePlayer() {
+  // Contrôles clavier
+  if(keys['ArrowLeft']) player.velocityX = -5;
+  else if(keys['ArrowRight']) player.velocityX = 5;
+  else if(Math.abs(tiltX) < 5) player.velocityX *= 0.8; // Friction
+  
+  player.x += player.velocityX;
+  player.velocityY += player.gravity;
+  player.y += player.velocityY;
+  
+  // Wraparound horizontal
+  if(player.x > canvas.width) player.x = 0;
+  if(player.x < -player.width) player.x = canvas.width;
+  
+  // Collision avec plateformes (seulement en descendant)
+  if(player.velocityY > 0) {
+    platforms.forEach(platform => {
+      if(
+        player.x < platform.x + platform.width &&
+        player.x + player.width > platform.x &&
+        player.y + player.height > platform.y &&
+        player.y + player.height < platform.y + platform.height + 5
+      ) {
+        player.velocityY = player.jumpPower;
       }
     });
-
-    installBanner.addEventListener('click', async () => {
-      installBanner.style.display = 'none';
-      deferredPrompt.prompt();
-      await deferredPrompt.userChoice;
-      deferredPrompt = null;
+  }
+  
+  // Déplacer la caméra vers le haut quand le joueur monte
+  if(player.y < canvas.height / 2) {
+    const diff = canvas.height / 2 - player.y;
+    player.y = canvas.height / 2;
+    cameraY += diff;
+    score += Math.floor(diff / 10);
+    scoreDisplay.textContent = Math.floor(score);
+    
+    // Générer nouvelles plateformes
+    platforms.forEach(platform => {
+      platform.y += diff;
     });
-
-    window.addEventListener('appinstalled', () => {
-      installBanner.style.display = 'none';
-    });
-
-    // ===== Menu Partenaires / Mentions =====
-    document.querySelectorAll('nav a').forEach(link => {
-      link.classList.add('nav-link');
-      link.addEventListener('click', (e) => {
-        e.preventDefault();
-        document.querySelectorAll('.nav-link').forEach(l => {
-          l.classList.remove('text-white');
-          l.classList.add('text-gray-400');
-          l.style.backgroundColor = 'transparent';
-          l.style.padding = '0';
-          l.style.borderRadius = '0';
-        });
-        link.classList.remove('text-gray-400');
-        link.classList.add('text-white');
-        link.style.backgroundColor = '#dc2626';
-        link.style.padding = '0.25rem 0.75rem';
-        link.style.borderRadius = '9999px';
-
-        if (link.textContent.includes("Partenaires")) {
-          document.getElementById('categories').scrollIntoView({ behavior: 'smooth' });
-        } else if (link.textContent.includes("Mentions")) {
-          document.getElementById('mentions').scrollIntoView({ behavior: 'smooth' });
-        }
-      });
-    });
-
-    // ===== Badge Compteur Automatique (Version CORRIGÉE pour gérer les accordéons et les listes) =====
-    document.querySelectorAll('[onclick^="toggleCategory"]').forEach(trigger => {
-      // 1. Détecter l'ID de la carte de contenu (ex: 'gout-content')
-      const idMatch = trigger.getAttribute('onclick').match(/'(.+?)'/);
-      if (!idMatch) return;
-
-      const contentId = idMatch[1];
-      const content = document.getElementById(contentId);
-
-      if (!content) return;
-
-      // 2. Compter tous les partenaires, quelle que soit la profondeur (fonctionne pour les accordéons comme Maison)
-      const count = content.querySelectorAll('.partner-link').length;
-
-      // 3. La div où nous voulons attacher le badge est le 'trigger' lui-même (la div qui a l'onclick)
-      let headerDiv = trigger;
-
-      if (count > 0) {
-        // Supprimer l'ancien badge s'il existe (pour éviter les doublons lors des rechargements)
-        let existingBadge = headerDiv.querySelector('.badge-compteur');
-        if (existingBadge) {
-          existingBadge.remove();
-        }
-
-        // Créer et attacher le nouveau badge
-        let badge = document.createElement('div');
-        // Ajout de la classe badge-compteur pour un meilleur ciblage futur
-        badge.className = "absolute top-2 right-2 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded-full shadow z-10 badge-compteur";
-
-        // Attacher le badge au déclencheur (la div qui a l'image/titre)
-        headerDiv.appendChild(badge);
-
-        badge.textContent = count + " Partenaire" + (count > 1 ? "s" : "");
-      }
-    });
-
-    // ===== Accordion (Version Modifiée pour l'Exclusivité) =====
-    document.querySelectorAll(".accordion-btn").forEach(btn => {
-      btn.addEventListener("click", () => {
-        const content = btn.nextElementSibling;
-
-        // 1. GESTION DE L'EXCLUSIVITÉ (Fermeture des autres)
-        document.querySelectorAll(".accordion-btn").forEach(otherBtn => {
-          const otherContent = otherBtn.nextElementSibling;
-
-          // Si ce n'est pas le bouton cliqué ET que son contenu est ouvert
-          if (otherBtn !== btn && otherContent.classList.contains("open")) {
-            otherContent.style.maxHeight = null;
-            otherContent.classList.remove("open");
-
-            // Retirer les classes des boutons et flèches des autres onglets
-            otherBtn.classList.remove("active");
-            const otherArrow = otherBtn.querySelector(".arrow");
-            if (otherArrow) otherArrow.classList.remove("rotate");
-          }
-        });
-        // FIN GESTION EXCLUSIVITÉ
-
-        // 2. OUVERTURE / FERMETURE DU BOUTON CLIQUÉ
-        const arrow = btn.querySelector(".arrow");
-
-        if (content.classList.contains("open")) {
-          // Fermeture
-          content.style.maxHeight = null;
-          content.classList.remove("open");
-          if (arrow) arrow.classList.remove("rotate");
-          btn.classList.remove("active");
-        } else {
-          // Ouverture
-          content.classList.add("open");
-          if (arrow) arrow.classList.add("rotate");
-          btn.classList.add("active");
-
-          // On utilise requestAnimationFrame pour une lecture correcte de scrollHeight
-          requestAnimationFrame(() => { content.style.maxHeight = content.scrollHeight + "px"; });
-        }
-      });
-    });
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/Renault-trucks-CE/service-worker.js')
-        .then(() => console.log('Service Worker enregistré ✔'))
-        .catch(err => console.error('SW: Échec ❌', err));
-
-      let refreshing = false;
-      navigator.serviceWorker.addEventListener('controllerchange', () => {
-        if (!refreshing) {
-          refreshing = true;
-          console.log('SW: Nouvelle version détectée, rechargement automatique…');
-          window.location.reload();
-        }
+    
+    while(platforms[platforms.length - 1].y > 0) {
+      platforms.push({
+        x: Math.random() * (canvas.width - platformWidth),
+        y: platforms[platforms.length - 1].y - 70 - Math.random() * 30,
+        width: platformWidth,
+        height: platformHeight
       });
     }
-  </script>
+    
+    // Supprimer plateformes hors écran
+    platforms = platforms.filter(p => p.y < canvas.height + 50);
+  }
+  
+  // Game Over
+  if(player.y > canvas.height) {
+    endGame();
+  }
+}
+
+function drawPlayer() {
+  ctx.font = '30px Arial';
+  ctx.fillText(player.character, player.x, player.y + 25);
+}
+
+function drawPlatforms() {
+  ctx.fillStyle = '#22c55e';
+  platforms.forEach(platform => {
+    ctx.fillRect(platform.x, platform.y, platform.width, platform.height);
+    ctx.strokeStyle = '#16a34a';
+    ctx.lineWidth = 2;
+    ctx.strokeRect(platform.x, platform.y, platform.width, platform.height);
+  });
+}
+
+function gameLoop() {
+  if(!gameRunning) return;
+  
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  
+  // Fond avec nuages
+  ctx.fillStyle = '#bae6fd';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  
+  drawPlatforms();
+  updatePlayer();
+  drawPlayer();
+  
+  requestAnimationFrame(gameLoop);
+}
+
+function endGame() {
+  gameRunning = false;
+  gameOverScreen.classList.remove('hidden');
+  finalScoreDisplay.textContent = Math.floor(score);
+  startBtn.textContent = 'Démarrer';
+  startBtn.disabled = false;
+  
+  if(score > highScore) {
+    highScore = Math.floor(score);
+    localStorage.setItem('jumpHighScore', highScore);
+    highScoreDisplay.textContent = highScore;
+  }
+  
+  window.removeEventListener('deviceorientation', handleTilt);
+  tiltX = 0;
+}
+
+function changeCharacter(char) {
+  player.character = char;
+  document.querySelectorAll('.character-btn').forEach(btn => {
+    btn.classList.remove('ring-4', 'ring-red-500');
+  });
+  event.target.classList.add('ring-4', 'ring-red-500');
+}
+
+// Initialiser le jeu au chargement
+initGame();
+ctx.fillStyle = '#64748b';
+ctx.font = 'bold 20px Arial';
+ctx.textAlign = 'center';
+ctx.fillText('Appuie sur Démarrer!', canvas.width/2, canvas.height/2);
+</script>
 </body>
-
 </html>
