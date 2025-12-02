@@ -885,13 +885,14 @@ highScoreDisplay.textContent = highScore;
 // Charger l'image du personnage Mario
 const playerImg = new Image();
 playerImg.src = 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/mario.jpg';
+playerImg.crossOrigin = "anonymous"; // Pour éviter les problèmes CORS
 
 // Personnage
 let player = {
-  x: canvas.width / 2 - 15,
+  x: canvas.width / 2 - 30,
   y: canvas.height - 150,
-  width: 35,
-  height: 35,
+  width: 60,
+  height: 60,
   velocityY: 0,
   velocityX: 0,
   gravity: 0.4,
@@ -913,7 +914,7 @@ function initGame() {
   platforms = [];
   score = 0;
   cameraY = 0;
-  player.x = canvas.width / 2 - 15;
+  player.x = canvas.width / 2 - player.width / 2;
   player.y = canvas.height - 150;
   player.velocityY = 0;
   player.velocityX = 0;
@@ -1032,12 +1033,19 @@ function updatePlayer() {
 
 function drawPlayer() {
   if(player.useImage && playerImg.complete) {
-    // Dessiner l'image Mario
+    // Dessiner l'image Mario avec un fond blanc pour voir si elle charge
+    ctx.fillStyle = 'white';
+    ctx.fillRect(player.x, player.y, player.width, player.height);
     ctx.drawImage(playerImg, player.x, player.y, player.width, player.height);
+    
+    // Bordure pour debug
+    ctx.strokeStyle = 'red';
+    ctx.lineWidth = 2;
+    ctx.strokeRect(player.x, player.y, player.width, player.height);
   } else {
     // Afficher l'emoji en attendant le chargement ou si emoji sélectionné
-    ctx.font = '30px Arial';
-    ctx.fillText(player.character, player.x, player.y + 25);
+    ctx.font = '50px Arial';
+    ctx.fillText(player.character, player.x, player.y + 45);
   }
 }
 
@@ -1087,13 +1095,13 @@ function endGame() {
 function changeCharacter(char) {
   if(char === 'mario') {
     player.useImage = true;
-    player.width = 35;
-    player.height = 35;
+    player.width = 60;
+    player.height = 60;
   } else {
     player.useImage = false;
     player.character = char;
-    player.width = 30;
-    player.height = 30;
+    player.width = 50;
+    player.height = 50;
   }
   document.querySelectorAll('.character-btn').forEach(btn => {
     btn.classList.remove('ring-4', 'ring-red-500');
