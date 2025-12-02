@@ -346,287 +346,56 @@
       left: 100%;
     }
 
-    /* Prize Wheel Styles */
-    #prizeWheelContainer {
-      position: relative;
-      width: 100%;
-      background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
-      padding: 2rem 1rem;
-      text-align: center;
-      overflow: hidden;
-      transition: opacity 0.5s ease, max-height 0.5s ease;
-    }
-
-    #prizeWheelContainer.wheel-hidden {
-      opacity: 0 !important;
-      max-height: 0 !important;
-      padding: 0 !important;
-      margin: 0 !important;
-      overflow: hidden !important;
-      pointer-events: none !important;
-    }
-
-    #prizeWheelContainer h2 {
-      font-size: 1.5rem;
-      font-weight: bold;
-      color: #dc2626;
-      margin-bottom: 1.5rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    @media (min-width: 768px) {
-      #prizeWheelContainer h2 {
-        font-size: 2rem;
-      }
-    }
-
-    .wheel-wrapper {
-      position: relative;
-      width: 300px;
-      height: 300px;
-      margin: 0 auto;
-    }
-
-    @media (min-width: 768px) {
-      .wheel-wrapper {
-        width: 380px;
-        height: 380px;
-      }
-    }
-
-    .wheel {
-      position: relative;
+    /* Splash Screen */
+    #splash-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
       width: 100%;
       height: 100%;
-      border-radius: 50%;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-      background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
-    }
-
-    /* Rotating container for circles */
-    .wheel-segments {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      transition: transform 4s cubic-bezier(0.25, 0.1, 0.25, 1);
-    }
-
-    .wheel-segments.spinning {
-      transition: transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99);
-    }
-
-    /* Individual circular segments */
-    .wheel-circle {
-      position: absolute;
-      width: 65px;
-      height: 65px;
-      border-radius: 50%;
+      background: linear-gradient(135deg, #ffffff 0%, #f3f4f6 100%);
       display: flex;
-      align-items: center;
       justify-content: center;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-      top: 50%;
-      left: 50%;
-    }
-
-    @media (min-width: 768px) {
-      .wheel-circle {
-        width: 80px;
-        height: 80px;
-      }
-    }
-
-    /* Position circles around the wheel */
-    .wheel-circle:nth-child(1) {
-      background: linear-gradient(135deg, #ef4444, #dc2626);
-      transform: translate(-50%, -50%) translateY(-110px);
-    }
-
-    .wheel-circle:nth-child(2) {
-      background: linear-gradient(135deg, #f59e0b, #ea580c);
-      transform: translate(-50%, -50%) translate(78px, -78px);
-    }
-
-    .wheel-circle:nth-child(3) {
-      background: linear-gradient(135deg, #eab308, #ca8a04);
-      transform: translate(-50%, -50%) translateX(110px);
-    }
-
-    .wheel-circle:nth-child(4) {
-      background: linear-gradient(135deg, #22c55e, #16a34a);
-      transform: translate(-50%, -50%) translate(78px, 78px);
-    }
-
-    .wheel-circle:nth-child(5) {
-      background: linear-gradient(135deg, #3b82f6, #2563eb);
-      transform: translate(-50%, -50%) translateY(110px);
-    }
-
-    .wheel-circle:nth-child(6) {
-      background: linear-gradient(135deg, #8b5cf6, #7c3aed);
-      transform: translate(-50%, -50%) translate(-78px, 78px);
-    }
-
-    .wheel-circle:nth-child(7) {
-      background: linear-gradient(135deg, #ec4899, #db2777);
-      transform: translate(-50%, -50%) translateX(-110px);
-    }
-
-    .wheel-circle:nth-child(8) {
-      background: linear-gradient(135deg, #06b6d4, #0891b2);
-      transform: translate(-50%, -50%) translate(-78px, -78px);
-    }
-
-    @media (min-width: 768px) {
-      .wheel-circle:nth-child(1) {
-        transform: translate(-50%, -50%) translateY(-140px);
-      }
-
-      .wheel-circle:nth-child(2) {
-        transform: translate(-50%, -50%) translate(99px, -99px);
-      }
-
-      .wheel-circle:nth-child(3) {
-        transform: translate(-50%, -50%) translateX(140px);
-      }
-
-      .wheel-circle:nth-child(4) {
-        transform: translate(-50%, -50%) translate(99px, 99px);
-      }
-
-      .wheel-circle:nth-child(5) {
-        transform: translate(-50%, -50%) translateY(140px);
-      }
-
-      .wheel-circle:nth-child(6) {
-        transform: translate(-50%, -50%) translate(-99px, 99px);
-      }
-
-      .wheel-circle:nth-child(7) {
-        transform: translate(-50%, -50%) translateX(-140px);
-      }
-
-      .wheel-circle:nth-child(8) {
-        transform: translate(-50%, -50%) translate(-99px, -99px);
-      }
-    }
-
-    .wheel-circle .euro-symbol {
-      color: #fff;
-      font-size: 1.75rem;
-      font-weight: bold;
-      text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.4);
-    }
-
-    @media (min-width: 768px) {
-      .wheel-circle .euro-symbol {
-        font-size: 2.25rem;
-      }
-    }
-
-    /* Fixed center button */
-    .wheel-center {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 90px;
-      height: 90px;
-      background: linear-gradient(135deg, #dc2626, #b91c1c);
-      border-radius: 50%;
-      display: flex;
       align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
-      transition: all 0.3s ease;
-      z-index: 10;
-      border: 5px solid #fff;
+      z-index: 99999;
+      transition: opacity 0.8s ease-out, visibility 0.8s;
     }
 
-    @media (min-width: 768px) {
-      .wheel-center {
-        width: 110px;
-        height: 110px;
+    .splash-logo {
+      width: 250px;
+      max-width: 80%;
+      animation: logo-modern-entrance 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+      filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.15));
+    }
+
+    @keyframes logo-modern-entrance {
+      0% {
+        opacity: 0;
+        transform: scale(0.8) translateY(20px);
+        filter: blur(10px);
       }
-    }
 
-    .wheel-center:hover {
-      transform: translate(-50%, -50%) scale(1.1);
-      box-shadow: 0 8px 25px rgba(220, 38, 38, 0.6);
-    }
-
-    .wheel-center:active {
-      transform: translate(-50%, -50%) scale(0.95);
-    }
-
-    .wheel-center span {
-      color: #fff;
-      font-size: 1rem;
-      font-weight: bold;
-      text-align: center;
-      line-height: 1.2;
-      padding: 0.5rem;
-    }
-
-    @media (min-width: 768px) {
-      .wheel-center span {
-        font-size: 1.125rem;
-      }
-    }
-
-    .wheel-pointer {
-      position: absolute;
-      top: -15px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 0;
-      height: 0;
-      border-left: 18px solid transparent;
-      border-right: 18px solid transparent;
-      border-top: 35px solid #fbbf24;
-      z-index: 11;
-      filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.3));
-    }
-
-    .wheel.spinning {
-      transition: transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99);
-    }
-
-    /* Timer overlay on modal */
-    .timer-overlay {
-      position: absolute;
-      top: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(220, 38, 38, 0.95);
-      color: white;
-      padding: 0.75rem 1.5rem;
-      border-radius: 9999px;
-      font-weight: bold;
-      font-size: 1rem;
-      z-index: 10002;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-      animation: pulse 1s infinite;
-    }
-
-    @keyframes pulse {
-
-      0%,
       100% {
         opacity: 1;
+        transform: scale(1) translateY(0);
+        filter: blur(0);
       }
+    }
 
-      50% {
-        opacity: 0.8;
-      }
+    .splash-hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
     }
   </style>
 </head>
 
 <body class="bg-gray-100 text-black">
+
+  <!-- Splash Screen -->
+  <div id="splash-screen">
+    <img src="assets/Startup_logo.webp" alt="Bienvenue" class="splash-logo">
+  </div>
 
   <!-- Modal -->
   <div id="imageModal">
@@ -692,29 +461,6 @@
     });
   </script>
 
-
-  <!-- PRIZE WHEEL -->
-  <section id="prizeWheelContainer">
-    <h2>🎰 Cliquez pour découvrir le prochain partenaire 🎰</h2>
-    <div class="wheel-wrapper">
-      <div class="wheel-pointer"></div>
-      <div class="wheel" id="wheel">
-        <div class="wheel-segments" id="wheelSegments">
-          <div class="wheel-circle"><span class="euro-symbol">€</span></div>
-          <div class="wheel-circle"><span class="euro-symbol">€</span></div>
-          <div class="wheel-circle"><span class="euro-symbol">€</span></div>
-          <div class="wheel-circle"><span class="euro-symbol">€</span></div>
-          <div class="wheel-circle"><span class="euro-symbol">€</span></div>
-          <div class="wheel-circle"><span class="euro-symbol">€</span></div>
-          <div class="wheel-circle"><span class="euro-symbol">€</span></div>
-          <div class="wheel-circle"><span class="euro-symbol">€</span></div>
-        </div>
-        <div class="wheel-center" id="spinButton">
-          <span>Tourner</span>
-        </div>
-      </div>
-    </div>
-  </section>
 
   <!-- HERO -->
   <section class="bg-white text-gray-900 text-center py-12 px-4 shadow-md">
@@ -1322,93 +1068,6 @@
     }
 
 
-    // ===== PRIZE WHEEL =====
-    const wheelSegments = document.getElementById('wheelSegments');
-    const spinButton = document.getElementById('spinButton');
-    let isSpinning = false;
-    let currentRotation = 0;
-
-    // CONFIGURATION
-    const defaultPartnerImage = 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/MaisonB.webp';
-    const AUTO_CLOSE_DELAY = 5; // Timer duration in seconds (modify this value to adapt)
-
-    spinButton.addEventListener('click', spinWheel);
-
-    function spinWheel() {
-      if (isSpinning) return;
-
-      isSpinning = true;
-      spinButton.style.pointerEvents = 'none';
-
-      // Random rotation between 3-5 full spins plus random angle
-      const minSpins = 3;
-      const maxSpins = 5;
-      const spins = Math.floor(Math.random() * (maxSpins - minSpins + 1)) + minSpins;
-      const randomAngle = Math.floor(Math.random() * 360);
-      const totalRotation = (spins * 360) + randomAngle;
-
-      currentRotation += totalRotation;
-
-      wheelSegments.classList.add('spinning');
-      wheelSegments.style.transform = `rotate(${currentRotation}deg)`;
-
-      // After spin completes, automatically show photo
-      setTimeout(() => {
-        wheelSegments.classList.remove('spinning');
-
-        // Hide the wheel container
-        const wheelContainer = document.getElementById('prizeWheelContainer');
-        wheelContainer.style.display = 'none'; // Force hide
-        wheelContainer.classList.add('wheel-hidden');
-
-        // Open modal automatically with default image and configured timer
-        openModalWithTimer(defaultPartnerImage, AUTO_CLOSE_DELAY);
-
-        // Reset for next spin
-        setTimeout(() => {
-          isSpinning = false;
-          spinButton.style.pointerEvents = 'auto';
-        }, 500);
-      }, 4000); // 4 seconds spin duration
-    }
-
-    // showPartnerSelection function removed as it's no longer needed
-
-    function openModalWithTimer(url, seconds) {
-      const modal = document.getElementById('imageModal');
-      const modalImg = document.getElementById('modalImg');
-
-      modalImg.src = url;
-      modal.classList.add('active');
-
-      // Create timer overlay
-      let timerOverlay = document.getElementById('timerOverlay');
-      if (!timerOverlay) {
-        timerOverlay = document.createElement('div');
-        timerOverlay.id = 'timerOverlay';
-        timerOverlay.className = 'timer-overlay';
-        modal.appendChild(timerOverlay);
-      }
-
-      let timeLeft = seconds;
-      timerOverlay.textContent = `Fermeture dans ${timeLeft}s`;
-      timerOverlay.style.display = 'block';
-
-      const countdown = setInterval(() => {
-        timeLeft--;
-        timerOverlay.textContent = `Fermeture dans ${timeLeft}s`;
-
-        if (timeLeft <= 0) {
-          clearInterval(countdown);
-          closeModal();
-          timerOverlay.style.display = 'none';
-        }
-      }, 1000);
-
-      // Store interval ID to clear if user closes manually
-      modal.dataset.countdownId = countdown;
-    }
-
     // ===== Modal =====
     const modal = document.getElementById('imageModal');
     const modalImg = document.getElementById('modalImg');
@@ -1421,25 +1080,6 @@
     }
 
     function closeModal() {
-      // Clear countdown timer if exists
-      if (modal.dataset.countdownId) {
-        clearInterval(parseInt(modal.dataset.countdownId));
-        delete modal.dataset.countdownId;
-      }
-
-      // Hide timer overlay
-      const timerOverlay = document.getElementById('timerOverlay');
-      if (timerOverlay) {
-        timerOverlay.style.display = 'none';
-      }
-
-      // Show the wheel container again
-      const wheelContainer = document.getElementById('prizeWheelContainer');
-      if (wheelContainer) {
-        wheelContainer.style.display = 'block'; // Force show
-        wheelContainer.classList.remove('wheel-hidden');
-      }
-
       modal.classList.remove('active');
       if (history.state && history.state.modalOpen) history.back();
     }
@@ -1607,6 +1247,18 @@
         }
       });
     }
+    // Splash Screen Logic
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        const splash = document.getElementById('splash-screen');
+        if (splash) {
+          splash.classList.add('splash-hidden');
+          setTimeout(() => {
+            splash.remove();
+          }, 800);
+        }
+      }, 2500);
+    });
   </script>
 </body>
 
