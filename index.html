@@ -357,11 +357,13 @@
       transition: opacity 0.5s ease, max-height 0.5s ease;
     }
 
-    #prizeWheelContainer.hidden {
-      opacity: 0;
-      max-height: 0;
-      padding: 0;
-      overflow: hidden;
+    #prizeWheelContainer.wheel-hidden {
+      opacity: 0 !important;
+      max-height: 0 !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      overflow: hidden !important;
+      pointer-events: none !important;
     }
 
     #prizeWheelContainer h2 {
@@ -1356,7 +1358,7 @@
 
         // Hide the wheel container
         const wheelContainer = document.getElementById('prizeWheelContainer');
-        wheelContainer.classList.add('hidden');
+        wheelContainer.classList.add('wheel-hidden');
 
         // Open modal automatically with default image and configured timer
         openModalWithTimer(defaultPartnerImage, AUTO_CLOSE_DELAY);
@@ -1433,7 +1435,7 @@
       // Show the wheel container again
       const wheelContainer = document.getElementById('prizeWheelContainer');
       if (wheelContainer) {
-        wheelContainer.classList.remove('hidden');
+        wheelContainer.classList.remove('wheel-hidden');
       }
 
       modal.classList.remove('active');
