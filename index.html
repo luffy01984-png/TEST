@@ -828,12 +828,14 @@
       <div class="mb-3">
         <label class="text-sm font-semibold block mb-2">Choisis ton personnage:</label>
         <div class="flex gap-2 justify-center">
+          <button onclick="changeCharacter('mario')" class="character-btn p-2 bg-gray-100 rounded-lg hover:bg-red-100 transition ring-4 ring-red-500">
+            <img src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/mario.jpg" alt="Mario" class="w-10 h-10 object-cover rounded">
+          </button>
           <button onclick="changeCharacter('🚛')" class="character-btn text-3xl p-2 bg-gray-100 rounded-lg hover:bg-red-100 transition">🚛</button>
           <button onclick="changeCharacter('🏃')" class="character-btn text-3xl p-2 bg-gray-100 rounded-lg hover:bg-red-100 transition">🏃</button>
           <button onclick="changeCharacter('🐱')" class="character-btn text-3xl p-2 bg-gray-100 rounded-lg hover:bg-red-100 transition">🐱</button>
           <button onclick="changeCharacter('🦊')" class="character-btn text-3xl p-2 bg-gray-100 rounded-lg hover:bg-red-100 transition">🦊</button>
           <button onclick="changeCharacter('🚀')" class="character-btn text-3xl p-2 bg-gray-100 rounded-lg hover:bg-red-100 transition">🚀</button>
-          <button onclick="changeCharacter('⚽')" class="character-btn text-3xl p-2 bg-gray-100 rounded-lg hover:bg-red-100 transition">⚽</button>
         </div>
       </div>
       
@@ -880,17 +882,22 @@ let score = 0;
 let highScore = localStorage.getItem('jumpHighScore') || 0;
 highScoreDisplay.textContent = highScore;
 
+// Charger l'image du personnage Mario
+const playerImg = new Image();
+playerImg.src = 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/mario.jpg';
+
 // Personnage
 let player = {
   x: canvas.width / 2 - 15,
   y: canvas.height - 150,
-  width: 30,
-  height: 30,
+  width: 35,
+  height: 35,
   velocityY: 0,
   velocityX: 0,
   gravity: 0.4,
   jumpPower: -12,
-  character: '🚛'
+  character: '🚛',
+  useImage: true
 };
 
 // Plateformes
@@ -911,11 +918,19 @@ function initGame() {
   player.velocityY = 0;
   player.velocityX = 0;
   
-  // Créer plateformes initiales
-  for(let i = 0; i < 8; i++) {
+  // Plateforme de départ juste sous le joueur
+  platforms.push({
+    x: canvas.width / 2 - platformWidth / 2,
+    y: canvas.height - 100,
+    width: platformWidth,
+    height: platformHeight
+  });
+  
+  // Créer plateformes initiales FACILES (plus proches)
+  for(let i = 1; i < 10; i++) {
     platforms.push({
       x: Math.random() * (canvas.width - platformWidth),
-      y: canvas.height - 100 - (i * 70),
+      y: canvas.height - 100 - (i * 50), // Espacement réduit de 70 à 50
       width: platformWidth,
       height: platformHeight
     });
@@ -999,7 +1014,7 @@ function updatePlayer() {
     while(platforms[platforms.length - 1].y > 0) {
       platforms.push({
         x: Math.random() * (canvas.width - platformWidth),
-        y: platforms[platforms.length - 1].y - 70 - Math.random() * 30,
+        y: platforms[platforms.length - 1].y - 50 - Math.random() * 20, // Plus rapprochées
         width: platformWidth,
         height: platformHeight
       });
@@ -1016,8 +1031,14 @@ function updatePlayer() {
 }
 
 function drawPlayer() {
-  ctx.font = '30px Arial';
-  ctx.fillText(player.character, player.x, player.y + 25);
+  if(player.useImage && playerImg.complete) {
+    // Dessiner l'image Mario
+    ctx.drawImage(playerImg, player.x, player.y, player.width, player.height);
+  } else {
+    // Afficher l'emoji en attendant le chargement ou si emoji sélectionné
+    ctx.font = '30px Arial';
+    ctx.fillText(player.character, player.x, player.y + 25);
+  }
 }
 
 function drawPlatforms() {
@@ -1064,7 +1085,16 @@ function endGame() {
 }
 
 function changeCharacter(char) {
-  player.character = char;
+  if(char === 'mario') {
+    player.useImage = true;
+    player.width = 35;
+    player.height = 35;
+  } else {
+    player.useImage = false;
+    player.character = char;
+    player.width = 30;
+    player.height = 30;
+  }
   document.querySelectorAll('.character-btn').forEach(btn => {
     btn.classList.remove('ring-4', 'ring-red-500');
   });
