@@ -1067,6 +1067,90 @@
         }
       });
     }
+    <!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Roue Interactive</title>
+<style>
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background: #f0f0f0;
+        flex-direction: column;
+        font-family: sans-serif;
+    }
+
+    #container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        transition: opacity 1s ease;
+    }
+
+    /* La roue */
+    #wheel {
+        width: 250px;
+        height: 250px;
+        background: url("roue.png") center/cover no-repeat;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: transform 4s cubic-bezier(.17,.67,.32,1.34);
+    }
+
+    /* Photo qui apparaît après */
+    #result-image {
+        margin-top: 20px;
+        width: 200px;
+        display: none;
+    }
+</style>
+</head>
+<body>
+
+<div id="container">
+    <h2>Clique sur la roue</h2>
+
+    <div id="wheel"></div>
+
+    <img id="result-image" src="photo.jpg" alt="Résultat">
+</div>
+
+<script>
+    const wheel = document.getElementById("wheel");
+    const resultImg = document.getElementById("result-image");
+    const container = document.getElementById("container");
+
+    wheel.addEventListener("click", () => {
+
+        const randomRotation = 720 + Math.floor(Math.random() * 1080);
+        wheel.style.transform = `rotate(${randomRotation}deg)`;
+
+        resultImg.style.display = "none"; // Cachée avant arrêt
+
+        // Après l'arrêt de la roue
+        setTimeout(() => {
+            resultImg.style.display = "block";
+
+            // Après 1 seconde → faire disparaître l'ensemble
+            setTimeout(() => {
+                container.style.opacity = 0;
+
+                // Retirer complètement du DOM après la transition
+                setTimeout(() => {
+                    container.style.display = "none";
+                }, 1000);
+
+            }, 1000);
+
+        }, 4000);
+    });
+</script>
+
+</body>
+</html>
   </script>
 </body>
 
