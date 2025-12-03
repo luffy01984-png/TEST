@@ -54,7 +54,7 @@ body {
     left: 5%; /* Légèrement à gauche */
     width: 60px; /* Plus large */
     height: 75px; /* Plus grand que l'original (taille personnalisée) */
-    background-image: url('URL_DE_VOTRE_IMAGE_DE_PERSONNAGE_MARIO.png'); /* ⬅️ **À REMPLACER** */
+    background-image: url('https://raw.githubusercontent.com/luffy01984-png/TEST/main/chris.jpg'); /* ⬅️ **À REMPLACER** */
     background-size: contain;
     background-repeat: no-repeat;
     background-position: bottom;
