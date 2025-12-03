@@ -1,1 +1,154 @@
+/* Réinitialisation de base */
+body {
+    margin: 0;
+    overflow: hidden; /* Empêche le défilement */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Prend toute la hauteur de l'écran */
+    background-color: #f7f7f7;
+    font-family: Arial, sans-serif;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent; /* Pour les mobiles */
+}
+
+/* 📱 Conteneur principal pour le mode grand écran mobile (Game-container) */
+#game-container {
+    width: 100%; /* Prend toute la largeur */
+    max-width: 1000px; /* Limite maximale pour les très grands écrans/bureaux */
+    height: 100vh; /* Prend toute la hauteur visible */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+/* 🕹️ Monde du jeu (Game-world) */
+#game-world {
+    position: relative;
+    width: 95%; /* Un peu de marge */
+    height: 70%; /* Une grande partie de l'écran */
+    max-height: 600px; /* Limite la hauteur sur grand écran */
+    border-bottom: 3px solid #333; /* Le sol */
+    background-color: #ffffff;
+    overflow: hidden;
+    touch-action: manipulation; /* Améliore la réactivité tactile */
+}
+
+/* Le sol (pour l'animation de défilement) */
+#sol {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 200%; /* Plus large que le monde pour l'effet de défilement */
+    height: 3px; /* La même hauteur que la bordure du game-world pour faire illusion */
+    background-color: #333;
+    animation: none; /* L'animation sera ajoutée par JS */
+    z-index: 10;
+}
+
+/* 🏃 Personnage (Mario/Dino) */
+#personnage {
+    position: absolute;
+    bottom: 3px; /* Posé sur le sol */
+    left: 5%; /* Légèrement à gauche */
+    width: 60px; /* Plus large */
+    height: 75px; /* Plus grand que l'original (taille personnalisée) */
+    background-image: url('URL_DE_VOTRE_IMAGE_DE_PERSONNAGE_MARIO.png'); /* ⬅️ **À REMPLACER** */
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: bottom;
+    z-index: 20;
+}
+
+/* 🌵 Obstacles (Cactus) */
+.obstacle {
+    position: absolute;
+    bottom: 3px; /* Posé sur le sol */
+    width: 30px; /* Largeur de base */
+    height: 60px; /* Hauteur de base */
+    background-color: green; /* Couleur temporaire du cactus */
+    /* Vous pouvez remplacer la couleur par une image de cactus si vous le souhaitez */
+    z-index: 15;
+}
+
+/* ☁️ Nuages (défilement lent) */
+.nuage {
+    position: absolute;
+    top: 10%;
+    width: 80px;
+    height: 30px;
+    background-color: #ddd;
+    border-radius: 50%;
+    box-shadow: 10px 0 0 -5px #ddd, 25px 0 0 -10px #ddd;
+    z-index: 5;
+    animation: nuage-move linear infinite;
+}
+
+/* Affichage du score */
+#score, #high-score {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 1.5em;
+    color: #555;
+    z-index: 50;
+}
+
+#high-score {
+    top: 50px;
+    font-size: 0.9em;
+}
+
+/* 🛑 Écran Game Over */
+#game-over {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 3em;
+    color: #555;
+    font-weight: bold;
+    display: none;
+    z-index: 100;
+}
+
+#restart-message {
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.2em;
+    color: #777;
+    display: none;
+    cursor: pointer;
+    z-index: 100;
+}
+
+/* 🌟 Effet de saut (appliqué par JS) */
+.saut {
+    animation: jump 0.6s ease-out;
+}
+
+/* Animation de saut */
+@keyframes jump {
+    0% { bottom: 3px; }
+    50% { bottom: 200px; } /* Hauteur de saut */
+    100% { bottom: 3px; }
+}
+
+/* Animation de défilement du sol/arrière-plan */
+@keyframes sol-move {
+    from { background-position: 0 0; }
+    to { background-position: -600px 0; }
+}
+
+/* Animation de défilement des nuages */
+@keyframes nuage-move {
+    from { transform: translateX(100vw); }
+    to { transform: translateX(-100vw); }
+}
+
+/* Media query pour le mode paysage sur mobile si nécessaire (moins important avec height: 100vh) */
+/* @media (orientation: landscape) and (max-width: 900px) { ... } */
 
