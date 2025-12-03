@@ -216,7 +216,7 @@ function drawSnow() {
     const xPos = Math.floor(flake.x);
     if (xPos >= 0 && xPos < canvas.width) {
       if (flake.y >= groundLevel - accumulatedSnow[xPos] - flake.radius) {
-        accumulatedSnow[xPos] = Math.min(accumulatedSnow[xPos] + 0.5, 60);
+        accumulatedSnow[xPos] = Math.min(accumulatedSnow[xPos] + 50, 60);
         flake.y = -10;
         flake.x = Math.random() * canvas.width;
       }
