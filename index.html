@@ -374,7 +374,7 @@
     /* Gift Boxes with String */
     .gift-container {
       position: absolute;
-      top: -200px;
+      top: 0;
       z-index: 3;
       animation: dropDown 3s ease-out forwards, swing 2s ease-in-out 3s infinite;
     }
@@ -472,14 +472,14 @@
       right: -12px;
     }
 
-    /* Drop down animation */
+    /* Drop down animation - From top of hero to above promo box */
     @keyframes dropDown {
       0% {
-        top: -200px;
+        top: 0;
       }
 
       100% {
-        top: 35%;
+        top: 50%;
       }
     }
 
