@@ -348,9 +348,9 @@
 
     /* Hero Section - Blue and White Theme */
     #hero-section h1 {
-      color: #1e40af !important;
-      /* Blue */
-      text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.8);
+      color: #ffffff !important;
+      /* White for main title */
+      text-shadow: 2px 2px 4px rgba(30, 64, 175, 0.8);
     }
 
     #hero-section h1 .text-red-400 {
@@ -389,17 +389,17 @@
       animation-delay: 0.5s, 3.5s;
     }
 
-    /* String/Ficelle */
+    /* String/Ficelle - Extended to top */
     .gift-string {
       width: 2px;
-      height: 100px;
+      height: 250px;
       background: linear-gradient(to bottom, #8b4513, #654321);
       margin: 0 auto;
       position: relative;
       transform-origin: top center;
     }
 
-    /* Gift Box */
+    /* Gift Box - New style with dots pattern */
     .gift-box {
       width: 60px;
       height: 60px;
@@ -410,30 +410,34 @@
       margin: 0 auto;
     }
 
-    /* Ribbon vertical */
+    /* Polka dots pattern */
     .gift-box::before {
       content: '';
       position: absolute;
       top: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 12px;
+      left: 0;
+      width: 100%;
       height: 100%;
-      background: linear-gradient(to right, #fbbf24, #f59e0b);
-      box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+      background-image:
+        radial-gradient(circle, #fbbf24 2px, transparent 2px),
+        radial-gradient(circle, #fbbf24 2px, transparent 2px);
+      background-size: 15px 15px;
+      background-position: 0 0, 7.5px 7.5px;
+      border-radius: 8px;
+      opacity: 0.6;
     }
 
-    /* Ribbon horizontal */
+    /* Decorative shine */
     .gift-box::after {
       content: '';
       position: absolute;
-      top: 50%;
-      left: 0;
-      transform: translateY(-50%);
-      width: 100%;
-      height: 12px;
-      background: linear-gradient(to bottom, #fbbf24, #f59e0b);
-      box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+      top: 5px;
+      left: 5px;
+      width: 20px;
+      height: 20px;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      filter: blur(3px);
     }
 
     /* Bow on top */
