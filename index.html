@@ -1,416 +1,317 @@
 <!doctype html>
 <html lang="fr">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Runner - Jeu (version GitHub Pages)</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<title>Runner Mobile</title>
+
 <style>
-  :root{
-    --bg:#f7f7f7;
-    --ground:#444;
-    --text:#222;
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: #f7f7f7;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    touch-action: none;
+    font-family: system-ui, Arial;
   }
-  html,body{height:100%;margin:0;font-family:Inter,system-ui,Arial,sans-serif;background:var(--bg);color:var(--text);}
-  .wrap{display:flex;flex-direction:column;align-items:center;gap:12px;padding:18px;}
-  h1{margin:6px 0;font-size:18px;}
-  canvas{background:linear-gradient(#f7f7f7,#eaeaea);border-radius:8px;box-shadow:0 6px 18px rgba(0,0,0,0.08);}
-  .controls{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
-  button{padding:8px 12px;border-radius:8px;border:1px solid #ddd;background:white;cursor:pointer;}
-  .info{font-size:13px;color:#555;}
-  .row{display:flex;gap:8px;align-items:center;}
-  .small{font-size:12px;color:#666;}
-  footer{font-size:12px;color:#666;margin-top:8px;}
-  @media (max-width:480px){
-    canvas{width:320px;height:160px;}
+
+  /* CANVAS PLEIN ÉCRAN */
+  #game {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 50vh; /* hauteur idéale smartphone */
+    background: #e8e8e8;
+  }
+
+  /* BOUTONS UI */
+  .ui {
+    position: absolute;
+    bottom: 12px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+  }
+
+  .ui button {
+    padding: 12px 20px;
+    font-size: 18px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    background: white;
+    cursor: pointer;
   }
 </style>
 </head>
+
 <body>
-  <div class="wrap">
-    <h1>Runner — jeu pour GitHub Pages</h1>
-    <canvas id="game" width="800" height="200" style="width:800px;height:200px;"></canvas>
-    <div class="controls">
-      <div class="row">
-        <button id="startBtn">Démarrer</button>
-        <button id="muteBtn">🔊 Son</button>
-        <button id="resetBtn">Réinitialiser score</button>
-      </div>
-      <div class="info">
-        Touche: <b>Espace</b> ou <b>Flèche ↑</b> — Touchez l'écran pour sauter.
-      </div>
-    </div>
-    <div class="small">Appuie sur Espace pour sauter. Ta progression est sauvegardée localement.</div>
-    <footer>Remplace le personnage en modifiant l'URL dans la variable <code>playerImgUrl</code> dans le script.</footer>
-  </div>
+
+<canvas id="game" width="800" height="200"></canvas>
+
+<div class="ui">
+  <button id="startBtn">Démarrer</button>
+  <button id="muteBtn">🔊</button>
+  <button id="resetBtn">Reset</button>
+</div>
 
 <script>
 /* ------------------ CONFIG ------------------ */
-// Image fournie par l'utilisateur (URL raw GitHub)
-const playerImgUrl = 'https://raw.githubusercontent.com/luffy01984-png/TEST/main/chris.jpg';
 
-// gameplay params (modifiable)
+/* ► Ton image transparente */
+const playerImgUrl = "https://raw.githubusercontent.com/luffy01984-png/TEST/main/chris.jpg";
+
+/* Dimensions logiques du jeu */
 const CANVAS_W = 800, CANVAS_H = 200;
+
+/* Joueur plus grand */
+const PLAYER_W = 90;
+const PLAYER_H = 90;
+
 const GROUND_Y = 160;
 const GRAVITY = 0.9;
-const JUMP_V = -14;
-const OBSTACLE_MIN_GAP = 900; // ms min between obstacles
-const OBSTACLE_MAX_GAP = 1800; // ms max
-const INITIAL_SPEED = 5;
-const SPEED_INCREASE_EVERY = 1000; // points
-const SPEED_SCALE = 0.1;
+const JUMP_V = -15;
 
-/* ------------------ SETUP ------------------ */
-const canvas = document.getElementById('game');
-const ctx = canvas.getContext('2d');
-canvas.width = CANVAS_W; canvas.height = CANVAS_H;
+const OBSTACLE_MIN_GAP = 700;
+const OBSTACLE_MAX_GAP = 1500;
 
-const startBtn = document.getElementById('startBtn');
-const muteBtn = document.getElementById('muteBtn');
-const resetBtn = document.getElementById('resetBtn');
+const INITIAL_SPEED = 6;
+const SPEED_SCALE = 0.12;
 
-let lastTime = 0, acc = 0;
+/* ------------------ CANVAS ------------------ */
+const canvas = document.getElementById("game");
+const ctx = canvas.getContext("2d");
+
+canvas.width = CANVAS_W;
+canvas.height = CANVAS_H;
+
+/* ------------------ UI ------------------ */
+const startBtn = document.getElementById("startBtn");
+const muteBtn = document.getElementById("muteBtn");
+const resetBtn = document.getElementById("resetBtn");
+
 let running = false;
-let paused = false;
+let lastTime = 0;
 let speed = INITIAL_SPEED;
 let score = 0;
-let highScore = parseInt(localStorage.getItem('runner_highscore') || '0',10);
+let highScore = parseInt(localStorage.getItem("runner_highscore") || "0", 10);
 let soundsOn = true;
 
-/* ------------------ LOAD PLAYER IMAGE ------------------ */
+/* ------------------ PLAYER IMAGE ------------------ */
 const playerImg = new Image();
-playerImg.crossOrigin = 'anonymous';
+playerImg.crossOrigin = "anonymous";
 playerImg.src = playerImgUrl;
 let playerReady = false;
-playerImg.onload = () => { playerReady = true; };
-playerImg.onerror = () => {
-  playerReady = false;
-  console.warn('Impossible de charger l\'image du joueur — utilisation d\'une forme par défaut.');
-};
+playerImg.onload = () => playerReady = true;
 
-/* ------------------ AUDIO (simple beeps) ------------------ */
+/* ------------------ AUDIO ------------------ */
 let audioCtx;
-function beep(freq=440,dur=0.08, vol=0.15) {
-  if(!soundsOn) return;
-  try{
-    if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    const o = audioCtx.createOscillator();
-    const g = audioCtx.createGain();
-    o.type = 'sine';
-    o.frequency.value = freq;
-    g.gain.value = vol;
-    o.connect(g); g.connect(audioCtx.destination);
-    o.start();
-    o.stop(audioCtx.currentTime + dur);
-  }catch(e){ /* ignore */ }
+function beep(freq=500, dur=0.08, vol=0.2) {
+  if (!soundsOn) return;
+  try {
+    if (!audioCtx) audioCtx = new AudioContext();
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.frequency.value = freq;
+    gain.gain.value = vol;
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.start();
+    osc.stop(audioCtx.currentTime + dur);
+  } catch(e){}
 }
 
-/* ------------------ ENTITIES ------------------ */
+/* ------------------ ENTITÉS ------------------ */
 const player = {
-  x: 60,
-  y: GROUND_Y - 40,
-  w: 40,
-  h: 40,
+  x: 80,
+  y: GROUND_Y - PLAYER_H,
+  w: PLAYER_W,
+  h: PLAYER_H,
   vy: 0,
   onGround: true,
-  draw(){
-    if(playerReady){
-      // draw the image resized to player's box preserving aspect ratio
-      const ratio = playerImg.width / playerImg.height;
-      let drawW = this.w*1.2, drawH = drawW / ratio;
-      if(drawH > this.h*1.2){ drawH = this.h*1.2; drawW = drawH * ratio; }
-      ctx.drawImage(playerImg, this.x - 2, this.y - (drawH - this.h)/2, drawW, drawH);
-    } else {
-      // placeholder: rounded rect
-      ctx.fillStyle = '#0b6';
-      roundRect(ctx, this.x, this.y, this.w, this.h, 6);
-    }
-  },
-  jump(){
-    if(this.onGround){
+
+  jump() {
+    if (this.onGround) {
       this.vy = JUMP_V;
       this.onGround = false;
-      beep(880,0.06);
+      beep(900,0.08);
     }
   },
-  update(dt){
+
+  update(dt) {
     this.vy += GRAVITY * dt;
     this.y += this.vy * dt;
-    if(this.y >= GROUND_Y - this.h){
+
+    if (this.y >= GROUND_Y - this.h) {
       this.y = GROUND_Y - this.h;
       this.vy = 0;
       this.onGround = true;
     }
   },
-  getBox(){ return {x:this.x, y:this.y, w:this.w, h:this.h}; }
+
+  draw() {
+    if (playerReady) {
+      ctx.drawImage(playerImg, this.x, this.y, this.w, this.h);
+    } else {
+      ctx.fillStyle = "green";
+      ctx.fillRect(this.x, this.y, this.w, this.h);
+    }
+  },
+
+  box() {
+    return {x:this.x, y:this.y, w:this.w, h:this.h};
+  }
 };
 
-function roundRect(ctx, x, y, w, h, r){
-  ctx.beginPath();
-  ctx.moveTo(x+r, y);
-  ctx.arcTo(x+w, y, x+w, y+h, r);
-  ctx.arcTo(x+w, y+h, x, y+h, r);
-  ctx.arcTo(x, y+h, x, y, r);
-  ctx.arcTo(x, y, x+w, y, r);
-  ctx.closePath();
-  ctx.fill();
-}
-
-/* obstacles array */
 let obstacles = [];
-function spawnObstacle(){
-  const h = 20 + Math.random()*40;
-  const type = Math.random() > 0.6 ? 'tall' : 'short';
-  const w = (type==='tall') ? (20 + Math.random()*20) : (12 + Math.random()*18);
-  const obs = {
-    x: CANVAS_W + 10,
+
+function spawnObstacle() {
+  const h = 20 + Math.random()*50;
+  const w = 20 + Math.random()*40;
+
+  obstacles.push({
+    x: CANVAS_W + 20,
     y: GROUND_Y - h,
-    w: w,
-    h: h,
+    w, h,
     passed: false,
-    draw(){
-      // simple stylized cactus/rock shapes
-      ctx.save();
-      if(type==='tall'){
-        // cactus-like: stacked rectangles
-        ctx.fillStyle = '#2b7';
-        roundRect(ctx, this.x, this.y, this.w, this.h, 3);
-        // little arms
-        ctx.fillRect(this.x - 4, this.y + this.h*0.3, 4, this.h*0.15);
-        ctx.fillRect(this.x + this.w, this.y + this.h*0.5, 4, this.h*0.25);
-      } else {
-        // rock: triangle-ish rounded
-        ctx.fillStyle = '#6b6b6b';
-        ctx.beginPath();
-        ctx.moveTo(this.x, this.y + this.h);
-        ctx.lineTo(this.x + this.w*0.5, this.y - this.h*0.3);
-        ctx.lineTo(this.x + this.w, this.y + this.h);
-        ctx.closePath();
-        ctx.fill();
-      }
-      ctx.restore();
-    },
-    update(dt){
+
+    update(dt) {
       this.x -= speed * dt;
     },
-    getBox(){ return {x:this.x, y:this.y, w:this.w, h:this.h}; }
-  };
-  obstacles.push(obs);
-}
 
-/* clouds (background) */
-let clouds = [];
-function spawnCloud(){
-  clouds.push({
-    x: CANVAS_W + Math.random()*200,
-    y: 20 + Math.random()*60,
-    w: 40 + Math.random()*60,
-    speed: 0.6 + Math.random()*0.8
+    draw() {
+      ctx.fillStyle = "#444";
+      ctx.fillRect(this.x, this.y, this.w, this.h);
+    },
+
+    box() {
+      return {x:this.x, y:this.y, w:this.w, h:this.h};
+    }
   });
 }
 
-/* ------------------ COLLISIONS ------------------ */
-function rectsCollide(a,b){
-  return !(a.x + a.w < b.x || a.x > b.x + b.w || a.y + a.h < b.y || a.y > b.y + b.h);
+/* Collision simple */
+function collide(a,b){
+  return !(a.x+a.w<b.x || a.x>b.x+b.w || a.y+a.h<b.y || a.y>b.y+b.h);
 }
 
 /* ------------------ GAME LOOP ------------------ */
-let obstacleTimer = 0;
-let nextObstacleIn = getRandomInt(OBSTACLE_MIN_GAP, OBSTACLE_MAX_GAP);
+let spawnTimer = 0;
+let spawnNext = 800;
 
 function resetGame(){
   obstacles = [];
-  clouds = [];
-  player.y = GROUND_Y - player.h;
-  player.vy = 0;
-  player.onGround = true;
-  score = 0;
   speed = INITIAL_SPEED;
-  obstacleTimer = 0;
-  nextObstacleIn = getRandomInt(OBSTACLE_MIN_GAP, OBSTACLE_MAX_GAP);
+  player.y = GROUND_Y - PLAYER_H;
+  player.vy = 0;
+  score = 0;
   running = false;
-  startBtn.textContent = 'Démarrer';
+  startBtn.textContent = "Démarrer";
 }
 
-function getRandomInt(a,b){ return Math.floor(a + Math.random()*(b-a)); }
+function loop(t) {
+  if (!lastTime) lastTime = t;
+  const dt = (t-lastTime)/16.666;
+  lastTime = t;
 
-function update(ts){
-  if(!lastTime) lastTime = ts;
-  const dtMs = ts - lastTime;
-  lastTime = ts;
-  if(!running) return draw(); // show static screen while stopped
-
-  const dt = Math.min(dtMs/16.666, 4); // normalize to ~60fps ticks
-
-  // update timers
-  obstacleTimer += dtMs;
-  // spawn obstacles
-  if(obstacleTimer >= nextObstacleIn){
-    obstacleTimer = 0;
-    nextObstacleIn = getRandomInt(OBSTACLE_MIN_GAP, OBSTACLE_MAX_GAP);
-    spawnObstacle();
+  if (!running) {
+    draw();
+    return requestAnimationFrame(loop);
   }
-  // occasionally spawn clouds
-  if(Math.random() < 0.02) spawnCloud();
 
-  // update player
+  /* Update */
   player.update(dt);
 
-  // update obstacles
-  for(let i=obstacles.length-1;i>=0;i--){
-    obstacles[i].update(dt);
-    if(!obstacles[i].passed && obstacles[i].x + obstacles[i].w < player.x){
-      obstacles[i].passed = true;
+  spawnTimer += t - lastTime + (dt*16.666);
+  if (spawnTimer >= spawnNext) {
+    spawnObstacle();
+    spawnTimer = 0;
+    spawnNext = OBSTACLE_MIN_GAP + Math.random()*(OBSTACLE_MAX_GAP-OBSTACLE_MIN_GAP);
+  }
+
+  for (let o of obstacles) o.update(dt);
+  obstacles = obstacles.filter(o => o.x + o.w > -50);
+
+  /* Scoring + speed */
+  for (let o of obstacles) {
+    if (!o.passed && o.x + o.w < player.x) {
+      o.passed = true;
       score += 10;
-      // increase speed every X points
-      if(score % SPEED_INCREASE_EVERY === 0){
-        speed += SPEED_SCALE * (SPEED_INCREASE_EVERY/100);
-      }
+      speed += SPEED_SCALE;
     }
-    // remove off screen
-    if(obstacles[i].x + obstacles[i].w < -50) obstacles.splice(i,1);
-  }
-
-  // update clouds
-  for(let i=clouds.length-1;i>=0;i--){
-    clouds[i].x -= clouds[i].speed * dt * 20;
-    if(clouds[i].x + clouds[i].w < -50) clouds.splice(i,1);
-  }
-
-  // collision detection
-  for(const o of obstacles){
-    if(rectsCollide(player.getBox(), o.getBox())){
-      // collision! end game
+    if (collide(player.box(), o.box())) {
       running = false;
-      beep(150,0.25,0.2);
-      if(score > highScore){ highScore = score; localStorage.setItem('runner_highscore', String(highScore)); }
-      startBtn.textContent = 'Rejouer';
+      beep(200,0.3);
+      if (score > highScore) {
+        highScore = score;
+        localStorage.setItem("runner_highscore", highScore);
+      }
+      startBtn.textContent = "Rejouer";
     }
   }
 
   draw();
-  requestAnimationFrame(update);
+  requestAnimationFrame(loop);
 }
 
-/* ------------------ DRAW ------------------ */
+/* ------------------ RENDER ------------------ */
 function draw(){
-  // clear
   ctx.clearRect(0,0,canvas.width,canvas.height);
 
-  // sky gradient
-  const g = ctx.createLinearGradient(0,0,0,canvas.height);
-  g.addColorStop(0, '#f7fbff');
-  g.addColorStop(1, '#eef3f8');
-  ctx.fillStyle = g;
-  ctx.fillRect(0,0,canvas.width,canvas.height);
+  ctx.fillStyle = "#efefef";
+  ctx.fillRect(0, GROUND_Y, canvas.width, 40);
 
-  // clouds
-  for(const c of clouds){
-    ctx.fillStyle = 'rgba(255,255,255,0.9)';
-    roundRect(ctx, c.x, c.y, c.w, 16, 10);
-  }
-
-  // ground
-  ctx.fillStyle = '#efefef';
-  ctx.fillRect(0, GROUND_Y + player.h, canvas.width, canvas.height - (GROUND_Y + player.h));
-
-  // ground line
-  ctx.strokeStyle = '#ccc';
-  ctx.lineWidth = 2;
-  ctx.beginPath();
-  ctx.moveTo(0, GROUND_Y + player.h);
-  ctx.lineTo(canvas.width, GROUND_Y + player.h);
-  ctx.stroke();
-
-  // obstacles
-  for(const o of obstacles) o.draw();
-
-  // player
+  for (let o of obstacles) o.draw();
   player.draw();
 
-  // UI: score
-  ctx.fillStyle = '#222';
-  ctx.font = '14px system-ui,Arial';
-  ctx.fillText('Score: ' + score, canvas.width - 140, 30);
-  ctx.fillText('High: ' + highScore, canvas.width - 140, 50);
-
-  if(!running){
-    ctx.fillStyle = 'rgba(0,0,0,0.5)';
-    ctx.font = '20px system-ui,Arial';
-    ctx.textAlign = 'center';
-    ctx.fillText('Appuie sur Démarrer ou Espace pour jouer', canvas.width/2, canvas.height/2 - 10);
-    ctx.textAlign = 'start';
-  }
+  ctx.fillStyle = "#222";
+  ctx.font = "18px Arial";
+  ctx.fillText("Score : " + score, 20, 30);
+  ctx.fillText("High : " + highScore, 20, 55);
 }
 
 /* ------------------ INPUT ------------------ */
-window.addEventListener('keydown', (e) => {
-  if(e.code === 'Space' || e.code === 'ArrowUp'){
-    e.preventDefault();
-    if(!running){
-      startGame();
-    }
+window.addEventListener("keydown", e => {
+  if (e.code === "Space" || e.code === "ArrowUp") {
+    if (!running) startGame();
     player.jump();
   }
-  if(e.code === 'KeyM'){ // mute toggle
-    soundsOn = !soundsOn;
-    muteBtn.textContent = soundsOn ? '🔊 Son' : '🔇 Muet';
-  }
 });
 
-canvas.addEventListener('touchstart', (e) => {
-  e.preventDefault();
-  if(!running) startGame();
-  player.jump();
-}, {passive:false});
-
-canvas.addEventListener('mousedown', (e) => {
-  if(!running) startGame();
+canvas.addEventListener("touchstart", () => {
+  if (!running) startGame();
   player.jump();
 });
 
-startBtn.addEventListener('click', () => {
-  if(!running) startGame();
-  else { running = false; startBtn.textContent = 'Démarrer'; }
+startBtn.addEventListener("click", () => {
+  if (!running) startGame();
 });
-muteBtn.addEventListener('click', () => {
+
+muteBtn.addEventListener("click", () => {
   soundsOn = !soundsOn;
-  muteBtn.textContent = soundsOn ? '🔊 Son' : '🔇 Muet';
+  muteBtn.textContent = soundsOn ? "🔊" : "🔇";
 });
-resetBtn.addEventListener('click', () => {
+
+resetBtn.addEventListener("click", () => {
+  localStorage.setItem("runner_highscore","0");
   highScore = 0;
-  localStorage.setItem('runner_highscore','0');
-  alert('High score réinitialisé');
+  alert("Score réinitialisé !");
 });
 
-/* ------------------ START / UTIL ------------------ */
+/* ------------------ START ------------------ */
 function startGame(){
-  obstacles = [];
-  clouds = [];
-  score = 0;
-  speed = INITIAL_SPEED;
-  obstacleTimer = 0;
-  nextObstacleIn = getRandomInt(OBSTACLE_MIN_GAP, OBSTACLE_MAX_GAP);
+  resetGame();
   running = true;
-  startBtn.textContent = 'En jeu...';
   lastTime = 0;
-  beep(660,0.06);
-  requestAnimationFrame(update);
+  startBtn.textContent = "En jeu...";
+  requestAnimationFrame(loop);
 }
 
-// kick initial draw
 draw();
-
-/* ------------------ ACCESSIBILITY / RESIZE ------------------ */
-// simple resizing so canvas scales on small viewports while keeping logic size
-function resizeCanvasToFit(){
-  const maxW = Math.min(window.innerWidth - 36, CANVAS_W);
-  const scale = maxW / CANVAS_W;
-  canvas.style.width = Math.max(320, Math.floor(CANVAS_W * scale)) + 'px';
-  canvas.style.height = Math.max(160, Math.floor(CANVAS_H * scale)) + 'px';
-}
-window.addEventListener('resize', resizeCanvasToFit);
-resizeCanvasToFit();
-
 </script>
+
 </body>
 </html>
