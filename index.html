@@ -1,24 +1,63 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Mon Dino Game Personnalisé</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Runner - Jeu (version GitHub Pages)</title>
+<style>
+  :root{
+    --bg:#f7f7f7;
+    --ground:#444;
+    --text:#222;
+  }
+  html,body{height:100%;margin:0;font-family:Inter,system-ui,Arial,sans-serif;background:var(--bg);color:var(--text);}
+  .wrap{display:flex;flex-direction:column;align-items:center;gap:12px;padding:18px;}
+  h1{margin:6px 0;font-size:18px;}
+  canvas{background:linear-gradient(#f7f7f7,#eaeaea);border-radius:8px;box-shadow:0 6px 18px rgba(0,0,0,0.08);}
+  .controls{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+  button{padding:8px 12px;border-radius:8px;border:1px solid #ddd;background:white;cursor:pointer;}
+  .info{font-size:13px;color:#555;}
+  .row{display:flex;gap:8px;align-items:center;}
+  .small{font-size:12px;color:#666;}
+  footer{font-size:12px;color:#666;margin-top:8px;}
+  @media (max-width:480px){
+    canvas{width:320px;height:160px;}
+  }
+</style>
 </head>
 <body>
-
-    <div id="game-container">
-        <div id="game-world">
-            <div id="score">0</div>
-            <div id="high-score">Meilleur : 0</div>
-            <div id="personnage"></div>
-            <div id="sol"></div>
-            <div id="game-over">GAME OVER</div>
-            <div id="restart-message">Appuyez pour recommencer</div>
-        </div>
+  <div class="wrap">
+    <h1>Runner — jeu pour GitHub Pages</h1>
+    <canvas id="game" width="800" height="200" style="width:800px;height:200px;"></canvas>
+    <div class="controls">
+      <div class="row">
+        <button id="startBtn">Démarrer</button>
+        <button id="muteBtn">🔊 Son</button>
+        <button id="resetBtn">Réinitialiser score</button>
+      </div>
+      <div class="info">
+        Touche: <b>Espace</b> ou <b>Flèche ↑</b> — Touchez l'écran pour sauter.
+      </div>
     </div>
+    <div class="small">Appuie sur Espace pour sauter. Ta progression est sauvegardée localement.</div>
+    <footer>Remplace le personnage en modifiant l'URL dans la variable <code>playerImgUrl</code> dans le script.</footer>
+  </div>
 
-    <script src="script.js"></script>
-</body>
-</html>
+<script>
+/* ------------------ CONFIG ------------------ */
+// Image fournie par l'utilisateur (URL raw GitHub)
+const playerImgUrl = 'https://raw.githubusercontent.com/luffy01984-png/TEST/main/chris.jpg';
+
+// gameplay params (modifiable)
+const CANVAS_W = 800, CANVAS_H = 200;
+const GROUND_Y = 160;
+const GRAVITY = 0.9;
+const JUMP_V = -14;
+const OBSTACLE_MIN_GAP = 900; // ms min between obstacles
+const OBSTACLE_MAX_GAP = 1800; // ms max
+const INITIAL_SPEED = 5;
+const SPEED_INCREASE_EVERY = 1000; // points
+const SPEED_SCALE = 0.1;
+
+/* ------------------ SETUP ------------------ */
+const canvas =
