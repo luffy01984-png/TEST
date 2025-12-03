@@ -389,10 +389,11 @@
       animation-delay: 0.5s, 3.5s;
     }
 
-    /* String/Ficelle - Extended to top */
+    /* String/Ficelle - Adjusted length */
     .gift-string {
       width: 2px;
-      height: 250px;
+      height: 150px;
+      /* Reduced height to stay above promo box */
       background: linear-gradient(to bottom, #8b4513, #654321);
       margin: 0 auto;
       position: relative;
@@ -472,14 +473,14 @@
       right: -12px;
     }
 
-    /* Drop down animation - From top of hero to above promo box */
+    /* Drop down animation - Slide in from top */
     @keyframes dropDown {
       0% {
-        top: 0;
+        top: -300px;
       }
 
       100% {
-        top: 50%;
+        top: 0;
       }
     }
 
