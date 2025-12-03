@@ -1,0 +1,22 @@
+{
+  "name": "Avantages Partenaires Renault Trucks",
+  "short_name": "CSE-Renault Trucks",
+  "description": "Découvrez toutes les offres exclusives négociées par votre CSE Renault Trucks à Bourg-en-Bresse.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#dc2626",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/Header.webp",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/Header.webp",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
