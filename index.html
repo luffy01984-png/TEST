@@ -346,206 +346,90 @@
       left: 100%;
     }
 
-    /* Snow Effect - Hero Only */
+    /* Modern Hero Section */
     #hero-section {
       position: relative;
       overflow: hidden;
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 50%, #1e293b 100%);
+      background-size: 200% 200%;
+      animation: gradientFlow 15s ease infinite;
     }
 
-    .snowflake {
-      position: absolute;
-      top: -10px;
-      color: white;
-      font-size: 1em;
-      user-select: none;
-      pointer-events: none;
-      z-index: 1;
-      animation: fall linear infinite;
-    }
-
-    @keyframes fall {
-      0% {
-        top: -10px;
-        opacity: 1;
-      }
-
-      100% {
-        top: 100%;
-        opacity: 0.8;
-      }
-    }
-
-    /* Snow Accumulation Layer */
-    .snow-accumulation {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 0;
-      background: linear-gradient(to top,
-          rgba(255, 255, 255, 0.95) 0%,
-          rgba(255, 255, 255, 0.8) 50%,
-          rgba(255, 255, 255, 0.3) 80%,
-          transparent 100%);
-      z-index: 2;
-      transition: height 0.3s ease;
-      pointer-events: none;
-    }
-
-    /* Hero text colors - Blue and White theme */
-    #hero-section h1 {
-      color: #1e40af !important;
-      /* Blue */
-      text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.8);
-    }
-
-    #hero-section h1 .text-red-600 {
-      color: #ffffff !important;
-      /* White for CSE Renault Trucks */
-      text-shadow: 2px 2px 6px rgba(30, 64, 175, 0.6);
-    }
-
-    #hero-section p {
-      color: #1e3a8a !important;
-      /* Darker blue for paragraphs */
-    }
-
-    #hero-section p strong {
-      color: #ffffff !important;
-      /* White for strong text */
-      text-shadow: 1px 1px 3px rgba(30, 64, 175, 0.8);
-    }
-
-    /* Gift Boxes with String */
-    .gift-container {
-      position: absolute;
-      top: -200px;
-      z-index: 1;
-      animation: dropDown 3s ease-out forwards, swing 2s ease-in-out 3s infinite;
-    }
-
-    .gift-container.left {
-      left: 15%;
-      animation-delay: 0s, 3s;
-    }
-
-    .gift-container.right {
-      right: 15%;
-      animation-delay: 0.5s, 3.5s;
-    }
-
-    /* String/Ficelle */
-    .gift-string {
-      width: 2px;
-      height: 100px;
-      background: linear-gradient(to bottom, #8b4513, #654321);
-      margin: 0 auto;
-      position: relative;
-      transform-origin: top center;
-    }
-
-    /* Gift Box */
-    .gift-box {
-      width: 60px;
-      height: 60px;
-      background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
-      border-radius: 8px;
-      position: relative;
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-      margin: 0 auto;
-    }
-
-    /* Ribbon vertical */
-    .gift-box::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 12px;
-      height: 100%;
-      background: linear-gradient(to right, #fbbf24, #f59e0b);
-      box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
-    }
-
-    /* Ribbon horizontal */
-    .gift-box::after {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 0;
-      transform: translateY(-50%);
-      width: 100%;
-      height: 12px;
-      background: linear-gradient(to bottom, #fbbf24, #f59e0b);
-      box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
-    }
-
-    /* Bow on top */
-    .gift-bow {
-      position: absolute;
-      top: -15px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 30px;
-      height: 20px;
-      background: #fbbf24;
-      border-radius: 50% 50% 0 0;
-      box-shadow: 0 2px 8px rgba(251, 191, 36, 0.5);
-    }
-
-    .gift-bow::before,
-    .gift-bow::after {
-      content: '';
-      position: absolute;
-      top: 5px;
-      width: 15px;
-      height: 15px;
-      background: #fbbf24;
-      border-radius: 50%;
-    }
-
-    .gift-bow::before {
-      left: -12px;
-    }
-
-    .gift-bow::after {
-      right: -12px;
-    }
-
-    /* Drop down animation */
-    @keyframes dropDown {
-      0% {
-        top: -200px;
-      }
-
-      100% {
-        top: 45%;
-      }
-    }
-
-    /* Swing animation */
-    @keyframes swing {
+    @keyframes gradientFlow {
 
       0%,
       100% {
-        transform: rotate(0deg);
+        background-position: 0% 50%;
       }
 
-      25% {
-        transform: rotate(8deg);
-      }
-
-      75% {
-        transform: rotate(-8deg);
+      50% {
+        background-position: 100% 50%;
       }
     }
 
-    /* Make text appear above gifts */
-    #hero-section h1,
-    #hero-section p {
+    /* Geometric Shapes Background */
+    .hero-shape {
+      position: absolute;
+      opacity: 0.1;
+      animation: floatShape 20s ease-in-out infinite;
+    }
+
+    .hero-shape.circle {
+      border-radius: 50%;
+      background: linear-gradient(135deg, #dc2626, #f59e0b);
+    }
+
+    .hero-shape.square {
+      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+      border-radius: 20px;
+    }
+
+    .hero-shape.triangle {
+      width: 0;
+      height: 0;
+      background: transparent;
+      border-left: 75px solid transparent;
+      border-right: 75px solid transparent;
+      border-bottom: 130px solid rgba(220, 38, 38, 0.3);
+    }
+
+    @keyframes floatShape {
+
+      0%,
+      100% {
+        transform: translateY(0) rotate(0deg);
+      }
+
+      50% {
+        transform: translateY(-30px) rotate(180deg);
+      }
+    }
+
+    /* Hero Content Styling */
+    #hero-section h1 {
+      color: #ffffff !important;
+      text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
       position: relative;
-      z-index: 5;
+      z-index: 10;
+    }
+
+    #hero-section h1 .text-red-600 {
+      background: linear-gradient(135deg, #dc2626, #f59e0b);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: none;
+    }
+
+    #hero-section p {
+      color: #e2e8f0 !important;
+      position: relative;
+      z-index: 10;
+    }
+
+    #hero-section p strong {
+      color: #fbbf24 !important;
+      text-shadow: 0 2px 10px rgba(251, 191, 36, 0.5);
     }
   </style>
 </head>
@@ -617,150 +501,220 @@
   </script>
 
 
-  <!-- HERO -->
-  <section id="hero-section" class="bg-white text-gray-900 text-center py-12 px-4 shadow-md">
-    <!-- Snow Accumulation Layer -->
-    <div class="snow-accumulation" id="snowAccumulation"></div>
+  <!-- HERO SECTION -->
+  <section id="hero-section" class="text-center py-16 px-4 shadow-md">
+    <!-- Geometric Shapes -->
+    <div class="hero-shape circle" style="width: 150px; height: 150px; top: 10%; left: 5%;"></div>
+    <div class="hero-shape square" style="width: 120px; height: 120px; top: 60%; right: 8%; animation-delay: 3s;"></div>
+    <div class="hero-shape circle" style="width: 100px; height: 100px; bottom: 15%; left: 10%; animation-delay: 5s;">
+    </div>
+    <div class="hero-shape triangle" style="top: 20%; right: 15%; animation-delay: 7s;"></div>
+    <div class="hero-shape square" style="width: 80px; height: 80px; top: 70%; left: 15%; animation-delay: 2s;"></div>
 
-    <!-- Gift Boxes with Strings -->
-    <div class="gift-container left">
-      <div class="gift-string"></div>
-      <div class="gift-box">
-        <div class="gift-bow"></div>
-      </div>
+    <!-- Hero Content -->
+    <div class="max-w-4xl mx-auto">
+      <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight mb-4">
+        Vos Avantages <span class="text-red-600">CSE Renault Trucks</span>
+      </h1>
+      <p class="text-lg mt-2 uppercase tracking-wider font-semibold">
+        <strong>Bourg-en-Bresse</strong>
+      </p>
+      <p class="text-base md:text-lg mt-4 max-w-2xl mx-auto font-light leading-relaxed">
+        Cliquez sur une catégorie pour découvrir toutes les offres exclusives négociées par votre Comité d'Entreprise.
+        <br class="hidden md:block">
+        *Sur présentation du badge.
+      </p>
     </div>
 
-    <div class="gift-container right">
-      <div class="gift-string"></div>
-      <div class="gift-box">
-        <div class="gift-bow"></div>
+    <!-- NEW PROMO BOX -->
+    <section class="new-promo-container">
+      <div class="promo-header">
+        <div class="promo-ribbon">
+          <span class="ribbon-text">🎁 Nouveaux Partenaires</span>
+        </div>
       </div>
-    </div>
 
-    <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight">
-      Vos Avantages <span class="text-red-600">CSE Renault Trucks</span>
-    </h1>
-    <p class="text-black-400 mt-1 text-sm uppercase tracking-wider"><strong>Bourg-en-Bresse</strong></p>
-    <p class="text-gray-600 mt-2 max-w-xl mx-auto text-lg font-light">
-      Cliquez sur une catégorie pour découvrir toutes les offres exclusives négociées par votre Comité d'Entreprise.*Sur
-      présentation du badge.
-    </p>
-
-    <!-- PREMIUM PROMO BOX -->
-    <section class="promo-box-container">
-      <div class="promo-box">
-        <!-- Floating Particles -->
-        <div class="particles">
-          <span class="particle"></span>
-          <span class="particle"></span>
-          <span class="particle"></span>
-          <span class="particle"></span>
-          <span class="particle"></span>
-          <span class="particle"></span>
+      <div class="promo-cards-grid">
+        <!-- Card 1: Maison B -->
+        <div class="promo-card">
+          <div class="card-glow"></div>
+          <div class="card-content">
+            <div class="card-icon">🏠</div>
+            <h3 class="card-title">Maison B</h3>
+            <div class="card-discount">
+              <span class="discount-value">-5 à 10%</span>
+            </div>
+            <div class="card-shine"></div>
+          </div>
         </div>
 
-        <!-- Animated Border -->
-        <div class="promo-border"></div>
-
-        <!-- Glass Content Card -->
-        <div class="promo-glass-card">
-          <!-- Sparkle Effect -->
-          <div class="sparkle sparkle-1"></div>
-          <div class="sparkle sparkle-2"></div>
-          <div class="sparkle sparkle-3"></div>
-
-          <!-- Icon Badge -->
-          <div class="promo-badge">
-            <span class="badge-icon">✨</span>
-          </div>
-
-          <!-- Content -->
-          <h2 class="promo-title">
-            <span class="title-line">Nouveaux</span>
-            <span class="title-line highlight">Partenaires</span>
-          </h2>
-
-          <div class="promo-offers">
-            <div class="offer-item">
-              <div class="offer-name">Maison B</div>
-              <div class="offer-discount">
-                <span class="discount-badge">-5 à 10%</span>
-              </div>
+        <!-- Card 2: Azureva -->
+        <div class="promo-card">
+          <div class="card-glow"></div>
+          <div class="card-content">
+            <div class="card-icon">🏖️</div>
+            <h3 class="card-title">Azureva</h3>
+            <div class="card-discount">
+              <span class="discount-value">-10%</span>
             </div>
-
-            <div class="offer-divider"></div>
-
-            <div class="offer-item">
-              <div class="offer-name">Azureva</div>
-              <div class="offer-discount">
-                <span class="discount-badge">-10%</span>
-              </div>
-            </div>
+            <div class="card-shine"></div>
           </div>
-
-          <!-- Shine Effect -->
-          <div class="shine-effect"></div>
         </div>
+      </div>
+
+      <!-- Animated Background Elements -->
+      <div class="promo-bg-elements">
+        <div class="bg-circle"></div>
+        <div class="bg-circle"></div>
+        <div class="bg-circle"></div>
       </div>
     </section>
 
     <style>
-      /* Container */
-      .promo-box-container {
-        margin-top: 2rem;
-        padding: 0 1rem;
-        display: flex;
-        justify-content: center;
-        perspective: 1000px;
-      }
-
-      /* Main Promo Box */
-      .promo-box {
+      /* New Promo Container */
+      .new-promo-container {
         position: relative;
-        width: 100%;
-        max-width: 600px;
-        transform-style: preserve-3d;
-        transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-        animation: floatBox 4s ease-in-out infinite;
+        margin-top: 3rem;
+        margin-bottom: 2rem;
+        padding: 2rem 1rem;
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
       }
 
-      .promo-box:hover {
-        transform: translateY(-8px) rotateX(2deg);
+      /* Promo Header with Ribbon */
+      .promo-header {
+        text-align: center;
+        margin-bottom: 2rem;
+        position: relative;
       }
 
-      /* Floating Animation */
-      @keyframes floatBox {
+      .promo-ribbon {
+        display: inline-block;
+        position: relative;
+        background: linear-gradient(135deg, #dc2626, #991b1b);
+        padding: 0.75rem 2.5rem;
+        border-radius: 50px;
+        box-shadow:
+          0 8px 32px rgba(220, 38, 38, 0.4),
+          0 0 0 3px rgba(255, 255, 255, 0.1) inset;
+        animation: ribbonPulse 3s ease-in-out infinite;
+        overflow: hidden;
+      }
+
+      .promo-ribbon::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(45deg,
+            transparent 30%,
+            rgba(255, 255, 255, 0.2) 50%,
+            transparent 70%);
+        animation: ribbonShine 3s linear infinite;
+      }
+
+      @keyframes ribbonPulse {
 
         0%,
         100% {
-          transform: translateY(0px);
+          transform: scale(1);
+          box-shadow:
+            0 8px 32px rgba(220, 38, 38, 0.4),
+            0 0 0 3px rgba(255, 255, 255, 0.1) inset;
         }
 
         50% {
-          transform: translateY(-12px);
+          transform: scale(1.05);
+          box-shadow:
+            0 12px 48px rgba(220, 38, 38, 0.6),
+            0 0 0 4px rgba(255, 255, 255, 0.2) inset;
         }
       }
 
-      /* Animated Border */
-      .promo-border {
+      @keyframes ribbonShine {
+        0% {
+          transform: translateX(-100%) translateY(-100%) rotate(45deg);
+        }
+
+        100% {
+          transform: translateX(100%) translateY(100%) rotate(45deg);
+        }
+      }
+
+      .ribbon-text {
+        position: relative;
+        z-index: 2;
+        color: white;
+        font-size: 1.25rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+      }
+
+      /* Cards Grid */
+      .promo-cards-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 2rem;
+        position: relative;
+        z-index: 2;
+      }
+
+      /* Promo Card */
+      .promo-card {
+        position: relative;
+        border-radius: 20px;
+        overflow: hidden;
+        transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        animation: cardFloat 6s ease-in-out infinite;
+      }
+
+      .promo-card:nth-child(1) {
+        animation-delay: 0s;
+      }
+
+      .promo-card:nth-child(2) {
+        animation-delay: 3s;
+      }
+
+      @keyframes cardFloat {
+
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+
+        50% {
+          transform: translateY(-10px);
+        }
+      }
+
+      .promo-card:hover {
+        transform: translateY(-15px) scale(1.02);
+      }
+
+      /* Card Glow Effect */
+      .card-glow {
         position: absolute;
-        inset: -3px;
-        border-radius: 24px;
+        inset: -2px;
         background: linear-gradient(135deg,
             #dc2626,
             #f59e0b,
             #fbbf24,
-            #dc2626,
-            #991b1b,
             #dc2626);
-        background-size: 400% 400%;
-        animation: gradientRotate 8s ease infinite;
-        filter: blur(8px);
-        opacity: 0.8;
+        background-size: 300% 300%;
+        border-radius: 20px;
+        animation: glowRotate 6s ease infinite;
+        filter: blur(10px);
+        opacity: 0.7;
         z-index: -1;
       }
 
-      @keyframes gradientRotate {
+      @keyframes glowRotate {
 
         0%,
         100% {
@@ -772,362 +726,112 @@
         }
       }
 
-      /* Glass Card */
-      .promo-glass-card {
+      /* Card Content */
+      .card-content {
         position: relative;
         background: linear-gradient(135deg,
-            rgba(220, 38, 38, 0.95) 0%,
-            rgba(153, 27, 27, 0.95) 100%);
+            rgba(30, 41, 59, 0.95),
+            rgba(15, 23, 42, 0.95));
         backdrop-filter: blur(20px);
         -webkit-backdrop-filter: blur(20px);
-        border-radius: 20px;
+        border-radius: 18px;
         padding: 2rem 1.5rem;
+        text-align: center;
+        border: 1px solid rgba(255, 255, 255, 0.1);
         overflow: hidden;
         box-shadow:
-          0 20px 60px rgba(220, 38, 38, 0.4),
-          0 0 0 1px rgba(255, 255, 255, 0.1) inset,
-          0 8px 32px rgba(0, 0, 0, 0.3);
-        border: 1px solid rgba(255, 255, 255, 0.15);
+          0 20px 60px rgba(0, 0, 0, 0.4),
+          0 0 0 1px rgba(255, 255, 255, 0.05) inset;
       }
 
-      /* Floating Particles */
-      .particles {
-        position: absolute;
-        inset: 0;
-        overflow: hidden;
-        pointer-events: none;
-        z-index: 1;
+      /* Card Icon */
+      .card-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        animation: iconBounce 2s ease-in-out infinite;
+        filter: drop-shadow(0 0 20px rgba(251, 191, 36, 0.6));
       }
 
-      .particle {
-        position: absolute;
-        width: 4px;
-        height: 4px;
-        background: rgba(255, 255, 255, 0.6);
-        border-radius: 50%;
-        animation: particleFloat 6s ease-in-out infinite;
-        box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
-      }
-
-      .particle:nth-child(1) {
-        left: 10%;
-        animation-delay: 0s;
-        animation-duration: 7s;
-      }
-
-      .particle:nth-child(2) {
-        left: 30%;
-        animation-delay: 1s;
-        animation-duration: 6s;
-      }
-
-      .particle:nth-child(3) {
-        left: 50%;
-        animation-delay: 2s;
-        animation-duration: 8s;
-      }
-
-      .particle:nth-child(4) {
-        left: 70%;
-        animation-delay: 1.5s;
-        animation-duration: 7s;
-      }
-
-      .particle:nth-child(5) {
-        left: 85%;
-        animation-delay: 0.5s;
-        animation-duration: 6.5s;
-      }
-
-      .particle:nth-child(6) {
-        left: 20%;
-        animation-delay: 2.5s;
-        animation-duration: 7.5s;
-      }
-
-      @keyframes particleFloat {
-        0% {
-          transform: translateY(100vh) scale(0);
-          opacity: 0;
-        }
-
-        10% {
-          opacity: 1;
-        }
-
-        90% {
-          opacity: 1;
-        }
-
-        100% {
-          transform: translateY(-100px) scale(1);
-          opacity: 0;
-        }
-      }
-
-      /* Sparkle Effects */
-      .sparkle {
-        position: absolute;
-        width: 20px;
-        height: 20px;
-        background: radial-gradient(circle, rgba(255, 255, 255, 0.9) 0%, transparent 70%);
-        border-radius: 50%;
-        animation: sparkleAnim 3s ease-in-out infinite;
-        pointer-events: none;
-      }
-
-      .sparkle-1 {
-        top: 15%;
-        left: 10%;
-        animation-delay: 0s;
-      }
-
-      .sparkle-2 {
-        top: 70%;
-        right: 15%;
-        animation-delay: 1s;
-      }
-
-      .sparkle-3 {
-        bottom: 20%;
-        left: 20%;
-        animation-delay: 2s;
-      }
-
-      @keyframes sparkleAnim {
+      @keyframes iconBounce {
 
         0%,
         100% {
-          transform: scale(0);
-          opacity: 0;
-        }
-
-        50% {
-          transform: scale(1);
-          opacity: 1;
-        }
-      }
-
-      /* Badge Icon */
-      .promo-badge {
-        position: absolute;
-        top: -15px;
-        right: 20px;
-        width: 50px;
-        height: 50px;
-        background: linear-gradient(135deg, #fbbf24, #f59e0b);
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        box-shadow:
-          0 8px 24px rgba(251, 191, 36, 0.5),
-          0 0 0 4px rgba(255, 255, 255, 0.2);
-        animation: badgePulse 2s ease-in-out infinite;
-        z-index: 10;
-      }
-
-      .badge-icon {
-        font-size: 1.5rem;
-        animation: iconSpin 4s linear infinite;
-      }
-
-      @keyframes badgePulse {
-
-        0%,
-        100% {
-          transform: scale(1);
-          box-shadow:
-            0 8px 24px rgba(251, 191, 36, 0.5),
-            0 0 0 4px rgba(255, 255, 255, 0.2);
-        }
-
-        50% {
-          transform: scale(1.1);
-          box-shadow:
-            0 12px 32px rgba(251, 191, 36, 0.7),
-            0 0 0 6px rgba(255, 255, 255, 0.3);
-        }
-      }
-
-      @keyframes iconSpin {
-
-        0%,
-        100% {
-          transform: rotate(0deg);
-        }
-
-        25% {
-          transform: rotate(-10deg);
-        }
-
-        75% {
-          transform: rotate(10deg);
-        }
-      }
-
-      /* Title */
-      .promo-title {
-        position: relative;
-        margin: 0 0 1.5rem 0;
-        text-align: center;
-        z-index: 2;
-      }
-
-      .title-line {
-        display: block;
-        font-size: 1.75rem;
-        font-weight: 800;
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
-        color: white;
-        text-shadow:
-          0 2px 10px rgba(0, 0, 0, 0.5),
-          0 0 20px rgba(255, 255, 255, 0.3);
-        line-height: 1.2;
-      }
-
-      .title-line.highlight {
-        background: linear-gradient(90deg,
-            #fff 0%,
-            #fef3c7 25%,
-            #fbbf24 50%,
-            #fef3c7 75%,
-            #fff 100%);
-        background-size: 200% auto;
-        -webkit-background-clip: text;
-        background-clip: text;
-        -webkit-text-fill-color: transparent;
-        animation: shimmerText 3s linear infinite;
-        font-size: 2rem;
-        margin-top: 0.25rem;
-      }
-
-      @keyframes shimmerText {
-        0% {
-          background-position: 0% center;
-        }
-
-        100% {
-          background-position: 200% center;
-        }
-      }
-
-      /* Offers Container */
-      .promo-offers {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 1.5rem;
-        position: relative;
-        z-index: 2;
-      }
-
-      /* Offer Item */
-      .offer-item {
-        flex: 1;
-        text-align: center;
-        animation: offerSlideIn 0.8s ease-out backwards;
-      }
-
-      .offer-item:nth-child(1) {
-        animation-delay: 0.2s;
-      }
-
-      .offer-item:nth-child(3) {
-        animation-delay: 0.4s;
-      }
-
-      @keyframes offerSlideIn {
-        from {
-          opacity: 0;
-          transform: translateY(20px);
-        }
-
-        to {
-          opacity: 1;
           transform: translateY(0);
         }
+
+        50% {
+          transform: translateY(-10px);
+        }
       }
 
-      .offer-name {
-        font-size: 1.125rem;
+      /* Card Title */
+      .card-title {
+        font-size: 1.5rem;
         font-weight: 700;
         color: white;
-        margin-bottom: 0.5rem;
-        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        margin: 0 0 1.5rem 0;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        letter-spacing: 0.05em;
       }
 
-      .offer-discount {
-        display: flex;
-        justify-content: center;
+      /* Card Discount */
+      .card-discount {
+        margin-top: 1rem;
       }
 
-      .discount-badge {
+      .discount-value {
         display: inline-block;
-        background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+        background: linear-gradient(135deg, #fbbf24, #f59e0b);
         color: #1f2937;
-        font-size: 1.125rem;
-        font-weight: 800;
-        padding: 0.5rem 1rem;
-        border-radius: 12px;
+        font-size: 1.5rem;
+        font-weight: 900;
+        padding: 0.75rem 1.5rem;
+        border-radius: 50px;
         box-shadow:
-          0 4px 16px rgba(251, 191, 36, 0.4),
-          0 0 0 2px rgba(255, 255, 255, 0.2) inset;
+          0 8px 24px rgba(251, 191, 36, 0.5),
+          0 0 0 3px rgba(255, 255, 255, 0.2) inset;
         transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
         position: relative;
         overflow: hidden;
       }
 
-      .discount-badge::before {
+      .discount-value::before {
         content: '';
         position: absolute;
         top: 0;
         left: -100%;
         width: 100%;
         height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-        transition: left 0.5s;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+        transition: left 0.6s;
       }
 
-      .discount-badge:hover {
-        transform: scale(1.1) translateY(-2px);
+      .promo-card:hover .discount-value {
+        transform: scale(1.1);
         box-shadow:
-          0 8px 24px rgba(251, 191, 36, 0.6),
-          0 0 0 3px rgba(255, 255, 255, 0.3) inset;
+          0 12px 32px rgba(251, 191, 36, 0.7),
+          0 0 0 4px rgba(255, 255, 255, 0.3) inset;
       }
 
-      .discount-badge:hover::before {
+      .promo-card:hover .discount-value::before {
         left: 100%;
       }
 
-      /* Divider */
-      .offer-divider {
-        width: 2px;
-        height: 60px;
-        background: linear-gradient(to bottom,
-            transparent,
-            rgba(255, 255, 255, 0.6),
-            transparent);
-        border-radius: 2px;
-        box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-      }
-
-      /* Shine Effect */
-      .shine-effect {
+      /* Card Shine Effect */
+      .card-shine {
         position: absolute;
         top: -50%;
         left: -50%;
         width: 200%;
         height: 200%;
         background: radial-gradient(circle,
-            rgba(255, 255, 255, 0.1) 0%,
-            transparent 60%);
-        animation: rotateShine 12s linear infinite;
+            rgba(255, 255, 255, 0.08) 0%,
+            transparent 70%);
+        animation: shineRotate 10s linear infinite;
         pointer-events: none;
       }
 
-      @keyframes rotateShine {
+      @keyframes shineRotate {
         0% {
           transform: rotate(0deg);
         }
@@ -1137,41 +841,91 @@
         }
       }
 
+      /* Background Elements */
+      .promo-bg-elements {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+        pointer-events: none;
+        z-index: 1;
+      }
+
+      .bg-circle {
+        position: absolute;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(220, 38, 38, 0.15), transparent);
+        animation: bgFloat 15s ease-in-out infinite;
+      }
+
+      .bg-circle:nth-child(1) {
+        width: 200px;
+        height: 200px;
+        top: 10%;
+        left: -50px;
+        animation-delay: 0s;
+      }
+
+      .bg-circle:nth-child(2) {
+        width: 150px;
+        height: 150px;
+        bottom: 20%;
+        right: -30px;
+        animation-delay: 5s;
+      }
+
+      .bg-circle:nth-child(3) {
+        width: 180px;
+        height: 180px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        animation-delay: 10s;
+      }
+
+      @keyframes bgFloat {
+
+        0%,
+        100% {
+          transform: translateY(0) scale(1);
+          opacity: 0.3;
+        }
+
+        50% {
+          transform: translateY(-30px) scale(1.1);
+          opacity: 0.5;
+        }
+      }
+
       /* Responsive Design */
       @media (max-width: 640px) {
-        .promo-glass-card {
-          padding: 1.5rem 1rem;
+        .new-promo-container {
+          padding: 1.5rem 0.5rem;
         }
 
-        .title-line {
-          font-size: 1.5rem;
+        .promo-cards-grid {
+          grid-template-columns: 1fr;
+          gap: 1.5rem;
         }
 
-        .title-line.highlight {
-          font-size: 1.75rem;
-        }
-
-        .promo-offers {
-          flex-direction: column;
-          gap: 1rem;
-        }
-
-        .offer-divider {
-          width: 60px;
-          height: 2px;
-          background: linear-gradient(to right,
-              transparent,
-              rgba(255, 255, 255, 0.6),
-              transparent);
-        }
-
-        .offer-name {
+        .ribbon-text {
           font-size: 1rem;
         }
 
-        .discount-badge {
-          font-size: 1rem;
-          padding: 0.4rem 0.8rem;
+        .promo-ribbon {
+          padding: 0.6rem 2rem;
+        }
+
+        .card-icon {
+          font-size: 2.5rem;
+        }
+
+        .card-title {
+          font-size: 1.25rem;
+        }
+
+        .discount-value {
+          font-size: 1.25rem;
+          padding: 0.6rem 1.25rem;
         }
       }
     </style>
@@ -1926,51 +1680,6 @@
         }
       });
     });
-
-    // ===== Snow Effect - Hero Section Only =====
-    const heroSection = document.getElementById('hero-section');
-    const snowAccumulation = document.getElementById('snowAccumulation');
-    const promoBox = document.querySelector('.promo-box-container');
-    let snowHeight = 0;
-    const snowflakeCount = 70; // More snowflakes for faster accumulation
-
-    // Calculate max height: from bottom of hero to top of promo box
-    const heroRect = heroSection.getBoundingClientRect();
-    const promoRect = promoBox.getBoundingClientRect();
-    const targetSnowHeight = promoRect.top - heroRect.top; // Height up to promo box
-
-    function createSnowflake() {
-      const snowflake = document.createElement('div');
-      snowflake.classList.add('snowflake');
-      snowflake.innerHTML = '❄';
-      snowflake.style.left = Math.random() * 100 + '%';
-      snowflake.style.fontSize = (Math.random() * 1.5 + 0.5) + 'em';
-      snowflake.style.animationDuration = (Math.random() * 3 + 4) + 's';
-      snowflake.style.animationDelay = Math.random() * 5 + 's';
-
-      heroSection.appendChild(snowflake);
-
-      // Remove snowflake when animation ends and increase accumulation
-      snowflake.addEventListener('animationiteration', () => {
-        if (snowHeight < targetSnowHeight) {
-          snowHeight += 1.5; // Faster accumulation per snowflake
-          snowAccumulation.style.height = snowHeight + 'px';
-        }
-      });
-    }
-
-    // Create initial snowflakes
-    for (let i = 0; i < snowflakeCount; i++) {
-      createSnowflake();
-    }
-
-    // Gradually increase snow accumulation over time (faster)
-    setInterval(() => {
-      if (snowHeight < targetSnowHeight) {
-        snowHeight += 1.2; // Faster gradual increase
-        snowAccumulation.style.height = snowHeight + 'px';
-      }
-    }, 1000); // Increase every second
 
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('/Renault-trucks-CE/service-worker.js')
