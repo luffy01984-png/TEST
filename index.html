@@ -1216,6 +1216,7 @@
     document.querySelectorAll(".accordion-btn").forEach(btn => {
       btn.addEventListener("click", () => {
         const content = btn.nextElementSibling;
+        const isCurrentlyOpen = content.classList.contains("open");
 
         // 1. GESTION DE L'EXCLUSIVITÉ (Fermeture des autres)
         document.querySelectorAll(".accordion-btn").forEach(otherBtn => {
@@ -1237,7 +1238,7 @@
         // 2. OUVERTURE / FERMETURE DU BOUTON CLIQUÉ
         const arrow = btn.querySelector(".arrow");
 
-        if (content.classList.contains("open")) {
+        if (isCurrentlyOpen) {
           // Fermeture
           content.style.maxHeight = null;
           content.classList.remove("open");
@@ -1251,8 +1252,10 @@
 
           // On utilise requestAnimationFrame pour une lecture correcte de scrollHeight
           requestAnimationFrame(() => { content.style.maxHeight = content.scrollHeight + "px"; });
+        }
 
-          // Scroll pour garder le bouton visible sous le header
+        // 3. SCROLL AUTOMATIQUE - Se déclenche toujours lors de l'ouverture (même si un autre était ouvert)
+        if (!isCurrentlyOpen) {
           setTimeout(() => {
             const header = document.querySelector('header');
             const headerHeight = header ? header.offsetHeight : 0;
