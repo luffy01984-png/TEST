@@ -2,652 +2,515 @@
 <html lang="fr">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Avantages Partenaires | Renault Trucks CSE Bourg-en-Bresse</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#dc2626">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avantages Partenaires | Renault Trucks CSE Bourg-en-Bresse</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#dc2626">
 
-  <style>
-    /* Permet d'afficher les sous-catégories en liste verticale (comme les mentions) */
-    .partner-content.list-layout.active {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-      padding: 0.5rem;
-    }
+    <style>
+        .partner-content.list-layout.active {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            padding: 0.5rem;
+        }
 
-    /* Remet la grille pour les logos À L'INTÉRIEUR de l'accordéon */
-    .accordion-content .partner-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      /* 2 colonnes mobile */
-      gap: 0.75rem;
-      padding-top: 1rem;
-      padding-bottom: 1rem;
-    }
+        .accordion-content .partner-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+        }
 
-    @media (min-width: 768px) {
-      .accordion-content .partner-grid {
-        gap: 1rem;
-      }
-    }
+        @media (min-width: 768px) {
+            .accordion-content .partner-grid {
+                gap: 1rem;
+            }
+        }
 
-    body {
-      font-family: 'Inter', sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f3f4f6;
-    }
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f3f4f6;
+        }
 
+        .partner-content {
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: max-height 0.5s ease, opacity 0.4s ease, margin-top 0.4s ease;
+            margin-top: 0;
+        }
 
-    /* Partner content toggle */
-    .partner-content {
-      max-height: 0;
-      overflow: hidden;
-      opacity: 0;
-      transition: max-height 0.5s ease, opacity 0.4s ease, margin-top 0.4s ease;
-      margin-top: 0;
-    }
+        .partner-content.active {
+            opacity: 1;
+            margin-top: 1rem;
+            max-height: 5000px;
+        }
 
-    .partner-content.active {
-      opacity: 1;
-      margin-top: 1rem;
-      max-height: 5000px;
-    }
+        .partner-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem 0.5rem;
+            border-radius: 0.75rem;
+            background-color: #f9fafb;
+            color: #1f2937;
+            font-weight: 500;
+            font-size: 0.875rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s, color 0.2s;
+            text-align: center;
+            min-height: 70px;
+            margin-bottom: 0;
+        }
 
-    /* Partner links */
-    .partner-link {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0.75rem 0.5rem;
-      border-radius: 0.75rem;
-      background-color: #f9fafb;
-      color: #1f2937;
-      font-weight: 500;
-      font-size: 0.875rem;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-      cursor: pointer;
-      transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s, color 0.2s;
-      text-align: center;
-      min-height: 70px;
-      margin-bottom: 0;
-    }
+        @media (min-width: 768px) {
+            .partner-link {
+                padding: 1rem 1.25rem;
+                font-size: 1rem;
+                min-height: 80px;
+            }
+        }
 
-    @media (min-width: 768px) {
-      .partner-link {
-        padding: 1rem 1.25rem;
-        font-size: 1rem;
-        min-height: 80px;
-      }
-    }
+        .partner-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+            background-color: #fff;
+            color: #dc2626;
+        }
 
-    .partner-link:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-      background-color: #fff;
-      color: #dc2626;
-    }
+        #imageModal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            transition: opacity 0.3s ease;
+            padding: 10px;
+        }
 
-    /* Modal */
-    #imageModal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.85);
-      justify-content: center;
-      align-items: center;
-      z-index: 10000;
-      transition: opacity 0.3s ease;
-      padding: 10px;
-      /* Réduit sur mobile */
-    }
+        #imageModal.active {
+            display: flex;
+        }
 
-    #imageModal.active {
-      display: flex;
-    }
+        #imageModal img {
+            max-width: 100%;
+            max-height: 85%;
+            width: 100%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            cursor: zoom-out;
+            object-fit: contain;
+        }
 
-    #imageModal img {
-      max-width: 100%;
-      /* Augmenté pour mobile */
-      max-height: 85%;
-      /* Augmenté pour mobile */
-      width: 100%;
-      /* Prend toute la largeur disponible */
-      height: auto;
-      /* Garde les proportions */
-      border-radius: 12px;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-      cursor: zoom-out;
-      object-fit: contain;
-    }
+        @media (min-width: 768px) {
+            #imageModal {
+                padding: 20px;
+            }
 
-    /* Sur tablette et desktop, garder une taille plus raisonnable */
-    @media (min-width: 768px) {
-      #imageModal {
-        padding: 20px;
-      }
+            #imageModal img {
+                max-width: 90%;
+                max-height: 80%;
+                width: auto;
+            }
+        }
 
-      #imageModal img {
-        max-width: 90%;
-        max-height: 80%;
-        width: auto;
-        /* Retour à la taille normale */
-      }
-    }
+        #imageModal button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #dc2626;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.9rem;
+            transition: background 0.2s;
+            z-index: 10001;
+        }
 
-    #imageModal button {
-      position: absolute;
-      top: 10px;
-      /* Ajusté pour mobile */
-      right: 10px;
-      background: #dc2626;
-      color: #fff;
-      border: none;
-      padding: 10px 20px;
-      /* Légèrement réduit sur mobile */
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: bold;
-      font-size: 0.9rem;
-      /* Légèrement plus petit sur mobile */
-      transition: background 0.2s;
-      z-index: 10001;
-      /* Pour être au-dessus de l'image */
-    }
+        @media (min-width: 768px) {
+            #imageModal button {
+                top: 20px;
+                right: 20px;
+                padding: 12px 24px;
+                font-size: 1rem;
+            }
+        }
 
-    @media (min-width: 768px) {
-      #imageModal button {
-        top: 20px;
-        right: 20px;
-        padding: 12px 24px;
-        font-size: 1rem;
-      }
-    }
+        #imageModal button:hover {
+            background: #b91c1c;
+        }
 
-    #imageModal button:hover {
-      background: #b91c1c;
-    }
+        .category-card img {
+            width: 100%;
+            height: 9rem;
+            object-fit: cover;
+            border-radius: 1rem;
+        }
 
-    /* Category cards */
-    .category-card img {
-      width: 100%;
-      height: 9rem;
-      object-fit: cover;
-      border-radius: 1rem;
-    }
+        .accordion-btn {
+            width: 100%;
+            text-align: left;
+            padding: 1rem 1.25rem;
+            background-color: #f3f4f6;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            color: #1f2937;
+            cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
 
-    /* Accordion */
-    .accordion-btn {
-      width: 100%;
-      text-align: left;
-      padding: 1rem 1.25rem;
-      background-color: #f3f4f6;
-      border-radius: 0.5rem;
-      font-weight: 600;
-      color: #1f2937;
-      cursor: pointer;
-      transition: background-color 0.3s ease, color 0.3s ease;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 0.5rem;
-    }
+        .accordion-btn:hover {
+            background-color: #e5e7eb;
+        }
 
-    .accordion-btn:hover {
-      background-color: #e5e7eb;
-    }
+        .accordion-btn.active {
+            color: #dc2626;
+            background-color: #fee2e2;
+        }
 
-    .accordion-btn.active {
-      color: #dc2626;
-      background-color: #fee2e2;
-    }
+        .arrow {
+            transition: transform 0.3s ease;
+            font-size: 0.875rem;
+        }
 
-    .arrow {
-      transition: transform 0.3s ease;
-      font-size: 0.875rem;
-    }
+        .arrow.rotate {
+            transform: rotate(90deg);
+        }
 
-    .arrow.rotate {
-      transform: rotate(90deg);
-    }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+            background: white;
+            padding: 0 1.25rem;
+            border-left: 3px solid #dc2626;
+            margin-bottom: 0.5rem;
+            border-radius: 0.5rem;
+        }
 
-    .accordion-content {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.4s ease;
-      background: white;
-      padding: 0 1.25rem;
-      border-left: 3px solid #dc2626;
-      margin-bottom: 0.5rem;
-      border-radius: 0.5rem;
-    }
+        .accordion-content.open {
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+        }
 
-    .accordion-content.open {
-      padding-top: 1rem;
-      padding-bottom: 1rem;
-    }
+        .nav-link {
+            color: #9ca3af;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
 
-    /* Navbar active */
-    .nav-link {
-      color: #9ca3af;
-      text-decoration: none;
-      font-weight: 600;
-      padding: 0.5rem 1rem;
-      border-radius: 9999px;
-      transition: all 0.3s ease;
-      display: inline-block;
-    }
+        .nav-link:hover {
+            background-color: #fecaca;
+            color: #dc2626;
+        }
 
-    .nav-link:hover {
-      background-color: #fecaca;
-      color: #dc2626;
-    }
+        .nav-link.active {
+            background-color: #dc2626 !important;
+            color: #ffffff !important;
+        }
 
-    .nav-link.active {
-      background-color: #dc2626 !important;
-      color: #ffffff !important;
-    }
+        .partner-content.active {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
+            justify-items: stretch;
+            align-items: start;
+        }
 
-    /* Responsive grid for partner-content */
-    /* Mobile et Tablette: 2 colonnes */
-    .partner-content.active {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 0.75rem;
-      justify-items: stretch;
-      align-items: start;
-    }
+        @media (min-width: 768px) {
+            .partner-content.active {
+                gap: 1rem;
+            }
+        }
 
-    /* Tablette: même disposition mais espacement augmenté */
-    @media (min-width: 768px) {
-      .partner-content.active {
-        gap: 1rem;
-      }
-    }
+        @media (min-width: 1024px) {
+            .partner-content.active {
+                gap: 1.5rem;
+            }
+        }
 
-    /* Desktop: 2 colonnes avec plus d'espace */
-    @media (min-width: 1024px) {
-      .partner-content.active {
-        gap: 1.5rem;
-      }
-    }
+        .partner-badge {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background: #dc2626;
+            color: white;
+            font-size: 0.75rem;
+            font-weight: bold;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            box-shadow: 0 2px 8px rgba(220, 38, 38, 0.4);
+            z-index: 10;
+        }
 
-    /* Badge nombre partenaires */
-    .partner-badge {
-      position: absolute;
-      top: 0.5rem;
-      right: 0.5rem;
-      background: #dc2626;
-      color: white;
-      font-size: 0.75rem;
-      font-weight: bold;
-      padding: 0.25rem 0.75rem;
-      border-radius: 9999px;
-      box-shadow: 0 2px 8px rgba(220, 38, 38, 0.4);
-      z-index: 10;
-    }
+        #scrollTopBtn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #dc2626;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
 
-    /* Scroll to top button */
-    #scrollTopBtn {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: #dc2626;
-      color: white;
-      border: none;
-      border-radius: 50%;
-      width: 50px;
-      height: 50px;
-      display: none;
-      justify-content: center;
-      align-items: center;
-      cursor: pointer;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-      z-index: 1000;
-      transition: all 0.3s ease;
-    }
+        #scrollTopBtn:hover {
+            background: #b91c1c;
+            transform: translateY(-3px);
+        }
 
-    #scrollTopBtn:hover {
-      background: #b91c1c;
-      transform: translateY(-3px);
-    }
+        #scrollTopBtn.show {
+            display: flex;
+        }
 
-    #scrollTopBtn.show {
-      display: flex;
-    }
+        .category-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 1rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
 
-    /* Amélioration visuelle des cartes catégories */
-    .category-card {
-      position: relative;
-      overflow: hidden;
-      border-radius: 1rem;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    }
+        .category-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
 
-    .category-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-      transition: left 0.5s;
-    }
+        .category-card:hover::before {
+            left: 100%;
+        }
 
-    .category-card:hover::before {
-      left: 100%;
-    }
+        /* MODERN HERO ANIMATIONS */
+        @keyframes gradient-shift {
 
-    /* Modern Hero Section */
-    #hero-section {
-      position: relative;
-      overflow: hidden;
-      background: linear-gradient(135deg, #1e293b 0%, #0f172a 50%, #1e293b 100%);
-      background-size: 200% 200%;
-      animation: gradientFlow 15s ease infinite;
-    }
+            0%,
+            100% {
+                background-position: 0% 50%;
+            }
 
-    @keyframes gradientFlow {
+            50% {
+                background-position: 100% 50%;
+            }
+        }
 
-      0%,
-      100% {
-        background-position: 0% 50%;
-      }
+        @keyframes shine {
+            to {
+                background-position: 200% center;
+            }
+        }
 
-      50% {
-        background-position: 100% 50%;
-      }
-    }
+        @keyframes pulse-glow {
 
-    /* Geometric Shapes Background */
-    .hero-shape {
-      position: absolute;
-      opacity: 0.1;
-      animation: floatShape 20s ease-in-out infinite;
-    }
+            0%,
+            100% {
+                opacity: 0.3;
+            }
 
-    .hero-shape.circle {
-      border-radius: 50%;
-      background: linear-gradient(135deg, #dc2626, #f59e0b);
-    }
+            50% {
+                opacity: 0.6;
+            }
+        }
 
-    .hero-shape.square {
-      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
-      border-radius: 20px;
-    }
+        .animate-gradient-shift {
+            background-size: 200% 200%;
+            animation: gradient-shift 15s ease infinite;
+        }
 
-    .hero-shape.triangle {
-      width: 0;
-      height: 0;
-      background: transparent;
-      border-left: 75px solid transparent;
-      border-right: 75px solid transparent;
-      border-bottom: 130px solid rgba(220, 38, 38, 0.3);
-    }
+        .animate-shine {
+            animation: shine 3s linear infinite;
+        }
 
-    @keyframes floatShape {
+        .glow-text {
+            text-shadow: 0 0 20px rgba(248, 113, 113, 0.8),
+                0 0 40px rgba(248, 113, 113, 0.6),
+                0 0 60px rgba(248, 113, 113, 0.4);
+        }
 
-      0%,
-      100% {
-        transform: translateY(0) rotate(0deg);
-      }
+        .promo-card-modern {
+            animation: float 6s ease-in-out infinite;
+        }
 
-      50% {
-        transform: translateY(-30px) rotate(180deg);
-      }
-    }
+        @keyframes float {
 
-    /* Hero Content Styling */
-    #hero-section h1 {
-      color: #ffffff !important;
-      text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-      position: relative;
-      z-index: 10;
-    }
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
 
-    #hero-section h1 .text-red-600 {
-      background: linear-gradient(135deg, #dc2626, #f59e0b);
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-      text-shadow: none;
-    }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
 
-    #hero-section p {
-      color: #e2e8f0 !important;
-      position: relative;
-      z-index: 10;
-    }
-
-    #hero-section p strong {
-      color: #fbbf24 !important;
-      text-shadow: 0 2px 10px rgba(251, 191, 36, 0.5);
-    }
-  </style>
+        .promo-item {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+    </style>
 </head>
 
 <body class="bg-gray-100 text-black">
 
-  <!-- Modal -->
-  <div id="imageModal">
-    <button aria-label="Fermer">✕ Fermer</button>
-    <img id="modalImg" src="" alt="Partenaire">
-  </div>
-
-  <!-- Scroll to top button -->
-  <button id="scrollTopBtn" aria-label="Retour en haut">↑</button>
-
-  <!-- HEADER -->
-  <header class="bg-white shadow-xl sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto flex justify-between items-center px-4 py-3">
-      <!-- Logo et texte -->
-      <div class="flex items-center space-x-2">
-        <img src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/Header.webp"
-          alt="Logo Renault Trucks" class="h-20 sm:h-24 rounded-md">
-        <span class="text-xs font-bold text-red-600 uppercase tracking-widest hidden sm:inline">CSE
-          Bourg-en-Bresse</span>
-      </div>
-
-      <!-- Navbar -->
-      <nav class="flex items-center space-x-2 sm:space-x-4 text-sm">
-        <a href="#categories" class="nav-link" id="nav-partenaires">Partenaires</a>
-        <a href="#mentions" class="nav-link" id="nav-mentions">Mentions</a>
-      </nav>
-    </div>
-  </header>
-
-  <script>
-    // Sélection des liens
-    const navPartenaires = document.getElementById('nav-partenaires');
-    const navMentions = document.getElementById('nav-mentions');
-
-    // Gestion clic pour scroll et active
-    navPartenaires.addEventListener('click', () => {
-      navPartenaires.classList.add('active');
-      navMentions.classList.remove('active');
-      document.getElementById('categories').scrollIntoView({ behavior: 'smooth' });
-    });
-
-    navMentions.addEventListener('click', () => {
-      navMentions.classList.add('active');
-      navPartenaires.classList.remove('active');
-      document.getElementById('mentions').scrollIntoView({ behavior: 'smooth' });
-    });
-
-    // Détection scroll pour active link automatique
-    const categoriesSection = document.getElementById('categories');
-    const mentionsSection = document.getElementById('mentions');
-
-    window.addEventListener('scroll', () => {
-      const scrollPos = window.scrollY + 150; // Ajuste pour le header sticky
-      if (categoriesSection && mentionsSection) {
-        if (scrollPos >= mentionsSection.offsetTop) {
-          navMentions.classList.add('active');
-          navPartenaires.classList.remove('active');
-        } else if (scrollPos >= categoriesSection.offsetTop) {
-          navPartenaires.classList.add('active');
-          navMentions.classList.remove('active');
-        }
-      }
-    });
-  </script>
-
-
-  <!-- HERO SECTION -->
-  <section id="hero-section" class="text-center py-16 px-4 shadow-md">
-    <!-- Geometric Shapes -->
-    <div class="hero-shape circle" style="width: 150px; height: 150px; top: 10%; left: 5%;"></div>
-    <div class="hero-shape square" style="width: 120px; height: 120px; top: 60%; right: 8%; animation-delay: 3s;"></div>
-    <div class="hero-shape circle" style="width: 100px; height: 100px; bottom: 15%; left: 10%; animation-delay: 5s;">
-    </div>
-    <div class="hero-shape triangle" style="top: 20%; right: 15%; animation-delay: 7s;"></div>
-    <div class="hero-shape square" style="width: 80px; height: 80px; top: 70%; left: 15%; animation-delay: 2s;"></div>
-
-    <!-- Hero Content -->
-    <div class="max-w-4xl mx-auto">
-      <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight mb-4">
-        Vos Avantages <span class="text-red-600">CSE Renault Trucks</span>
-      </h1>
-      <p class="text-lg mt-2 uppercase tracking-wider font-semibold">
-        <strong>Bourg-en-Bresse</strong>
-      </p>
-      <p class="text-base md:text-lg mt-4 max-w-2xl mx-auto font-light leading-relaxed">
-        Cliquez sur une catégorie pour découvrir toutes les offres exclusives négociées par votre Comité d'Entreprise.
-        <br class="hidden md:block">
-        *Sur présentation du badge.
-      </p>
+    <div id="imageModal">
+        <button aria-label="Fermer">✕ Fermer</button>
+        <img id="modalImg" src="" alt="Partenaire">
     </div>
 
-    <!-- SIMPLE PROMO BOX -->
-    <section class="simple-promo-container">
-      <div class="promo-box-simple">
-        <h2 class="promo-title-simple">🎁 Nouveaux Partenaires</h2>
-        <div class="promo-content-simple">
-          <div class="partner-item">
-            <span class="partner-name">Maison B</span>
-            <span class="partner-discount">-5 à 10%</span>
-          </div>
-          <div class="partner-divider"></div>
-          <div class="partner-item">
-            <span class="partner-name">Azureva</span>
-            <span class="partner-discount">-10%</span>
-          </div>
+    <button id="scrollTopBtn" aria-label="Retour en haut">↑</button>
+
+    <header class="bg-white shadow-xl sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto flex justify-between items-center px-4 py-3">
+            <div class="flex items-center space-x-2">
+                <img src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/Header.webp"
+                    alt="Logo Renault Trucks" class="h-20 sm:h-24 rounded-md">
+                <span class="text-xs font-bold text-red-600 uppercase tracking-widest hidden sm:inline">CSE
+                    Bourg-en-Bresse</span>
+            </div>
+
+            <nav class="flex items-center space-x-2 sm:space-x-4 text-sm">
+                <a href="#categories" class="nav-link" id="nav-partenaires">Partenaires</a>
+                <a href="#mentions" class="nav-link" id="nav-mentions">Mentions</a>
+            </nav>
         </div>
-      </div>
+    </header>
+
+    <script>
+        const navPartenaires = document.getElementById('nav-partenaires');
+        const navMentions = document.getElementById('nav-mentions');
+
+        navPartenaires.addEventListener('click', () => {
+            navPartenaires.classList.add('active');
+            navMentions.classList.remove('active');
+            document.getElementById('categories').scrollIntoView({ behavior: 'smooth' });
+        });
+
+        navMentions.addEventListener('click', () => {
+            navMentions.classList.add('active');
+            navPartenaires.classList.remove('active');
+            document.getElementById('mentions').scrollIntoView({ behavior: 'smooth' });
+        });
+
+        const categoriesSection = document.getElementById('categories');
+        const mentionsSection = document.getElementById('mentions');
+
+        window.addEventListener('scroll', () => {
+            const scrollPos = window.scrollY + 150;
+            if (categoriesSection && mentionsSection) {
+                if (scrollPos >= mentionsSection.offsetTop) {
+                    navMentions.classList.add('active');
+                    navPartenaires.classList.remove('active');
+                } else if (scrollPos >= categoriesSection.offsetTop) {
+                    navPartenaires.classList.add('active');
+                    navMentions.classList.remove('active');
+                }
+            }
+        });
+    </script>
+
+    <!-- HERO MODERNISÉ -->
+    <section class="relative overflow-hidden text-white text-center py-16 px-4" id="hero-section"
+        style="min-height: 500px;">
+        <div
+            class="absolute inset-0 bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 animate-gradient-shift">
+        </div>
+
+        <canvas id="geometricCanvas"
+            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1;"></canvas>
+
+        <div class="absolute inset-0 backdrop-blur-sm bg-white/5 z-0"></div>
+
+        <div class="relative z-10 max-w-5xl mx-auto">
+            <h1
+                class="text-4xl md:text-6xl font-extrabold tracking-tight mb-4 animate-shine bg-gradient-to-r from-white via-red-200 to-white bg-clip-text text-transparent bg-[length:200%_auto]">
+                Vos Avantages <span class="text-red-400 glow-text">CSE Renault Trucks</span>
+            </h1>
+            <p class="text-purple-200 mt-2 text-sm md:text-base uppercase tracking-widest font-semibold">
+                <strong>Bourg-en-Bresse</strong></p>
+            <p class="text-white/90 mt-4 max-w-2xl mx-auto text-base md:text-lg font-light leading-relaxed">
+                Cliquez sur une catégorie pour découvrir toutes les offres exclusives négociées par votre Comité
+                d'Entreprise.*Sur présentation du badge.
+            </p>
+
+            <div class="mt-10 inline-block">
+                <div
+                    class="promo-card-modern bg-gradient-to-br from-red-600 via-red-500 to-pink-600 p-6 rounded-2xl shadow-2xl border border-red-400/30 backdrop-blur-md relative overflow-hidden">
+                    <div
+                        class="absolute inset-0 rounded-2xl bg-gradient-to-r from-red-400 via-pink-400 to-red-400 opacity-50 blur-xl animate-pulse-glow">
+                    </div>
+
+                    <div class="relative z-10">
+                        <h2
+                            class="text-2xl md:text-3xl font-bold uppercase tracking-wide mb-3 flex items-center justify-center gap-2">
+                            <span class="text-4xl">🎉</span>
+                            Déjà 88 Partenaires !
+                            <span class="text-4xl">🎉</span>
+                        </h2>
+
+                        <div class="space-y-3 mt-4">
+                            <div
+                                class="promo-item bg-white/10 backdrop-blur-sm rounded-xl p-3 border border-white/20 hover:bg-white/20 transition-all duration-300 hover:scale-105">
+                                <p class="text-lg md:text-xl font-semibold">
+                                    ET CE N'EST PAS FINI ! <span
+                                        class="text-yellow-300 animate-bounce inline-block">✨</span>
+                                </p>
+                            </div>
+
+                            <div
+                                class="promo-item bg-white/10 backdrop-blur-sm rounded-xl p-3 border border-white/20 hover:bg-white/20 transition-all duration-300 hover:scale-105">
+                                <p class="text-lg md:text-xl font-semibold">
+                                    CASTORAMA : <span class="text-yellow-300 font-bold text-xl">DE -5 à -20 %</span>
+                                </p>
+                            </div>
+
+                            <div
+                                class="promo-item bg-white/10 backdrop-blur-sm rounded-xl p-3 border border-white/20 hover:bg-white/20 transition-all duration-300 hover:scale-105">
+                                <p class="text-lg md:text-xl font-semibold">
+                                    Day by Day: <span class="text-yellow-300 font-bold text-xl">DE -5 à -7 %</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
-
-    <style>
-      /* Simple Promo Container */
-      .simple-promo-container {
-        margin-top: 3rem;
-        margin-bottom: 2rem;
-        padding: 0 1rem;
-        max-width: 700px;
-        margin-left: auto;
-        margin-right: auto;
-      }
-
-      /* Simple Promo Box */
-      .promo-box-simple {
-        background: linear-gradient(135deg, #dc2626, #991b1b);
-        border-radius: 16px;
-        padding: 2rem;
-        box-shadow: 0 10px 40px rgba(220, 38, 38, 0.3);
-        border: 2px solid rgba(255, 255, 255, 0.1);
-      }
-
-      /* Title */
-      .promo-title-simple {
-        color: white;
-        font-size: 1.5rem;
-        font-weight: 800;
-        text-align: center;
-        margin: 0 0 1.5rem 0;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-      }
-
-      /* Content */
-      .promo-content-simple {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 2rem;
-        flex-wrap: wrap;
-      }
-
-      /* Partner Item */
-      .partner-item {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 0.75rem;
-      }
-
-      .partner-name {
-        color: white;
-        font-size: 1.25rem;
-        font-weight: 700;
-        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-      }
-
-      .partner-discount {
-        background: linear-gradient(135deg, #fbbf24, #f59e0b);
-        color: #1f2937;
-        font-size: 1.25rem;
-        font-weight: 900;
-        padding: 0.5rem 1.5rem;
-        border-radius: 50px;
-        box-shadow: 0 4px 16px rgba(251, 191, 36, 0.4);
-      }
-
-      /* Divider */
-      .partner-divider {
-        width: 2px;
-        height: 60px;
-        background: rgba(255, 255, 255, 0.3);
-      }
-
-      /* Responsive */
-      @media (max-width: 640px) {
-        .promo-box-simple {
-          padding: 1.5rem;
-        }
-
-        .promo-title-simple {
-          font-size: 1.25rem;
-        }
-
-        .promo-content-simple {
-          flex-direction: column;
-          gap: 1.5rem;
-        }
-
-        .partner-divider {
-          width: 80px;
-          height: 2px;
-        }
-
-        .partner-name {
-          font-size: 1.125rem;
-        }
-
-        .partner-discount {
-          font-size: 1.125rem;
-          padding: 0.4rem 1.25rem;
-        }
-      }
-    </style>
-  </section>
 
   <!-- CATEGORIES -->
   <section id="categories" class="max-w-6xl mx-auto py-4 px-4">
