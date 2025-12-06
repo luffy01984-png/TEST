@@ -526,14 +526,21 @@
           </button>
           <div class="accordion-content">
             <div class="partner-grid">
-              <div class="partner-link"onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/Restaurant.webp')">Le Lodge</div>
-              <div class="partner-link"onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/Restaurant.webp')">Butch</div>
-              <div class="partner-link"onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/Restaurant.webp')">Napol'in</div>
-              <div class="partner-link"onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/Restaurant.webp')">23éme Avenue</div>
-              <div class="partner-link"onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/Restaurant.webp')">Bandes de Maqueraux</div>
-              <div class="partner-link"onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/Restaurant.webp')">Ryoko</div>
-              <div class="partner-link"onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/Restaurant.webp')">The Roster</div>
-              <div class="partner-link"onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/Restaurant.webp')">Cheese Naan</div>
+              <div class="partner-link"
+                onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/Restaurant.webp')">
+                Partenaire 1</div>
+              <div class="partner-link"
+                onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/Restaurant.webp')">
+                Partenaire 2</div>
+              <div class="partner-link"
+                onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/Restaurant.webp')">
+                Partenaire 3</div>
+              <div class="partner-link"
+                onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/Restaurant.webp')">
+                Partenaire 4</div>
+              <div class="partner-link"
+                onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/Restaurant.webp')">
+                Partenaire 5</div>
             </div>
           </div>
         </div>
@@ -991,7 +998,8 @@
     <button class="accordion-btn">1. Éditeur du site <span class="arrow">▶</span></button>
     <div class="accordion-content">
       <p>Renault Trucks CSE Bourg-en-Bresse<br>Secrétaire du CSE et créateur des plaquettes promotionnelles :
-        <strong>Arnaud Christian</strong><br></p>
+        <strong>Arnaud Christian</strong><br>
+      </p>
     </div>
 
     <button class="accordion-btn">2. Conception et Realisation <span class="arrow">▶</span></button>
@@ -1243,6 +1251,19 @@
 
           // On utilise requestAnimationFrame pour une lecture correcte de scrollHeight
           requestAnimationFrame(() => { content.style.maxHeight = content.scrollHeight + "px"; });
+
+          // Scroll pour garder le bouton visible sous le header
+          setTimeout(() => {
+            const header = document.querySelector('header');
+            const headerHeight = header ? header.offsetHeight : 0;
+            const btnTop = btn.getBoundingClientRect().top + window.scrollY;
+            const scrollTarget = btnTop - headerHeight - 10; // 10px de marge
+
+            window.scrollTo({
+              top: Math.max(0, scrollTarget),
+              behavior: 'smooth'
+            });
+          }, 100); // Petit délai pour laisser l'animation se déclencher
         }
       });
     });
