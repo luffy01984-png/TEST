@@ -430,11 +430,30 @@
         Cliquez sur une catégorie pour découvrir toutes les offres exclusives négociées par votre Comité
         d'Entreprise.*Sur présentation du badge.
       </p>
-      <section class="bg-red-600 text-white text-center py-4 px-4 mt-6 rounded-lg shadow-lg inline-block">
-        <h2 class="text-2xl font-bold uppercase tracking-wide">On vous prépare un marché… mais pas n’importe lequel !
-          Restez connecté pour connaître notre nouveau partenaire.
-          Une piste ? C’est beau, c’est bon, et ça arrive bientôt. </h2>
+      <!-- JEU À GRATTER -->
+      <section class="mt-6 inline-block">
+        <div class="scratch-game-container" style="position: relative; max-width: 500px; margin: 0 auto;">
+          <h2 class="text-2xl font-bold text-white mb-4 uppercase tracking-wide text-center">
+            🎁 Grattez pour découvrir votre surprise !
+          </h2>
 
+          <!-- Image cachée en dessous -->
+          <div id="scratchImageContainer"
+            style="position: relative; width: 100%; max-width: 500px; height: 300px; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.3);">
+            <img id="scratchImage"
+              src="https://images.unsplash.com/photo-1513694203232-719a280e022f?w=500&h=300&fit=crop" alt="Prize"
+              style="width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0;">
+
+            <!-- Canvas de grattage par-dessus -->
+            <canvas id="scratchCanvas" width="500" height="300"
+              style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; cursor: grab; touch-action: none;">
+            </canvas>
+          </div>
+
+          <p class="text-white text-sm mt-4 text-center opacity-90">
+            ✨ Utilisez votre souris ou votre doigt pour gratter
+          </p>
+        </div>
       </section>
     </div>
   </section>
@@ -547,7 +566,7 @@
               <div class="partner-link"
                 onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/Restaurant.webp')">
                 The Roaster</div>
-              
+
             </div>
           </div>
         </div>
@@ -1366,6 +1385,118 @@
     }
 
     drawSnow();
+
+    // ===== JEU À GRATTER =====
+    const scratchCanvas = document.getElementById('scratchCanvas');
+    const scratchCtx = scratchCanvas ? scratchCanvas.getContext('2d') : null;
+
+    if (scratchCanvas && scratchCtx) {
+      let isScratching = false;
+      let scratchedPercentage = 0;
+
+      // Fonction pour initialiser le canvas de grattage
+      function initScratchCanvas() {
+        // Remplir avec une couleur argentée/métallique
+        const gradient = scratchCtx.createLinearGradient(0, 0, scratchCanvas.width, scratchCanvas.height);
+        gradient.addColorStop(0, '#c0c0c0');
+        gradient.addColorStop(0.5, '#e8e8e8');
+        gradient.addColorStop(1, '#a8a8a8');
+
+        scratchCtx.fillStyle = gradient;
+        scratchCtx.fillRect(0, 0, scratchCanvas.width, scratchCanvas.height);
+
+        // Ajouter du texte par-dessus
+        scratchCtx.fillStyle = '#666';
+        scratchCtx.font = 'bold 32px Inter, sans-serif';
+        scratchCtx.textAlign = 'center';
+        scratchCtx.textBaseline = 'middle';
+        scratchCtx.fillText('GRATTEZ ICI', scratchCanvas.width / 2, scratchCanvas.height / 2 - 20);
+
+        scratchCtx.font = '20px Inter, sans-serif';
+        scratchCtx.fillText('👆', scratchCanvas.width / 2, scratchCanvas.height / 2 + 30);
+      }
+
+      // Fonction de grattage
+      function scratch(x, y) {
+        const rect = scratchCanvas.getBoundingClientRect();
+        const scaleX = scratchCanvas.width / rect.width;
+        const scaleY = scratchCanvas.height / rect.height;
+
+        const canvasX = (x - rect.left) * scaleX;
+        const canvasY = (y - rect.top) * scaleY;
+
+        scratchCtx.globalCompositeOperation = 'destination-out';
+        scratchCtx.beginPath();
+        scratchCtx.arc(canvasX, canvasY, 25, 0, Math.PI * 2);
+        scratchCtx.fill();
+
+        // Calculer le pourcentage gratté
+        checkScratchedArea();
+      }
+
+      // Vérifier combien a été gratté
+      function checkScratchedArea() {
+        const imageData = scratchCtx.getImageData(0, 0, scratchCanvas.width, scratchCanvas.height);
+        const pixels = imageData.data;
+        let transparent = 0;
+
+        for (let i = 3; i < pixels.length; i += 4) {
+          if (pixels[i] < 128) transparent++;
+        }
+
+        scratchedPercentage = (transparent / (pixels.length / 4)) * 100;
+
+        // Si plus de 70% est gratté, révéler complètement
+        if (scratchedPercentage > 70) {
+          scratchCanvas.style.opacity = '0';
+          scratchCanvas.style.transition = 'opacity 0.5s ease';
+        }
+      }
+
+      // Événements souris
+      scratchCanvas.addEventListener('mousedown', (e) => {
+        isScratching = true;
+        scratch(e.clientX, e.clientY);
+      });
+
+      scratchCanvas.addEventListener('mousemove', (e) => {
+        if (isScratching) {
+          scratch(e.clientX, e.clientY);
+        }
+      });
+
+      scratchCanvas.addEventListener('mouseup', () => {
+        isScratching = false;
+      });
+
+      scratchCanvas.addEventListener('mouseleave', () => {
+        isScratching = false;
+      });
+
+      // Événements tactiles (mobile)
+      scratchCanvas.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        isScratching = true;
+        const touch = e.touches[0];
+        scratch(touch.clientX, touch.clientY);
+      });
+
+      scratchCanvas.addEventListener('touchmove', (e) => {
+        e.preventDefault();
+        if (isScratching) {
+          const touch = e.touches[0];
+          scratch(touch.clientX, touch.clientY);
+        }
+      });
+
+      scratchCanvas.addEventListener('touchend', (e) => {
+        e.preventDefault();
+        isScratching = false;
+      });
+
+      // Initialiser le canvas
+      initScratchCanvas();
+    }
   </script>
 </body>
 
