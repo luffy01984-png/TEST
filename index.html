@@ -345,6 +345,16 @@
     .category-card:hover::before {
       left: 100%;
     }
+
+    /* Cacher la scrollbar sur mobile pour le carrousel */
+    .scrollbar-hide::-webkit-scrollbar {
+      display: none;
+    }
+
+    .scrollbar-hide {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
   </style>
 </head>
 
@@ -430,43 +440,115 @@
         Cliquez sur une catégorie pour découvrir toutes les offres exclusives négociées par votre Comité
         d'Entreprise.*Sur présentation du badge.
       </p>
-      <!-- JEU TRUCK RUNNER -->
-      <section class="mt-8 mb-4 relative w-full max-w-xl mx-auto perspective-1000">
-        <div id="game-wrapper"
-          class="relative bg-gradient-to-b from-sky-300 to-sky-100 rounded-xl shadow-[0_20px_50px_rgba(0,0,0,0.5)] overflow-hidden border-4 border-white/50 ring-4 ring-black/10 transform transition-all hover:scale-[1.01]"
-          style="height: 250px;">
+      <!-- PROMO BOX NOUVEAUX PARTENAIRES -->
+      <section class="mt-10 mb-8 w-full max-w-5xl mx-auto px-4 perspective-1000">
+        <div
+          class="relative bg-white/10 backdrop-blur-md border border-white/20 rounded-3xl shadow-[0_8px_32px_rgba(0,0,0,0.2)] overflow-hidden transform hover:scale-[1.01] transition-transform duration-500">
 
-          <!-- Score Board -->
+          <!-- Background Decor -->
           <div
-            class="absolute top-4 right-4 bg-white/80 backdrop-blur-sm px-4 py-1 rounded-full border border-white/50 shadow-sm z-10">
-            <span class="text-gray-600 font-bold text-sm tracking-wider">SCORE</span>
-            <span id="score" class="text-red-600 font-black text-xl ml-2 font-mono">0000</span>
+            class="absolute top-0 right-0 -mr-20 -mt-20 w-80 h-80 bg-red-600/20 rounded-full blur-3xl pointer-events-none">
+          </div>
+          <div
+            class="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 bg-blue-600/20 rounded-full blur-3xl pointer-events-none">
           </div>
 
-          <!-- Canvas jeu -->
-          <canvas id="runnerCanvas" width="800" height="300"
-            class="w-full h-full block cursor-pointer touch-manipulation"></canvas>
+          <!-- Header -->
+          <div
+            class="px-6 py-5 border-b border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 bg-gradient-to-r from-gray-900/40 to-transparent">
+            <h2 class="text-2xl font-bold text-white tracking-wide uppercase flex items-center gap-3">
+              <span class="text-4xl filter drop-shadow-md">🚀</span>
+              <span
+                class="text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-300 drop-shadow-sm">Nouveaux
+                Partenaires</span>
+            </h2>
+            <span
+              class="bg-red-600/90 text-white text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wider shadow-lg border border-red-500/50 backdrop-blur-sm">
+              Sélection du mois
+            </span>
+          </div>
 
-          <!-- UI Overlay (Start / Game Over) -->
-          <div id="game-ui"
-            class="absolute inset-0 flex flex-col items-center justify-center bg-black/40 backdrop-blur-[2px] z-20 transition-all duration-300">
+          <!-- Cards Grid -->
+          <div
+            class="p-6 flex flex-nowrap overflow-x-auto snap-x snap-mandatory sm:grid sm:grid-cols-3 gap-4 sm:gap-6 relative z-10 scrollbar-hide pb-8 sm:pb-6">
+
+            <!-- Partner 1 -->
             <div
-              class="bg-white p-6 rounded-2xl shadow-2xl text-center transform hover:scale-105 transition-transform duration-300 border-b-4 border-red-600">
-              <h3 id="game-title" class="text-3xl font-extrabold text-gray-800 mb-1 tracking-tight">TRUCK RUNNER</h3>
-              <p id="game-subtitle" class="text-gray-500 mb-6 text-sm">Évitez les obstacles !</p>
-
-              <button id="start-btn"
-                class="group relative inline-flex items-center justify-center px-8 py-3 text-base font-bold text-white transition-all duration-200 bg-red-600 rounded-full hover:bg-red-700 hover:shadow-lg hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-600">
-                <span class="mr-2">🚛</span> JOUER
-                <span
-                  class="absolute right-3 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all">→</span>
-              </button>
-
-              <p class="mt-4 text-xs text-gray-400 font-medium">
-                <span class="hidden md:inline">Espace ou Haut pour sauter</span>
-                <span class="md:hidden">Touchez pour sauter</span>
-              </p>
+              onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/AuBureau.webp')"
+              class="min-w-[85%] sm:min-w-0 snap-center group relative bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer hover:-translate-y-2 border border-white/40">
+              <div
+                class="absolute top-3 right-3 bg-red-600 text-white text-[10px] font-bold px-2 py-1 rounded-md z-10 shadow-md transform group-hover:scale-110 transition-transform">
+                NOUVEAU
+              </div>
+              <div class="h-40 overflow-hidden relative">
+                <div class="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors z-10"></div>
+                <img
+                  src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/AuBureau.webp"
+                  alt="Au Bureau"
+                  class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
+              </div>
+              <div class="p-4 bg-white relative">
+                <h3 class="font-bold text-gray-800 text-lg group-hover:text-red-600 transition-colors text-center">Au
+                  Bureau</h3>
+                <p class="text-xs text-gray-500 text-center mt-1 uppercase tracking-wide font-medium">Bourg-en-Bresse
+                </p>
+                <div
+                  class="mt-3 w-8 h-1 bg-red-600 rounded-full mx-auto transform scale-0 group-hover:scale-100 transition-transform duration-300">
+                </div>
+              </div>
             </div>
+
+            <!-- Partner 2 -->
+            <div
+              onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/bollyfoodnew.webp')"
+              class="min-w-[85%] sm:min-w-0 snap-center group relative bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer hover:-translate-y-2 border border-white/40">
+              <div
+                class="absolute top-3 right-3 bg-red-600 text-white text-[10px] font-bold px-2 py-1 rounded-md z-10 shadow-md transform group-hover:scale-110 transition-transform">
+                NOUVEAU
+              </div>
+              <div class="h-40 overflow-hidden relative">
+                <div class="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors z-10"></div>
+                <img
+                  src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/bollyfoodnew.webp"
+                  alt="BollyFood"
+                  class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
+              </div>
+              <div class="p-4 bg-white relative">
+                <h3 class="font-bold text-gray-800 text-lg group-hover:text-red-600 transition-colors text-center">
+                  BollyFood</h3>
+                <p class="text-xs text-gray-500 text-center mt-1 uppercase tracking-wide font-medium">Cuisine Indienne
+                </p>
+                <div
+                  class="mt-3 w-8 h-1 bg-red-600 rounded-full mx-auto transform scale-0 group-hover:scale-100 transition-transform duration-300">
+                </div>
+              </div>
+            </div>
+
+            <!-- Partner 3 -->
+            <div
+              onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/NaanGang.webp')"
+              class="min-w-[85%] sm:min-w-0 snap-center group relative bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer hover:-translate-y-2 border border-white/40">
+              <div
+                class="absolute top-3 right-3 bg-red-600 text-white text-[10px] font-bold px-2 py-1 rounded-md z-10 shadow-md transform group-hover:scale-110 transition-transform">
+                NOUVEAU
+              </div>
+              <div class="h-40 overflow-hidden relative">
+                <div class="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors z-10"></div>
+                <img
+                  src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/NaanGang.webp"
+                  alt="Naan Gang"
+                  class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
+              </div>
+              <div class="p-4 bg-white relative">
+                <h3 class="font-bold text-gray-800 text-lg group-hover:text-red-600 transition-colors text-center">Naan
+                  Gang</h3>
+                <p class="text-xs text-gray-500 text-center mt-1 uppercase tracking-wide font-medium">Street Food</p>
+                <div
+                  class="mt-3 w-8 h-1 bg-red-600 rounded-full mx-auto transform scale-0 group-hover:scale-100 transition-transform duration-300">
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
       </section>
@@ -1548,340 +1630,7 @@
       // Initialiser le canvas
       initScratchCanvas();
     }
-    // ===== JEU TRUCK RUNNER =====
-    (function () {
-      const canvas = document.getElementById('runnerCanvas');
-      const ctx = canvas.getContext('2d');
-      const uiOverlay = document.getElementById('game-ui');
-      const startBtn = document.getElementById('start-btn');
-      const scoreEl = document.getElementById('score');
-      const titleEl = document.getElementById('game-title');
-      const subEl = document.getElementById('game-subtitle');
 
-      // Configuration
-      let gameSpeed = 5;
-      let score = 0;
-      let isPlaying = false;
-      let animationId;
-      let frame = 0;
-
-      // Objets du jeu
-      const truck = {
-        x: 50,
-        y: 200,
-        width: 60,
-        height: 40,
-        dy: 0,
-        jumpPower: -12,
-        gravity: 0.6,
-        grounded: true,
-        draw: function () {
-          // Ombre
-          ctx.fillStyle = 'rgba(0,0,0,0.2)';
-          ctx.beginPath();
-          ctx.ellipse(this.x + 30, this.y + 40, 25, 5, 0, 0, Math.PI * 2);
-          ctx.fill();
-
-          // Dessin Camion Vectoriel (Personnalisé)
-          ctx.save();
-          ctx.translate(this.x, this.y);
-
-          // Corps arrière (Blanc/Gris)
-          ctx.fillStyle = '#f3f4f6';
-          ctx.fillRect(0, 5, 40, 30);
-          ctx.strokeStyle = '#d1d5db';
-          ctx.lineWidth = 2;
-          ctx.strokeRect(0, 5, 40, 30);
-
-          // Cabine avant (Rouge)
-          ctx.fillStyle = '#dc2626';
-          ctx.fillRect(40, 10, 20, 25);
-
-          // Vitre (Bleu transluscide - Moins opaque)
-          ctx.fillStyle = 'rgba(100, 200, 255, 0.6)';
-          ctx.fillRect(42, 12, 15, 12);
-
-          // Phare
-          ctx.fillStyle = '#fbbf24';
-          ctx.fillRect(58, 28, 2, 4);
-
-          // Roues
-          ctx.fillStyle = '#1f2937';
-          ctx.beginPath();
-          ctx.arc(15, 35, 7, 0, Math.PI * 2);
-          ctx.arc(50, 35, 7, 0, Math.PI * 2);
-          ctx.fill();
-
-          // Jantes
-          ctx.fillStyle = '#9ca3af';
-          ctx.beginPath();
-          ctx.arc(15, 35, 3, 0, Math.PI * 2);
-          ctx.arc(50, 35, 3, 0, Math.PI * 2);
-          ctx.fill();
-
-          ctx.restore();
-        },
-        update: function () {
-          // Saut
-          if (!this.grounded) {
-            this.dy += this.gravity;
-            this.y += this.dy;
-          }
-
-          // Sol
-          if (this.y > 200) {
-            this.y = 200;
-            this.dy = 0;
-            this.grounded = true;
-          }
-        },
-        jump: function () {
-          if (this.grounded) {
-            this.dy = this.jumpPower;
-            this.grounded = false;
-          }
-        }
-      };
-
-      let obstacles = [];
-      let spawnTimer = 0;
-
-      class Obstacle {
-        constructor() {
-          this.x = canvas.width;
-          this.width = 40;
-          this.height = 40;
-          this.y = 200; // Aligné sur le sol (y=200 + h=40 = 240)
-          this.type = Math.random() > 0.5 ? 'cone' : 'box';
-          this.marked = false;
-        }
-
-        draw() {
-          // Dessin vectoriel pour meilleure visibilité
-          if (this.type === 'cone') {
-            // Cône Orange vif avec bandes blanches pour contraste max
-            ctx.fillStyle = '#ff4500'; // Orange Rouge néon
-            ctx.strokeStyle = '#ffffff';
-            ctx.lineWidth = 2;
-
-            ctx.beginPath();
-            ctx.moveTo(this.x + this.width / 2, this.y); // Pointe
-            ctx.lineTo(this.x, this.y + this.height); // Bas gauche
-            ctx.lineTo(this.x + this.width, this.y + this.height); // Bas droite
-            ctx.closePath();
-            ctx.fill();
-
-            // Bande blanche décorative
-            ctx.beginPath();
-            ctx.moveTo(this.x + 12, this.y + 20);
-            ctx.lineTo(this.x + 28, this.y + 20);
-            ctx.lineTo(this.x + 32, this.y + 30);
-            ctx.lineTo(this.x + 8, this.y + 30);
-            ctx.closePath();
-            ctx.fillStyle = '#ffffff';
-            ctx.fill();
-          } else {
-            // Caisse en bois très visible
-            ctx.fillStyle = '#d2691e'; // Chocolat
-            ctx.beginPath();
-            ctx.rect(this.x, this.y, this.width, this.height);
-            ctx.fill();
-            // Bordure claire jaune pour bien détacher du fond
-            ctx.strokeStyle = '#ffcc00';
-            ctx.lineWidth = 3;
-            ctx.strokeRect(this.x, this.y, this.width, this.height);
-            // Motif en croix
-            ctx.beginPath();
-            ctx.moveTo(this.x, this.y);
-            ctx.lineTo(this.x + this.width, this.y + this.height);
-            ctx.moveTo(this.x + this.width, this.y);
-            ctx.lineTo(this.x, this.y + this.height);
-            ctx.stroke();
-          }
-        }
-
-        update() {
-          this.x -= gameSpeed;
-        }
-      }
-
-      function spawnObstacle() {
-        spawnTimer--;
-        if (spawnTimer <= 0) {
-          obstacles.push(new Obstacle());
-          // ESPACEMENT GARANTI : Minimum 70 frames (~1.2s) entre chaque obstacle
-          // Cela laisse le temps de retomber après un saut (saut ~40 frames)
-          spawnTimer = 70 + Math.random() * 60;
-        }
-      }
-
-      // Décors (Nuages / Lignes de route)
-      let clouds = [];
-      class Cloud {
-        constructor() {
-          this.x = canvas.width + Math.random() * 200;
-          this.y = Math.random() * 100;
-          this.speed = Math.random() * 0.5 + 0.2;
-          this.size = Math.random() * 30 + 20;
-        }
-        update() { this.x -= this.speed; }
-        draw() {
-          ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
-          ctx.beginPath();
-          ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-          ctx.arc(this.x + 15, this.y - 10, this.size * 1.2, 0, Math.PI * 2);
-          ctx.arc(this.x + 35, this.y, this.size, 0, Math.PI * 2);
-          ctx.fill();
-        }
-      }
-
-      // Boucle principale
-      function animate() {
-        if (!isPlaying) return;
-
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        frame++;
-
-        // Augmenter la vitesse plus vite
-        if (frame % 300 === 0) gameSpeed += 0.2;
-
-        // Décors : Ciel et Route
-        ctx.fillStyle = '#6b7280'; // Gris route
-        ctx.fillRect(0, 240, canvas.width, 60);
-        ctx.fillStyle = '#374151'; // Bordure route
-        ctx.fillRect(0, 240, canvas.width, 4);
-
-        // Lignes blanches route
-        ctx.strokeStyle = '#ffffff';
-        ctx.lineWidth = 4;
-        ctx.setLineDash([30, 30]);
-        ctx.lineDashOffset = -frame * gameSpeed;
-        ctx.beginPath();
-        ctx.moveTo(0, 270);
-        ctx.lineTo(canvas.width, 270);
-        ctx.stroke();
-        ctx.setLineDash([]);
-
-        // Nuages
-        if (frame % 200 === 0) clouds.push(new Cloud());
-        clouds.forEach((c, i) => {
-          c.update();
-          c.draw();
-          if (c.x < -100) clouds.splice(i, 1);
-        });
-
-        // Obstacles
-        spawnObstacle();
-        obstacles.forEach((obs, index) => {
-          obs.update();
-          obs.draw();
-
-          // Collision Ajustée (Hitbox plus précise)
-          // obs.x et obs.y sont top-left du texte à peu près (selon font)
-          // Avec fillText standard sans baseline modif, y est baseline.
-          // Ici on a pas défini baseline pour obstacles, donc default alphabetic.
-          // Mais pour le camion j'ai mis textBaseline = 'middle'. Attention.
-
-          // Simplification : Distance check ou AABB simple
-          // Camion : x=50, w=60, h=40.
-          // Obstacle : variable x, w=40, h=40.
-
-          if (
-            truck.x + 10 < obs.x + obs.width - 5 && // +10 pour le nez du camion
-            truck.x + truck.width - 10 > obs.x + 5 &&
-            truck.y + 10 < obs.y + 40 && // 40 approx height
-            truck.y + truck.height > obs.y - 10 // Haut de l'obstacle
-          ) {
-            gameOver();
-          }
-
-          // Nettoyage
-          if (obs.x + obs.width < 0) {
-            obstacles.splice(index, 1);
-            score += 10;
-            scoreEl.textContent = score.toString().padStart(4, '0');
-          }
-        });
-
-        // Joueur
-        truck.update();
-        truck.draw();
-
-        animationId = requestAnimationFrame(animate);
-      }
-
-      function startGame() {
-        if (isPlaying) return;
-
-        // Reset variables
-        isPlaying = true;
-        score = 0;
-        gameSpeed = 7; // Vitesse de départ augmentée (était 5)
-        spawnTimer = 0;
-        frame = 0;
-        obstacles = [];
-        clouds = [];
-        truck.y = 200;
-        truck.dy = 0;
-        truck.grounded = true;
-        scoreEl.textContent = "0000";
-
-        // UI
-        uiOverlay.style.opacity = '0';
-        setTimeout(() => uiOverlay.style.display = 'none', 300);
-
-        animate();
-      }
-
-      function gameOver() {
-        isPlaying = false;
-        cancelAnimationFrame(animationId);
-
-        titleEl.textContent = "GAME OVER";
-        subEl.textContent = `Score: ${score}`;
-        startBtn.innerHTML = '<span class="mr-2">🔄</span> REJOUER';
-
-        uiOverlay.style.display = 'flex';
-        // Petit délai pour l'animation d'opacité
-        requestAnimationFrame(() => uiOverlay.style.opacity = '1');
-      }
-
-      // Input Handlers
-      function handleInput(e) {
-        // Empêcher le comportement par défaut SEULEMENT si c'est une touche de jeu ou un clic DANS le canvas
-        // Sinon, le scroll est bloqué sur toute la page, ce qui est mauvais.
-
-        if (e.type === 'keydown') {
-          if (e.code === 'Space' || e.code === 'ArrowUp') {
-            e.preventDefault(); // Empêche le scroll avec espace/haut
-            if (isPlaying) truck.jump();
-            else if (uiOverlay.style.opacity !== '0') startGame(); // Start avec espace si menu affiché
-          }
-        } else if (e.type === 'touchstart' || e.type === 'mousedown') {
-          // Vérifier si l'interaction est dans le conteneur du jeu pour éviter de bloquer le scroll ailleurs
-          if (e.target.closest('#game-wrapper')) {
-            // Pas de preventDefault ici pour laisser le clic bouton passer, 
-            // MAIS si on joue, on saute
-            if (isPlaying) {
-              e.preventDefault(); // Empêche le zoom double tap etc. si nécessaire, mais surtout active le saut
-              truck.jump();
-            }
-          }
-        }
-      }
-
-
-      window.addEventListener('keydown', handleInput);
-      canvas.addEventListener('touchstart', handleInput, { passive: false });
-      canvas.addEventListener('mousedown', handleInput);
-
-      startBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation(); // Évite de déclencher le saut immédiatement
-        startGame();
-      });
-
-    })();
   </script>
 </body>
 
