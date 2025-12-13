@@ -1218,9 +1218,12 @@
       </div>
 
       <div id="start-message"
-        class="absolute inset-0 flex flex-col items-center justify-center bg-white bg-opacity-80 text-gray-800 font-bold z-20 cursor-pointer">
-        <span class="text-xl">Cliquez pour JOUER</span>
-        <span class="text-sm text-gray-500 mt-2">(Espace ou Toucher)</span>
+        class="absolute inset-0 flex flex-col items-center justify-center bg-white bg-opacity-90 text-gray-800 font-bold z-20 cursor-pointer">
+        <div class="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center mb-2 shadow-lg animate-pulse">
+          <span class="text-white text-3xl pl-1">▶</span>
+        </div>
+        <span class="text-xl uppercase tracking-wider">JOUER</span>
+        <span class="text-sm text-gray-500 mt-2 font-normal">(Espace ou Toucher)</span>
       </div>
     </div>
   </section>
@@ -1664,23 +1667,35 @@
       // Controls
       document.addEventListener('keydown', (e) => {
         if (e.code === 'Space' || e.code === 'ArrowUp') {
-          // Empêche le scroll seulement si le jeu est visible ou en cours
-          // Pour faire simple, on empêche le scroll par défaut si on appuie sur Espace
           e.preventDefault();
           jump();
         }
       });
 
+      // Gestion Tactile Optimisée
       gameContainer.addEventListener('touchstart', (e) => {
-        e.preventDefault();
+        // Si on touche un bouton (ex: Rejouer), on laisse l'événement passer
+        if (e.target.tagName === 'BUTTON' || e.target.closest('button')) return;
+
+        // Sinon on saute et on empêche le scroll
+        if (e.cancelable) e.preventDefault();
         jump();
       }, { passive: false });
 
+      // Support Souris
       gameContainer.addEventListener('mousedown', (e) => {
-        if (e.target.tagName !== 'BUTTON') jump();
+        if (e.target.tagName !== 'BUTTON' && !e.target.closest('button')) jump();
       });
 
-      startMessage.addEventListener('click', startGame);
+      // Gestion explicite du démarrage (Click + Touch)
+      const handleStart = (e) => {
+        e.stopPropagation(); // Évite propagation au conteneur (double saut)
+        if (e.cancelable && e.type === 'touchstart') e.preventDefault();
+        startGame();
+      }
+
+      startMessage.addEventListener('click', handleStart);
+      startMessage.addEventListener('touchstart', handleStart, { passive: false });
 
     })();
 
