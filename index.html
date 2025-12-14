@@ -1192,42 +1192,6 @@
     </div>
   </section>
 
-  <!-- JEU TRUCK RUNNER -->
-  <section id="game-section" class="bg-white shadow-inner p-6 mt-8 rounded-xl text-center select-none">
-    <h2 class="text-2xl font-bold text-red-600 mb-4">Pause Détente : Attrapez la Promo !</h2>
-    <p class="mb-4 text-gray-600">Appuyez sur ESPACE ou touchez l'écran pour sauter et attraper le % !</p>
-
-    <div id="game-container" class="relative mx-auto bg-gray-100 border-b-4 border-gray-400 overflow-hidden"
-      style="max-width: 800px; height: 300px; touch-action: none;">
-      <div id="score-display" class="absolute top-2 right-4 font-mono text-xl text-gray-700 font-bold z-10">00000</div>
-
-      <div id="dino" class="absolute bottom-0 left-1/2 transform -translate-x-1/2" style="width: 130px; height: 130px; 
-           background-image: url('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/Adobe%20Express%20-%20file.png'); 
-           background-size: contain; background-repeat: no-repeat; background-position: center bottom;">
-      </div>
-
-      <div id="target"
-        class="absolute top-10 flex items-center justify-center text-2xl font-bold border-4 border-red-600 bg-white rounded-full text-red-600 shadow-md z-10"
-        style="width: 50px; height: 50px; left: 0px;">%</div>
-
-      <div id="game-message"
-        class="absolute inset-0 flex flex-col items-center justify-center bg-black bg-opacity-40 text-white font-bold hidden z-20">
-        <span class="text-2xl mb-2">PERDU !</span>
-        <button onclick="resetGame()"
-          class="px-4 py-2 bg-red-600 rounded text-white hover:bg-red-700 transition cursor-pointer">Rejouer</button>
-      </div>
-
-      <div id="start-message"
-        class="absolute inset-0 flex flex-col items-center justify-center bg-white bg-opacity-90 text-gray-800 font-bold z-20 cursor-pointer">
-        <div class="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center mb-2 shadow-lg animate-pulse">
-          <span class="text-white text-3xl pl-1">▶</span>
-        </div>
-        <span class="text-xl uppercase tracking-wider">JOUER</span>
-        <span class="text-sm text-gray-500 mt-2 font-normal">(Espace ou Toucher)</span>
-      </div>
-    </div>
-  </section>
-
   <script>
 
     // ===== Toggle categories fluide et responsive =====
@@ -1463,9 +1427,21 @@
       });
     });
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/Renault-trucks-CE/service-worker.js')
-        .then(() => console.log('Service Worker enregistré ✔'))
-        .catch(err => console.error('SW: Échec ❌', err));
+      // Détection de l'environnement (Local vs Production)
+      const isLocal = window.location.hostname === 'localhost' || window.location.protocol === 'file:';
+      const swPath = isLocal ? './service-worker.js' : '/Renault-trucks-CE/service-worker.js';
+
+      navigator.serviceWorker.register(swPath)
+        .then(reg => console.log('Service Worker enregistré ✔', reg))
+        .catch(err => {
+          console.error('SW: Échec d\'enregistrement ❌', err);
+          // Si échec, on tente de désinscrire les anciens SW pour éviter les conflits
+          navigator.serviceWorker.getRegistrations().then(registrations => {
+            for (let registration of registrations) {
+              registration.unregister();
+            }
+          });
+        });
 
       let refreshing = false;
       navigator.serviceWorker.addEventListener('controllerchange', () => {
@@ -1551,186 +1527,6 @@
     }
 
     drawSnow();
-
-
-    // ===== JEU CATCH THE PRIZE =====
-    (function () {
-      const dino = document.getElementById('dino'); // Le camion
-      const target = document.getElementById('target'); // Le % qui bouge
-      const gameContainer = document.getElementById('game-container');
-      const startMessage = document.getElementById('start-message');
-      const gameMessage = document.getElementById('game-message');
-      const scoreDisplay = document.getElementById('score-display');
-
-      let isGameRunning = false;
-      let isJumping = false;
-      let score = 0;
-
-      // Target animation variables
-      let targetX = 0;
-      let targetSpeed = 3;
-      let targetDirection = 1; // 1 = right, -1 = left
-
-      // Jump variables
-      let jumpVelocity = 0;
-      let dinoBottom = 0;
-      const GRAVITY = 0.5;
-      const JUMP_FORCE = 15;
-
-      let gameLoopId;
-
-      // Récupérer toutes les URLs des partenaires pour le cadeau
-      function getRandomPartnerUrl() {
-        const links = document.querySelectorAll('.partner-link');
-        const urls = [];
-        links.forEach(l => {
-          const match = l.getAttribute('onclick')?.match(/'(.+?)'/);
-          if (match) urls.push(match[1]);
-        });
-        if (urls.length === 0) return 'https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/Adobe%20Express%20-%20file.png'; // Fallback
-        return urls[Math.floor(Math.random() * urls.length)];
-      }
-
-      window.startGame = function () {
-        if (isGameRunning) return;
-        isGameRunning = true;
-        startMessage.style.display = 'none';
-        gameMessage.classList.add('hidden');
-        score = 0;
-        scoreDisplay.textContent = "00000";
-
-        // Reset positions
-        targetX = 0;
-        targetDirection = 1;
-        targetSpeed = 8;
-        dinoBottom = 0;
-        jumpVelocity = 0;
-
-        dino.style.bottom = '0px';
-
-        gameLoopId = requestAnimationFrame(gameLoop);
-      }
-
-      window.resetGame = function () {
-        gameMessage.classList.add('hidden');
-        startMessage.style.display = 'flex';
-        isGameRunning = false;
-        cancelAnimationFrame(gameLoopId);
-        dino.style.bottom = '0px';
-        target.style.left = '0px';
-      }
-
-      function jump() {
-        if (!isGameRunning) {
-          startGame();
-          return;
-        }
-        if (isJumping) return;
-        isJumping = true;
-        jumpVelocity = JUMP_FORCE;
-      }
-
-      function gameLoop() {
-        if (!isGameRunning) return;
-
-        // 1. Move Target (Left <-> Right)
-        const containerWidth = gameContainer.offsetWidth;
-        const targetWidth = target.offsetWidth;
-
-        targetX += targetSpeed * targetDirection;
-
-        // Rebonds sur les bords
-        if (targetX + targetWidth >= containerWidth) {
-          targetX = containerWidth - targetWidth;
-          targetDirection = -1;
-        } else if (targetX <= 0) {
-          targetX = 0;
-          targetDirection = 1;
-        }
-        target.style.left = targetX + 'px';
-
-        // 2. Dino Jump Physics
-        if (isJumping) {
-          dinoBottom += jumpVelocity;
-          jumpVelocity -= GRAVITY;
-
-          if (dinoBottom <= 0) {
-            dinoBottom = 0;
-            isJumping = false;
-          }
-          dino.style.bottom = dinoBottom + 'px';
-        }
-
-        // 3. Collision Detection (WIN)
-        const dinoRect = dino.getBoundingClientRect();
-        const targetRect = target.getBoundingClientRect();
-
-        // Marge de tolérance
-        const margin = 10;
-
-        if (
-          dinoRect.right - margin > targetRect.left &&
-          dinoRect.left + margin < targetRect.right &&
-          dinoRect.top + margin < targetRect.bottom &&
-          dinoRect.bottom - margin > targetRect.top
-        ) {
-          // WIN!
-          winGame();
-          return;
-        }
-
-        gameLoopId = requestAnimationFrame(gameLoop);
-      }
-
-      function winGame() {
-        isGameRunning = false;
-        cancelAnimationFrame(gameLoopId);
-
-        score += 100;
-        scoreDisplay.textContent = "GAGNÉ!";
-
-        // Confetti effect or just open modal
-        setTimeout(() => {
-          const url = getRandomPartnerUrl();
-          openModal(url);
-          resetGame(); // Retour au menu start après avoir fermé la modale (ou tout de suite)
-        }, 200);
-      }
-
-      // Modifier le message de fin pour être générique si jamais on perd (pas possible ici sauf si on ajoute un timer ou ennemi)
-      // Pour l'instant on ne perd pas, on essaie juste d'attraper.
-
-      // Controls
-      document.addEventListener('keydown', (e) => {
-        if (e.code === 'Space' || e.code === 'ArrowUp') {
-          e.preventDefault();
-          jump();
-        }
-      });
-
-      // Gestion Tactile Optimisée
-      gameContainer.addEventListener('touchstart', (e) => {
-        if (e.target.tagName === 'BUTTON' || e.target.closest('button')) return;
-        if (e.cancelable) e.preventDefault();
-        jump();
-      }, { passive: false });
-
-      // Support Souris
-      gameContainer.addEventListener('mousedown', (e) => {
-        if (e.target.tagName !== 'BUTTON' && !e.target.closest('button')) jump();
-      });
-
-      // Start logic
-      const handleStart = (e) => {
-        e.stopPropagation();
-        if (e.cancelable && e.type === 'touchstart') e.preventDefault();
-        startGame();
-      }
-
-      startMessage.addEventListener('click', handleStart);
-      startMessage.addEventListener('touchstart', handleStart, { passive: false });
-
-    })();
 
   </script>
 </body>
