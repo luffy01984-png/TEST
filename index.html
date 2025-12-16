@@ -355,73 +355,6 @@
       -ms-overflow-style: none;
       scrollbar-width: none;
     }
-
-    /* SKEWED VERTICAL SCROLL ANIMATION */
-    .skew-col {
-      /* Flex column layout defined in HTML */
-    }
-
-    .food-card {
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-      transition: transform 0.3s ease;
-      height: 140px;
-      /* Fixed height for uniformity */
-      flex-shrink: 0;
-    }
-
-    .food-card img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    /* Scroll Animations */
-    @keyframes scrollUp {
-      0% {
-        transform: translateY(0);
-      }
-
-      100% {
-        transform: translateY(-50%);
-      }
-    }
-
-    @keyframes scrollDown {
-      0% {
-        transform: translateY(-50%);
-      }
-
-      100% {
-        transform: translateY(0);
-      }
-    }
-
-    .animate-scrollUp {
-      animation: scrollUp 20s linear infinite;
-    }
-
-    .animate-scrollDown {
-      animation: scrollDown 22s linear infinite;
-    }
-
-    .animate-scrollUpSlow {
-      animation: scrollUp 25s linear infinite;
-    }
-
-    /* Pause on hover */
-    .skewed-grid-wrapper:hover .skew-col {
-      animation-play-state: paused;
-    }
-
-    /* Mobile Card Size Adjustments */
-    @media (max-width: 640px) {
-      .food-card {
-        height: 100px;
-      }
-    }
   </style>
 </head>
 
@@ -507,131 +440,112 @@
         Cliquez sur une catégorie pour découvrir toutes les offres exclusives négociées par votre Comité
         d'Entreprise.*Sur présentation du badge.
       </p>
-
-      <!-- MODERN SKEWED VERTICAL SCROLL ANIMATION -->
-      <div class="mt-10 mb-8 relative">
-
-        <!-- HEADER MESSAGE (Visible & Separate) -->
-        <div class="text-center mb-8 relative z-10">
-          <div
-            class="inline-block bg-white/10 backdrop-blur-md border border-white/20 px-8 py-4 rounded-2xl shadow-xl transform transition hover:scale-105">
-            <h2
-              class="text-2xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-yellow-300 uppercase tracking-widest drop-shadow-sm mb-2">
-              Tour du Monde dans votre Assiette
-            </h2>
-            <p class="text-blue-50 font-medium text-lg">
-              Indien • Italien • Français • Japonais • Fast Food
-            </p>
-            <div
-              class="mt-3 bg-red-600 text-white text-xs font-bold px-4 py-1 rounded-full inline-block shadow-lg animate-bounce">
-              Réductions Exclusives 👇
-            </div>
-          </div>
-        </div>
-
-        <!-- SKEWED GRID CONTAINER -->
+      <!-- PROMO BOX NOUVEAUX PARTENAIRES -->
+      <section class="mt-10 mb-8 w-full max-w-5xl mx-auto px-4 perspective-1000">
         <div
-          class="skewed-grid-wrapper h-[400px] md:h-[500px] w-full overflow-hidden relative rounded-3xl border border-white/10 shadow-2xl bg-gradient-to-b from-black/20 to-transparent">
-          <!-- Gradient Masks -->
+          class="relative bg-white/10 backdrop-blur-md border border-white/20 rounded-3xl shadow-[0_8px_32px_rgba(0,0,0,0.2)] overflow-hidden transform hover:scale-[1.01] transition-transform duration-500">
+
+          <!-- Background Decor -->
           <div
-            class="absolute top-0 left-0 w-full h-24 bg-gradient-to-b from-blue-900 via-blue-900/80 to-transparent z-10 pointer-events-none">
+            class="absolute top-0 right-0 -mr-20 -mt-20 w-80 h-80 bg-red-600/20 rounded-full blur-3xl pointer-events-none">
           </div>
           <div
-            class="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-blue-900 via-blue-900/80 to-transparent z-10 pointer-events-none">
+            class="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 bg-blue-600/20 rounded-full blur-3xl pointer-events-none">
           </div>
 
-          <div class="skewed-grid flex justify-center gap-4 md:gap-6 transform -rotate-3 scale-110 opacity-90">
+          <!-- Header -->
+          <div
+            class="px-6 py-5 border-b border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 bg-gradient-to-r from-gray-900/40 to-transparent">
+            <h2 class="text-2xl font-bold text-white tracking-wide uppercase flex items-center gap-3">
+              <span class="text-4xl filter drop-shadow-md">🚀</span>
+              <span
+                class="text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-300 drop-shadow-sm">Nouveaux
+                Partenaires</span>
+            </h2>
 
-            <!-- Column 1 (Scroll Up) -->
-            <div class="skew-col w-1/3 md:w-1/4 flex flex-col gap-4 animate-scrollUp">
-              <div class="food-card"><img
-                  src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/promo_food/indian.png"
-                  alt="Indien"></div>
-              <div class="food-card"><img
-                  src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/promo_food/pasta.png"
-                  alt="Italien"></div>
-              <div class="food-card"><img
-                  src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/promo_food/indian.png"
-                  alt="Maghreb"></div>
-              <div class="food-card"><img
-                  src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/promo_food/burger.png"
-                  alt="FastFood"></div>
-              <!-- Duplicate for loop -->
-              <div class="food-card"><img
-                  src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/promo_food/indian.png"
-                  alt="Indien"></div>
-              <div class="food-card"><img
-                  src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/promo_food/pasta.png"
-                  alt="Italien"></div>
-              <div class="food-card"><img
-                  src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/promo_food/indian.png"
-                  alt="Maghreb"></div>
-              <div class="food-card"><img
-                  src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/promo_food/burger.png"
-                  alt="FastFood"></div>
+          </div>
+
+          <!-- Cards Grid -->
+          <div
+            class="p-6 flex flex-nowrap overflow-x-auto snap-x snap-mandatory sm:grid sm:grid-cols-3 gap-4 sm:gap-6 relative z-10 scrollbar-hide pb-8 sm:pb-6">
+
+            <!-- Partner 1 -->
+            <div
+              onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/logomarche.webp')"
+              class="min-w-[85%] sm:min-w-0 snap-center group relative bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer hover:-translate-y-2 border border-white/40">
+              <div
+                class="absolute top-3 right-3 bg-red-600 text-white text-[10px] font-bold px-2 py-1 rounded-md z-10 shadow-md transform group-hover:scale-110 transition-transform">
+                NOUVEAU
+              </div>
+              <div class="h-40 overflow-hidden relative">
+                <div class="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors z-10"></div>
+                <img
+                  src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/logomarche.webp"
+                  class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
+              </div>
+              <div class="p-4 bg-white relative">
+                <h3 class="font-bold text-gray-800 text-lg group-hover:text-red-600 transition-colors text-center">Le
+                  Beau Marché</h3>
+                <p class="text-xs text-gray-500 text-center mt-1 uppercase tracking-wide font-medium">RESTAURANT
+                </p>
+                <div
+                  class="mt-3 w-8 h-1 bg-red-600 rounded-full mx-auto transform scale-0 group-hover:scale-100 transition-transform duration-300">
+                </div>
+              </div>
             </div>
 
-            <!-- Column 2 (Scroll Down) -->
-            <div class="skew-col w-1/3 md:w-1/4 flex flex-col gap-4 animate-scrollDown">
-              <div class="food-card"><img
-                  src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/promo_food/sushi.png"
-                  alt="Japon"></div>
-              <div class="food-card"><img
-                  src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/promo_food/french.png"
-                  alt="Français"></div>
-              <div class="food-card"><img
-                  src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/promo_food/french.png"
-                  alt="Viande"></div>
-              <div class="food-card"><img
-                  src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/promo_food/sushi.png"
-                  alt="FruitsMer"></div>
-              <!-- Duplicate -->
-              <div class="food-card"><img
-                  src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/promo_food/sushi.png"
-                  alt="Japon"></div>
-              <div class="food-card"><img
-                  src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/promo_food/french.png"
-                  alt="Français"></div>
-              <div class="food-card"><img
-                  src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/promo_food/french.png"
-                  alt="Viande"></div>
-              <div class="food-card"><img
-                  src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/promo_food/sushi.png"
-                  alt="FruitsMer"></div>
+            <!-- Partner 2 -->
+            <div
+              onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/opticalcenter.webp')"
+              class="min-w-[85%] sm:min-w-0 snap-center group relative bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer hover:-translate-y-2 border border-white/40">
+              <div
+                class="absolute top-3 right-3 bg-red-600 text-white text-[10px] font-bold px-2 py-1 rounded-md z-10 shadow-md transform group-hover:scale-110 transition-transform">
+                NOUVEAU
+              </div>
+              <div class="h-40 overflow-hidden relative">
+                <div class="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors z-10"></div>
+                <img
+                  src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/opticalcenter.webp"
+                  class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
+              </div>
+              <div class="p-4 bg-white relative">
+                <h3 class="font-bold text-gray-800 text-lg group-hover:text-red-600 transition-colors text-center">
+                  Optical Center</h3>
+                <p class="text-xs text-gray-500 text-center mt-1 uppercase tracking-wide font-medium">OPTICIEN
+                </p>
+                <div
+                  class="mt-3 w-8 h-1 bg-red-600 rounded-full mx-auto transform scale-0 group-hover:scale-100 transition-transform duration-300">
+                </div>
+              </div>
             </div>
 
-            <!-- Column 3 (Scroll Up - Hidden on small mobile to save space, visible on large) -->
-            <div class="skew-col hidden sm:flex w-1/3 md:w-1/4 flex-col gap-4 animate-scrollUpSlow">
-              <div class="food-card"><img
-                  src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/promo_food/tacos.png"
-                  alt="Mexicain"></div>
-              <div class="food-card"><img
-                  src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/promo_food/burger.png"
-                  alt="Burger"></div>
-              <div class="food-card"><img
-                  src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/promo_food/indian.png"
-                  alt="Indien"></div>
-              <div class="food-card"><img
-                  src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/promo_food/pasta.png"
-                  alt="Italien"></div>
-              <!-- Duplicate -->
-              <div class="food-card"><img
-                  src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/promo_food/tacos.png"
-                  alt="Mexicain"></div>
-              <div class="food-card"><img
-                  src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/promo_food/burger.png"
-                  alt="Burger"></div>
-              <div class="food-card"><img
-                  src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/promo_food/indian.png"
-                  alt="Indien"></div>
-              <div class="food-card"><img
-                  src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/promo_food/pasta.png"
-                  alt="Italien"></div>
+            <!-- Partner 3 -->
+            <div
+              onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Castoramanew.webp')"
+              class="min-w-[85%] sm:min-w-0 snap-center group relative bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer hover:-translate-y-2 border border-white/40">
+              <div
+                class="absolute top-3 right-3 bg-red-600 text-white text-[10px] font-bold px-2 py-1 rounded-md z-10 shadow-md transform group-hover:scale-110 transition-transform">
+                NOUVEAU
+              </div>
+              <div class="h-40 overflow-hidden relative">
+                <div class="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors z-10"></div>
+                <img
+                  src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Castoramanew.webp"
+                  class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
+              </div>
+              <div class="p-4 bg-white relative">
+                <h3 class="font-bold text-gray-800 text-lg group-hover:text-red-600 transition-colors text-center">
+                  CASTORAMA</h3>
+                <p class="text-xs text-gray-500 text-center mt-1 uppercase tracking-wide font-medium">BRICOLAGE</p>
+                <div
+                  class="mt-3 w-8 h-1 bg-red-600 rounded-full mx-auto transform scale-0 group-hover:scale-100 transition-transform duration-300">
+                </div>
+              </div>
             </div>
 
           </div>
         </div>
-      </div>
+      </section>
     </div>
   </section>
 
@@ -914,6 +828,9 @@
                 onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Idplan.webp')">
                 ID Plan</div>
               <div class="partner-link"
+                onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/MirePoix.webp')">
+                Mirepoix</div>
+              <div class="partner-link"
                 onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/schmidt.webp')">
                 Schmidt</div>
             </div>
@@ -1150,6 +1067,9 @@
           <div class="partner-link"
             onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/photographe102.webp')">
             Photographe</div>
+          <div class="partner-link"
+                onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/MirePoix.webp')">
+                Mirepoix</div>
           <div class="partner-link"
             onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Shivaa.webp')">
             Shiva</div>
