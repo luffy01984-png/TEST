@@ -413,36 +413,28 @@
 
   <!-- HEADER -->
   <!-- HEADER MODERNISÉ -->
-  <!-- HEADER FLOTTANT (FLOATING ISLAND) -->
-  <header class="fixed top-4 left-0 right-0 z-50 flex justify-center px-4 pointer-events-none">
-    <div
-      class="pointer-events-auto bg-white/80 backdrop-blur-2xl border border-white/50 shadow-2xl rounded-full px-5 py-3 flex items-center gap-6 sm:gap-8 transition-all duration-300 hover:scale-[1.02] hover:bg-white/90 hover:shadow-red-500/10 ring-1 ring-black/5">
+  <!-- HEADER FULL WIDTH (LOGO ONLY) -->
+  <header
+    class="sticky top-0 z-50 w-full bg-white/90 backdrop-blur-md border-b border-gray-200/60 shadow-sm transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
 
-      <!-- Logo Seul (Zoom au survol) -->
-      <a href="#" class="block group relative shrink-0">
-        <div
-          class="absolute -inset-3 bg-gradient-to-r from-red-500 to-blue-600 opacity-0 group-hover:opacity-20 blur-xl rounded-full transition-opacity duration-500">
-        </div>
+      <!-- Logo Seul (Grande taille) -->
+      <a href="#" class="block group relative shrink-0 transition-transform hover:scale-105 duration-300">
         <img src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/Header.webp" alt="Logo"
-          class="relative h-12 w-auto object-contain transform group-hover:rotate-6 transition-transform duration-300 drop-shadow-md">
+          class="h-14 sm:h-16 w-auto object-contain drop-shadow-sm">
       </a>
 
-      <!-- Séparateur vertical -->
-      <div class="h-8 w-px bg-slate-200 hidden sm:block"></div>
-
-      <!-- Navigation Compacte -->
-      <nav class="flex items-center gap-2">
+      <!-- Navigation -->
+      <nav class="flex items-center gap-1 sm:gap-4 bg-slate-100/50 p-1.5 rounded-full border border-slate-200/50">
         <a href="#categories"
-          class="nav-link px-4 py-2 rounded-full text-xs sm:text-sm font-bold text-slate-600 transition-all duration-300 hover:text-red-600 flex items-center gap-2 group"
+          class="nav-link px-4 py-2 rounded-full text-sm font-bold text-slate-600 transition-all duration-300 hover:text-red-700 hover:bg-white hover:shadow-sm"
           id="nav-partenaires">
-          <span class="text-lg group-hover:scale-125 transition-transform duration-300">🤝</span>
-          <span class="hidden sm:inline">Partenaires</span>
+          Partenaires
         </a>
         <a href="#mentions"
-          class="nav-link px-4 py-2 rounded-full text-xs sm:text-sm font-bold text-slate-600 transition-all duration-300 hover:text-red-600 flex items-center gap-2 group"
+          class="nav-link px-4 py-2 rounded-full text-sm font-bold text-slate-600 transition-all duration-300 hover:text-red-700 hover:bg-white hover:shadow-sm"
           id="nav-mentions">
-          <span class="text-lg group-hover:scale-125 transition-transform duration-300">ℹ️</span>
-          <span class="hidden sm:inline">Mentions</span>
+          Mentions
         </a>
       </nav>
 
@@ -458,13 +450,13 @@
     function updateActiveNav(activeId) {
       [navPartenaires, navMentions].forEach(el => {
         if (el.id === activeId) {
-          // ACTIVE STATE: Red Background, White Text
-          el.classList.add('bg-gradient-to-r', 'from-red-600', 'to-red-500', 'text-white', 'shadow-lg', 'shadow-red-500/30', 'scale-105');
-          el.classList.remove('text-slate-600', 'hover:text-red-600');
+          // ACTIVE STATE: White bg, Red Text, Shadow
+          el.classList.add('bg-white', 'text-red-600', 'shadow-md', 'ring-1', 'ring-black/5');
+          el.classList.remove('text-slate-600', 'hover:text-red-700', 'hover:bg-white', 'hover:shadow-sm');
         } else {
           // INACTIVE STATE
-          el.classList.remove('bg-gradient-to-r', 'from-red-600', 'to-red-500', 'text-white', 'shadow-lg', 'shadow-red-500/30', 'scale-105');
-          el.classList.add('text-slate-600', 'hover:text-red-600');
+          el.classList.remove('bg-white', 'text-red-600', 'shadow-md', 'ring-1', 'ring-black/5');
+          el.classList.add('text-slate-600', 'hover:text-red-700', 'hover:bg-white', 'hover:shadow-sm');
         }
       });
     }
@@ -502,7 +494,7 @@
 
   <!-- HERO -->
   <section
-    class="bg-gradient-to-br from-blue-900 via-blue-700 to-red-600 text-white text-center pt-32 pb-12 px-4 shadow-md relative overflow-hidden"
+    class="bg-gradient-to-br from-blue-900 via-blue-700 to-red-600 text-white text-center py-12 px-4 shadow-md relative overflow-hidden"
     id="hero-section" style="min-height: 400px;">
     <!-- Bubble Background Elements -->
     <div class="bubbles-container">
