@@ -6,8 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Avantages Partenaires | Renault Trucks CSE Bourg-en-Bresse</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
-    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#dc2626">
 
@@ -37,10 +36,10 @@
     }
 
     body {
-      font-family: 'Outfit', sans-serif;
+      font-family: 'Inter', sans-serif;
       margin: 0;
       padding: 0;
-      background-color: #f8fafc;
+      background-color: #f3f4f6;
     }
 
 
@@ -64,8 +63,8 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 1rem;
-      border-radius: 1.25rem;
+      padding: 0.75rem 0.5rem;
+      border-radius: 0.75rem;
       background-color: #f9fafb;
       color: #1f2937;
       font-weight: 500;
@@ -181,8 +180,7 @@
       width: 100%;
       height: 9rem;
       object-fit: cover;
-      object-fit: cover;
-      border-radius: 1.5rem;
+      border-radius: 1rem;
     }
 
     /* Accordion */
@@ -191,7 +189,7 @@
       text-align: left;
       padding: 1rem 1.25rem;
       background-color: #f3f4f6;
-      border-radius: 1rem;
+      border-radius: 0.5rem;
       font-weight: 600;
       color: #1f2937;
       cursor: pointer;
@@ -228,7 +226,7 @@
       padding: 0 1.25rem;
       border-left: 3px solid #dc2626;
       margin-bottom: 0.5rem;
-      border-radius: 1rem;
+      border-radius: 0.5rem;
     }
 
     .accordion-content.open {
@@ -236,7 +234,26 @@
       padding-bottom: 1rem;
     }
 
-    /* Navbar active handled via Tailwind classes in JS */
+    /* Navbar active */
+    .nav-link {
+      color: #9ca3af;
+      text-decoration: none;
+      font-weight: 600;
+      padding: 0.5rem 1rem;
+      border-radius: 9999px;
+      transition: all 0.3s ease;
+      display: inline-block;
+    }
+
+    .nav-link:hover {
+      background-color: #fecaca;
+      color: #dc2626;
+    }
+
+    .nav-link.active {
+      background-color: #dc2626 !important;
+      color: #ffffff !important;
+    }
 
     /* Responsive grid for partner-content */
     /* Mobile et Tablette: 2 colonnes */
@@ -310,10 +327,8 @@
     .category-card {
       position: relative;
       overflow: hidden;
-      overflow: hidden;
-      border-radius: 1.5rem;
-      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      border-radius: 1rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     }
 
     .category-card::before {
@@ -340,67 +355,10 @@
       -ms-overflow-style: none;
       scrollbar-width: none;
     }
-
-    @keyframes slow-spin {
-      from {
-        transform: rotate(0deg);
-      }
-
-      to {
-        transform: rotate(360deg);
-      }
-    }
-
-    .animate-slow-spin {
-      animation: slow-spin 20s linear infinite;
-    }
-
-    /* Bubble Animation */
-    .bubbles-container {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      z-index: 1;
-      pointer-events: none;
-    }
-
-    .bubble {
-      position: absolute;
-      bottom: -100px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.15);
-      backdrop-filter: blur(2px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
-      animation: floatUp infinite ease-in-out;
-    }
-
-    @keyframes floatUp {
-      0% {
-        transform: translateY(0) scale(0.8) translateX(0);
-        opacity: 0;
-      }
-
-      20% {
-        opacity: 0.8;
-      }
-
-      80% {
-        opacity: 0.4;
-      }
-
-      100% {
-        transform: translateY(-800px) scale(1.2) translateX(20px);
-        opacity: 0;
-      }
-    }
   </style>
 </head>
 
-<body class="bg-slate-50 text-slate-900">
+<body class="bg-gray-100 text-black">
 
   <!-- Modal -->
   <div id="imageModal">
@@ -412,80 +370,55 @@
   <button id="scrollTopBtn" aria-label="Retour en haut">↑</button>
 
   <!-- HEADER -->
-  <!-- HEADER MODERNISÉ -->
-  <!-- HEADER FULL WIDTH (LOGO ONLY) -->
-  <header
-    class="sticky top-0 z-50 w-full bg-white/90 backdrop-blur-md border-b border-gray-200/60 shadow-sm transition-all duration-300">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-24 flex items-center justify-between">
+  <header class="bg-white shadow-xl sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto flex justify-between items-center px-4 py-3">
+      <!-- Logo et texte -->
+      <div class="flex items-center space-x-2">
+        <img src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/Header.webp"
+          alt="Logo Renault Trucks" class="h-20 sm:h-24 rounded-md">
+        <span class="text-xs font-bold text-red-600 uppercase tracking-widest hidden sm:inline">CSE
+          Bourg-en-Bresse</span>
+      </div>
 
-      <!-- Logo Seul (Grande taille) -->
-      <a href="#" class="block group relative shrink-0 transition-transform hover:scale-105 duration-300">
-        <img src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/Header.webp" alt="Logo"
-          class="h-20 sm:h-22 w-auto object-contain drop-shadow-sm">
-      </a>
-
-      <!-- Navigation -->
-      <nav class="flex items-center gap-1 sm:gap-4 bg-slate-100/50 p-1.5 rounded-full border border-slate-200/50">
-        <a href="#categories"
-          class="nav-link px-4 py-2 rounded-full text-sm font-bold text-slate-600 transition-all duration-300 hover:text-red-700 hover:bg-white hover:shadow-sm"
-          id="nav-partenaires">
-          Partenaires
-        </a>
-        <a href="#mentions"
-          class="nav-link px-4 py-2 rounded-full text-sm font-bold text-slate-600 transition-all duration-300 hover:text-red-700 hover:bg-white hover:shadow-sm"
-          id="nav-mentions">
-          Mentions
-        </a>
+      <!-- Navbar -->
+      <nav class="flex items-center space-x-2 sm:space-x-4 text-sm">
+        <a href="#categories" class="nav-link" id="nav-partenaires">Partenaires</a>
+        <a href="#mentions" class="nav-link" id="nav-mentions">Mentions</a>
       </nav>
-
     </div>
   </header>
 
   <script>
     // Sélection des liens
-    // Sélection des liens
     const navPartenaires = document.getElementById('nav-partenaires');
     const navMentions = document.getElementById('nav-mentions');
 
-    function updateActiveNav(activeId) {
-      [navPartenaires, navMentions].forEach(el => {
-        if (el.id === activeId) {
-          // ACTIVE STATE: White bg, Red Text, Shadow
-          el.classList.add('bg-white', 'text-red-600', 'shadow-md', 'ring-1', 'ring-black/5');
-          el.classList.remove('text-slate-600', 'hover:text-red-700', 'hover:bg-white', 'hover:shadow-sm');
-        } else {
-          // INACTIVE STATE
-          el.classList.remove('bg-white', 'text-red-600', 'shadow-md', 'ring-1', 'ring-black/5');
-          el.classList.add('text-slate-600', 'hover:text-red-700', 'hover:bg-white', 'hover:shadow-sm');
-        }
-      });
-    }
-
-    // Initital state
-    updateActiveNav('nav-partenaires');
-
-    navPartenaires.addEventListener('click', (e) => {
-      e.preventDefault();
-      updateActiveNav('nav-partenaires');
+    // Gestion clic pour scroll et active
+    navPartenaires.addEventListener('click', () => {
+      navPartenaires.classList.add('active');
+      navMentions.classList.remove('active');
       document.getElementById('categories').scrollIntoView({ behavior: 'smooth' });
     });
 
-    navMentions.addEventListener('click', (e) => {
-      e.preventDefault();
-      updateActiveNav('nav-mentions');
+    navMentions.addEventListener('click', () => {
+      navMentions.classList.add('active');
+      navPartenaires.classList.remove('active');
       document.getElementById('mentions').scrollIntoView({ behavior: 'smooth' });
     });
 
+    // Détection scroll pour active link automatique
     const categoriesSection = document.getElementById('categories');
     const mentionsSection = document.getElementById('mentions');
 
     window.addEventListener('scroll', () => {
-      const scrollPos = window.scrollY + 100;
+      const scrollPos = window.scrollY + 150; // Ajuste pour le header sticky
       if (categoriesSection && mentionsSection) {
         if (scrollPos >= mentionsSection.offsetTop) {
-          updateActiveNav('nav-mentions');
-        } else if (scrollPos >= categoriesSection.offsetTop - 200) {
-          updateActiveNav('nav-partenaires');
+          navMentions.classList.add('active');
+          navPartenaires.classList.remove('active');
+        } else if (scrollPos >= categoriesSection.offsetTop) {
+          navPartenaires.classList.add('active');
+          navMentions.classList.remove('active');
         }
       }
     });
@@ -494,30 +427,10 @@
 
   <!-- HERO -->
   <section
-    class="bg-gradient-to-br from-blue-900 via-blue-700 to-red-600 text-white text-center py-12 px-4 shadow-md relative overflow-hidden"
+    class="bg-gradient-to-b from-blue-900 to-blue-700 text-white text-center py-12 px-4 shadow-md relative overflow-hidden"
     id="hero-section" style="min-height: 400px;">
-    <!-- Bubble Background Elements -->
-    <div class="bubbles-container">
-      <div class="bubble" style="width: 60px; height: 60px; left: 10%; animation-duration: 9s; animation-delay: 0s;">
-      </div>
-      <div class="bubble" style="width: 40px; height: 40px; left: 20%; animation-duration: 12s; animation-delay: 2s;">
-      </div>
-      <div class="bubble" style="width: 70px; height: 70px; left: 35%; animation-duration: 14s; animation-delay: 4s;">
-      </div>
-      <div class="bubble" style="width: 30px; height: 30px; left: 50%; animation-duration: 10s; animation-delay: 1s;">
-      </div>
-      <div class="bubble" style="width: 50px; height: 50px; left: 65%; animation-duration: 15s; animation-delay: 3s;">
-      </div>
-      <div class="bubble" style="width: 80px; height: 80px; left: 80%; animation-duration: 11s; animation-delay: 5s;">
-      </div>
-      <div class="bubble" style="width: 45px; height: 45px; left: 90%; animation-duration: 13s; animation-delay: 0.5s;">
-      </div>
-      <div class="bubble" style="width: 25px; height: 25px; left: 5%; animation-duration: 8s; animation-delay: 6s;">
-      </div>
-      <div class="bubble" style="width: 55px; height: 55px; left: 95%; animation-duration: 16s; animation-delay: 2.5s;">
-      </div>
-    </div>
-
+    <canvas id="snowCanvas"
+      style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1;"></canvas>
     <div style="position: relative; z-index: 2;">
       <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight">
         Vos Avantages <span class="text-red-400">CSE Renault Trucks</span>
@@ -527,113 +440,445 @@
         Cliquez sur une catégorie pour découvrir toutes les offres exclusives négociées par votre Comité
         d'Entreprise.*Sur présentation du badge.
       </p>
-      <!-- PROMO BOX NOUVEAUX PARTENAIRES -->
-      <section class="mt-10 mb-8 w-full max-w-5xl mx-auto px-4 perspective-1000">
+      <!-- BOWLING HERO GAME (Three.js + Cannon.js) -->
+      <section class="mt-10 mb-8 w-full max-w-5xl mx-auto px-4 relative z-20">
         <div
-          class="relative bg-white/10 backdrop-blur-md border border-white/20 rounded-3xl shadow-[0_8px_32px_rgba(0,0,0,0.2)] overflow-hidden transform hover:scale-[1.01] transition-transform duration-500">
+          class="relative bg-gray-900/90 backdrop-blur-md border border-red-500/30 rounded-3xl shadow-[0_0_50px_rgba(220,38,38,0.3)] overflow-hidden h-[500px]">
 
-          <!-- Background Decor -->
-          <div
-            class="absolute top-0 right-0 -mr-20 -mt-20 w-80 h-80 bg-red-600/20 rounded-full blur-3xl pointer-events-none">
-          </div>
-          <div
-            class="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 bg-blue-600/20 rounded-full blur-3xl pointer-events-none">
-          </div>
-
-          <!-- Header -->
-          <div
-            class="px-6 py-5 border-b border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 bg-gradient-to-r from-gray-900/40 to-transparent">
-            <h2 class="text-2xl font-bold text-white tracking-wide uppercase flex items-center gap-3">
-              <span class="text-4xl filter drop-shadow-md">🚀</span>
-              <span
-                class="text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-300 drop-shadow-sm">Nouveaux
-                Partenaires</span>
-            </h2>
-
+          <!-- Game Header -->
+          <div class="absolute top-0 left-0 w-full p-4 flex justify-between items-center z-10 pointer-events-none">
+            <div class="bg-black/60 px-4 py-2 rounded-full border border-white/10 backdrop-blur-sm shadow-lg">
+              <span class="text-xs font-bold text-gray-400 uppercase tracking-widest">Score</span>
+              <span id="bowlingScore" class="ml-2 text-2xl font-black text-red-500 font-mono">0</span>
+            </div>
+            <div class="bg-black/60 px-4 py-1 rounded-full border border-white/10 backdrop-blur-sm shadow-lg">
+              <span class="text-xs font-bold text-white uppercase tracking-wider">Bowling Hero XT 🎳</span>
+            </div>
           </div>
 
-          <!-- Cards Grid -->
-          <div
-            class="p-6 flex flex-nowrap overflow-x-auto snap-x snap-mandatory sm:grid sm:grid-cols-3 gap-4 sm:gap-6 relative z-10 scrollbar-hide pb-8 sm:pb-6">
+          <!-- 3D Canvas Container -->
+          <div id="threeContainer"
+            class="w-full h-full relative cursor-grab active:cursor-grabbing touch-none select-none overflow-hidden">
+            <!-- Canvas will be injected here by Three.js -->
 
-            <!-- Partner 1 -->
-            <div
-              onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/gammvert.webp')"
-              class="min-w-[85%] sm:min-w-0 snap-center group relative bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer hover:-translate-y-2 border border-white/40">
-              <div
-                class="absolute top-3 right-3 bg-red-600 text-white text-[10px] font-bold px-2 py-1 rounded-md z-10 shadow-md transform group-hover:scale-110 transition-transform">
-                NOUVEAU
-              </div>
-              <div class="h-40 overflow-hidden relative">
-                <div class="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors z-10"></div>
-                <img
-                  src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/gammvert.webp"
-                  class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
-              </div>
-              <div class="p-4 bg-white relative">
-                <h3 class="font-bold text-gray-800 text-lg group-hover:text-red-600 transition-colors text-center">
-                  GammVert</h3>
-                <p class="text-xs text-gray-500 text-center mt-1 uppercase tracking-wide font-medium">JARDINAGE
-                </p>
-                <div
-                  class="mt-3 w-8 h-1 bg-red-600 rounded-full mx-auto transform scale-0 group-hover:scale-100 transition-transform duration-300">
-                </div>
-              </div>
+            <!-- Start Overlay -->
+            <div id="gameOverlay"
+              class="absolute inset-0 flex flex-col items-center justify-center bg-black/80 backdrop-blur-md z-20 transition-all duration-500">
+              <h2
+                class="text-5xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-white via-gray-200 to-gray-500 mb-4 drop-shadow-[0_2px_10px_rgba(255,255,255,0.3)]">
+                STRIKE ZONE 3D
+              </h2>
+              <p class="text-gray-300 mb-8 text-lg font-light tracking-wide">Expérience Physique Réaliste</p>
+              <button id="startGameBtn"
+                class="px-10 py-4 bg-gradient-to-r from-red-600 to-red-800 text-white font-bold rounded-full shadow-[0_0_20px_rgba(220,38,38,0.6)] transform hover:scale-105 hover:shadow-[0_0_40px_rgba(220,38,38,0.9)] transition-all duration-300 border border-red-400/30">
+                JOUER (3D)
+              </button>
             </div>
 
-            <!-- Partner 2 -->
-            <div
-              onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/MirePoix.webp')"
-              class="min-w-[85%] sm:min-w-0 snap-center group relative bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer hover:-translate-y-2 border border-white/40">
-              <div
-                class="absolute top-3 right-3 bg-red-600 text-white text-[10px] font-bold px-2 py-1 rounded-md z-10 shadow-md transform group-hover:scale-110 transition-transform">
-                NOUVEAU
-              </div>
-              <div class="h-40 overflow-hidden relative">
-                <div class="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors z-10"></div>
-                <img
-                  src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/MirePoix.webp"
-                  class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
-              </div>
-              <div class="p-4 bg-white relative">
-                <h3 class="font-bold text-gray-800 text-lg group-hover:text-red-600 transition-colors text-center">
-                  Mirepoix</h3>
-                <p class="text-xs text-gray-500 text-center mt-1 uppercase tracking-wide font-medium">Materiel de
-                  cuisine
-                </p>
-                <div
-                  class="mt-3 w-8 h-1 bg-red-600 rounded-full mx-auto transform scale-0 group-hover:scale-100 transition-transform duration-300">
-                </div>
-              </div>
+            <!-- Retry/Reset UI -->
+            <div id="gameControls" class="absolute bottom-6 right-6 z-20 hidden flex gap-2">
+              <button id="retryBtn"
+                class="px-6 py-2 bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold rounded-full backdrop-blur-md transition-all shadow-lg">
+                Rejouer ↺
+              </button>
             </div>
-
-            <!-- Partner 3 -->
-            <div
-              onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Castoramanew.webp')"
-              class="min-w-[85%] sm:min-w-0 snap-center group relative bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer hover:-translate-y-2 border border-white/40">
-              <div
-                class="absolute top-3 right-3 bg-red-600 text-white text-[10px] font-bold px-2 py-1 rounded-md z-10 shadow-md transform group-hover:scale-110 transition-transform">
-                NOUVEAU
-              </div>
-              <div class="h-40 overflow-hidden relative">
-                <div class="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors z-10"></div>
-                <img
-                  src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Castoramanew.webp"
-                  class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
-              </div>
-              <div class="p-4 bg-white relative">
-                <h3 class="font-bold text-gray-800 text-lg group-hover:text-red-600 transition-colors text-center">
-                  CASTORAMA</h3>
-                <p class="text-xs text-gray-500 text-center mt-1 uppercase tracking-wide font-medium">BRICOLAGE</p>
-                <div
-                  class="mt-3 w-8 h-1 bg-red-600 rounded-full mx-auto transform scale-0 group-hover:scale-100 transition-transform duration-300">
-                </div>
-              </div>
-            </div>
-
+            <div id="loadingText" class="absolute bottom-4 left-4 text-xs text-gray-500 hidden">Chargement du moteur
+              physique...</div>
           </div>
+
         </div>
       </section>
+
+      <!-- Three.js & Cannon.js Dependencies -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/cannon.js/0.6.2/cannon.min.js"></script>
+
+      <script>
+        // MAIN GAME LOGIC
+        document.addEventListener('DOMContentLoaded', () => {
+          const container = document.getElementById('threeContainer');
+          const overlay = document.getElementById('gameOverlay');
+          const startBtn = document.getElementById('startGameBtn');
+          const retryBtn = document.getElementById('retryBtn');
+          const scoreEl = document.getElementById('bowlingScore');
+          const controlsDiv = document.getElementById('gameControls');
+
+          let scene, camera, renderer;
+          let world; // Cannon world
+          let timeStep = 1 / 60;
+          let animationId;
+          let isPlaying = false;
+
+          // Objects
+          let ballMesh, ballBody;
+          let pins = []; // { mesh, body, initialPos }
+          let laneBody;
+
+          // Game State
+          let score = 0;
+          let ballLaunched = false;
+          let resetTimer = null;
+
+          // Interaction
+          let dragStart = { x: 0, y: 0 };
+          let isDragging = false;
+
+          // --- INIT THREE.JS & PHYSICS ---
+          function init() {
+            // 1. Scene
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x111827); // Dark blue-gray
+            scene.fog = new THREE.Fog(0x111827, 20, 50);
+
+            // 2. Camera
+            camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 100);
+            camera.position.set(0, 3, 6); // Behind the ball
+            camera.lookAt(0, 0, -10);
+
+            // 3. Renderer
+            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            renderer.shadowMap.enabled = true;
+            renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+            container.appendChild(renderer.domElement);
+
+            // 4. Lights
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
+            scene.add(ambientLight);
+
+            const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
+            dirLight.position.set(5, 10, 5);
+            dirLight.castShadow = true;
+            dirLight.shadow.mapSize.width = 1024;
+            dirLight.shadow.mapSize.height = 1024;
+            scene.add(dirLight);
+
+            // Neon Glow Lights (PointLights)
+            const neonLight1 = new THREE.PointLight(0xdc2626, 1, 20);
+            neonLight1.position.set(-3, 1, -5);
+            scene.add(neonLight1);
+            const neonLight2 = new THREE.PointLight(0xdc2626, 1, 20);
+            neonLight2.position.set(3, 1, -15);
+            scene.add(neonLight2);
+
+
+            // 5. Physics World (Cannon.js)
+            world = new CANNON.World();
+            world.gravity.set(0, -9.82, 0);
+            world.broadphase = new CANNON.NaiveBroadphase();
+            world.solver.iterations = 10;
+
+            // Materials
+            const physicsMaterial = new CANNON.Material("slipperyMaterial");
+            const physicsContactMaterial = new CANNON.ContactMaterial(physicsMaterial, physicsMaterial, {
+              friction: 0.1,
+              restitution: 0.5
+            });
+            world.addContactMaterial(physicsContactMaterial);
+
+            createLevel(physicsMaterial);
+            createBall(physicsMaterial);
+            createPins(physicsMaterial);
+
+            // Events
+            window.addEventListener('resize', onWindowResize);
+
+            // Mouse/Touch Events
+            container.addEventListener('mousedown', onPointerDown);
+            container.addEventListener('touchstart', (e) => onPointerDown(e.touches[0]), { passive: false });
+
+            window.addEventListener('mousemove', onPointerMove);
+            window.addEventListener('touchmove', (e) => {
+              if (isDragging) e.preventDefault();
+              onPointerMove(e.touches[0]);
+            }, { passive: false });
+
+            window.addEventListener('mouseup', onPointerUp);
+            window.addEventListener('touchend', onPointerUp);
+          }
+
+          function createLevel(material) {
+            // -- VISUAL ---
+            // Lane
+            const laneGeo = new THREE.BoxGeometry(3, 0.5, 40); // Width, Height, Depth
+            const laneMat = new THREE.MeshStandardMaterial({
+              color: 0x222222,
+              roughness: 0.2,
+              metalness: 0.1
+            });
+            const laneMesh = new THREE.Mesh(laneGeo, laneMat);
+            laneMesh.position.set(0, -0.25, -15);
+            laneMesh.receiveShadow = true;
+            scene.add(laneMesh);
+
+            // Gutters
+            const gutterGeo = new THREE.BoxGeometry(1, 0.5, 40);
+            const gutterMat = new THREE.MeshStandardMaterial({ color: 0x111111 });
+
+            const gutterL = new THREE.Mesh(gutterGeo, gutterMat);
+            gutterL.position.set(-2, -0.25, -15);
+            scene.add(gutterL);
+
+            const gutterR = new THREE.Mesh(gutterGeo, gutterMat);
+            gutterR.position.set(2, -0.25, -15);
+            scene.add(gutterR);
+
+            // -- PHYSICS --
+            // Lane body
+            const laneShape = new CANNON.Box(new CANNON.Vec3(1.5, 0.25, 20));
+            laneBody = new CANNON.Body({ mass: 0, material: material });
+            laneBody.addShape(laneShape);
+            laneBody.position.set(0, -0.25, -15);
+            world.addBody(laneBody);
+
+            // Gutter bodies (static, slanted slightly inward to catch ball)
+            // simplified: just floors lower down or barriers
+            const floorShape = new CANNON.Plane();
+            const floorBody = new CANNON.Body({ mass: 0, material: material });
+            floorBody.addShape(floorShape);
+            floorBody.quaternion.setFromAxisAngle(new CANNON.Vec3(1, 0, 0), -Math.PI / 2);
+            floorBody.position.set(0, -2, 0); // Catch-all floor
+            world.addBody(floorBody);
+          }
+
+          function createBall(material) {
+            const radius = 0.25; // ~25cm
+
+            // Visual
+            const geo = new THREE.SphereGeometry(radius, 32, 32);
+            const mat = new THREE.MeshStandardMaterial({
+              color: 0xff0000,
+              roughness: 0.1,
+              metalness: 0.4
+            });
+            ballMesh = new THREE.Mesh(geo, mat);
+            ballMesh.castShadow = true;
+            scene.add(ballMesh);
+
+            // Physics
+            const shape = new CANNON.Sphere(radius);
+            ballBody = new CANNON.Body({ mass: 5, material: material }); // Heavty ball
+            ballBody.addShape(shape);
+            ballBody.position.set(0, 0.5, 4); // Start pos
+            ballBody.linearDamping = 0.1;
+            ballBody.angularDamping = 0.1;
+            world.addBody(ballBody);
+
+            resetBallPos();
+          }
+
+          function createPins(material) {
+            // Pin Dimensions
+            const topR = 0.08;
+            const bottomR = 0.06;
+            const height = 0.6;
+
+            // Setup rows
+            let startZ = -18;
+            let rows = 4;
+
+            for (let r = 0; r < rows; r++) {
+              for (let c = 0; c <= r; c++) {
+                const x = (c - r * 0.5) * 0.4; // spacing
+                const z = startZ - r * 0.35; // hex spacing roughly
+
+                createSinglePin(x, 0.3, z, material);
+              }
+            }
+          }
+
+          function createSinglePin(x, y, z, material) {
+            // Visual
+            const geo = new THREE.CylinderGeometry(0.08, 0.06, 0.6, 16);
+            const mat = new THREE.MeshStandardMaterial({ color: 0xffffff });
+            // Add red Stripe texture or just simple color for now
+            const mesh = new THREE.Mesh(geo, mat);
+            mesh.castShadow = true;
+            mesh.receiveShadow = true;
+
+            // Add a red ring (child mesh)
+            const ringGeo = new THREE.TorusGeometry(0.07, 0.01, 8, 16);
+            const ringMat = new THREE.MeshBasicMaterial({ color: 0xdc2626 });
+            const ring = new THREE.Mesh(ringGeo, ringMat);
+            ring.rotation.x = Math.PI / 2;
+            ring.position.y = 0.1;
+            mesh.add(ring);
+
+            scene.add(mesh);
+
+            // Physics
+            // Use Box for stability or Cylinder
+            const shape = new CANNON.Cylinder(0.08, 0.06, 0.6, 8);
+            // Cannon cylinder orientation is Z-aligned, Three is Y-aligned. Need to rotate shape relative to body or body.
+            // Easier: Use a Box approximation for stability in simple demos
+            const boxShape = new CANNON.Box(new CANNON.Vec3(0.08, 0.3, 0.08));
+
+            const body = new CANNON.Body({ mass: 0.5, material: material });
+            body.addShape(boxShape);
+            body.position.set(x, y, z);
+            // body.sleepSpeedLimit = 0.1; // Sleep if slow
+
+            world.addBody(body);
+
+            pins.push({ mesh, body, initialPos: new CANNON.Vec3(x, y, z), active: true });
+          }
+
+          function resetBallPos() {
+            ballBody.velocity.set(0, 0, 0);
+            ballBody.angularVelocity.set(0, 0, 0);
+            ballBody.position.set(0, 0.5, 4);
+            ballBody.quaternion.set(0, 0, 0, 1);
+            ballLaunched = false;
+
+            // Reset camera
+            camera.position.set(0, 2, 7);
+            camera.lookAt(0, 0, -10);
+          }
+
+          function resetGame() {
+            resetBallPos();
+
+            // Reset pins
+            pins.forEach(p => {
+              p.body.velocity.set(0, 0, 0);
+              p.body.angularVelocity.set(0, 0, 0);
+              p.body.position.copy(p.initialPos);
+              p.body.quaternion.set(0, 0, 0, 1);
+              p.active = true;
+            });
+
+            score = 0;
+            scoreEl.innerText = score;
+            retryBtn.parentElement.classList.add('hidden');
+          }
+
+          function onPointerDown(e) {
+            if (ballLaunched || !isPlaying) return;
+            // Ensure canvas rect
+            const rect = container.getBoundingClientRect();
+            dragStart.x = e.clientX - rect.left;
+            dragStart.y = e.clientY - rect.top;
+            isDragging = true;
+          }
+
+          function onPointerMove(e) {
+            if (!isDragging) return;
+            // Could visualize arrow here
+          }
+
+          function onPointerUp(e) {
+            if (!isDragging) return;
+            isDragging = false;
+
+            if (!e || !e.clientX) { // Touch end handles differently usually, but we keep simple
+              // For touch end, we might need last movement data, but let's assume simple gesture
+            }
+            const rect = container.getBoundingClientRect();
+            const endX = (e.clientX || (e.changedTouches ? e.changedTouches[0].clientX : 0)) - rect.left;
+            const endY = (e.clientY || (e.changedTouches ? e.changedTouches[0].clientY : 0)) - rect.top;
+
+            const dx = endX - dragStart.x;
+            const dy = endY - dragStart.y;
+
+            // Throw condition: drag UP (negative Y in screen space)
+            if (dy < -20) {
+              shootBall(dx, dy);
+            }
+          }
+
+          function shootBall(dx, dy) {
+            ballLaunched = true;
+
+            // Power
+            const power = Math.min(Math.abs(dy) * 0.15, 30); // Cap speed
+            const spin = -dx * 0.05; // Curve
+
+            // Apply impulse
+            // Forward is -Z
+            ballBody.velocity.set(spin, 0, -power);
+            // Add some backspin or topspin?
+            ballBody.angularVelocity.set(power, 0, spin); // Rolling forward
+
+            // Init reset timer
+            setTimeout(checkScore, 4000);
+          }
+
+          function checkScore() {
+            let pinsDown = 0;
+            pins.forEach(p => {
+              // Basically if pin is tipped over (up vector not pointing up)
+              // Or simplified: if Y < something? simpler: use quaternion angle
+              // Or displacement from start
+
+              // Check rotation away from Y up
+              const v = new CANNON.Vec3(0, 1, 0);
+              p.body.quaternion.vmult(v, v);
+              // if v.y is not close to 1, it fell
+              if (v.y < 0.8) {
+                pinsDown++;
+              }
+
+              // Also clear fallen pins slightly for next throw? or Just full reset
+            });
+
+            score = pinsDown * 10;
+            if (pinsDown === 10) score += 50; // Strike bonus
+
+            scoreEl.innerText = score + (pinsDown === 10 ? " STRIKE!" : "");
+
+            retryBtn.parentElement.classList.remove('hidden');
+          }
+
+          function animate() {
+            if (!isPlaying) return;
+            requestAnimationFrame(animate);
+
+            // Step Physics
+            world.step(timeStep);
+
+            // Sync Visuals
+            ballMesh.position.copy(ballBody.position);
+            ballMesh.quaternion.copy(ballBody.quaternion);
+
+            pins.forEach(p => {
+              p.mesh.position.copy(p.body.position);
+              p.mesh.quaternion.copy(p.body.quaternion);
+            });
+
+            // Camera Follow (Simple)
+            if (ballLaunched && ballBody.position.z > -16) {
+              // Smooth follow
+              camera.position.z = ballBody.position.z + 5;
+              camera.position.x = ballBody.position.x * 0.5;
+              camera.lookAt(ballBody.position.x, 0, ballBody.position.z - 10);
+            }
+
+            renderer.render(scene, camera);
+          }
+
+          function onWindowResize() {
+            if (!camera || !renderer) return;
+            camera.aspect = container.clientWidth / container.clientHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(container.clientWidth, container.clientHeight);
+          }
+
+          // START UI
+          startBtn.addEventListener('click', () => {
+            if (!scene) init();
+            resetGame();
+            isPlaying = true;
+            overlay.classList.add('opacity-0', 'pointer-events-none');
+            overlay.style.opacity = 0;
+            animate();
+          });
+
+          retryBtn.addEventListener('click', () => {
+            resetGame();
+          });
+
+        });
+      </script>
     </div>
   </section>
 
@@ -660,7 +905,7 @@
       <!-- RESTAURANTS -->
       <div class="col-span-1">
         <div
-          class="category-card relative group cursor-pointer transform hover:scale-[1.02] transition duration-300 shadow-lg rounded-3xl overflow-hidden"
+          class="category-card relative group cursor-pointer transform hover:scale-[1.02] transition duration-300 shadow-lg rounded-2xl overflow-hidden"
           onclick="toggleCategory('resto-content')">
           <img src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/Restaurant.webp"
             alt="Restaurants" class="w-full h-36 md:h-44 lg:h-56 object-cover rounded-2xl">
@@ -670,7 +915,7 @@
           </div>
         </div>
         <div id="resto-content"
-          class="partner-content bg-white border border-gray-200 rounded-2xl p-4 shadow-lg list-layout bg-gray-50">
+          class="partner-content bg-white border border-gray-200 rounded-xl p-4 shadow-lg list-layout bg-gray-50">
           <button class="accordion-btn">
             <span class="font-semibold">Partenaires Restaurants</span>
             <span class="arrow">▶</span>
@@ -751,7 +996,7 @@
       <!-- ARTISANS DU GOÛT -->
       <div class="col-span-1">
         <div
-          class="category-card relative group cursor-pointer transform hover:scale-[1.02] transition duration-300 shadow-lg rounded-3xl overflow-hidden"
+          class="category-card relative group cursor-pointer transform hover:scale-[1.02] transition duration-300 shadow-lg rounded-2xl overflow-hidden"
           onclick="toggleCategory('gout-content')">
           <img src="https://images.unsplash.com/photo-1510626176961-4b57d4fbad03?w=800" alt="Artisans du Goût"
             class="w-full h-36 md:h-44 lg:h-56 object-cover rounded-2xl">
@@ -833,7 +1078,7 @@
       <!-- MAISON & TRAVAUX -->
       <div class="col-span-1">
         <div
-          class="category-card relative group cursor-pointer transform hover:scale-[1.02] transition duration-300 shadow-lg rounded-3xl overflow-hidden"
+          class="category-card relative group cursor-pointer transform hover:scale-[1.02] transition duration-300 shadow-lg rounded-2xl overflow-hidden"
           onclick="toggleCategory('cat-maison')">
           <img
             src="https://images.unsplash.com/photo-1513694203232-719a280e022f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
@@ -844,7 +1089,7 @@
           </div>
         </div>
         <div id="cat-maison"
-          class="partner-content bg-white border border-gray-200 rounded-2xl p-4 shadow-lg list-layout bg-gray-50">
+          class="partner-content bg-white border border-gray-200 rounded-xl p-4 shadow-lg list-layout bg-gray-50">
           <button class="accordion-btn">
             <span class="font-semibold">Achat & Financement</span>
             <span class="arrow">▶</span>
@@ -958,7 +1203,7 @@
       <!-- AUTOMOBILE -->
       <div class="col-span-1">
         <div
-          class="category-card relative group cursor-pointer transform hover:scale-[1.02] transition duration-300 shadow-lg rounded-3xl overflow-hidden"
+          class="category-card relative group cursor-pointer transform hover:scale-[1.02] transition duration-300 shadow-lg rounded-2xl overflow-hidden"
           onclick="toggleCategory('auto-content')">
           <img
             src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/futuristic-black-glowing-car-desktop-wallpaper-preview.jpg"
@@ -1002,7 +1247,7 @@
       <!-- PRÊT-À-PORTER -->
       <div class="col-span-1">
         <div
-          class="category-card relative group cursor-pointer transform hover:scale-[1.02] transition duration-300 shadow-lg rounded-3xl overflow-hidden"
+          class="category-card relative group cursor-pointer transform hover:scale-[1.02] transition duration-300 shadow-lg rounded-2xl overflow-hidden"
           onclick="toggleCategory('vetement-lingerie')">
           <img src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/Pretaporter.webp"
             alt="Prêt a Porter" class="w-full h-36 md:h-44 lg:h-56 object-cover rounded-2xl">
@@ -1027,7 +1272,7 @@
       <!-- BEAUTÉ / BIEN-ÊTRE -->
       <div class="col-span-1">
         <div
-          class="category-card relative group cursor-pointer transform hover:scale-[1.02] transition duration-300 shadow-lg rounded-3xl overflow-hidden"
+          class="category-card relative group cursor-pointer transform hover:scale-[1.02] transition duration-300 shadow-lg rounded-2xl overflow-hidden"
           onclick="toggleCategory('beaute-bienetre')">
           <img
             src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/Beaut%C3%A9-bien.webp"
@@ -1068,7 +1313,7 @@
       <!-- SANTE -->
       <div class="col-span-1">
         <div
-          class="category-card relative group cursor-pointer transform hover:scale-[1.02] transition duration-300 shadow-lg rounded-3xl overflow-hidden"
+          class="category-card relative group cursor-pointer transform hover:scale-[1.02] transition duration-300 shadow-lg rounded-2xl overflow-hidden"
           onclick="toggleCategory('sante-content')">
           <img src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/santecategorie.webp"
             alt="SANTE" class="w-full h-36 md:h-44 lg:h-56 object-cover rounded-2xl">
@@ -1096,7 +1341,7 @@
       <!-- CULTURE / LOISIRS -->
       <div class="col-span-1">
         <div
-          class="category-card relative group cursor-pointer transform hover:scale-[1.02] transition duration-300 shadow-lg rounded-3xl overflow-hidden"
+          class="category-card relative group cursor-pointer transform hover:scale-[1.02] transition duration-300 shadow-lg rounded-2xl overflow-hidden"
           onclick="toggleCategory('culture')">
           <img src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/LogoCulture.webp"
             alt="Culture / Loisirs" class="w-full h-36 md:h-44 lg:h-56 object-cover rounded-2xl">
@@ -1127,7 +1372,7 @@
       <!-- QUOTIDIEN -->
       <div class="col-span-1">
         <div
-          class="category-card relative group cursor-pointer transform hover:scale-[1.02] transition duration-300 shadow-lg rounded-3xl overflow-hidden"
+          class="category-card relative group cursor-pointer transform hover:scale-[1.02] transition duration-300 shadow-lg rounded-2xl overflow-hidden"
           onclick="toggleCategory('quotidien-content')">
           <img src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/services.png"
             alt="Quotidien" class="w-full h-36 md:h-44 lg:h-56 object-cover rounded-2xl">
@@ -1170,7 +1415,7 @@
       <!-- AUTOUR DE L'ENFANT -->
       <div class="col-span-1">
         <div
-          class="category-card relative group cursor-pointer transform hover:scale-[1.02] transition duration-300 shadow-lg rounded-3xl overflow-hidden"
+          class="category-card relative group cursor-pointer transform hover:scale-[1.02] transition duration-300 shadow-lg rounded-2xl overflow-hidden"
           onclick="toggleCategory('enfants-content')">
           <img src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/enfants.webp"
             alt="Enfants" class="w-full h-36 md:h-44 lg:h-56 object-cover rounded-2xl">
@@ -1192,7 +1437,7 @@
       <!-- ANIMAUX -->
       <div class="col-span-1">
         <div
-          class="category-card relative group cursor-pointer transform hover:scale-[1.02] transition duration-300 shadow-lg rounded-3xl overflow-hidden"
+          class="category-card relative group cursor-pointer transform hover:scale-[1.02] transition duration-300 shadow-lg rounded-2xl overflow-hidden"
           onclick="toggleCategory('animal-content')">
           <img src="https://images.unsplash.com/photo-1592194996308-7b43878e84a6?w=800" alt="Animaux"
             class="w-full h-36 md:h-44 lg:h-56 object-cover rounded-2xl">
@@ -1214,7 +1459,7 @@
       <!-- HOTELS / VOYAGES -->
       <div class="col-span-1">
         <div
-          class="category-card relative group cursor-pointer transform hover:scale-[1.02] transition duration-300 shadow-lg rounded-3xl overflow-hidden"
+          class="category-card relative group cursor-pointer transform hover:scale-[1.02] transition duration-300 shadow-lg rounded-2xl overflow-hidden"
           onclick="toggleCategory('travel-content')">
           <img src="https://maybanton.com/wp-content/uploads/2023/05/valise-voyage-luxe-hotel-chambre.jpeg"
             alt="Hôtels et Voyages" class="w-full h-36 md:h-44 lg:h-56 object-cover rounded-2xl">
@@ -1224,7 +1469,7 @@
           </div>
         </div>
 
-        <div id="travel-content" class="partner-content bg-white border border-gray-200 rounded-2xl p-4 shadow-lg">
+        <div id="travel-content" class="partner-content bg-white border border-gray-200 rounded-xl p-4 shadow-lg">
           <div class="partner-link"
             onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Azureva.webp')">
             Azureva</div>
@@ -1245,7 +1490,7 @@
   </section>
 
   <!-- Mentions légales -->
-  <div id="mentions" class="bg-white shadow-inner p-6 mt-8 rounded-3xl">
+  <section id="mentions" class="bg-white shadow-inner p-6 mt-8 rounded-xl">
     <h2 class="text-2xl font-bold text-red-600 mb-4">Mentions légales</h2>
 
     <button class="accordion-btn">1. Éditeur du site <span class="arrow">▶</span></button>
@@ -1287,86 +1532,86 @@
         </a>
       </p>
     </div>
-    </section>
+  </section>
 
-    <script>
+  <script>
 
-      // ===== Toggle categories fluide et responsive =====
-      function toggleCategory(id) {
-        const section = document.getElementById(id);
-        const card = document.querySelector(`[onclick="toggleCategory('${id}')"]`);
+    // ===== Toggle categories fluide et responsive =====
+    function toggleCategory(id) {
+      const section = document.getElementById(id);
+      const card = document.querySelector(`[onclick="toggleCategory('${id}')"]`);
 
-        // Fermer toutes les autres catégories
-        document.querySelectorAll('.partner-content').forEach(item => {
-          if (item.id !== id) {
-            item.classList.remove('active');
-          }
-        });
-
-        // Reset des ombres sur toutes les cartes
-        document.querySelectorAll('.category-card').forEach(cardEl => {
-          cardEl.classList.remove("shadow-red-500/50", "shadow-xl");
-          cardEl.classList.add("shadow-lg");
-        });
-
-        const opening = !section.classList.contains('active');
-        section.classList.toggle('active');
-
-        if (opening) {
-          // Carte active : ajouter ombre spéciale
-          card.classList.remove("shadow-lg");
-          card.classList.add("shadow-xl", "shadow-red-500/50");
-
-          // Attendre que TOUTES les transitions soient terminées (fermeture + ouverture)
-          setTimeout(() => {
-            const header = document.querySelector('header');
-            const headerHeight = header ? header.offsetHeight : 0;
-
-            // Position de la CARTE (pas du contenu)
-            const cardTop = card.getBoundingClientRect().top + window.scrollY;
-
-            // Scroll pour que la carte soit visible sous le header
-            const scrollTarget = cardTop - headerHeight - 20; // 20px de marge
-
-            window.scrollTo({
-              top: Math.max(0, scrollTarget),
-              behavior: 'smooth'
-            });
-          }, 600); // Augmenté à 600ms pour laisser le temps aux transitions CSS (0.5s max-height + marge)
-
-        } else {
-          // Carte désactivée : reset ombre
-          card.classList.remove("shadow-xl", "shadow-red-500/50");
-          card.classList.add("shadow-lg");
+      // Fermer toutes les autres catégories
+      document.querySelectorAll('.partner-content').forEach(item => {
+        if (item.id !== id) {
+          item.classList.remove('active');
         }
+      });
+
+      // Reset des ombres sur toutes les cartes
+      document.querySelectorAll('.category-card').forEach(cardEl => {
+        cardEl.classList.remove("shadow-red-500/50", "shadow-xl");
+        cardEl.classList.add("shadow-lg");
+      });
+
+      const opening = !section.classList.contains('active');
+      section.classList.toggle('active');
+
+      if (opening) {
+        // Carte active : ajouter ombre spéciale
+        card.classList.remove("shadow-lg");
+        card.classList.add("shadow-xl", "shadow-red-500/50");
+
+        // Attendre que TOUTES les transitions soient terminées (fermeture + ouverture)
+        setTimeout(() => {
+          const header = document.querySelector('header');
+          const headerHeight = header ? header.offsetHeight : 0;
+
+          // Position de la CARTE (pas du contenu)
+          const cardTop = card.getBoundingClientRect().top + window.scrollY;
+
+          // Scroll pour que la carte soit visible sous le header
+          const scrollTarget = cardTop - headerHeight - 20; // 20px de marge
+
+          window.scrollTo({
+            top: Math.max(0, scrollTarget),
+            behavior: 'smooth'
+          });
+        }, 600); // Augmenté à 600ms pour laisser le temps aux transitions CSS (0.5s max-height + marge)
+
+      } else {
+        // Carte désactivée : reset ombre
+        card.classList.remove("shadow-xl", "shadow-red-500/50");
+        card.classList.add("shadow-lg");
       }
+    }
 
 
-      // ===== Modal =====
-      const modal = document.getElementById('imageModal');
-      const modalImg = document.getElementById('modalImg');
-      const closeModalBtn = modal.querySelector('button');
+    // ===== Modal =====
+    const modal = document.getElementById('imageModal');
+    const modalImg = document.getElementById('modalImg');
+    const closeModalBtn = modal.querySelector('button');
 
-      function openModal(url) {
-        modalImg.src = url;
-        modal.classList.add('active');
-        history.pushState({ modalOpen: true }, "");
-      }
+    function openModal(url) {
+      modalImg.src = url;
+      modal.classList.add('active');
+      history.pushState({ modalOpen: true }, "");
+    }
 
-      function closeModal() {
-        modal.classList.remove('active');
-        if (history.state && history.state.modalOpen) history.back();
-      }
+    function closeModal() {
+      modal.classList.remove('active');
+      if (history.state && history.state.modalOpen) history.back();
+    }
 
-      modalImg.addEventListener('click', closeModal);
-      closeModalBtn.addEventListener('click', closeModal);
-      modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
-      window.addEventListener('popstate', () => { if (modal.classList.contains('active')) closeModal(); });
-      // PWA install banner
-      let deferredPrompt;
-      const installBanner = document.createElement('div');
-      installBanner.style.cssText =
-        `position: fixed;
+    modalImg.addEventListener('click', closeModal);
+    closeModalBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+    window.addEventListener('popstate', () => { if (modal.classList.contains('active')) closeModal(); });
+    // PWA install banner
+    let deferredPrompt;
+    const installBanner = document.createElement('div');
+    installBanner.style.cssText =
+      `position: fixed;
    bottom: 20px; left: 20px; right: 20px;
    background: #dc2626;
    color: #fff;
@@ -1377,159 +1622,255 @@
    z-index: 10001;
    cursor: pointer;
    box-shadow: 0 4px 12px rgba(0,0,0,0.3);`;
-      installBanner.textContent = "Installer l'application sur votre écran d'accueil";
+    installBanner.textContent = "Installer l'application sur votre écran d'accueil";
+    installBanner.style.display = 'none';
+
+    document.body.appendChild(installBanner);
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+
+      // Ne pas afficher si déjà installé
+      if (!window.matchMedia('(display-mode: standalone)').matches) {
+        installBanner.style.display = 'block';
+      }
+    });
+
+    installBanner.addEventListener('click', async () => {
       installBanner.style.display = 'none';
+      deferredPrompt.prompt();
+      await deferredPrompt.userChoice;
+      deferredPrompt = null;
+    });
 
-      document.body.appendChild(installBanner);
+    window.addEventListener('appinstalled', () => {
+      installBanner.style.display = 'none';
+    });
 
-      window.addEventListener('beforeinstallprompt', (e) => {
+    // ===== Menu Partenaires / Mentions =====
+    document.querySelectorAll('nav a').forEach(link => {
+      link.classList.add('nav-link');
+      link.addEventListener('click', (e) => {
         e.preventDefault();
-        deferredPrompt = e;
+        document.querySelectorAll('.nav-link').forEach(l => {
+          l.classList.remove('text-white');
+          l.classList.add('text-gray-400');
+          l.style.backgroundColor = 'transparent';
+          l.style.padding = '0';
+          l.style.borderRadius = '0';
+        });
+        link.classList.remove('text-gray-400');
+        link.classList.add('text-white');
+        link.style.backgroundColor = '#dc2626';
+        link.style.padding = '0.25rem 0.75rem';
+        link.style.borderRadius = '9999px';
 
-        // Ne pas afficher si déjà installé
-        if (!window.matchMedia('(display-mode: standalone)').matches) {
-          installBanner.style.display = 'block';
+        if (link.textContent.includes("Partenaires")) {
+          document.getElementById('categories').scrollIntoView({ behavior: 'smooth' });
+        } else if (link.textContent.includes("Mentions")) {
+          document.getElementById('mentions').scrollIntoView({ behavior: 'smooth' });
         }
       });
+    });
 
-      installBanner.addEventListener('click', async () => {
-        installBanner.style.display = 'none';
-        deferredPrompt.prompt();
-        await deferredPrompt.userChoice;
-        deferredPrompt = null;
-      });
+    // ===== Badge Compteur Automatique (Version CORRIGÉE pour gérer les accordéons et les listes) =====
+    document.querySelectorAll('[onclick^="toggleCategory"]').forEach(trigger => {
+      // 1. Détecter l'ID de la carte de contenu (ex: 'gout-content')
+      const idMatch = trigger.getAttribute('onclick').match(/'(.+?)'/);
+      if (!idMatch) return;
 
-      window.addEventListener('appinstalled', () => {
-        installBanner.style.display = 'none';
-      });
+      const contentId = idMatch[1];
+      const content = document.getElementById(contentId);
 
-      // ===== Menu Partenaires / Mentions =====
-      // Menu logic moved to top script
+      if (!content) return;
 
-      // ===== Badge Compteur Automatique (Version CORRIGÉE pour gérer les accordéons et les listes) =====
-      document.querySelectorAll('[onclick^="toggleCategory"]').forEach(trigger => {
-        // 1. Détecter l'ID de la carte de contenu (ex: 'gout-content')
-        const idMatch = trigger.getAttribute('onclick').match(/'(.+?)'/);
-        if (!idMatch) return;
+      // 2. Compter tous les partenaires, quelle que soit la profondeur (fonctionne pour les accordéons comme Maison)
+      const count = content.querySelectorAll('.partner-link').length;
 
-        const contentId = idMatch[1];
-        const content = document.getElementById(contentId);
+      // 3. La div où nous voulons attacher le badge est le 'trigger' lui-même (la div qui a l'onclick)
+      let headerDiv = trigger;
 
-        if (!content) return;
+      if (count > 0) {
+        // Supprimer l'ancien badge s'il existe (pour éviter les doublons lors des rechargements)
+        let existingBadge = headerDiv.querySelector('.badge-compteur');
+        if (existingBadge) {
+          existingBadge.remove();
+        }
 
-        // 2. Compter tous les partenaires, quelle que soit la profondeur (fonctionne pour les accordéons comme Maison)
-        const count = content.querySelectorAll('.partner-link').length;
+        // Créer et attacher le nouveau badge
+        let badge = document.createElement('div');
+        // Ajout de la classe badge-compteur pour un meilleur ciblage futur
+        badge.className = "absolute top-2 right-2 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded-full shadow z-10 badge-compteur";
 
-        // 3. La div où nous voulons attacher le badge est le 'trigger' lui-même (la div qui a l'onclick)
-        let headerDiv = trigger;
+        // Attacher le badge au déclencheur (la div qui a l'image/titre)
+        headerDiv.appendChild(badge);
 
-        if (count > 0) {
-          // Supprimer l'ancien badge s'il existe (pour éviter les doublons lors des rechargements)
-          let existingBadge = headerDiv.querySelector('.badge-compteur');
-          if (existingBadge) {
-            existingBadge.remove();
+        badge.textContent = count + " Partenaire" + (count > 1 ? "s" : "");
+      }
+    });
+
+    // ===== Accordion (Version Modifiée pour l'Exclusivité) =====
+    document.querySelectorAll(".accordion-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const content = btn.nextElementSibling;
+        const isCurrentlyOpen = content.classList.contains("open");
+
+        // 1. GESTION DE L'EXCLUSIVITÉ (Fermeture des autres)
+        document.querySelectorAll(".accordion-btn").forEach(otherBtn => {
+          const otherContent = otherBtn.nextElementSibling;
+
+          // Si ce n'est pas le bouton cliqué ET que son contenu est ouvert
+          if (otherBtn !== btn && otherContent.classList.contains("open")) {
+            otherContent.style.maxHeight = null;
+            otherContent.classList.remove("open");
+
+            // Retirer les classes des boutons et flèches des autres onglets
+            otherBtn.classList.remove("active");
+            const otherArrow = otherBtn.querySelector(".arrow");
+            if (otherArrow) otherArrow.classList.remove("rotate");
           }
+        });
+        // FIN GESTION EXCLUSIVITÉ
 
-          // Créer et attacher le nouveau badge
-          let badge = document.createElement('div');
-          // Ajout de la classe badge-compteur pour un meilleur ciblage futur
-          badge.className = "absolute top-2 right-2 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded-full shadow z-10 badge-compteur";
+        // 2. OUVERTURE / FERMETURE DU BOUTON CLIQUÉ
+        const arrow = btn.querySelector(".arrow");
 
-          // Attacher le badge au déclencheur (la div qui a l'image/titre)
-          headerDiv.appendChild(badge);
+        if (isCurrentlyOpen) {
+          // Fermeture
+          content.style.maxHeight = null;
+          content.classList.remove("open");
+          if (arrow) arrow.classList.remove("rotate");
+          btn.classList.remove("active");
+        } else {
+          // Ouverture
+          content.classList.add("open");
+          if (arrow) arrow.classList.add("rotate");
+          btn.classList.add("active");
 
-          badge.textContent = count + " Partenaire" + (count > 1 ? "s" : "");
+          // On utilise requestAnimationFrame pour une lecture correcte de scrollHeight
+          requestAnimationFrame(() => { content.style.maxHeight = content.scrollHeight + "px"; });
+        }
+
+        // 3. SCROLL AUTOMATIQUE - Se déclenche toujours lors de l'ouverture (même si un autre était ouvert)
+        if (!isCurrentlyOpen) {
+          setTimeout(() => {
+            const header = document.querySelector('header');
+            const headerHeight = header ? header.offsetHeight : 0;
+            const btnTop = btn.getBoundingClientRect().top + window.scrollY;
+            const scrollTarget = btnTop - headerHeight - 10; // 10px de marge
+
+            window.scrollTo({
+              top: Math.max(0, scrollTarget),
+              behavior: 'smooth'
+            });
+          }, 450); // Délai augmenté pour laisser les animations de fermeture/ouverture se terminer
         }
       });
+    });
+    if ('serviceWorker' in navigator) {
+      // Détection de l'environnement (Local vs Production)
+      const isLocal = window.location.hostname === 'localhost' || window.location.protocol === 'file:';
+      const swPath = isLocal ? './service-worker.js' : '/Renault-trucks-CE/service-worker.js';
 
-      // ===== Accordion (Version Modifiée pour l'Exclusivité) =====
-      document.querySelectorAll(".accordion-btn").forEach(btn => {
-        btn.addEventListener("click", () => {
-          const content = btn.nextElementSibling;
-          const isCurrentlyOpen = content.classList.contains("open");
-
-          // 1. GESTION DE L'EXCLUSIVITÉ (Fermeture des autres)
-          document.querySelectorAll(".accordion-btn").forEach(otherBtn => {
-            const otherContent = otherBtn.nextElementSibling;
-
-            // Si ce n'est pas le bouton cliqué ET que son contenu est ouvert
-            if (otherBtn !== btn && otherContent.classList.contains("open")) {
-              otherContent.style.maxHeight = null;
-              otherContent.classList.remove("open");
-
-              // Retirer les classes des boutons et flèches des autres onglets
-              otherBtn.classList.remove("active");
-              const otherArrow = otherBtn.querySelector(".arrow");
-              if (otherArrow) otherArrow.classList.remove("rotate");
+      navigator.serviceWorker.register(swPath)
+        .then(reg => console.log('Service Worker enregistré ✔', reg))
+        .catch(err => {
+          console.error('SW: Échec d\'enregistrement ❌', err);
+          // Si échec, on tente de désinscrire les anciens SW pour éviter les conflits
+          navigator.serviceWorker.getRegistrations().then(registrations => {
+            for (let registration of registrations) {
+              registration.unregister();
             }
           });
-          // FIN GESTION EXCLUSIVITÉ
-
-          // 2. OUVERTURE / FERMETURE DU BOUTON CLIQUÉ
-          const arrow = btn.querySelector(".arrow");
-
-          if (isCurrentlyOpen) {
-            // Fermeture
-            content.style.maxHeight = null;
-            content.classList.remove("open");
-            if (arrow) arrow.classList.remove("rotate");
-            btn.classList.remove("active");
-          } else {
-            // Ouverture
-            content.classList.add("open");
-            if (arrow) arrow.classList.add("rotate");
-            btn.classList.add("active");
-
-            // On utilise requestAnimationFrame pour une lecture correcte de scrollHeight
-            requestAnimationFrame(() => { content.style.maxHeight = content.scrollHeight + "px"; });
-          }
-
-          // 3. SCROLL AUTOMATIQUE - Se déclenche toujours lors de l'ouverture (même si un autre était ouvert)
-          if (!isCurrentlyOpen) {
-            setTimeout(() => {
-              const header = document.querySelector('header');
-              const headerHeight = header ? header.offsetHeight : 0;
-              const btnTop = btn.getBoundingClientRect().top + window.scrollY;
-              const scrollTarget = btnTop - headerHeight - 10; // 10px de marge
-
-              window.scrollTo({
-                top: Math.max(0, scrollTarget),
-                behavior: 'smooth'
-              });
-            }, 450); // Délai augmenté pour laisser les animations de fermeture/ouverture se terminer
-          }
         });
+
+      let refreshing = false;
+      navigator.serviceWorker.addEventListener('controllerchange', () => {
+        if (!refreshing) {
+          refreshing = true;
+          console.log('SW: Nouvelle version détectée, rechargement automatique…');
+          window.location.reload();
+        }
       });
-      if ('serviceWorker' in navigator) {
-        // Détection de l'environnement (Local vs Production)
-        const isLocal = window.location.hostname === 'localhost' || window.location.protocol === 'file:';
-        const swPath = isLocal ? './service-worker.js' : '/Renault-trucks-CE/service-worker.js';
+    }
 
-        navigator.serviceWorker.register(swPath)
-          .then(reg => console.log('Service Worker enregistré ✔', reg))
-          .catch(err => {
-            console.error('SW: Échec d\'enregistrement ❌', err);
-            // Si échec, on tente de désinscrire les anciens SW pour éviter les conflits
-            navigator.serviceWorker.getRegistrations().then(registrations => {
-              for (let registration of registrations) {
-                registration.unregister();
-              }
-            });
-          });
+    // Animation de Neige avec Accumulation
+    const canvas = document.getElementById('snowCanvas');
+    const ctx = canvas.getContext('2d');
+    const heroSection = document.getElementById('hero-section');
 
-        let refreshing = false;
-        navigator.serviceWorker.addEventListener('controllerchange', () => {
-          if (!refreshing) {
-            refreshing = true;
-            console.log('SW: Nouvelle version détectée, rechargement automatique…');
-            window.location.reload();
-          }
-        });
+    function resizeCanvas() {
+      canvas.width = heroSection.offsetWidth;
+      canvas.height = heroSection.offsetHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    const snowflakes = [];
+    const numFlakes = 150;
+    const groundLevel = canvas.height - 20;
+    const accumulatedSnow = [];
+
+    for (let i = 0; i < canvas.width; i++) {
+      accumulatedSnow[i] = 0;
+    }
+
+    for (let i = 0; i < numFlakes; i++) {
+      snowflakes.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height - canvas.height,
+        radius: Math.random() * 3 + 1,
+        speed: Math.random() * 1 + 0.5,
+        drift: Math.random() * 0.5 - 0.25
+      });
+    }
+
+    function drawSnow() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+      for (let i = 0; i < canvas.width; i++) {
+        if (accumulatedSnow[i] > 0) {
+          ctx.fillRect(i, groundLevel - accumulatedSnow[i], 180, accumulatedSnow[i]);
+        }
       }
 
-      // Animation de Neige supprimée pour un rendu plus pro
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+      ctx.shadowBlur = 3;
+      ctx.shadowColor = 'white';
 
-    </script>
+      snowflakes.forEach(flake => {
+        ctx.beginPath();
+        ctx.arc(flake.x, flake.y, flake.radius, 0, Math.PI * 2);
+        ctx.fill();
+
+        flake.y += flake.speed;
+        flake.x += flake.drift;
+
+        const xPos = Math.floor(flake.x);
+        if (xPos >= 0 && xPos < canvas.width) {
+          if (flake.y >= groundLevel - accumulatedSnow[xPos] - flake.radius) {
+            accumulatedSnow[xPos] = Math.min(accumulatedSnow[xPos] + 0.5, 60);
+            flake.y = -10;
+            flake.x = Math.random() * canvas.width;
+          }
+        }
+
+        if (flake.y > canvas.height) {
+          flake.y = -10;
+          flake.x = Math.random() * canvas.width;
+        }
+        if (flake.x > canvas.width) flake.x = 0;
+        if (flake.x < 0) flake.x = canvas.width;
+      });
+
+      requestAnimationFrame(drawSnow);
+    }
+
+    drawSnow();
+
+  </script>
 </body>
 
 </html>
