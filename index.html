@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -440,98 +441,6 @@
         Cliquez sur une catégorie pour découvrir toutes les offres exclusives négociées par votre Comité
         d'Entreprise.*Sur présentation du badge.
       </p>
-      <!-- BOWLING PARTNER ANNOUNCEMENT -->
-      <div class="mt-10 mb-8 w-full max-w-4xl mx-auto px-4 relative z-20">
-        <div
-          class="relative bg-gray-900/80 backdrop-blur-xl border border-red-500/30 rounded-3xl shadow-[0_0_40px_rgba(220,38,38,0.2)] overflow-hidden p-8 text-center group cursor-pointer transition-transform hover:scale-[1.01]"
-          onclick="document.getElementById('categories').scrollIntoView({behavior: 'smooth'})">
-
-          <!-- Animated Background Elements -->
-          <div class="absolute inset-0 opacity-20 pointer-events-none">
-            <div
-              class="absolute top-[-50%] left-[-50%] w-[200%] h-[200%] bg-[radial-gradient(circle,rgba(220,38,38,0.3)_0%,transparent_70%)] animate-spin-slow">
-            </div>
-          </div>
-
-          <div class="relative z-10 flex flex-col items-center justify-center space-y-6">
-
-            <!-- Badge -->
-            <div class="inline-block px-4 py-1 rounded-full bg-red-600/20 border border-red-500/50 backdrop-blur-md">
-              <span class="text-red-400 font-bold tracking-widest text-xs uppercase animate-pulse">Nouveau
-                Partenaire</span>
-            </div>
-
-            <!-- Title with Neon Effect -->
-            <h2
-              class="text-4xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white via-red-200 to-gray-400 drop-shadow-[0_0_15px_rgba(255,255,255,0.5)] italic transform -skew-x-12">
-              NOUVEAU LOISIR
-            </h2>
-            <p class="text-xl md:text-2xl text-gray-300 font-light tracking-wide">Négocié par votre CSE !</p>
-
-            <!-- Bowling SCENE Animation (CSS - Interactive) -->
-            <div id="bowlingGame"
-              class="h-64 w-full relative flex items-center justify-center overflow-hidden my-4 perspective-container-3d">
-
-              <!-- Floor/Lane (Moving texture effect) -->
-              <div
-                class="absolute bottom-[-50px] w-[200%] h-[150%] bg-[linear-gradient(0deg,rgba(30,41,59,1)_0%,rgba(15,23,42,0)_100%),repeating-linear-gradient(90deg,transparent_0,transparent_49px,rgba(255,255,255,0.05)_50px)] transform rotate-x-70 origin-bottom animate-lane-scroll">
-              </div>
-
-              <!-- Pins Group (3D Setup) -->
-              <div id="pinsGroup" class="relative z-10 w-40 h-32 flex justify-center items-end"
-                style="transform-style: preserve-3d;">
-                <!-- Back Row -->
-                <div
-                  class="absolute bottom-5 -left-12 w-6 h-20 bg-gray-200 rounded-full border-b-4 border-gray-400 shadow-xl pin-target"
-                  data-anim="animate-pin-hit-left-back"></div>
-                <div
-                  class="absolute bottom-5 left-12 w-6 h-20 bg-gray-200 rounded-full border-b-4 border-gray-400 shadow-xl pin-target"
-                  data-anim="animate-pin-hit-right-back"></div>
-                <div
-                  class="absolute bottom-5 -left-4 w-6 h-20 bg-gray-200 rounded-full border-b-4 border-gray-400 shadow-xl pin-target"
-                  data-anim="animate-pin-hit-left-center"></div>
-                <div
-                  class="absolute bottom-5 left-4 w-6 h-20 bg-gray-200 rounded-full border-b-4 border-gray-400 shadow-xl pin-target"
-                  data-anim="animate-pin-hit-right-center"></div>
-                <!-- Front Pin -->
-                <div
-                  class="absolute bottom-0 w-8 h-24 bg-white rounded-full border-b-4 border-gray-300 shadow-[0_10px_20px_rgba(0,0,0,0.5)] z-20 flex flex-col items-center justify-center pin-target"
-                  data-anim="animate-pin-hit-front">
-                  <div class="w-full h-1.5 bg-red-600 mt-3"></div>
-                  <div class="w-full h-1.5 bg-red-600 mt-1"></div>
-                </div>
-              </div>
-
-              <!-- Ball (Hidden initially, triggered by JS) -->
-              <div id="bowlingBall"
-                class="absolute bottom-[-100px] w-24 h-24 rounded-full bg-gradient-to-r from-black via-gray-800 to-black border border-gray-700 shadow-2xl flex items-center justify-center z-30 opacity-0">
-                <div class="w-3 h-3 bg-gray-600 rounded-full mr-2 opacity-80"></div>
-                <div class="w-3 h-3 bg-gray-600 rounded-full mt-2 opacity-80"></div>
-              </div>
-
-              <!-- STRIKE Text Explosion -->
-              <div id="strikeText"
-                class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-40 opacity-0 pointer-events-none">
-                <span
-                  class="text-7xl font-black text-yellow-400 drop-shadow-[0_0_20px_rgba(234,179,8,1)] italic tracking-tighter">STRIKE!</span>
-              </div>
-            </div>
-
-            <!-- CTA CONTROL -->
-            <div class="mt-2 h-16 flex items-center justify-center relative">
-              <button id="launchBtn" onclick="playBowlingSequence(event)"
-                class="group relative px-8 py-4 bg-red-600 hover:bg-red-700 text-white font-bold rounded-full shadow-[0_0_20px_rgba(220,38,38,0.5)] hover:shadow-[0_0_40px_rgba(220,38,38,0.8)] transition-all transform hover:scale-105 active:scale-95 z-50 overflow-hidden">
-                <span class="relative z-10 flex items-center gap-2">
-                  LANCER LA BOULE ! 🎳
-                </span>
-                <div
-                  class="absolute inset-0 bg-white/20 transform -skew-x-12 translate-x-[-150%] group-hover:animate-shine">
-                </div>
-              </button>
-            </div>
-
-          </div>
-        </div>
       <!-- PROMO BOX NOUVEAUX PARTENAIRES -->
       <section class="mt-10 mb-8 w-full max-w-5xl mx-auto px-4 perspective-1000">
         <div
@@ -563,7 +472,7 @@
 
             <!-- Partner 1 -->
             <div
-              onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/gammvert.webp')"
+              onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/bowling.webp')"
               class="min-w-[85%] sm:min-w-0 snap-center group relative bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer hover:-translate-y-2 border border-white/40">
               <div
                 class="absolute top-3 right-3 bg-red-600 text-white text-[10px] font-bold px-2 py-1 rounded-md z-10 shadow-md transform group-hover:scale-110 transition-transform">
@@ -572,13 +481,13 @@
               <div class="h-40 overflow-hidden relative">
                 <div class="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors z-10"></div>
                 <img
-                  src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/gammvert.webp"
+                  src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/bowling.webp"
                   class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
               </div>
               <div class="p-4 bg-white relative">
                 <h3 class="font-bold text-gray-800 text-lg group-hover:text-red-600 transition-colors text-center">
-                  GammVert</h3>
-                <p class="text-xs text-gray-500 text-center mt-1 uppercase tracking-wide font-medium">JARDINAGE
+                  Bowling</h3>
+                <p class="text-xs text-gray-500 text-center mt-1 uppercase tracking-wide font-medium">loisir
                 </p>
                 <div
                   class="mt-3 w-8 h-1 bg-red-600 rounded-full mx-auto transform scale-0 group-hover:scale-100 transition-transform duration-300">
@@ -588,7 +497,7 @@
 
             <!-- Partner 2 -->
             <div
-              onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/MirePoix.webp')"
+              onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/bandemaquereau.webp')"
               class="min-w-[85%] sm:min-w-0 snap-center group relative bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer hover:-translate-y-2 border border-white/40">
               <div
                 class="absolute top-3 right-3 bg-red-600 text-white text-[10px] font-bold px-2 py-1 rounded-md z-10 shadow-md transform group-hover:scale-110 transition-transform">
@@ -597,13 +506,13 @@
               <div class="h-40 overflow-hidden relative">
                 <div class="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors z-10"></div>
                 <img
-                  src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/MirePoix.webp"
+                  src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/bandemaquereau.webp"
                   class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
               </div>
               <div class="p-4 bg-white relative">
                 <h3 class="font-bold text-gray-800 text-lg group-hover:text-red-600 transition-colors text-center">
-                  Mirepoix</h3>
-                <p class="text-xs text-gray-500 text-center mt-1 uppercase tracking-wide font-medium">Materiel de cuisine
+                  Bande de Maquereaux</h3>
+                <p class="text-xs text-gray-500 text-center mt-1 uppercase tracking-wide font-medium">restaurant
                 </p>
                 <div
                   class="mt-3 w-8 h-1 bg-red-600 rounded-full mx-auto transform scale-0 group-hover:scale-100 transition-transform duration-300">
@@ -613,7 +522,7 @@
 
             <!-- Partner 3 -->
             <div
-              onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Castoramanew.webp')"
+              onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/leroidumatelas.webp')"
               class="min-w-[85%] sm:min-w-0 snap-center group relative bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer hover:-translate-y-2 border border-white/40">
               <div
                 class="absolute top-3 right-3 bg-red-600 text-white text-[10px] font-bold px-2 py-1 rounded-md z-10 shadow-md transform group-hover:scale-110 transition-transform">
@@ -622,13 +531,13 @@
               <div class="h-40 overflow-hidden relative">
                 <div class="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors z-10"></div>
                 <img
-                  src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Castoramanew.webp"
+                  src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/leroidumatelas.webp"
                   class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
               </div>
               <div class="p-4 bg-white relative">
                 <h3 class="font-bold text-gray-800 text-lg group-hover:text-red-600 transition-colors text-center">
-                  CASTORAMA</h3>
-                <p class="text-xs text-gray-500 text-center mt-1 uppercase tracking-wide font-medium">BRICOLAGE</p>
+                  Le Roi du Matelas</h3>
+                <p class="text-xs text-gray-500 text-center mt-1 uppercase tracking-wide font-medium">Equipement Maison</p>
                 <div
                   class="mt-3 w-8 h-1 bg-red-600 rounded-full mx-auto transform scale-0 group-hover:scale-100 transition-transform duration-300">
                 </div>
@@ -728,6 +637,9 @@
               <div class="partner-link"
                 onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/23avenue.webp')">
                 23ème Avenue</div>
+              <div class="partner-link"
+                onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/bandemaquereau.webp')">
+                Bande de Maquereaux</div>
               <div class="partner-link"
                 onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/butch.webp')">
                 Butch</div>
@@ -1025,6 +937,9 @@
           <div class="partner-link"
             onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Gambetta.webp')">
             Gambetta</div>
+          <div class="partner-link"
+            onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/liujo.webp')">
+            Liu.Jo</div>
         </div>
       </div>
 
@@ -1111,6 +1026,9 @@
         </div>
         <div id="culture" class="partner-content bg-white border border-gray-200 rounded-xl p-4 shadow-lg">
           <div class="partner-link"
+            onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/bowling.webp')">
+            Bowling Bresse Loisirs</div>
+          <div class="partner-link"
             onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/declic-ludik.webp')">
             Déclic Ludik</div>
           <div class="partner-link"
@@ -1159,6 +1077,9 @@
           <div class="partner-link"
             onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/la%20rek1ke.webp')">
             La Rek1que</div>
+          <div class="partner-link"
+            onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/leroidumatelas.webp')">
+            Le Roi du Matelas</div>
           <div class="partner-link"
             onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/photographe102.webp')">
             Photographe</div>
