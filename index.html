@@ -355,6 +355,195 @@
       -ms-overflow-style: none;
       scrollbar-width: none;
     }
+
+    /* Partners Announcement Carousel */
+    .partners-announcement {
+      position: relative;
+      max-width: 900px;
+      margin: 2rem auto 0;
+      padding: 1.5rem;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 1.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+
+    @media (max-width: 768px) {
+      .partners-announcement {
+        margin: 1.5rem 1rem 0;
+        padding: 1rem;
+      }
+    }
+
+    .carousel-container {
+      position: relative;
+      width: 100%;
+      min-height: 180px;
+    }
+
+    @media (max-width: 768px) {
+      .carousel-container {
+        min-height: 200px;
+      }
+    }
+
+    .carousel-slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      opacity: 0;
+      transform: translateX(100%);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 1rem;
+    }
+
+    .carousel-slide.active {
+      opacity: 1;
+      transform: translateX(0);
+      z-index: 1;
+    }
+
+    .carousel-slide.prev {
+      transform: translateX(-100%);
+    }
+
+    .partner-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, #dc2626, #ef4444);
+      color: white;
+      padding: 0.5rem 1.5rem;
+      border-radius: 2rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 1rem;
+      box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4);
+      animation: pulse-glow 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse-glow {
+
+      0%,
+      100% {
+        box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4);
+      }
+
+      50% {
+        box-shadow: 0 4px 25px rgba(220, 38, 38, 0.6);
+      }
+    }
+
+    .partner-name {
+      font-size: 1.75rem;
+      font-weight: 800;
+      color: white;
+      margin-bottom: 0.75rem;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+      line-height: 1.2;
+    }
+
+    @media (max-width: 768px) {
+      .partner-name {
+        font-size: 1.5rem;
+      }
+    }
+
+    .partner-description {
+      font-size: 1.125rem;
+      color: rgba(255, 255, 255, 0.9);
+      max-width: 600px;
+      margin: 0 auto;
+      font-weight: 300;
+    }
+
+    @media (max-width: 768px) {
+      .partner-description {
+        font-size: 1rem;
+      }
+    }
+
+    .partner-icon {
+      font-size: 3rem;
+      margin-bottom: 0.5rem;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    .partner-image {
+      width: 200px;
+      height: 120px;
+      object-fit: contain;
+      margin-bottom: 1rem;
+      border-radius: 0.75rem;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      animation: float 3s ease-in-out infinite;
+      background: white;
+      padding: 0.5rem;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .partner-image:hover {
+      transform: scale(1.05) translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    @media (max-width: 768px) {
+      .partner-image {
+        width: 160px;
+        height: 100px;
+      }
+    }
+
+    @keyframes float {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+
+    /* Carousel Navigation Dots */
+    .carousel-dots {
+      display: flex;
+      justify-content: center;
+      gap: 0.75rem;
+      margin-top: 1.5rem;
+    }
+
+    .carousel-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      border: 2px solid rgba(255, 255, 255, 0.5);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .carousel-dot:hover {
+      background: rgba(255, 255, 255, 0.5);
+      transform: scale(1.2);
+    }
+
+    .carousel-dot.active {
+      background: white;
+      width: 32px;
+      border-radius: 6px;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    }
   </style>
 </head>
 
@@ -440,1181 +629,64 @@
         Cliquez sur une catégorie pour découvrir toutes les offres exclusives négociées par votre Comité
         d'Entreprise.*Sur présentation du badge.
       </p>
-      <!-- UNIFIED PREMIUM SPOTLIGHT BOX -->
-      <section class="mt-12 mb-16 w-full max-w-7xl mx-auto px-4 sm:px-6">
 
-        <!-- Header with Modern Accent -->
-        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
-          <div class="max-w-2xl">
-            <h2 class="text-4xl sm:text-5xl font-black text-gray-900 tracking-tight leading-tight mb-4">
-              Partenaires <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-red-800">à la
-                une</span>
-            </h2>
-            <p class="text-gray-600 text-lg sm:text-xl font-light">
-              Découvrez les dernières offres exclusives sélectionnées pour vous par votre Comité d'Entreprise.
-            </p>
-          </div>
-          <div
-            class="hidden md:flex items-center gap-2 bg-gray-50 border border-gray-100 px-4 py-2 rounded-full shadow-sm">
-            <span class="relative flex h-3 w-3">
-              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-              <span class="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
-            </span>
-            <span class="text-sm font-bold text-gray-700 uppercase tracking-widest">Nouveautés</span>
-          </div>
-        </div>
-
-        <!-- Main Spotlight Container -->
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-
-          <!-- Featured Partner - Large Spotlight (7/12) -->
-          <div class="lg:col-span-7 group relative"
-            onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/bowling.webp')">
-            <div
-              class="relative h-[450px] sm:h-[550px] w-full bg-white rounded-[2.5rem] overflow-hidden shadow-2xl transition-all duration-700 cursor-pointer border border-gray-100 group-hover:shadow-[0_20px_60px_-15px_rgba(220,38,38,0.2)]">
-
-              <!-- Background Image with Zoom -->
-              <div class="absolute inset-0 overflow-hidden">
-                <img
-                  src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/bowling.webp"
-                  alt="Bowling"
-                  class="w-full h-full object-cover transform transition-transform duration-1000 group-hover:scale-110">
-                <!-- Premium Glass Overlay -->
-                <div
-                  class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/40 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-500">
-                </div>
-              </div>
-
-              <!-- Content Overlay -->
-              <div class="absolute inset-0 p-8 sm:p-12 flex flex-col justify-end">
-                <div class="translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                  <div
-                    class="inline-flex items-center gap-2 bg-red-600 text-white px-5 py-2 rounded-full text-sm font-black uppercase tracking-widest mb-6 shadow-xl">
-                    ⭐ Sélection du CE
-                  </div>
-                  <h3 class="text-4xl sm:text-6xl font-black text-white mb-4 leading-tight">
-                    Bowling <br><span class="text-red-400">Bresse Loisirs</span>
-                  </h3>
-                  <p
-                    class="text-gray-200 text-lg sm:text-xl max-w-lg mb-8 opacity-0 group-hover:opacity-100 transition-opacity duration-700 delay-100">
-                    Redécouvrez le plaisir du jeu en famille ou entre collègues avec des tarifs privilégiés.
-                  </p>
-                  <button
-                    class="bg-white text-gray-900 hover:bg-red-600 hover:text-white px-8 py-4 rounded-2xl font-black text-lg transition-all shadow-2xl flex items-center gap-3">
-                    Découvrir l'offre
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
-                        d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                    </svg>
-                  </button>
-                </div>
-              </div>
-
-              <!-- Animated Accent Circle -->
-              <div
-                class="absolute -top-12 -right-12 w-48 h-48 bg-red-500/10 rounded-full blur-3xl group-hover:bg-red-500/20 transition-colors duration-700">
-              </div>
-            </div>
-          </div>
-
-          <!-- Secondary Partners Grid (5/12) -->
-          <div class="lg:col-span-5 grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-8">
-
-            <!-- Card 2 - Bande de Maquereaux -->
-            <div
-              onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/bandemaquereau.webp')"
-              class="group relative bg-white rounded-[2rem] overflow-hidden shadow-lg border border-gray-100 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 cursor-pointer">
-              <div class="h-48 relative overflow-hidden">
-                <img
-                  src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/bandemaquereau.webp"
-                  class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
-                  alt="Bande de Maquereaux">
-                <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm p-2 rounded-xl shadow-lg">
-                  <span class="text-orange-600 text-[10px] font-black uppercase tracking-tighter">New</span>
-                </div>
-              </div>
-              <div class="p-6">
-                <div class="text-orange-600 text-xs font-bold uppercase tracking-widest mb-2 italic">Restaurant</div>
-                <h4 class="text-xl font-black text-gray-900 group-hover:text-red-600 transition-colors">Bande de
-                  Maquereaux</h4>
-              </div>
-            </div>
-
-            <!-- Card 3 - Le Roi du Matelas -->
-            <div
-              onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/leroidumatelas.webp')"
-              class="group relative bg-white rounded-[2rem] overflow-hidden shadow-lg border border-gray-100 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 cursor-pointer">
-              <div class="h-48 relative overflow-hidden">
-                <img
-                  src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/leroidumatelas.webp"
-                  class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
-                  alt="Le Roi du Matelas">
-                <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm p-2 rounded-xl shadow-lg">
-                  <span class="text-purple-600 text-[10px] font-black uppercase tracking-tighter">New</span>
-                </div>
-              </div>
-              <div class="p-6">
-                <div class="text-purple-600 text-xs font-bold uppercase tracking-widest mb-2 italic">Maison</div>
-                <h4 class="text-xl font-black text-gray-900 group-hover:text-red-600 transition-colors">Le Roi du
-                  Matelas</h4>
-              </div>
-            </div>
-
-            <!-- Card 4 - Lui.Jo -->
-            <div
-              onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/liujo.webp')"
-              class="group relative bg-white rounded-[2rem] overflow-hidden shadow-lg border border-gray-100 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 cursor-pointer">
-              <div class="h-48 relative overflow-hidden">
-                <img
-                  src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/liujo.webp"
-                  class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
-                  alt="Lui.Jo">
-                <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm p-2 rounded-xl shadow-lg">
-                  <span class="text-pink-600 text-[10px] font-black uppercase tracking-tighter">New</span>
-                </div>
-              </div>
-              <div class="p-6">
-                <div class="text-pink-600 text-xs font-bold uppercase tracking-widest mb-2 italic">Mode</div>
-                <h4 class="text-xl font-black text-gray-900 group-hover:text-red-600 transition-colors">Lui.Jo</h4>
-              </div>
-            </div>
-
-            <!-- Card 5 - L'alsacien -->
-            <div
-              onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/alsacien.webp')"
-              class="group relative bg-white rounded-[2rem] overflow-hidden shadow-lg border border-gray-100 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 cursor-pointer">
-              <div class="h-48 relative overflow-hidden">
-                <img
-                  src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/alsacien.webp"
-                  class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
-                  alt="L'alsacien">
-                <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm p-2 rounded-xl shadow-lg">
-                  <span class="text-amber-600 text-[10px] font-black uppercase tracking-tighter">New</span>
-                </div>
-              </div>
-              <div class="p-6">
-                <div class="text-amber-600 text-xs font-bold uppercase tracking-widest mb-2 italic">Restaurant</div>
-                <h4 class="text-xl font-black text-gray-900 group-hover:text-red-600 transition-colors">L'alsacien</h4>
-              </div>
-            </div>
-
-          </div>
-        </div>
-
-        <!-- Bottom Status Bar -->
-        <div
-          class="mt-12 p-6 bg-gray-50 rounded-[2rem] border border-gray-100 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-sm">
-          <div class="flex items-center gap-4">
-            <div class="flex -space-x-3">
-              <div class="w-12 h-12 rounded-full border-4 border-white bg-red-100 overflow-hidden shadow-md">
-                <div class="w-full h-full flex items-center justify-center font-bold text-red-600">RT</div>
-              </div>
-              <div class="w-12 h-12 rounded-full border-4 border-white bg-blue-100 overflow-hidden shadow-md">
-                <div class="w-full h-full flex items-center justify-center font-bold text-blue-600">CE</div>
-              </div>
-            </div>
-            <div>
-              <p class="text-gray-900 font-black tracking-tight">+50 Partenaires actifs</p>
-              <p class="text-gray-500 text-sm font-medium leading-none">Offres négociées localement</p>
-            </div>
-          </div>
-          <button
-            class="bg-gray-900 text-white hover:bg-red-600 px-8 py-4 rounded-2xl font-bold transition-colors w-full sm:w-auto shadow-lg">
-            Voir tous les partenaires
-          </button>
-        </div>
-
-      </section>
-
-
-      <!-- Header Section with Premium Typography -->
-      <div class="text-center mb-10">
-        <div
-          class="inline-flex items-center gap-2 bg-gradient-to-r from-red-50 to-blue-50 px-4 py-2 rounded-full mb-4 border border-red-100">
-          <div class="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
-          <span class="text-sm font-semibold text-gray-700 uppercase tracking-widest">Nouveautés</span>
-        </div>
-        <h2 class="text-4xl sm:text-5xl lg:text-6xl font-black text-gray-900 mb-4 tracking-tight">
-          Nouveaux <span
-            class="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-blue-600">Partenaires</span>
-        </h2>
-        <p class="text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto font-light">
-          Découvrez nos 5 dernières collaborations exclusives
-        </p>
-      </div>
-
-      <!-- Featured Card (Desktop) / First Card (Mobile) -->
-      <div class="mb-8">
-        <div
-          onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/bowling.webp')"
-          class="group relative bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer border border-gray-100 hover:border-red-200">
-
-          <div class="flex flex-col sm:flex-row">
-            <!-- Image Section -->
-            <div class="relative sm:w-2/5 h-64 sm:h-auto overflow-hidden">
-              <div class="absolute top-4 left-4 z-20">
-                <div
-                  class="bg-gradient-to-r from-red-500 to-pink-500 text-white text-xs font-bold px-4 py-2 rounded-full shadow-lg uppercase tracking-wider">
-                  ⭐ Coup de Cœur
-                </div>
-              </div>
-              <div
-                class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent sm:bg-gradient-to-r sm:from-transparent sm:to-white z-10">
-              </div>
-              <img
-                src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/bowling.webp"
-                alt="Bowling"
-                class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
-                loading="lazy">
-            </div>
-
-            <!-- Content Section -->
-            <div class="sm:w-3/5 p-8 sm:p-10 flex flex-col justify-center">
-              <div
-                class="inline-flex items-center gap-2 bg-blue-50 text-blue-700 px-3 py-1.5 rounded-full text-sm font-semibold mb-4 w-fit">
-                <span class="w-2 h-2 bg-blue-500 rounded-full"></span>
-                Loisir
-              </div>
-              <h3 class="text-3xl sm:text-4xl font-black text-gray-900 mb-3 group-hover:text-red-600 transition-colors">
-                Bowling
-              </h3>
-              <p class="text-gray-600 text-lg mb-6 leading-relaxed">
-                Profitez d'une expérience de bowling exceptionnelle avec des tarifs préférentiels pour les membres
-                CSE.
-              </p>
-              <div class="flex items-center text-red-600 font-semibold group-hover:translate-x-2 transition-transform">
-                <span>Découvrir l'offre</span>
-                <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3">
-                  </path>
-                </svg>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Grid Cards -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
-
-        <!-- Card 2 - Bande de Maquereaux -->
-        <div
-          onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/bandemaquereau.webp')"
-          class="group relative bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-500 cursor-pointer border border-gray-100 hover:border-orange-200 hover:-translate-y-2">
-
-          <div class="relative h-56 overflow-hidden">
-            <div class="absolute top-3 right-3 z-20">
-              <div
-                class="bg-gradient-to-r from-pink-500 to-rose-500 text-white text-[10px] font-bold px-3 py-1.5 rounded-full shadow-md uppercase">
-                New
-              </div>
-            </div>
-            <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent z-10"></div>
+      <!-- Partners Announcement Carousel -->
+      <div class="partners-announcement">
+        <div class="carousel-container">
+          <!-- Slide 1 - Restaurant -->
+          <div class="carousel-slide active">
             <img
-              src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/bandemaquereau.webp"
-              alt="Bande de Maquereaux"
-              class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
-              loading="lazy">
+              src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/1001new.webp"
+              alt="1001 Pizzas" class="partner-image"
+              onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/1001new.webp')">
+            <div class="partner-badge">Nouveau Partenaire</div>
+            <div class="partner-name">1001 Pizzas</div>
+            <div class="partner-description">Découvrez nos offres exclusives CSE</div>
           </div>
 
-          <div class="p-6">
-            <div
-              class="inline-flex items-center gap-1.5 bg-orange-50 text-orange-700 px-2.5 py-1 rounded-full text-xs font-semibold mb-3">
-              <span class="w-1.5 h-1.5 bg-orange-500 rounded-full"></span>
-              Restaurant
-            </div>
-            <h3 class="text-xl font-bold text-gray-900 mb-2 group-hover:text-orange-600 transition-colors">
-              Bande de Maquereaux
-            </h3>
-            <div class="flex items-center text-gray-500 text-sm">
-              <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-              </svg>
-              <span class="font-medium">Voir l'offre</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Card 3 - Le Roi du Matelas -->
-        <div
-          onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/leroidumatelas.webp')"
-          class="group relative bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-500 cursor-pointer border border-gray-100 hover:border-purple-200 hover:-translate-y-2">
-
-          <div class="relative h-56 overflow-hidden">
-            <div class="absolute top-3 right-3 z-20">
-              <div
-                class="bg-gradient-to-r from-purple-500 to-violet-500 text-white text-[10px] font-bold px-3 py-1.5 rounded-full shadow-md uppercase">
-                New
-              </div>
-            </div>
-            <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent z-10"></div>
+          <!-- Slide 2 - Automobile -->
+          <div class="carousel-slide">
             <img
-              src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/leroidumatelas.webp"
-              alt="Le Roi du Matelas"
-              class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
-              loading="lazy">
+              src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Speedynew.webp"
+              alt="Speedy" class="partner-image"
+              onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Speedynew.webp')">
+            <div class="partner-badge">Nouveau Partenaire</div>
+            <div class="partner-name">Speedy</div>
+            <div class="partner-description">Entretien auto à tarif préférentiel</div>
           </div>
 
-          <div class="p-6">
-            <div
-              class="inline-flex items-center gap-1.5 bg-purple-50 text-purple-700 px-2.5 py-1 rounded-full text-xs font-semibold mb-3">
-              <span class="w-1.5 h-1.5 bg-purple-500 rounded-full"></span>
-              Maison
-            </div>
-            <h3 class="text-xl font-bold text-gray-900 mb-2 group-hover:text-purple-600 transition-colors">
-              Le Roi du Matelas
-            </h3>
-            <div class="flex items-center text-gray-500 text-sm">
-              <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-              </svg>
-              <span class="font-medium">Voir l'offre</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Card 4 - Lui.Jo -->
-        <div
-          onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/liujo.webp')"
-          class="group relative bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-500 cursor-pointer border border-gray-100 hover:border-pink-200 hover:-translate-y-2">
-
-          <div class="relative h-56 overflow-hidden">
-            <div class="absolute top-3 right-3 z-20">
-              <div
-                class="bg-gradient-to-r from-pink-500 to-rose-500 text-white text-[10px] font-bold px-3 py-1.5 rounded-full shadow-md uppercase">
-                New
-              </div>
-            </div>
-            <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent z-10"></div>
-            <img src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/liujo.webp"
-              alt="Lui.Jo"
-              class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
-              loading="lazy">
-          </div>
-
-          <div class="p-6">
-            <div
-              class="inline-flex items-center gap-1.5 bg-pink-50 text-pink-700 px-2.5 py-1 rounded-full text-xs font-semibold mb-3">
-              <span class="w-1.5 h-1.5 bg-pink-500 rounded-full"></span>
-              Mode
-            </div>
-            <h3 class="text-xl font-bold text-gray-900 mb-2 group-hover:text-pink-600 transition-colors">
-              Lui.Jo
-            </h3>
-            <div class="flex items-center text-gray-500 text-sm">
-              <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-              </svg>
-              <span class="font-medium">Voir l'offre</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Card 5 - L'alsacien -->
-        <div
-          onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/alsacien.webp')"
-          class="group relative bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-500 cursor-pointer border border-gray-100 hover:border-amber-200 hover:-translate-y-2">
-
-          <div class="relative h-56 overflow-hidden">
-            <div class="absolute top-3 right-3 z-20">
-              <div
-                class="bg-gradient-to-r from-amber-500 to-orange-500 text-white text-[10px] font-bold px-3 py-1.5 rounded-full shadow-md uppercase">
-                New
-              </div>
-            </div>
-            <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent z-10"></div>
+          <!-- Slide 3 - Beauté -->
+          <div class="carousel-slide">
             <img
-              src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/alsacien.webp"
-              alt="L'alsacien"
-              class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
-              loading="lazy">
+              src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/GlowRitual.webp"
+              alt="Glow Ritual" class="partner-image"
+              onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/GlowRitual.webp')">
+            <div class="partner-badge">Nouveau Partenaire</div>
+            <div class="partner-name">Glow Ritual</div>
+            <div class="partner-description">Institut de beauté - Offres bien-être</div>
           </div>
 
-          <div class="p-6">
-            <div
-              class="inline-flex items-center gap-1.5 bg-amber-50 text-amber-700 px-2.5 py-1 rounded-full text-xs font-semibold mb-3">
-              <span class="w-1.5 h-1.5 bg-amber-500 rounded-full"></span>
-              Restaurant
-            </div>
-            <h3 class="text-xl font-bold text-gray-900 mb-2 group-hover:text-amber-600 transition-colors">
-              L'alsacien
-            </h3>
-            <div class="flex items-center text-gray-500 text-sm">
-              <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-              </svg>
-              <span class="font-medium">Voir l'offre</span>
-            </div>
+          <!-- Slide 4 - Loisirs -->
+          <div class="carousel-slide">
+            <img
+              src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/bowling.webp"
+              alt="Bowling Bresse Loisirs" class="partner-image"
+              onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/bowling.webp')">
+            <div class="partner-badge">Nouveau Partenaire</div>
+            <div class="partner-name">Bowling Bresse Loisirs</div>
+            <div class="partner-description">Loisirs en famille à prix réduit</div>
           </div>
         </div>
 
-      </div>
-
-      <!-- Bottom CTA -->
-      <div class="mt-12 text-center">
-        <div
-          class="inline-flex items-center gap-3 bg-gradient-to-r from-gray-50 to-gray-100 px-6 py-4 rounded-2xl border border-gray-200">
-          <div class="flex -space-x-2">
-            <div class="w-8 h-8 bg-gradient-to-br from-red-400 to-pink-500 rounded-full border-2 border-white"></div>
-            <div class="w-8 h-8 bg-gradient-to-br from-blue-400 to-purple-500 rounded-full border-2 border-white">
-            </div>
-            <div class="w-8 h-8 bg-gradient-to-br from-orange-400 to-yellow-500 rounded-full border-2 border-white">
-            </div>
-          </div>
-          <p class="text-sm text-gray-700 font-medium">
-            <span class="font-bold text-red-600">+50 partenaires</span> vous attendent
-          </p>
-        </div>
-      </div>
-
-  </section>
-  <section class="mt-10 mb-8 w-full max-w-7xl mx-auto px-3 sm:px-6">
-    <!-- Main Container with Dark Theme -->
-    <div
-      class="relative bg-gradient-to-br from-gray-950 via-gray-900 to-black rounded-3xl overflow-hidden border border-gray-800">
-
-      <!-- Animated Sparkles Background -->
-      <div class="absolute inset-0 overflow-hidden pointer-events-none">
-        <div class="absolute top-1/4 left-1/4 w-1 h-1 bg-cyan-400 rounded-full animate-ping"
-          style="animation-duration: 3s;"></div>
-        <div class="absolute top-1/3 right-1/3 w-1 h-1 bg-pink-400 rounded-full animate-ping"
-          style="animation-duration: 4s; animation-delay: 1s;"></div>
-        <div class="absolute bottom-1/4 left-1/2 w-1 h-1 bg-yellow-400 rounded-full animate-ping"
-          style="animation-duration: 5s; animation-delay: 2s;"></div>
-        <div class="absolute top-2/3 right-1/4 w-1 h-1 bg-purple-400 rounded-full animate-ping"
-          style="animation-duration: 3.5s; animation-delay: 0.5s;"></div>
-      </div>
-
-      <!-- Neon Glow Orbs -->
-      <div
-        class="absolute -top-32 -right-32 w-64 h-64 bg-gradient-to-br from-cyan-500/20 to-blue-500/20 rounded-full blur-3xl">
-      </div>
-      <div
-        class="absolute -bottom-32 -left-32 w-64 h-64 bg-gradient-to-tr from-pink-500/20 to-purple-500/20 rounded-full blur-3xl">
-      </div>
-
-      <!-- Header Section -->
-      <div class="relative px-4 sm:px-8 py-6 sm:py-8 border-b border-gray-800/50">
-        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <!-- Title with Neon Effect -->
-          <div class="space-y-2">
-            <div class="flex items-center gap-3">
-              <div class="relative">
-                <div
-                  class="absolute inset-0 bg-gradient-to-r from-cyan-400 to-blue-500 blur-xl opacity-60 animate-pulse">
-                </div>
-                <div class="relative text-4xl">✨</div>
-              </div>
-              <h2
-                class="text-2xl sm:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 tracking-tight">
-                Nouveaux Partenaires
-              </h2>
-            </div>
-            <p class="text-sm sm:text-base text-gray-400 font-medium ml-12 sm:ml-14">
-              Découvrez nos <span class="text-cyan-400 font-bold">5 dernières</span> offres exclusives
-            </p>
-          </div>
-
-          <!-- Live Badge -->
-          <div
-            class="flex items-center gap-3 bg-gradient-to-r from-gray-800/80 to-gray-900/80 backdrop-blur-sm px-5 py-3 rounded-2xl border border-gray-700/50 shadow-lg">
-            <div class="relative flex items-center justify-center">
-              <div class="absolute w-3 h-3 bg-green-400 rounded-full animate-ping"></div>
-              <div class="w-2.5 h-2.5 bg-green-400 rounded-full"></div>
-            </div>
-            <span class="text-sm font-bold text-white uppercase tracking-wider">Live</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Bento Grid Layout -->
-      <div class="relative p-4 sm:p-8">
-        <!-- Mobile: Carousel | Desktop: Bento Grid -->
-        <div class="hidden sm:grid sm:grid-cols-6 sm:grid-rows-2 gap-4 lg:gap-6">
-
-          <!-- Large Card 1 - Spans 2 columns, 2 rows -->
-          <div
-            onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/bowling.webp')"
-            class="col-span-2 row-span-2 group relative bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl overflow-hidden border border-gray-700/50 hover:border-cyan-500/50 transition-all duration-500 cursor-pointer hover:scale-[1.02] hover:shadow-2xl hover:shadow-cyan-500/20">
-
-            <!-- Neon Badge -->
-            <div class="absolute top-4 right-4 z-20">
-              <div class="relative">
-                <div class="absolute inset-0 bg-cyan-400 blur-lg opacity-75 animate-pulse"></div>
-                <div
-                  class="relative bg-gradient-to-r from-cyan-500 to-blue-500 text-white text-xs font-black px-4 py-2 rounded-xl uppercase tracking-wider shadow-lg">
-                  New
-                </div>
-              </div>
-            </div>
-
-            <!-- Image -->
-            <div class="relative h-full overflow-hidden">
-              <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/50 to-transparent z-10">
-              </div>
-              <img
-                src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/bowling.webp"
-                alt="Bowling"
-                class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
-                loading="lazy">
-
-              <!-- Content Overlay -->
-              <div class="absolute bottom-0 left-0 right-0 p-6 z-20">
-                <div class="flex items-center gap-2 mb-3">
-                  <span
-                    class="px-3 py-1 bg-cyan-500/20 backdrop-blur-sm border border-cyan-400/30 text-cyan-300 text-xs font-bold rounded-full uppercase">
-                    Loisir
-                  </span>
-                </div>
-                <h3 class="text-2xl font-black text-white mb-2 group-hover:text-cyan-400 transition-colors">
-                  Bowling
-                </h3>
-                <div
-                  class="h-1 w-16 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full group-hover:w-full transition-all duration-500">
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Medium Card 2 - Spans 2 columns, 1 row -->
-          <div
-            onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/bandemaquereau.webp')"
-            class="col-span-2 row-span-1 group relative bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl overflow-hidden border border-gray-700/50 hover:border-pink-500/50 transition-all duration-500 cursor-pointer hover:scale-[1.02] hover:shadow-2xl hover:shadow-pink-500/20">
-
-            <div class="absolute top-3 right-3 z-20">
-              <div class="relative">
-                <div class="absolute inset-0 bg-pink-400 blur-lg opacity-75 animate-pulse"></div>
-                <div
-                  class="relative bg-gradient-to-r from-pink-500 to-rose-500 text-white text-xs font-black px-3 py-1.5 rounded-xl uppercase tracking-wider shadow-lg">
-                  New
-                </div>
-              </div>
-            </div>
-
-            <div class="flex h-full">
-              <div class="w-1/2 relative overflow-hidden">
-                <div class="absolute inset-0 bg-gradient-to-r from-transparent to-gray-900 z-10"></div>
-                <img
-                  src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/bandemaquereau.webp"
-                  alt="Bande de Maquereaux"
-                  class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
-                  loading="lazy">
-              </div>
-              <div class="w-1/2 p-5 flex flex-col justify-center">
-                <span
-                  class="inline-block px-2.5 py-1 bg-orange-500/20 backdrop-blur-sm border border-orange-400/30 text-orange-300 text-xs font-bold rounded-full uppercase mb-3 w-fit">
-                  Restaurant
-                </span>
-                <h3 class="text-xl font-black text-white mb-2 group-hover:text-pink-400 transition-colors">
-                  Bande de Maquereaux
-                </h3>
-                <div
-                  class="h-1 w-12 bg-gradient-to-r from-pink-400 to-rose-500 rounded-full group-hover:w-full transition-all duration-500">
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Medium Card 3 - Spans 2 columns, 1 row -->
-          <div
-            onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/leroidumatelas.webp')"
-            class="col-span-2 row-span-1 group relative bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl overflow-hidden border border-gray-700/50 hover:border-purple-500/50 transition-all duration-500 cursor-pointer hover:scale-[1.02] hover:shadow-2xl hover:shadow-purple-500/20">
-
-            <div class="absolute top-3 right-3 z-20">
-              <div class="relative">
-                <div class="absolute inset-0 bg-purple-400 blur-lg opacity-75 animate-pulse"></div>
-                <div
-                  class="relative bg-gradient-to-r from-purple-500 to-violet-500 text-white text-xs font-black px-3 py-1.5 rounded-xl uppercase tracking-wider shadow-lg">
-                  New
-                </div>
-              </div>
-            </div>
-
-            <div class="flex h-full">
-              <div class="w-1/2 p-5 flex flex-col justify-center">
-                <span
-                  class="inline-block px-2.5 py-1 bg-purple-500/20 backdrop-blur-sm border border-purple-400/30 text-purple-300 text-xs font-bold rounded-full uppercase mb-3 w-fit">
-                  Maison
-                </span>
-                <h3 class="text-xl font-black text-white mb-2 group-hover:text-purple-400 transition-colors">
-                  Le Roi du Matelas
-                </h3>
-                <div
-                  class="h-1 w-12 bg-gradient-to-r from-purple-400 to-violet-500 rounded-full group-hover:w-full transition-all duration-500">
-                </div>
-              </div>
-              <div class="w-1/2 relative overflow-hidden">
-                <div class="absolute inset-0 bg-gradient-to-l from-transparent to-gray-900 z-10"></div>
-                <img
-                  src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/leroidumatelas.webp"
-                  alt="Le Roi du Matelas"
-                  class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
-                  loading="lazy">
-              </div>
-            </div>
-          </div>
-
-          <!-- Small Card 4 - Spans 1 column, 1 row -->
-          <div
-            onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/liujo.webp')"
-            class="col-span-1 row-span-1 group relative bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl overflow-hidden border border-gray-700/50 hover:border-pink-500/50 transition-all duration-500 cursor-pointer hover:scale-[1.02] hover:shadow-2xl hover:shadow-pink-500/20">
-
-            <div class="relative h-full overflow-hidden">
-              <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/70 to-transparent z-10">
-              </div>
-              <div class="absolute top-3 right-3 z-20">
-                <div class="relative">
-                  <div class="absolute inset-0 bg-pink-400 blur-md opacity-75"></div>
-                  <div
-                    class="relative bg-gradient-to-r from-pink-500 to-rose-500 text-white text-[10px] font-black px-2 py-1 rounded-lg uppercase">
-                    New
-                  </div>
-                </div>
-              </div>
-              <img
-                src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/liujo.webp"
-                alt="Lui.Jo"
-                class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
-                loading="lazy">
-              <div class="absolute bottom-0 left-0 right-0 p-4 z-20">
-                <span
-                  class="inline-block px-2 py-0.5 bg-pink-500/20 backdrop-blur-sm border border-pink-400/30 text-pink-300 text-[10px] font-bold rounded-full uppercase mb-2">
-                  Mode
-                </span>
-                <h3 class="text-base font-black text-white group-hover:text-pink-400 transition-colors">
-                  Lui.Jo
-                </h3>
-              </div>
-            </div>
-          </div>
-
-          <!-- Small Card 5 - Spans 1 column, 1 row -->
-          <div
-            onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/alsacien.webp')"
-            class="col-span-1 row-span-1 group relative bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl overflow-hidden border border-gray-700/50 hover:border-orange-500/50 transition-all duration-500 cursor-pointer hover:scale-[1.02] hover:shadow-2xl hover:shadow-orange-500/20">
-
-            <div class="relative h-full overflow-hidden">
-              <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/70 to-transparent z-10">
-              </div>
-              <div class="absolute top-3 right-3 z-20">
-                <div class="relative">
-                  <div class="absolute inset-0 bg-orange-400 blur-md opacity-75"></div>
-                  <div
-                    class="relative bg-gradient-to-r from-orange-500 to-amber-500 text-white text-[10px] font-black px-2 py-1 rounded-lg uppercase">
-                    New
-                  </div>
-                </div>
-              </div>
-              <img
-                src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/alsacien.webp"
-                alt="L'alsacien"
-                class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
-                loading="lazy">
-              <div class="absolute bottom-0 left-0 right-0 p-4 z-20">
-                <span
-                  class="inline-block px-2 py-0.5 bg-orange-500/20 backdrop-blur-sm border border-orange-400/30 text-orange-300 text-[10px] font-bold rounded-full uppercase mb-2">
-                  Restaurant
-                </span>
-                <h3 class="text-base font-black text-white group-hover:text-orange-400 transition-colors">
-                  L'alsacien
-                </h3>
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-        <!-- Mobile Carousel -->
-        <div class="sm:hidden flex overflow-x-auto snap-x snap-mandatory gap-4 pb-4 scrollbar-hide">
-
-          <!-- Mobile Card 1 -->
-          <div
-            onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/bowling.webp')"
-            class="flex-shrink-0 w-[85%] snap-center group relative bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl overflow-hidden border border-gray-700/50 hover:border-cyan-500/50 transition-all duration-500 cursor-pointer">
-
-            <div class="absolute top-4 right-4 z-20">
-              <div class="relative">
-                <div class="absolute inset-0 bg-cyan-400 blur-lg opacity-75 animate-pulse"></div>
-                <div
-                  class="relative bg-gradient-to-r from-cyan-500 to-blue-500 text-white text-xs font-black px-3 py-1.5 rounded-xl uppercase">
-                  New
-                </div>
-              </div>
-            </div>
-
-            <div class="relative h-64 overflow-hidden">
-              <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/50 to-transparent z-10">
-              </div>
-              <img
-                src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/bowling.webp"
-                alt="Bowling" class="w-full h-full object-cover" loading="lazy">
-              <div class="absolute bottom-0 left-0 right-0 p-5 z-20">
-                <span
-                  class="inline-block px-3 py-1 bg-cyan-500/20 backdrop-blur-sm border border-cyan-400/30 text-cyan-300 text-xs font-bold rounded-full uppercase mb-2">
-                  Loisir
-                </span>
-                <h3 class="text-xl font-black text-white">Bowling</h3>
-              </div>
-            </div>
-          </div>
-
-          <!-- Mobile Card 2 -->
-          <div
-            onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/bandemaquereau.webp')"
-            class="flex-shrink-0 w-[85%] snap-center group relative bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl overflow-hidden border border-gray-700/50 hover:border-pink-500/50 transition-all duration-500 cursor-pointer">
-
-            <div class="absolute top-4 right-4 z-20">
-              <div class="relative">
-                <div class="absolute inset-0 bg-pink-400 blur-lg opacity-75 animate-pulse"></div>
-                <div
-                  class="relative bg-gradient-to-r from-pink-500 to-rose-500 text-white text-xs font-black px-3 py-1.5 rounded-xl uppercase">
-                  New
-                </div>
-              </div>
-            </div>
-
-            <div class="relative h-64 overflow-hidden">
-              <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/50 to-transparent z-10">
-              </div>
-              <img
-                src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/bandemaquereau.webp"
-                alt="Bande de Maquereaux" class="w-full h-full object-cover" loading="lazy">
-              <div class="absolute bottom-0 left-0 right-0 p-5 z-20">
-                <span
-                  class="inline-block px-3 py-1 bg-orange-500/20 backdrop-blur-sm border border-orange-400/30 text-orange-300 text-xs font-bold rounded-full uppercase mb-2">
-                  Restaurant
-                </span>
-                <h3 class="text-xl font-black text-white">Bande de Maquereaux</h3>
-              </div>
-            </div>
-          </div>
-
-          <!-- Mobile Card 3 -->
-          <div
-            onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/leroidumatelas.webp')"
-            class="flex-shrink-0 w-[85%] snap-center group relative bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl overflow-hidden border border-gray-700/50 hover:border-purple-500/50 transition-all duration-500 cursor-pointer">
-
-            <div class="absolute top-4 right-4 z-20">
-              <div class="relative">
-                <div class="absolute inset-0 bg-purple-400 blur-lg opacity-75 animate-pulse"></div>
-                <div
-                  class="relative bg-gradient-to-r from-purple-500 to-violet-500 text-white text-xs font-black px-3 py-1.5 rounded-xl uppercase">
-                  New
-                </div>
-              </div>
-            </div>
-
-            <div class="relative h-64 overflow-hidden">
-              <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/50 to-transparent z-10">
-              </div>
-              <img
-                src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/leroidumatelas.webp"
-                alt="Le Roi du Matelas" class="w-full h-full object-cover" loading="lazy">
-              <div class="absolute bottom-0 left-0 right-0 p-5 z-20">
-                <span
-                  class="inline-block px-3 py-1 bg-purple-500/20 backdrop-blur-sm border border-purple-400/30 text-purple-300 text-xs font-bold rounded-full uppercase mb-2">
-                  Maison
-                </span>
-                <h3 class="text-xl font-black text-white">Le Roi du Matelas</h3>
-              </div>
-            </div>
-          </div>
-
-          <!-- Mobile Card 4 -->
-          <div
-            onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/liujo.webp')"
-            class="flex-shrink-0 w-[85%] snap-center group relative bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl overflow-hidden border border-gray-700/50 hover:border-pink-500/50 transition-all duration-500 cursor-pointer">
-
-            <div class="absolute top-4 right-4 z-20">
-              <div class="relative">
-                <div class="absolute inset-0 bg-pink-400 blur-lg opacity-75 animate-pulse"></div>
-                <div
-                  class="relative bg-gradient-to-r from-pink-500 to-rose-500 text-white text-xs font-black px-3 py-1.5 rounded-xl uppercase">
-                  New
-                </div>
-              </div>
-            </div>
-
-            <div class="relative h-64 overflow-hidden">
-              <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/50 to-transparent z-10">
-              </div>
-              <img
-                src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/liujo.webp"
-                alt="Lui.Jo" class="w-full h-full object-cover" loading="lazy">
-              <div class="absolute bottom-0 left-0 right-0 p-5 z-20">
-                <span
-                  class="inline-block px-3 py-1 bg-pink-500/20 backdrop-blur-sm border border-pink-400/30 text-pink-300 text-xs font-bold rounded-full uppercase mb-2">
-                  Mode
-                </span>
-                <h3 class="text-xl font-black text-white">Lui.Jo</h3>
-              </div>
-            </div>
-          </div>
-
-          <!-- Mobile Card 5 -->
-          <div
-            onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/alsacien.webp')"
-            class="flex-shrink-0 w-[85%] snap-center group relative bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl overflow-hidden border border-gray-700/50 hover:border-orange-500/50 transition-all duration-500 cursor-pointer">
-
-            <div class="absolute top-4 right-4 z-20">
-              <div class="relative">
-                <div class="absolute inset-0 bg-orange-400 blur-lg opacity-75 animate-pulse"></div>
-                <div
-                  class="relative bg-gradient-to-r from-orange-500 to-amber-500 text-white text-xs font-black px-3 py-1.5 rounded-xl uppercase">
-                  New
-                </div>
-              </div>
-            </div>
-
-            <div class="relative h-64 overflow-hidden">
-              <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/50 to-transparent z-10">
-              </div>
-              <img
-                src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/alsacien.webp"
-                alt="L'alsacien" class="w-full h-full object-cover" loading="lazy">
-              <div class="absolute bottom-0 left-0 right-0 p-5 z-20">
-                <span
-                  class="inline-block px-3 py-1 bg-orange-500/20 backdrop-blur-sm border border-orange-400/30 text-orange-300 text-xs font-bold rounded-full uppercase mb-2">
-                  Restaurant
-                </span>
-                <h3 class="text-xl font-black text-white">L'alsacien</h3>
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-        <!-- Mobile Scroll Indicator -->
-        <div class="sm:hidden flex justify-center mt-6">
-          <div
-            class="flex items-center gap-2 bg-gray-800/80 backdrop-blur-sm px-4 py-2 rounded-full border border-gray-700">
-            <svg class="w-4 h-4 text-cyan-400 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7">
-              </path>
-            </svg>
-            <span class="text-xs text-gray-300 font-bold uppercase tracking-wider">Swipe</span>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </section>>
-  <section class="mt-10 mb-8 w-full max-w-6xl mx-auto px-3 sm:px-4">
-    <div
-      class="relative bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 rounded-3xl sm:rounded-[2rem] shadow-[0_20px_60px_rgba(0,0,0,0.4)] overflow-hidden">
-
-      <!-- Animated Background Pattern -->
-      <div class="absolute inset-0 opacity-10">
-        <div class="absolute top-0 left-0 w-full h-full"
-          style="background-image: radial-gradient(circle at 2px 2px, rgba(255,255,255,0.15) 1px, transparent 0); background-size: 40px 40px;">
-        </div>
-      </div>
-
-      <!-- Gradient Orbs -->
-      <div
-        class="absolute top-0 right-0 w-64 h-64 sm:w-96 sm:h-96 bg-gradient-to-br from-red-500/30 to-pink-500/30 rounded-full blur-3xl transform translate-x-1/3 -translate-y-1/3 animate-pulse">
-      </div>
-      <div
-        class="absolute bottom-0 left-0 w-64 h-64 sm:w-96 sm:h-96 bg-gradient-to-tr from-blue-500/30 to-cyan-500/30 rounded-full blur-3xl transform -translate-x-1/3 translate-y-1/3 animate-pulse"
-        style="animation-delay: 1s;"></div>
-
-      <!-- Header -->
-      <div class="relative px-4 sm:px-8 py-6 sm:py-8 border-b border-white/10">
-        <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div class="flex items-center gap-3 sm:gap-4">
-            <div class="relative">
-              <div
-                class="absolute inset-0 bg-gradient-to-r from-red-500 to-pink-500 rounded-2xl blur-lg opacity-75 animate-pulse">
-              </div>
-              <div class="relative bg-gradient-to-br from-red-500 to-pink-600 p-3 sm:p-4 rounded-2xl shadow-lg">
-                <svg class="w-6 h-6 sm:w-8 sm:h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z">
-                  </path>
-                </svg>
-              </div>
-            </div>
-            <div>
-              <h2 class="text-xl sm:text-3xl font-bold text-white tracking-tight">
-                Nouveaux Partenaires
-              </h2>
-              <p class="text-xs sm:text-sm text-blue-200 mt-1 font-medium">Découvrez nos dernières offres exclusives
-              </p>
-            </div>
-          </div>
-          <div
-            class="hidden sm:flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full border border-white/20">
-            <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-            <span class="text-sm text-white font-medium">5 Nouveautés</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Cards Container -->
-      <div class="relative px-3 sm:px-8 py-6 sm:py-10">
-        <!-- Mobile: Horizontal Scroll | Desktop: Grid -->
-        <div
-          class="flex overflow-x-auto snap-x snap-mandatory gap-4 sm:gap-6 pb-4 scrollbar-hide sm:grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 sm:overflow-visible">
-
-          <!-- Partner 1 - Bowling -->
-          <div
-            onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/bowling.webp')"
-            class="flex-shrink-0 w-[280px] sm:w-auto snap-center group relative bg-white rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 cursor-pointer">
-
-            <!-- New Badge -->
-            <div class="absolute top-3 right-3 z-20">
-              <div class="relative">
-                <div class="absolute inset-0 bg-red-600 rounded-lg blur-md opacity-75"></div>
-                <div
-                  class="relative bg-gradient-to-r from-red-600 to-red-700 text-white text-[10px] sm:text-xs font-bold px-3 py-1.5 rounded-lg shadow-lg transform group-hover:scale-110 transition-transform">
-                  NOUVEAU
-                </div>
-              </div>
-            </div>
-
-            <!-- Image -->
-            <div class="relative h-48 sm:h-44 overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200">
-              <div
-                class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent z-10 group-hover:from-black/0 transition-all duration-500">
-              </div>
-              <img
-                src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/bowling.webp"
-                alt="Bowling"
-                class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
-                loading="lazy">
-            </div>
-
-            <!-- Content -->
-            <div class="p-5 bg-white">
-              <div class="flex items-start justify-between mb-2">
-                <h3 class="font-bold text-gray-900 text-lg group-hover:text-red-600 transition-colors">
-                  Bowling
-                </h3>
-                <svg class="w-5 h-5 text-gray-400 group-hover:text-red-600 group-hover:translate-x-1 transition-all"
-                  fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                </svg>
-              </div>
-              <div class="flex items-center gap-2 mb-3">
-                <span
-                  class="inline-block px-2.5 py-1 bg-blue-50 text-blue-700 text-xs font-semibold rounded-full uppercase tracking-wide">
-                  Loisir
-                </span>
-              </div>
-              <div
-                class="h-1 bg-gradient-to-r from-red-600 to-pink-600 rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left">
-              </div>
-            </div>
-          </div>
-
-          <!-- Partner 2 - Bande de Maquereaux -->
-          <div
-            onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/bandemaquereau.webp')"
-            class="flex-shrink-0 w-[280px] sm:w-auto snap-center group relative bg-white rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 cursor-pointer">
-
-            <div class="absolute top-3 right-3 z-20">
-              <div class="relative">
-                <div class="absolute inset-0 bg-red-600 rounded-lg blur-md opacity-75"></div>
-                <div
-                  class="relative bg-gradient-to-r from-red-600 to-red-700 text-white text-[10px] sm:text-xs font-bold px-3 py-1.5 rounded-lg shadow-lg transform group-hover:scale-110 transition-transform">
-                  NOUVEAU
-                </div>
-              </div>
-            </div>
-
-            <div class="relative h-48 sm:h-44 overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200">
-              <div
-                class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent z-10 group-hover:from-black/0 transition-all duration-500">
-              </div>
-              <img
-                src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/bandemaquereau.webp"
-                alt="Bande de Maquereaux"
-                class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
-                loading="lazy">
-            </div>
-
-            <div class="p-5 bg-white">
-              <div class="flex items-start justify-between mb-2">
-                <h3 class="font-bold text-gray-900 text-lg group-hover:text-red-600 transition-colors">
-                  Bande de Maquereaux
-                </h3>
-                <svg class="w-5 h-5 text-gray-400 group-hover:text-red-600 group-hover:translate-x-1 transition-all"
-                  fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                </svg>
-              </div>
-              <div class="flex items-center gap-2 mb-3">
-                <span
-                  class="inline-block px-2.5 py-1 bg-orange-50 text-orange-700 text-xs font-semibold rounded-full uppercase tracking-wide">
-                  Restaurant
-                </span>
-              </div>
-              <div
-                class="h-1 bg-gradient-to-r from-red-600 to-pink-600 rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left">
-              </div>
-            </div>
-          </div>
-
-          <!-- Partner 3 - Le Roi du Matelas -->
-          <div
-            onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/leroidumatelas.webp')"
-            class="flex-shrink-0 w-[280px] sm:w-auto snap-center group relative bg-white rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 cursor-pointer">
-
-            <div class="absolute top-3 right-3 z-20">
-              <div class="relative">
-                <div class="absolute inset-0 bg-red-600 rounded-lg blur-md opacity-75"></div>
-                <div
-                  class="relative bg-gradient-to-r from-red-600 to-red-700 text-white text-[10px] sm:text-xs font-bold px-3 py-1.5 rounded-lg shadow-lg transform group-hover:scale-110 transition-transform">
-                  NOUVEAU
-                </div>
-              </div>
-            </div>
-
-            <div class="relative h-48 sm:h-44 overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200">
-              <div
-                class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent z-10 group-hover:from-black/0 transition-all duration-500">
-              </div>
-              <img
-                src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/leroidumatelas.webp"
-                alt="Le Roi du Matelas"
-                class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
-                loading="lazy">
-            </div>
-
-            <div class="p-5 bg-white">
-              <div class="flex items-start justify-between mb-2">
-                <h3 class="font-bold text-gray-900 text-lg group-hover:text-red-600 transition-colors">
-                  Le Roi du Matelas
-                </h3>
-                <svg class="w-5 h-5 text-gray-400 group-hover:text-red-600 group-hover:translate-x-1 transition-all"
-                  fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                </svg>
-              </div>
-              <div class="flex items-center gap-2 mb-3">
-                <span
-                  class="inline-block px-2.5 py-1 bg-purple-50 text-purple-700 text-xs font-semibold rounded-full uppercase tracking-wide">
-                  Équipement Maison
-                </span>
-              </div>
-              <div
-                class="h-1 bg-gradient-to-r from-red-600 to-pink-600 rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left">
-              </div>
-            </div>
-          </div>
-
-          <!-- Partner 4 - Lui.Jo -->
-          <div
-            onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/liujo.webp')"
-            class="flex-shrink-0 w-[280px] sm:w-auto snap-center group relative bg-white rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 cursor-pointer">
-
-            <div class="absolute top-3 right-3 z-20">
-              <div class="relative">
-                <div class="absolute inset-0 bg-red-600 rounded-lg blur-md opacity-75"></div>
-                <div
-                  class="relative bg-gradient-to-r from-red-600 to-red-700 text-white text-[10px] sm:text-xs font-bold px-3 py-1.5 rounded-lg shadow-lg transform group-hover:scale-110 transition-transform">
-                  NOUVEAU
-                </div>
-              </div>
-            </div>
-
-            <div class="relative h-48 sm:h-44 overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200">
-              <div
-                class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent z-10 group-hover:from-black/0 transition-all duration-500">
-              </div>
-              <img
-                src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/liujo.webp"
-                alt="Lui.Jo"
-                class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
-                loading="lazy">
-            </div>
-
-            <div class="p-5 bg-white">
-              <div class="flex items-start justify-between mb-2">
-                <h3 class="font-bold text-gray-900 text-lg group-hover:text-red-600 transition-colors">
-                  Lui.Jo
-                </h3>
-                <svg class="w-5 h-5 text-gray-400 group-hover:text-red-600 group-hover:translate-x-1 transition-all"
-                  fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                </svg>
-              </div>
-              <div class="flex items-center gap-2 mb-3">
-                <span
-                  class="inline-block px-2.5 py-1 bg-pink-50 text-pink-700 text-xs font-semibold rounded-full uppercase tracking-wide">
-                  Prêt à Porter
-                </span>
-              </div>
-              <div
-                class="h-1 bg-gradient-to-r from-red-600 to-pink-600 rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left">
-              </div>
-            </div>
-          </div>
-
-          <!-- Partner 5 - L'alsacien -->
-          <div
-            onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/alsacien.webp')"
-            class="flex-shrink-0 w-[280px] sm:w-auto snap-center group relative bg-white rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 cursor-pointer">
-
-            <div class="absolute top-3 right-3 z-20">
-              <div class="relative">
-                <div class="absolute inset-0 bg-red-600 rounded-lg blur-md opacity-75"></div>
-                <div
-                  class="relative bg-gradient-to-r from-red-600 to-red-700 text-white text-[10px] sm:text-xs font-bold px-3 py-1.5 rounded-lg shadow-lg transform group-hover:scale-110 transition-transform">
-                  NOUVEAU
-                </div>
-              </div>
-            </div>
-
-            <div class="relative h-48 sm:h-44 overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200">
-              <div
-                class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent z-10 group-hover:from-black/0 transition-all duration-500">
-              </div>
-              <img
-                src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/alsacien.webp"
-                alt="L'alsacien"
-                class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
-                loading="lazy">
-            </div>
-
-            <div class="p-5 bg-white">
-              <div class="flex items-start justify-between mb-2">
-                <h3 class="font-bold text-gray-900 text-lg group-hover:text-red-600 transition-colors">
-                  L'alsacien
-                </h3>
-                <svg class="w-5 h-5 text-gray-400 group-hover:text-red-600 group-hover:translate-x-1 transition-all"
-                  fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                </svg>
-              </div>
-              <div class="flex items-center gap-2 mb-3">
-                <span
-                  class="inline-block px-2.5 py-1 bg-orange-50 text-orange-700 text-xs font-semibold rounded-full uppercase tracking-wide">
-                  Restaurant
-                </span>
-              </div>
-              <div
-                class="h-1 bg-gradient-to-r from-red-600 to-pink-600 rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left">
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-        <!-- Scroll Indicator (Mobile Only) -->
-        <div class="flex sm:hidden justify-center gap-2 mt-6">
-          <div
-            class="flex items-center gap-1.5 bg-white/10 backdrop-blur-sm px-3 py-1.5 rounded-full border border-white/20">
-            <svg class="w-4 h-4 text-white animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7">
-              </path>
-            </svg>
-            <span class="text-xs text-white font-medium">Faites défiler</span>
-          </div>
+        <!-- Navigation Dots -->
+        <div class="carousel-dots">
+          <div class="carousel-dot active" data-slide="0"></div>
+          <div class="carousel-dot" data-slide="1"></div>
+          <div class="carousel-dot" data-slide="2"></div>
+          <div class="carousel-dot" data-slide="3"></div>
         </div>
       </div>
     </div>
-  </section>
-  </div>
   </section>
 
   <!-- CATEGORIES -->
@@ -2619,6 +1691,112 @@
     }
 
     drawSnow();
+
+    // Partners Announcement Carousel
+    const slides = document.querySelectorAll('.carousel-slide');
+    const dots = document.querySelectorAll('.carousel-dot');
+    const carouselContainer = document.querySelector('.carousel-container');
+    let currentSlide = 0;
+    let autoRotateInterval;
+    let isPaused = false;
+
+    function showSlide(index) {
+      // Remove active class from all slides and dots
+      slides.forEach(slide => {
+        slide.classList.remove('active', 'prev');
+      });
+      dots.forEach(dot => {
+        dot.classList.remove('active');
+      });
+
+      // Add prev class to current slide for exit animation
+      if (slides[currentSlide]) {
+        slides[currentSlide].classList.add('prev');
+      }
+
+      // Update current slide
+      currentSlide = index;
+
+      // Add active class to new slide and dot
+      if (slides[currentSlide]) {
+        slides[currentSlide].classList.add('active');
+      }
+      if (dots[currentSlide]) {
+        dots[currentSlide].classList.add('active');
+      }
+    }
+
+    function nextSlide() {
+      if (!isPaused) {
+        const next = (currentSlide + 1) % slides.length;
+        showSlide(next);
+      }
+    }
+
+    function startAutoRotate() {
+      autoRotateInterval = setInterval(nextSlide, 4000); // Change slide every 4 seconds
+    }
+
+    function stopAutoRotate() {
+      clearInterval(autoRotateInterval);
+    }
+
+    // Manual navigation via dots
+    dots.forEach((dot, index) => {
+      dot.addEventListener('click', () => {
+        stopAutoRotate();
+        showSlide(index);
+        startAutoRotate();
+      });
+    });
+
+    // Pause on hover
+    if (carouselContainer) {
+      carouselContainer.addEventListener('mouseenter', () => {
+        isPaused = true;
+      });
+
+      carouselContainer.addEventListener('mouseleave', () => {
+        isPaused = false;
+      });
+    }
+
+    // Touch support for mobile
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    if (carouselContainer) {
+      carouselContainer.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+      }, { passive: true });
+
+      carouselContainer.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+      }, { passive: true });
+    }
+
+    function handleSwipe() {
+      const swipeThreshold = 50;
+      const diff = touchStartX - touchEndX;
+
+      if (Math.abs(diff) > swipeThreshold) {
+        stopAutoRotate();
+        if (diff > 0) {
+          // Swipe left - next slide
+          const next = (currentSlide + 1) % slides.length;
+          showSlide(next);
+        } else {
+          // Swipe right - previous slide
+          const prev = (currentSlide - 1 + slides.length) % slides.length;
+          showSlide(prev);
+        }
+        startAutoRotate();
+      }
+    }
+
+    // Start auto-rotation
+    startAutoRotate();
 
   </script>
 </body>
