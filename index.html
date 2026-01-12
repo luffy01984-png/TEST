@@ -345,16 +345,6 @@
     .category-card:hover::before {
       left: 100%;
     }
-
-    /* Cacher la scrollbar sur mobile pour le carrousel */
-    .scrollbar-hide::-webkit-scrollbar {
-      display: none;
-    }
-
-    .scrollbar-hide {
-      -ms-overflow-style: none;
-      scrollbar-width: none;
-    }
   </style>
 </head>
 
@@ -425,186 +415,62 @@
   </script>
 
 
-  <!-- PROMOBOX: NOUVEAUX PARTENAIRES -->
-  <section id="promo-section"
-    class="relative py-12 lg:py-20 overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-black">
-    <!-- Animated Background Effects -->
-    <div class="absolute inset-0 z-0 pointer-events-none overflow-hidden">
-      <!-- Glowing orbs -->
-      <div
-        class="absolute top-[-15%] right-[-8%] w-[500px] h-[500px] bg-red-600/15 rounded-full blur-3xl animate-pulse-slow">
-      </div>
-      <div
-        class="absolute bottom-[-15%] left-[-8%] w-[600px] h-[600px] bg-red-500/10 rounded-full blur-3xl animate-pulse-slow"
-        style="animation-delay: 3s;"></div>
+  <!-- HERO -->
+  <section
+    class="bg-gradient-to-b from-blue-900 to-blue-700 text-white text-center py-12 px-4 shadow-md relative overflow-hidden"
+    id="hero-section" style="min-height: 400px;">
+    <canvas id="snowCanvas"
+      style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1;"></canvas>
+    <div style="position: relative; z-index: 2;">
+      <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight">
+        Vos Avantages <span class="text-red-400">CSE Renault Trucks</span>
+      </h1>
+      <p class="text-blue-100 mt-1 text-sm uppercase tracking-wider"><strong>Bourg-en-Bresse</strong></p>
+      <p class="text-blue-50 mt-2 max-w-xl mx-auto text-lg font-light">
+        Cliquez sur une catégorie pour découvrir toutes les offres exclusives négociées par votre Comité
+        d'Entreprise.*Sur présentation du badge.
+      </p>
+      <!-- JEU TRUCK RUNNER -->
+      <section class="mt-8 mb-4 relative w-full max-w-xl mx-auto perspective-1000">
+        <div id="game-wrapper"
+          class="relative bg-gradient-to-b from-sky-300 to-sky-100 rounded-xl shadow-[0_20px_50px_rgba(0,0,0,0.5)] overflow-hidden border-4 border-white/50 ring-4 ring-black/10 transform transition-all hover:scale-[1.01]"
+          style="height: 250px;">
 
-      <!-- Grid pattern -->
-      <div class="absolute inset-0 opacity-[0.02]"
-        style="background-image: linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px); background-size: 50px 50px;">
-      </div>
-    </div>
+          <!-- Score Board -->
+          <div
+            class="absolute top-4 right-4 bg-white/80 backdrop-blur-sm px-4 py-1 rounded-full border border-white/50 shadow-sm z-10">
+            <span class="text-gray-600 font-bold text-sm tracking-wider">SCORE</span>
+            <span id="score" class="text-red-600 font-black text-xl ml-2 font-mono">0000</span>
+          </div>
 
-    <!-- PromoBox Container -->
-    <div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6">
-      <!-- Glowing border wrapper -->
-      <div
-        class="relative p-[2px] rounded-3xl bg-gradient-to-br from-red-500 via-red-600 to-red-700 shadow-2xl shadow-red-900/40">
-        <!-- Inner glow -->
-        <div class="absolute inset-0 rounded-3xl bg-gradient-to-br from-red-500/20 to-transparent blur-xl"></div>
+          <!-- Canvas jeu -->
+          <canvas id="runnerCanvas" width="800" height="300"
+            class="w-full h-full block cursor-pointer touch-manipulation"></canvas>
 
-        <!-- Main content -->
-        <div class="relative bg-gradient-to-br from-gray-800 to-gray-900 rounded-3xl overflow-hidden">
-
-          <!-- Header Section -->
-          <div class="text-center px-8 pt-12 pb-8">
-            <!-- Badge -->
+          <!-- UI Overlay (Start / Game Over) -->
+          <div id="game-ui"
+            class="absolute inset-0 flex flex-col items-center justify-center bg-black/40 backdrop-blur-[2px] z-20 transition-all duration-300">
             <div
-              class="inline-flex items-center gap-2 mb-6 px-5 py-2.5 bg-red-600/20 text-red-400 text-xs font-bold uppercase tracking-widest rounded-full border border-red-500/50 shadow-lg shadow-red-500/20">
-              <span class="flex h-2.5 w-2.5 relative">
-                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-75"></span>
-                <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-red-500 shadow-lg shadow-red-500"></span>
-              </span>
-              Nouveautés 2026
-            </div>
+              class="bg-white p-6 rounded-2xl shadow-2xl text-center transform hover:scale-105 transition-transform duration-300 border-b-4 border-red-600">
+              <h3 id="game-title" class="text-3xl font-extrabold text-gray-800 mb-1 tracking-tight">TRUCK RUNNER</h3>
+              <p id="game-subtitle" class="text-gray-500 mb-6 text-sm">Évitez les obstacles !</p>
 
-            <!-- Title -->
-            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white mb-4 leading-tight">
-              Découvrez Nos <br class="sm:hidden">
-              <span
-                class="text-transparent bg-clip-text bg-gradient-to-r from-red-400 via-red-500 to-red-600 drop-shadow-[0_0_25px_rgba(239,68,68,0.4)]">Nouveaux
-                Partenaires</span>
-            </h2>
-
-            <!-- Description -->
-            <p class="text-gray-300 text-lg max-w-2xl mx-auto leading-relaxed">
-              Profitez d'avantages exclusifs chez nos derniers partenaires
-            </p>
-          </div>
-
-          <!-- Partners Grid -->
-          <div class="px-8 pb-12">
-            <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
-
-              <!-- Partner 1: BollyFood -->
-              <div class="group relative">
-                <div
-                  class="relative bg-gradient-to-br from-gray-700 to-gray-800 rounded-2xl p-6 border border-gray-600 hover:border-red-500/50 transition-all duration-300 shadow-xl shadow-red-500/10 hover:shadow-red-500/30 cursor-pointer transform hover:scale-105"
-                  onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/bollyfoodnew.webp')">
-                  <!-- Glow effect on hover -->
-                  <div
-                    class="absolute inset-0 bg-gradient-to-br from-red-500/0 group-hover:from-red-500/10 to-transparent rounded-2xl transition-all duration-300">
-                  </div>
-
-                  <!-- Logo -->
-                  <div class="relative aspect-square flex items-center justify-center mb-3">
-                    <img
-                      src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/bollyfoodnew.webp"
-                      alt="BollyFood" class="w-full h-full object-contain filter drop-shadow-lg">
-                  </div>
-
-                  <!-- Name -->
-                  <h3 class="text-white font-bold text-center text-sm sm:text-base">BollyFood</h3>
-                </div>
-              </div>
-
-              <!-- Partner 2: Rod's -->
-              <div class="group relative">
-                <div
-                  class="relative bg-gradient-to-br from-gray-700 to-gray-800 rounded-2xl p-6 border border-gray-600 hover:border-red-500/50 transition-all duration-300 shadow-xl shadow-red-500/10 hover:shadow-red-500/30 cursor-pointer transform hover:scale-105"
-                  onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/rodsnew.webp')">
-                  <div
-                    class="absolute inset-0 bg-gradient-to-br from-red-500/0 group-hover:from-red-500/10 to-transparent rounded-2xl transition-all duration-300">
-                  </div>
-
-                  <div class="relative aspect-square flex items-center justify-center mb-3">
-                    <img
-                      src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/rodsnew.webp"
-                      alt="Rod's" class="w-full h-full object-contain filter drop-shadow-lg">
-                  </div>
-
-                  <h3 class="text-white font-bold text-center text-sm sm:text-base">Rod's</h3>
-                </div>
-              </div>
-
-              <!-- Partner 3: WokAna -->
-              <div class="group relative">
-                <div
-                  class="relative bg-gradient-to-br from-gray-700 to-gray-800 rounded-2xl p-6 border border-gray-600 hover:border-red-500/50 transition-all duration-300 shadow-xl shadow-red-500/10 hover:shadow-red-500/30 cursor-pointer transform hover:scale-105"
-                  onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/wokananew.webp')">
-                  <div
-                    class="absolute inset-0 bg-gradient-to-br from-red-500/0 group-hover:from-red-500/10 to-transparent rounded-2xl transition-all duration-300">
-                  </div>
-
-                  <div class="relative aspect-square flex items-center justify-center mb-3">
-                    <img
-                      src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/wokananew.webp"
-                      alt="WokAna" class="w-full h-full object-contain filter drop-shadow-lg">
-                  </div>
-
-                  <h3 class="text-white font-bold text-center text-sm sm:text-base">WokAna</h3>
-                </div>
-              </div>
-
-              <!-- Partner 4: La Centrale Finance -->
-              <div class="group relative">
-                <div
-                  class="relative bg-gradient-to-br from-gray-700 to-gray-800 rounded-2xl p-6 border border-gray-600 hover:border-red-500/50 transition-all duration-300 shadow-xl shadow-red-500/10 hover:shadow-red-500/30 cursor-pointer transform hover:scale-105"
-                  onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/lacentralefinancenew.webp')">
-                  <div
-                    class="absolute inset-0 bg-gradient-to-br from-red-500/0 group-hover:from-red-500/10 to-transparent rounded-2xl transition-all duration-300">
-                  </div>
-
-                  <div class="relative aspect-square flex items-center justify-center mb-3">
-                    <img
-                      src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/lacentralefinancenew.webp"
-                      alt="La Centrale Finance" class="w-full h-full object-contain filter drop-shadow-lg">
-                  </div>
-
-                  <h3 class="text-white font-bold text-center text-sm sm:text-base">La Centrale Finance</h3>
-                </div>
-              </div>
-
-            </div>
-
-            <!-- CTA Button -->
-            <div class="text-center mt-10">
-              <a href="#categories"
-                class="group relative inline-flex items-center justify-center gap-3 px-10 py-4 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-xl font-bold overflow-hidden transition-all duration-300 hover:shadow-2xl hover:shadow-red-500/50 hover:scale-105">
+              <button id="start-btn"
+                class="group relative inline-flex items-center justify-center px-8 py-3 text-base font-bold text-white transition-all duration-200 bg-red-600 rounded-full hover:bg-red-700 hover:shadow-lg hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-600">
+                <span class="mr-2">🚛</span> JOUER
                 <span
-                  class="absolute inset-0 bg-gradient-to-r from-red-500 to-red-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-                <span class="relative">Voir Tous Les Partenaires</span>
-                <svg class="relative w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none"
-                  stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3">
-                  </path>
-                </svg>
-              </a>
+                  class="absolute right-3 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all">→</span>
+              </button>
+
+              <p class="mt-4 text-xs text-gray-400 font-medium">
+                <span class="hidden md:inline">Espace ou Haut pour sauter</span>
+                <span class="md:hidden">Touchez pour sauter</span>
+              </p>
             </div>
           </div>
-
         </div>
-      </div>
+      </section>
     </div>
-
-    <style>
-      @keyframes pulse-slow {
-
-        0%,
-        100% {
-          opacity: 0.1;
-          transform: scale(1);
-        }
-
-        50% {
-          opacity: 0.2;
-          transform: scale(1.05);
-        }
-      }
-
-      .animate-pulse-slow {
-        animation: pulse-slow 8s ease-in-out infinite;
-      }
-    </style>
   </section>
 
   <!-- CATEGORIES -->
@@ -675,10 +541,10 @@
                 onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/MaisonB.webp')">
                 Maison B</div>
               <div class="partner-link"
-                onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/pastapizzanew.webp')">
+                onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Pasta%26Pizza.webp')">
                 Pasta&Pizza</div>
               <div class="partner-link"
-                onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/rodsnew.webp')">
+                onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Roadscofeenew.webp')">
                 Rod's</div>
               <div class="partner-link"
                 onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/wokananew.webp')">
@@ -695,17 +561,11 @@
                 onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/23avenue.webp')">
                 23ème Avenue</div>
               <div class="partner-link"
-                onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/bandemaquereau.webp')">
-                Bande de Maquereaux</div>
-              <div class="partner-link"
                 onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/butch.webp')">
                 Butch</div>
               <div class="partner-link"
                 onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/NaanGang.webp')">
                 Naan Gang</div>
-              <div class="partner-link"
-                onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/alsacien.webp')">
-                L'alsacien</div>
               <div class="partner-link"
                 onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/lelodge.webp')">
                 Le Lodge</div>
@@ -892,9 +752,6 @@
                 onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Idplan.webp')">
                 ID Plan</div>
               <div class="partner-link"
-                onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/MirePoix.webp')">
-                Mirepoix</div>
-              <div class="partner-link"
                 onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/schmidt.webp')">
                 Schmidt</div>
             </div>
@@ -914,9 +771,6 @@
               <div class="partner-link"
                 onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/FredMultiServices.webp')">
                 Fred Multi Services</div>
-              <div class="partner-link"
-                onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/gammvert.webp')">
-                GammVert</div>
               <div class="partner-link"
                 onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Irripiscine.webp')">
                 IrriPiscine</div>
@@ -992,14 +846,11 @@
             onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Bello.webp')">
             Bello</div>
           <div class="partner-link"
-            onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/dessousdessusnew.webp')">
+            onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Dessous_dessus.webp')">
             Dessous_Dessus</div>
           <div class="partner-link"
             onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Gambetta.webp')">
             Gambetta</div>
-          <div class="partner-link"
-            onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/liujo.webp')">
-            Liu.Jo</div>
         </div>
       </div>
 
@@ -1024,11 +875,11 @@
             onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/15thAvenuenew.webp')">
             15th Avenue Coiffure</div>
           <div class="partner-link"
-            onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/ckl.webp')">
-            KL Center</div>
-          <div class="partner-link"
             onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/elodieinstitut.webp')">
             Elodie Institut</div>
+          <div class="partner-link"
+            onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Gallerie%20102.webp')">
+            Galerie102</div>
           <div class="partner-link"
             onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/GlowRitual.webp')">
             Glow Ritual</div>
@@ -1036,14 +887,8 @@
             onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/LeSalondeshommes.webp')">
             Le Salon des Hommes</div>
           <div class="partner-link"
-            onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/coiffure102.webp')">
-            N.Bat's</div>
-          <div class="partner-link"
-            onclck="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Renaissance.webp')">
+            onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Renaissance.webp')">
             Renaissance Coiffure</div>
-          <div class="partner-link"
-            onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/tatouage%20102.webp')">
-            Tatouage Yoachim</div>
         </div>
       </div>
 
@@ -1088,9 +933,6 @@
           </div>
         </div>
         <div id="culture" class="partner-content bg-white border border-gray-200 rounded-xl p-4 shadow-lg">
-          <div class="partner-link"
-            onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/bowling.webp')">
-            Bowling Bresse Loisirs</div>
           <div class="partner-link"
             onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/declic-ludik.webp')">
             Déclic Ludik</div>
@@ -1141,17 +983,11 @@
             onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/la%20rek1ke.webp')">
             La Rek1que</div>
           <div class="partner-link"
-            onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/leroidumatelas.webp')">
-            Le Roi du Matelas</div>
-          <div class="partner-link"
-            onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/photographe102.webp')">
-            Photographe</div>
-          <div class="partner-link"
-            onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/MirePoix.webp')">
-            Mirepoix</div>
-          <div class="partner-link"
             onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/Shivaa.webp')">
             Shiva</div>
+          <div class="partner-link"
+            onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/vapingshop.webp')">
+            Vaping Shop</div>
         </div>
       </div>
 
@@ -1512,21 +1348,9 @@
       });
     });
     if ('serviceWorker' in navigator) {
-      // Détection de l'environnement (Local vs Production)
-      const isLocal = window.location.hostname === 'localhost' || window.location.protocol === 'file:';
-      const swPath = isLocal ? './service-worker.js' : '/Renault-trucks-CE/service-worker.js';
-
-      navigator.serviceWorker.register(swPath)
-        .then(reg => console.log('Service Worker enregistré ✔', reg))
-        .catch(err => {
-          console.error('SW: Échec d\'enregistrement ❌', err);
-          // Si échec, on tente de désinscrire les anciens SW pour éviter les conflits
-          navigator.serviceWorker.getRegistrations().then(registrations => {
-            for (let registration of registrations) {
-              registration.unregister();
-            }
-          });
-        });
+      navigator.serviceWorker.register('/Renault-trucks-CE/service-worker.js')
+        .then(() => console.log('Service Worker enregistré ✔'))
+        .catch(err => console.error('SW: Échec ❌', err));
 
       let refreshing = false;
       navigator.serviceWorker.addEventListener('controllerchange', () => {
@@ -1538,9 +1362,531 @@
       });
     }
 
+    // Animation de Neige avec Accumulation
+    const canvas = document.getElementById('snowCanvas');
+    const ctx = canvas.getContext('2d');
+    const heroSection = document.getElementById('hero-section');
+
+    function resizeCanvas() {
+      canvas.width = heroSection.offsetWidth;
+      canvas.height = heroSection.offsetHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    const snowflakes = [];
+    const numFlakes = 150;
+    const groundLevel = canvas.height - 20;
+    const accumulatedSnow = [];
+
+    for (let i = 0; i < canvas.width; i++) {
+      accumulatedSnow[i] = 0;
+    }
+
+    for (let i = 0; i < numFlakes; i++) {
+      snowflakes.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height - canvas.height,
+        radius: Math.random() * 3 + 1,
+        speed: Math.random() * 1 + 0.5,
+        drift: Math.random() * 0.5 - 0.25
+      });
+    }
+
+    function drawSnow() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+      for (let i = 0; i < canvas.width; i++) {
+        if (accumulatedSnow[i] > 0) {
+          ctx.fillRect(i, groundLevel - accumulatedSnow[i], 180, accumulatedSnow[i]);
+        }
+      }
+
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+      ctx.shadowBlur = 3;
+      ctx.shadowColor = 'white';
+
+      snowflakes.forEach(flake => {
+        ctx.beginPath();
+        ctx.arc(flake.x, flake.y, flake.radius, 0, Math.PI * 2);
+        ctx.fill();
+
+        flake.y += flake.speed;
+        flake.x += flake.drift;
+
+        const xPos = Math.floor(flake.x);
+        if (xPos >= 0 && xPos < canvas.width) {
+          if (flake.y >= groundLevel - accumulatedSnow[xPos] - flake.radius) {
+            accumulatedSnow[xPos] = Math.min(accumulatedSnow[xPos] + 0.5, 60);
+            flake.y = -10;
+            flake.x = Math.random() * canvas.width;
+          }
+        }
+
+        if (flake.y > canvas.height) {
+          flake.y = -10;
+          flake.x = Math.random() * canvas.width;
+        }
+        if (flake.x > canvas.width) flake.x = 0;
+        if (flake.x < 0) flake.x = canvas.width;
+      });
+
+      requestAnimationFrame(drawSnow);
+    }
+
+    drawSnow();
+
+    // ===== JEU À GRATTER =====
+    const scratchCanvas = document.getElementById('scratchCanvas');
+    const scratchCtx = scratchCanvas ? scratchCanvas.getContext('2d') : null;
+
+    if (scratchCanvas && scratchCtx) {
+      let isScratching = false;
+      let scratchedPercentage = 0;
+
+      // Fonction pour initialiser le canvas de grattage
+      function initScratchCanvas() {
+        // Remplir avec une couleur argentée/métallique
+        const gradient = scratchCtx.createLinearGradient(0, 0, scratchCanvas.width, scratchCanvas.height);
+        gradient.addColorStop(0, '#c0c0c0');
+        gradient.addColorStop(0.5, '#e8e8e8');
+        gradient.addColorStop(1, '#a8a8a8');
+
+        scratchCtx.fillStyle = gradient;
+        scratchCtx.fillRect(0, 0, scratchCanvas.width, scratchCanvas.height);
+
+        // Ajouter du texte par-dessus
+        scratchCtx.fillStyle = '#666';
+        scratchCtx.font = 'bold 32px Inter, sans-serif';
+        scratchCtx.textAlign = 'center';
+        scratchCtx.textBaseline = 'middle';
+        scratchCtx.fillText('GRATTEZ ICI', scratchCanvas.width / 2, scratchCanvas.height / 2 - 20);
+
+        scratchCtx.font = '20px Inter, sans-serif';
+        scratchCtx.fillText('👆', scratchCanvas.width / 2, scratchCanvas.height / 2 + 30);
+      }
+
+      // Fonction de grattage
+      function scratch(x, y) {
+        const rect = scratchCanvas.getBoundingClientRect();
+        const scaleX = scratchCanvas.width / rect.width;
+        const scaleY = scratchCanvas.height / rect.height;
+
+        const canvasX = (x - rect.left) * scaleX;
+        const canvasY = (y - rect.top) * scaleY;
+
+        scratchCtx.globalCompositeOperation = 'destination-out';
+        scratchCtx.beginPath();
+        scratchCtx.arc(canvasX, canvasY, 25, 0, Math.PI * 2);
+        scratchCtx.fill();
+
+        // Calculer le pourcentage gratté
+        checkScratchedArea();
+      }
+
+      // Vérifier combien a été gratté
+      function checkScratchedArea() {
+        const imageData = scratchCtx.getImageData(0, 0, scratchCanvas.width, scratchCanvas.height);
+        const pixels = imageData.data;
+        let transparent = 0;
+
+        for (let i = 3; i < pixels.length; i += 4) {
+          if (pixels[i] < 128) transparent++;
+        }
+
+        scratchedPercentage = (transparent / (pixels.length / 4)) * 100;
+
+        // Si plus de 70% est gratté, révéler complètement
+        if (scratchedPercentage > 70) {
+          scratchCanvas.style.opacity = '0';
+          scratchCanvas.style.transition = 'opacity 0.5s ease';
+        }
+      }
+
+      // Événements souris
+      scratchCanvas.addEventListener('mousedown', (e) => {
+        isScratching = true;
+        scratch(e.clientX, e.clientY);
+      });
+
+      scratchCanvas.addEventListener('mousemove', (e) => {
+        if (isScratching) {
+          scratch(e.clientX, e.clientY);
+        }
+      });
+
+      scratchCanvas.addEventListener('mouseup', () => {
+        isScratching = false;
+      });
+
+      scratchCanvas.addEventListener('mouseleave', () => {
+        isScratching = false;
+      });
+
+      // Événements tactiles (mobile)
+      scratchCanvas.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        isScratching = true;
+        const touch = e.touches[0];
+        scratch(touch.clientX, touch.clientY);
+      });
+
+      scratchCanvas.addEventListener('touchmove', (e) => {
+        e.preventDefault();
+        if (isScratching) {
+          const touch = e.touches[0];
+          scratch(touch.clientX, touch.clientY);
+        }
+      });
+
+      scratchCanvas.addEventListener('touchend', (e) => {
+        e.preventDefault();
+        isScratching = false;
+      });
+
+      // Initialiser le canvas
+      initScratchCanvas();
+    }
+    // ===== JEU TRUCK RUNNER =====
+    (function () {
+      const canvas = document.getElementById('runnerCanvas');
+      const ctx = canvas.getContext('2d');
+      const uiOverlay = document.getElementById('game-ui');
+      const startBtn = document.getElementById('start-btn');
+      const scoreEl = document.getElementById('score');
+      const titleEl = document.getElementById('game-title');
+      const subEl = document.getElementById('game-subtitle');
+
+      // Configuration
+      let gameSpeed = 5;
+      let score = 0;
+      let isPlaying = false;
+      let animationId;
+      let frame = 0;
+
+      // Objets du jeu
+      const truck = {
+        x: 50,
+        y: 200,
+        width: 60,
+        height: 40,
+        dy: 0,
+        jumpPower: -12,
+        gravity: 0.6,
+        grounded: true,
+        draw: function () {
+          // Ombre
+          ctx.fillStyle = 'rgba(0,0,0,0.2)';
+          ctx.beginPath();
+          ctx.ellipse(this.x + 30, this.y + 40, 25, 5, 0, 0, Math.PI * 2);
+          ctx.fill();
+
+          // Dessin Camion Vectoriel (Personnalisé)
+          ctx.save();
+          ctx.translate(this.x, this.y);
+
+          // Corps arrière (Blanc/Gris)
+          ctx.fillStyle = '#f3f4f6';
+          ctx.fillRect(0, 5, 40, 30);
+          ctx.strokeStyle = '#d1d5db';
+          ctx.lineWidth = 2;
+          ctx.strokeRect(0, 5, 40, 30);
+
+          // Cabine avant (Rouge)
+          ctx.fillStyle = '#dc2626';
+          ctx.fillRect(40, 10, 20, 25);
+
+          // Vitre (Bleu transluscide - Moins opaque)
+          ctx.fillStyle = 'rgba(100, 200, 255, 0.6)';
+          ctx.fillRect(42, 12, 15, 12);
+
+          // Phare
+          ctx.fillStyle = '#fbbf24';
+          ctx.fillRect(58, 28, 2, 4);
+
+          // Roues
+          ctx.fillStyle = '#1f2937';
+          ctx.beginPath();
+          ctx.arc(15, 35, 7, 0, Math.PI * 2);
+          ctx.arc(50, 35, 7, 0, Math.PI * 2);
+          ctx.fill();
+
+          // Jantes
+          ctx.fillStyle = '#9ca3af';
+          ctx.beginPath();
+          ctx.arc(15, 35, 3, 0, Math.PI * 2);
+          ctx.arc(50, 35, 3, 0, Math.PI * 2);
+          ctx.fill();
+
+          ctx.restore();
+        },
+        update: function () {
+          // Saut
+          if (!this.grounded) {
+            this.dy += this.gravity;
+            this.y += this.dy;
+          }
+
+          // Sol
+          if (this.y > 200) {
+            this.y = 200;
+            this.dy = 0;
+            this.grounded = true;
+          }
+        },
+        jump: function () {
+          if (this.grounded) {
+            this.dy = this.jumpPower;
+            this.grounded = false;
+          }
+        }
+      };
+
+      let obstacles = [];
+      let spawnTimer = 0;
+
+      class Obstacle {
+        constructor() {
+          this.x = canvas.width;
+          this.width = 40;
+          this.height = 40;
+          this.y = 200; // Aligné sur le sol (y=200 + h=40 = 240)
+          this.type = Math.random() > 0.5 ? 'cone' : 'box';
+          this.marked = false;
+        }
+
+        draw() {
+          // Dessin vectoriel pour meilleure visibilité
+          if (this.type === 'cone') {
+            // Cône Orange vif avec bandes blanches pour contraste max
+            ctx.fillStyle = '#ff4500'; // Orange Rouge néon
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = 2;
+
+            ctx.beginPath();
+            ctx.moveTo(this.x + this.width / 2, this.y); // Pointe
+            ctx.lineTo(this.x, this.y + this.height); // Bas gauche
+            ctx.lineTo(this.x + this.width, this.y + this.height); // Bas droite
+            ctx.closePath();
+            ctx.fill();
+
+            // Bande blanche décorative
+            ctx.beginPath();
+            ctx.moveTo(this.x + 12, this.y + 20);
+            ctx.lineTo(this.x + 28, this.y + 20);
+            ctx.lineTo(this.x + 32, this.y + 30);
+            ctx.lineTo(this.x + 8, this.y + 30);
+            ctx.closePath();
+            ctx.fillStyle = '#ffffff';
+            ctx.fill();
+          } else {
+            // Caisse en bois très visible
+            ctx.fillStyle = '#d2691e'; // Chocolat
+            ctx.beginPath();
+            ctx.rect(this.x, this.y, this.width, this.height);
+            ctx.fill();
+            // Bordure claire jaune pour bien détacher du fond
+            ctx.strokeStyle = '#ffcc00';
+            ctx.lineWidth = 3;
+            ctx.strokeRect(this.x, this.y, this.width, this.height);
+            // Motif en croix
+            ctx.beginPath();
+            ctx.moveTo(this.x, this.y);
+            ctx.lineTo(this.x + this.width, this.y + this.height);
+            ctx.moveTo(this.x + this.width, this.y);
+            ctx.lineTo(this.x, this.y + this.height);
+            ctx.stroke();
+          }
+        }
+
+        update() {
+          this.x -= gameSpeed;
+        }
+      }
+
+      function spawnObstacle() {
+        spawnTimer--;
+        if (spawnTimer <= 0) {
+          obstacles.push(new Obstacle());
+          // ESPACEMENT GARANTI : Minimum 70 frames (~1.2s) entre chaque obstacle
+          // Cela laisse le temps de retomber après un saut (saut ~40 frames)
+          spawnTimer = 70 + Math.random() * 60;
+        }
+      }
+
+      // Décors (Nuages / Lignes de route)
+      let clouds = [];
+      class Cloud {
+        constructor() {
+          this.x = canvas.width + Math.random() * 200;
+          this.y = Math.random() * 100;
+          this.speed = Math.random() * 0.5 + 0.2;
+          this.size = Math.random() * 30 + 20;
+        }
+        update() { this.x -= this.speed; }
+        draw() {
+          ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+          ctx.arc(this.x + 15, this.y - 10, this.size * 1.2, 0, Math.PI * 2);
+          ctx.arc(this.x + 35, this.y, this.size, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+
+      // Boucle principale
+      function animate() {
+        if (!isPlaying) return;
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        frame++;
+
+        // Augmenter la vitesse plus vite
+        if (frame % 300 === 0) gameSpeed += 0.2;
+
+        // Décors : Ciel et Route
+        ctx.fillStyle = '#6b7280'; // Gris route
+        ctx.fillRect(0, 240, canvas.width, 60);
+        ctx.fillStyle = '#374151'; // Bordure route
+        ctx.fillRect(0, 240, canvas.width, 4);
+
+        // Lignes blanches route
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = 4;
+        ctx.setLineDash([30, 30]);
+        ctx.lineDashOffset = -frame * gameSpeed;
+        ctx.beginPath();
+        ctx.moveTo(0, 270);
+        ctx.lineTo(canvas.width, 270);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        // Nuages
+        if (frame % 200 === 0) clouds.push(new Cloud());
+        clouds.forEach((c, i) => {
+          c.update();
+          c.draw();
+          if (c.x < -100) clouds.splice(i, 1);
+        });
+
+        // Obstacles
+        spawnObstacle();
+        obstacles.forEach((obs, index) => {
+          obs.update();
+          obs.draw();
+
+          // Collision Ajustée (Hitbox plus précise)
+          // obs.x et obs.y sont top-left du texte à peu près (selon font)
+          // Avec fillText standard sans baseline modif, y est baseline.
+          // Ici on a pas défini baseline pour obstacles, donc default alphabetic.
+          // Mais pour le camion j'ai mis textBaseline = 'middle'. Attention.
+
+          // Simplification : Distance check ou AABB simple
+          // Camion : x=50, w=60, h=40.
+          // Obstacle : variable x, w=40, h=40.
+
+          if (
+            truck.x + 10 < obs.x + obs.width - 5 && // +10 pour le nez du camion
+            truck.x + truck.width - 10 > obs.x + 5 &&
+            truck.y + 10 < obs.y + 40 && // 40 approx height
+            truck.y + truck.height > obs.y - 10 // Haut de l'obstacle
+          ) {
+            gameOver();
+          }
+
+          // Nettoyage
+          if (obs.x + obs.width < 0) {
+            obstacles.splice(index, 1);
+            score += 10;
+            scoreEl.textContent = score.toString().padStart(4, '0');
+          }
+        });
+
+        // Joueur
+        truck.update();
+        truck.draw();
+
+        animationId = requestAnimationFrame(animate);
+      }
+
+      function startGame() {
+        if (isPlaying) return;
+
+        // Reset variables
+        isPlaying = true;
+        score = 0;
+        gameSpeed = 7; // Vitesse de départ augmentée (était 5)
+        spawnTimer = 0;
+        frame = 0;
+        obstacles = [];
+        clouds = [];
+        truck.y = 200;
+        truck.dy = 0;
+        truck.grounded = true;
+        scoreEl.textContent = "0000";
+
+        // UI
+        uiOverlay.style.opacity = '0';
+        setTimeout(() => uiOverlay.style.display = 'none', 300);
+
+        animate();
+      }
+
+      function gameOver() {
+        isPlaying = false;
+        cancelAnimationFrame(animationId);
+
+        titleEl.textContent = "GAME OVER";
+        subEl.textContent = `Score: ${score}`;
+        startBtn.innerHTML = '<span class="mr-2">🔄</span> REJOUER';
+
+        uiOverlay.style.display = 'flex';
+        // Petit délai pour l'animation d'opacité
+        requestAnimationFrame(() => uiOverlay.style.opacity = '1');
+      }
+
+      // Input Handlers
+      function handleInput(e) {
+        // Empêcher le comportement par défaut SEULEMENT si c'est une touche de jeu ou un clic DANS le canvas
+        // Sinon, le scroll est bloqué sur toute la page, ce qui est mauvais.
+
+        if (e.type === 'keydown') {
+          if (e.code === 'Space' || e.code === 'ArrowUp') {
+            e.preventDefault(); // Empêche le scroll avec espace/haut
+            if (isPlaying) truck.jump();
+            else if (uiOverlay.style.opacity !== '0') startGame(); // Start avec espace si menu affiché
+          }
+        } else if (e.type === 'touchstart' || e.type === 'mousedown') {
+          // Vérifier si l'interaction est dans le conteneur du jeu pour éviter de bloquer le scroll ailleurs
+          if (e.target.closest('#game-wrapper')) {
+            // Pas de preventDefault ici pour laisser le clic bouton passer, 
+            // MAIS si on joue, on saute
+            if (isPlaying) {
+              e.preventDefault(); // Empêche le zoom double tap etc. si nécessaire, mais surtout active le saut
+              truck.jump();
+            }
+          }
+        }
+      }
 
 
+      window.addEventListener('keydown', handleInput);
+      canvas.addEventListener('touchstart', handleInput, { passive: false });
+      canvas.addEventListener('mousedown', handleInput);
+
+      startBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation(); // Évite de déclencher le saut immédiatement
+        startGame();
+      });
+
+    })();
   </script>
+</body>
+
+</html>
+</script>
 </body>
 
 </html>
