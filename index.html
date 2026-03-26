@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Avantages Partenaires | Renault Trucks CSE Bourg-en-Bresse</title>
   <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-messaging-compat.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#dc2626">
@@ -403,6 +407,44 @@
       <nav class="flex items-center space-x-2 sm:space-x-4 text-sm">
         <a href="#categories" class="nav-link" id="nav-partenaires">Partenaires</a>
         <a href="#mentions" class="nav-link" id="nav-mentions">Mentions</a>
+
+        <!-- Bouton Notifications -->
+        <button id="notif-btn" onclick="toggleNotification()"
+          title="Activer les notifications"
+          style="
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            border: 2px solid #dc2626;
+            background: transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            flex-shrink: 0;
+          "
+          aria-label="Notifications">
+          <!-- Icône Cloche -->
+          <svg id="bell-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+            fill="none" stroke="#dc2626" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+            <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+          </svg>
+          <!-- Badge rouge si abonné -->
+          <span id="notif-badge" style="
+            display: none;
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            width: 12px;
+            height: 12px;
+            background: #16a34a;
+            border-radius: 50%;
+            border: 2px solid white;
+          "></span>
+        </button>
       </nav>
     </div>
   </header>
@@ -1550,6 +1592,250 @@
 
 
   </script>
+
+  <!-- ============================================================
+    FIREBASE CLOUD MESSAGING — NOTIFICATIONS PUSH
+    ⚠️ REMPLACEZ les valeurs ci-dessous par celles de votre projet Firebase
+    Console Firebase → Paramètres du projet → Général → Vos applications (Web)
+    ============================================================ -->
+  <script>
+    // ── 1. CONFIG FIREBASE ──────────────────────────────────────
+    // ⚠️ Remplacez ces valeurs par les vôtres !
+    const FIREBASE_CONFIG = {
+      apiKey: "AIzaSyA2LaqIDhIGAvSnkee9FNidqe-X30OL7_U",
+      authDomain: "partenaires-renault-trucks.firebaseapp.com",
+      projectId: "partenaires-renault-trucks",
+      storageBucket: "partenaires-renault-trucks.firebasestorage.app",
+      messagingSenderId: "477978345523",
+      appId: "1:477978345523:web:e2c81438017610818ae346",
+      measurementId: "G-C47F0NHF3X"
+    };
+
+    // ⚠️ Votre clé VAPID publique
+    // Console Firebase → Paramètres du projet → Cloud Messaging
+    // → Certificats Web Push → Générer une paire de clés → copier la clé publique
+    const VAPID_KEY = "BCdNiB45OuQ2buALus9PgPsbSNNQNy5kQVqkAaV_Tdwjgtj8-KXihm7CF6909LACWHN12ib85aL2RTYxfUxUQTU";
+
+    // ── 2. INITIALISATION ───────────────────────────────────────
+    let messaging = null;
+    let notifEnabled = false;
+
+    function initFirebase() {
+      try {
+        if (!firebase.apps.length) {
+          firebase.initializeApp(FIREBASE_CONFIG);
+        }
+        messaging = firebase.messaging();
+
+        // Écoute les messages quand l'app est ouverte (foreground)
+        messaging.onMessage((payload) => {
+          console.log('[FCM] Message reçu en premier plan:', payload);
+          showInAppNotification(
+            payload.notification?.title || '🔔 CSE Renault Trucks',
+            payload.notification?.body || 'Nouvelle information disponible.',
+            payload.data?.url
+          );
+        });
+
+        // Vérifie l'état d'abonnement au chargement
+        checkNotificationStatus();
+
+      } catch (err) {
+        console.warn('[FCM] Erreur init Firebase:', err);
+      }
+    }
+
+    // ── 3. VÉRIFICATION DU STATUT ───────────────────────────────
+    function checkNotificationStatus() {
+      const saved = localStorage.getItem('fcm_subscribed');
+      if (saved === 'true' && Notification.permission === 'granted') {
+        notifEnabled = true;
+        updateBellUI(true);
+        // Re-génère le token pour s'assurer qu'il est valide
+        getAndSaveToken();
+      }
+    }
+
+    // ── 4. TOGGLE ABONNEMENT ────────────────────────────────────
+    async function toggleNotification() {
+      if (!('Notification' in window)) {
+        alert('Votre navigateur ne supporte pas les notifications.');
+        return;
+      }
+      if (!messaging) {
+        alert('Firebase non initialisé. Vérifiez la configuration.');
+        return;
+      }
+
+      if (notifEnabled) {
+        // Désabonnement
+        try {
+          await messaging.deleteToken();
+          localStorage.removeItem('fcm_subscribed');
+          localStorage.removeItem('fcm_token');
+          notifEnabled = false;
+          updateBellUI(false);
+          showToast('🔕 Notifications désactivées');
+        } catch (err) {
+          console.error('[FCM] Erreur désabonnement:', err);
+          showToast('Erreur lors de la désactivation', true);
+        }
+      } else {
+        // Demande de permission + abonnement
+        try {
+          let permission = Notification.permission;
+          if (permission === 'default') {
+            permission = await Notification.requestPermission();
+          }
+          if (permission === 'granted') {
+            await getAndSaveToken();
+            notifEnabled = true;
+            localStorage.setItem('fcm_subscribed', 'true');
+            updateBellUI(true);
+            showToast('🔔 Notifications activées ! Vous recevrez les nouveautés CSE.');
+          } else {
+            showToast('❌ Permission refusée. Autorisez les notifications dans les réglages.', true);
+          }
+        } catch (err) {
+          console.error('[FCM] Erreur abonnement:', err);
+          showToast('Erreur : ' + err.message, true);
+        }
+      }
+    }
+
+    // ── 5. OBTENIR ET AFFICHER LE TOKEN FCM ─────────────────────
+    async function getAndSaveToken() {
+      try {
+        // Enregistrement du SW Firebase
+        const swReg = await navigator.serviceWorker.register('/Renault-trucks-CE/firebase-messaging-sw.js');
+        const token = await messaging.getToken({
+          vapidKey: VAPID_KEY,
+          serviceWorkerRegistration: swReg
+        });
+        if (token) {
+          console.log('[FCM] Token:', token);
+          localStorage.setItem('fcm_token', token);
+          // ──────────────────────────────────────────────────────
+          // IMPORTANT : Copiez ce token depuis la console du navigateur
+          // et utilisez-le dans la console Firebase pour envoyer
+          // une notification à cet appareil spécifique.
+          // Pour notifier TOUS vos abonnés, vous devrez stocker
+          // les tokens sur un serveur (ex: Firebase Firestore).
+          // ──────────────────────────────────────────────────────
+        }
+      } catch (err) {
+        console.error("[FCM] Impossible d'obtenir le token:", err);
+        throw err;
+      }
+    }
+
+    // ── 6. UI — Cloche active/inactive ──────────────────────────
+    function updateBellUI(active) {
+      const btn = document.getElementById('notif-btn');
+      const badge = document.getElementById('notif-badge');
+      const bell = document.getElementById('bell-icon');
+      if (!btn) return;
+      if (active) {
+        btn.style.background = '#dc2626';
+        btn.style.borderColor = '#dc2626';
+        btn.title = 'Désactiver les notifications';
+        bell.setAttribute('stroke', '#ffffff');
+        bell.setAttribute('fill', '#ffffff');
+        badge.style.display = 'block';
+      } else {
+        btn.style.background = 'transparent';
+        btn.style.borderColor = '#dc2626';
+        btn.title = 'Activer les notifications';
+        bell.setAttribute('stroke', '#dc2626');
+        bell.setAttribute('fill', 'none');
+        badge.style.display = 'none';
+      }
+    }
+
+    // ── 7. NOTIFICATION IN-APP (quand l'app est ouverte) ────────
+    function showInAppNotification(title, body, url) {
+      // Crée un toast premium
+      const toast = document.createElement('div');
+      toast.style.cssText = `
+        position: fixed;
+        top: 85px;
+        right: 16px;
+        z-index: 99999;
+        background: white;
+        border-left: 4px solid #dc2626;
+        border-radius: 12px;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+        padding: 14px 18px;
+        max-width: 320px;
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        animation: slideInRight 0.4s ease;
+        cursor: ${url ? 'pointer' : 'default'};
+        font-family: 'Inter', sans-serif;
+      `;
+      toast.innerHTML = `
+        <div style="font-size: 22px; flex-shrink:0;">🔔</div>
+        <div style="flex:1;">
+          <div style="font-weight:700;font-size:14px;color:#111;margin-bottom:3px;">${title}</div>
+          <div style="font-size:13px;color:#555;">${body}</div>
+        </div>
+        <button onclick="this.parentElement.remove()" style="background:none;border:none;font-size:18px;cursor:pointer;color:#999;flex-shrink:0;line-height:1;">✕</button>
+      `;
+      if (url) toast.addEventListener('click', (e) => { if (e.target.tagName !== 'BUTTON') window.open(url, '_blank'); });
+      document.body.appendChild(toast);
+      setTimeout(() => toast.remove(), 8000);
+    }
+
+    // ── 8. TOAST SIMPLE ─────────────────────────────────────────
+    function showToast(msg, isError = false) {
+      const t = document.createElement('div');
+      t.style.cssText = `
+        position: fixed;
+        bottom: 90px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: ${isError ? '#dc2626' : '#16a34a'};
+        color: white;
+        padding: 12px 22px;
+        border-radius: 999px;
+        font-size: 14px;
+        font-weight: 600;
+        z-index: 99999;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+        animation: slideInRight 0.3s ease;
+        max-width: 90vw;
+        text-align: center;
+        font-family: 'Inter', sans-serif;
+      `;
+      t.textContent = msg;
+      document.body.appendChild(t);
+      setTimeout(() => t.remove(), 4500);
+    }
+
+    // Style animation
+    const styleSheet = document.createElement('style');
+    styleSheet.textContent = `
+      @keyframes slideInRight {
+        from { opacity: 0; transform: translateX(30px); }
+        to   { opacity: 1; transform: translateX(0); }
+      }
+    `;
+    document.head.appendChild(styleSheet);
+
+    // ── 9. INITIALISATION AU CHARGEMENT ─────────────────────────
+    // On attend que le service worker principal soit enregistré
+    window.addEventListener('load', () => {
+      if ('serviceWorker' in navigator && 'PushManager' in window) {
+        initFirebase();
+      } else {
+        console.warn('[FCM] Push notifications non supportées sur ce navigateur.');
+        const btn = document.getElementById('notif-btn');
+        if (btn) btn.style.display = 'none';
+      }
+    });
+  </script>
+
 </body>
 
 </html>
