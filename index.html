@@ -447,38 +447,178 @@
 
 
   <!-- HERO SECTION -->
-  <section id="hero" class="relative py-16 lg:py-24 bg-gradient-to-br from-gray-900 via-gray-800 to-black overflow-hidden">
-    <!-- Background Elements -->
-    <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMiIgY3k9IjIiIHI9IjEiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4wNSkiLz48L3N2Zz4=')] opacity-20"></div>
-    <div class="absolute -top-32 -left-32 w-96 h-96 bg-red-600 rounded-full mix-blend-multiply filter blur-[128px] opacity-40 animate-pulse"></div>
-    <div class="absolute -bottom-32 -right-32 w-96 h-96 bg-red-800 rounded-full mix-blend-multiply filter blur-[128px] opacity-40 animate-pulse" style="animation-delay: 2s;"></div>
+  <section id="hero" class="relative py-20 lg:py-32 bg-[#0a0a0a] overflow-hidden flex items-center min-h-[80vh]">
+    <!-- Animated modern background -->
+    <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTAgMGg0MHY0MEgwVjB6IiBmaWxsPSJub25lIi8+PHBhdGggZD0iTTAgMGgxdjQwSDBWMHptMCAzOWg0MHYxSDB2LTF6IiBmaWxsPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMDMpIi8+PC9zdmc+')] [mask-image:linear-gradient(to_bottom,white,transparent)] pointer-events-none"></div>
+    
+    <div class="absolute top-0 right-0 -mr-20 -mt-20 w-[500px] h-[500px] bg-red-600/20 rounded-full blur-[100px] animate-blob"></div>
+    <div class="absolute bottom-0 left-0 -ml-20 -mb-20 w-[600px] h-[600px] bg-blue-600/10 rounded-full blur-[120px] animate-blob animation-delay-2000"></div>
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-red-500/10 rounded-full blur-[80px] animate-blob animation-delay-4000"></div>
 
-    <div class="relative max-w-5xl mx-auto px-4 text-center space-y-8 z-10">
-      <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-red-500/30 bg-red-500/10 text-red-400 text-sm font-semibold tracking-wide backdrop-blur-sm shadow-[0_0_15px_rgba(220,38,38,0.2)]">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-        </svg>
-        Avantages exclusifs
-      </div>
+    <div class="relative max-w-7xl mx-auto px-4 w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center z-10">
       
-      <h1 class="text-4xl sm:text-5xl lg:text-7xl font-extrabold text-white tracking-tight leading-tight">
-        Profitez de <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-600">nombreuses offres</span>
-      </h1>
-      
-      <p class="text-xl sm:text-2xl text-gray-300 max-w-3xl mx-auto font-light leading-relaxed mb-6">
-        N'oubliez pas de <strong class="text-white font-semibold">présenter votre badge</strong> lors de vos passages chez nos partenaires pour bénéficier de l'ensemble de vos avantages.
-      </p>
+      <!-- Text Content -->
+      <div class="space-y-8 animate-fade-in-up">
+        <div class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-red-500/20 bg-red-500/10 backdrop-blur-md transition-all hover:bg-red-500/20 cursor-default animate-float">
+          <span class="relative flex h-3 w-3">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
+          </span>
+          <span class="text-red-400 text-sm font-bold tracking-wider uppercase">Avantages Exclusifs</span>
+        </div>
+        
+        <h1 class="text-5xl sm:text-6xl lg:text-7xl font-black text-white leading-[1.1] tracking-tight">
+          Profitez de
+          <span class="relative inline-block mt-2">
+            <span class="absolute -inset-2 bg-gradient-to-r from-red-600 to-red-400 blur-lg opacity-40"></span>
+            <span class="relative text-transparent bg-clip-text bg-gradient-to-r from-red-400 via-red-500 to-red-600 animate-gradient-text">
+              nombreuses offres
+            </span>
+          </span>
+        </h1>
+        
+        <p class="text-xl sm:text-2xl text-gray-400 font-light leading-relaxed max-w-lg">
+          N'oubliez pas de présenter votre <strong class="text-white font-semibold relative inline-block"><span class="relative z-10">badge</span><span class="absolute bottom-0 left-0 w-full h-2 bg-red-600/40 -z-10 skew-x-[-15deg]"></span></strong> lors de vos achats pour débloquer de superbes avantages chez nos partenaires.
+        </p>
 
-      <div class="pt-8">
-        <a href="#categories" class="inline-flex items-center justify-center px-8 py-4 text-base font-bold text-white transition-all duration-200 bg-red-600 border border-transparent rounded-xl hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-600 focus:ring-offset-gray-900 shadow-[0_0_20px_rgba(220,38,38,0.3)] hover:shadow-[0_0_30px_rgba(220,38,38,0.5)] transform hover:-translate-y-1">
-          Découvrir les offres
-          <svg class="w-5 h-5 ml-2 -mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-          </svg>
-        </a>
+        <div class="pt-4 flex flex-col sm:flex-row gap-4">
+          <a href="#categories" class="group relative inline-flex items-center justify-center px-8 py-4 text-base font-bold text-white transition-all bg-red-600 rounded-2xl overflow-hidden shadow-[0_0_40px_rgba(220,38,38,0.4)] hover:shadow-[0_0_60px_rgba(220,38,38,0.6)] hover:scale-105 active:scale-95">
+            <span class="absolute inset-0 w-full h-full -mt-1 rounded-lg opacity-30 bg-gradient-to-b from-transparent via-transparent to-black"></span>
+            <span class="absolute inset-0 w-full h-full opacity-0 group-hover:opacity-100 transition-opacity bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full duration-1000"></span>
+            <span class="relative flex items-center gap-2">
+              Découvrir les offres
+              <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+            </span>
+          </a>
+        </div>
       </div>
+
+      <!-- Animation / Illustration -->
+      <div class="relative w-full h-[500px] flex items-center justify-center perspective-[2000px] hidden lg:flex">
+        <!-- 3D Floating Badge Container -->
+        <div class="relative w-64 h-96 group animate-float-slow transform-style-3d hover:rotate-y-[15deg] transition-all duration-700 ease-out">
+          
+          <!-- Badge Shadow -->
+          <div class="absolute -bottom-10 left-1/2 -translate-x-1/2 w-3/4 h-8 bg-red-600/30 blur-2xl rounded-full scale-0 group-hover:scale-100 transition-transform duration-700"></div>
+
+          <!-- The Badge Card -->
+          <div class="absolute inset-0 rounded-[2rem] border border-white/10 bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl shadow-2xl overflow-hidden flex flex-col before:absolute before:inset-0 before:bg-gradient-to-b before:from-white/20 before:to-transparent before:opacity-0 group-hover:before:opacity-100 before:transition-opacity">
+            
+            <!-- Badge Top Holder -->
+            <div class="h-12 w-full bg-black/40 border-b border-white/10 flex items-center justify-center relative">
+               <div class="w-16 h-4 rounded-full bg-gray-900 border-2 border-gray-700 inset-shadow"></div>
+               <!-- Lanyard string -->
+               <div class="absolute -top-32 left-1/2 -translate-x-1/2 w-4 h-32 flex justify-between">
+                 <div class="w-[2px] h-full bg-red-600/80 -rotate-3 origin-bottom rounded-t-full"></div>
+                 <div class="w-[2px] h-full bg-red-600/80 rotate-3 origin-bottom rounded-t-full"></div>
+               </div>
+            </div>
+
+            <!-- Profile Info -->
+            <div class="flex-1 p-6 flex flex-col items-center justify-center gap-4 text-center">
+               <!-- Animated Logo -->
+               <div class="w-20 h-20 rounded-full bg-gradient-to-tr from-red-600 to-red-400 p-1 animate-spin-slow shadow-[0_0_20px_rgba(220,38,38,0.5)]">
+                 <div class="w-full h-full bg-black rounded-full flex items-center justify-center overflow-hidden">
+                    <img src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/Header.webp" alt="Logo" class="w-[150%] h-[150%] object-cover opacity-80 mix-blend-screen">
+                 </div>
+               </div>
+               
+               <div class="space-y-2 mt-4">
+                 <div class="h-3 w-28 bg-white/20 rounded-full mx-auto"></div>
+                 <div class="h-2 w-36 bg-white/10 rounded-full mx-auto"></div>
+                 <div class="h-2 w-20 bg-white/10 rounded-full mx-auto"></div>
+               </div>
+               
+               <div class="mt-8 w-full py-4 border-t border-white/10 border-dashed text-red-400 font-bold uppercase tracking-widest text-xs tracking-[0.2em]">
+                 Pass Employé
+               </div>
+            </div>
+
+            <!-- Scan Line Animation -->
+            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-red-500 to-transparent shadow-[0_0_15px_rgba(239,68,68,1)] animate-scan opacity-70"></div>
+          </div>
+
+          <!-- Floating Elements around the badge -->
+          <div class="absolute -top-4 -right-12 p-3 rounded-2xl bg-white/5 backdrop-blur-md border border-white/10 text-2xl animate-float shadow-xl" style="animation-delay: -1s;">🎁</div>
+          <div class="absolute top-1/2 -left-16 p-4 rounded-2xl bg-white/5 backdrop-blur-md border border-white/10 text-3xl animate-float shadow-xl" style="animation-delay: -2s;">🛒</div>
+          <div class="absolute -bottom-8 -right-4 p-3 rounded-2xl bg-red-500/20 backdrop-blur-md border border-red-500/30 text-2xl animate-float shadow-xl" style="animation-delay: -3s;">✨</div>
+
+        </div>
+      </div>
+
     </div>
   </section>
+
+  <style>
+    @keyframes blob {
+      0% { transform: translate(0px, 0px) scale(1); }
+      33% { transform: translate(30px, -50px) scale(1.1); }
+      66% { transform: translate(-20px, 20px) scale(0.9); }
+      100% { transform: translate(0px, 0px) scale(1); }
+    }
+    .animate-blob {
+      animation: blob 7s infinite;
+    }
+    .animation-delay-2000 {
+      animation-delay: 2s;
+    }
+    .animation-delay-4000 {
+      animation-delay: 4s;
+    }
+    
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-in-up {
+      animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    
+    @keyframes float {
+      0% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-15px) rotate(2deg); }
+      100% { transform: translateY(0px) rotate(0deg); }
+    }
+    .animate-float {
+      animation: float 4s ease-in-out infinite;
+    }
+    
+    .animate-float-slow {
+      animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes scan {
+      0% { top: -10%; opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { top: 110%; opacity: 0; }
+    }
+    .animate-scan {
+      animation: scan 3s linear infinite;
+    }
+    
+    @keyframes gradientText {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    .animate-gradient-text {
+      background-size: 200% auto;
+      animation: gradientText 4s linear infinite;
+    }
+
+    @keyframes spinSlow {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    .animate-spin-slow {
+      animation: spinSlow 12s linear infinite;
+    }
+
+    .transform-style-3d {
+      transform-style: preserve-3d;
+    }
+  </style>
 
   <!-- CATEGORIES -->
   <section id="categories" class="max-w-6xl mx-auto py-4 px-4">
