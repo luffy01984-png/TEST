@@ -454,7 +454,7 @@
     <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-yellow-200 rounded-full mix-blend-multiply filter blur-[150px] opacity-30 pointer-events-none"></div>
 
     <!-- New Premium Flash Animation Layer -->
-    <div id="flash-layer" class="absolute inset-0 z-30 flex flex-col items-center justify-center overflow-hidden transition-all duration-[900ms] ease-out bg-[#111827] before:absolute before:inset-0 before:bg-[radial-gradient(ellipse_at_center,rgba(220,38,38,0.4)_0%,rgba(17,24,39,1)_70%)] before:z-0 opacity-100 origin-center will-change-[transform,opacity,filter]">
+    <div id="flash-layer" class="absolute inset-0 z-30 flex flex-col items-center justify-center overflow-hidden transition-all duration-500 ease-out bg-[#111827] before:absolute before:inset-0 before:bg-[radial-gradient(ellipse_at_center,rgba(220,38,38,0.4)_0%,rgba(17,24,39,1)_70%)] before:z-0 opacity-100 origin-center will-change-[transform,opacity,filter]">
       
       <!-- Energy Rings -->
       <div class="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
@@ -642,8 +642,8 @@
               promoLayer.classList.remove('opacity-0', 'scale-95');
               promoLayer.classList.add('opacity-100', 'scale-100');
             });
-          }, 900); // Temps pour l'effet de zoom/fade
-        }, 3000); // Laisse l'animation intense visible pendant 3s
+          }, 500); // Temps réduit pour l'effet de zoom/fade
+        }, 1500); // L'animation ne dure plus que 1.5s
       }
     });
   </script>
