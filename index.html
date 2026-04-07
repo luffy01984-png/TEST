@@ -454,7 +454,7 @@
     <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-yellow-200 rounded-full mix-blend-multiply filter blur-[150px] opacity-30 pointer-events-none"></div>
 
     <!-- New Premium Flash Animation Layer -->
-    <div id="flash-layer" class="absolute inset-0 z-30 flex flex-col items-center justify-center overflow-hidden transition-all duration-[900ms] ease-in-out bg-[#111827] before:absolute before:inset-0 before:bg-[radial-gradient(ellipse_at_center,rgba(220,38,38,0.4)_0%,rgba(17,24,39,1)_70%)] before:z-0 opacity-100 origin-center">
+    <div id="flash-layer" class="absolute inset-0 z-30 flex flex-col items-center justify-center overflow-hidden transition-all duration-[900ms] ease-out bg-[#111827] before:absolute before:inset-0 before:bg-[radial-gradient(ellipse_at_center,rgba(220,38,38,0.4)_0%,rgba(17,24,39,1)_70%)] before:z-0 opacity-100 origin-center will-change-[transform,opacity,filter]">
       
       <!-- Energy Rings -->
       <div class="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
@@ -497,7 +497,7 @@
     </div>
 
     <!-- Partner Promo Layer -->
-    <div id="promo-layer" class="relative z-10 w-full max-w-5xl mx-auto px-4 text-center space-y-6 transition-all duration-1000 opacity-0 scale-95 hidden flex-col items-center">
+    <div id="promo-layer" class="relative z-10 w-full max-w-5xl mx-auto px-4 text-center space-y-6 transition-all duration-[1000ms] ease-out opacity-0 scale-95 hidden flex-col items-center will-change-[transform,opacity]">
       <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-pink-500/30 bg-pink-500/10 text-pink-600 text-sm font-bold tracking-wide backdrop-blur-sm shadow-[0_0_15px_rgba(236,72,153,0.3)]">
         <svg class="w-4 h-4 text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
@@ -553,9 +553,10 @@
 
     .animate-text-focus-in {
       animation: textFocusIn 1s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
+      will-change: transform, opacity, filter;
     }
     @keyframes textFocusIn {
-      0% { filter: blur(12px); opacity: 0; transform: translateY(-20px); }
+      0% { filter: blur(8px); opacity: 0; transform: translateY(-20px); }
       100% { filter: blur(0px); opacity: 1; transform: translateY(0); }
     }
 
@@ -600,8 +601,8 @@
     }
 
     @keyframes pulseGlow {
-      0% { text-shadow: 0 0 20px rgba(239,68,68,0.5), 0 0 10px rgba(255,255,255,0.5); }
-      100% { text-shadow: 0 0 40px rgba(239,68,68,1), 0 0 20px rgba(255,255,255,0.8), 0 0 60px rgba(220,38,38,0.6); }
+      0% { text-shadow: 0 0 15px rgba(239,68,68,0.5); }
+      100% { text-shadow: 0 0 30px rgba(239,68,68,0.9), 0 0 15px rgba(255,255,255,0.6); }
     }
 
     .slide-reveal-badge {
@@ -622,21 +623,25 @@
       if (flashLayer && promoLayer) {
         // Dramatic entrance and exit for new animation
         setTimeout(() => {
-          // Zoom in and fade out effect
-          flashLayer.style.transform = 'scale(1.5)';
+          // Optimization: Reduced scale slightly and blur to keep FPS high
+          flashLayer.style.transform = 'scale(1.15)';
           flashLayer.classList.remove('opacity-100');
           flashLayer.classList.add('opacity-0');
-          flashLayer.style.filter = 'blur(10px) brightness(1.5)';
+          flashLayer.style.filter = 'blur(4px) brightness(1.2)';
           
           setTimeout(() => {
             flashLayer.style.display = 'none';
             promoLayer.classList.remove('hidden');
             promoLayer.classList.add('flex');
             
-            setTimeout(() => {
+            // Force hardware layout recalculation before transitioning to avoid stutters
+            void promoLayer.offsetHeight;
+            
+            // requestAnimationFrame guarantees the previous layout paints before animating
+            requestAnimationFrame(() => {
               promoLayer.classList.remove('opacity-0', 'scale-95');
               promoLayer.classList.add('opacity-100', 'scale-100');
-            }, 50);
+            });
           }, 900); // Temps pour l'effet de zoom/fade
         }, 3000); // Laisse l'animation intense visible pendant 3s
       }
