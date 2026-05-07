@@ -358,14 +358,16 @@
 
     /* Animation Vraie Voiture et Moto */
     .road-scene {
-      position: absolute;
-      bottom: 0;
-      left: 0;
+      position: relative;
       width: 100%;
-      height: 35%;
+      height: 220px;
       overflow: hidden;
       z-index: 1;
-      background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.8) 40%, #1a1a1a);
+      background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.6) 50%, #111);
+      margin: 1.5rem 0;
+      border-radius: 1.5rem;
+      border: 1px solid rgba(220, 38, 38, 0.3);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     }
 
     .road-lines {
@@ -457,7 +459,7 @@
     .hero-content-wrapper {
       position: relative;
       z-index: 10;
-      padding-bottom: 8rem; /* space for cars */
+      padding-bottom: 2rem;
     }
   </style>
 </head>
@@ -532,79 +534,15 @@
 
 
   <!-- HERO SECTION - REAL CAR & MOTO ANIMATION -->
-  <section id="hero" class="relative pt-20 pb-40 sm:pt-28 sm:pb-48 bg-gray-900 border-b-4 border-red-600 overflow-hidden min-h-[80vh] flex flex-col justify-start">
+  <section id="hero" class="relative pt-8 pb-16 sm:pt-12 sm:pb-20 bg-gray-900 border-b-4 border-red-600 overflow-hidden min-h-[70vh] flex flex-col justify-start">
     <!-- Background Image with Overlay -->
     <div class="absolute inset-0 z-0">
       <img src="assets/hero_technical_control.png" alt="Background Technical Control" class="w-full h-full object-cover opacity-30">
       <div class="absolute inset-0 bg-gradient-to-b from-gray-900 via-transparent to-gray-900"></div>
     </div>
 
-    <!-- Animated Road Scene with Vehicles -->
-    <div class="road-scene">
-      <div class="road-lines"></div>
-      
-      <div class="vehicles-wrapper">
-        <!-- Car SVG -->
-        <div class="car-wrapper">
-          <div class="headlight-beam"></div>
-          <svg viewBox="0 0 300 100" xmlns="http://www.w3.org/2000/svg">
-            <ellipse cx="150" cy="90" rx="130" ry="10" fill="rgba(0,0,0,0.6)" />
-            <path class="car-body" d="M30,75 L20,60 L25,45 C30,35 50,30 70,25 C100,15 130,10 170,15 C200,20 230,35 250,50 L270,55 L280,65 L285,75 Z" />
-            <path class="car-window" d="M80,28 C110,20 140,18 170,22 C190,25 210,35 225,45 L170,45 L130,22 Z" />
-            <path class="car-window" d="M165,45 L135,23 C110,23 90,26 80,30 L85,45 Z" />
-            <path fill="#999" d="M250,50 L270,55 L280,65" stroke="#777" stroke-width="2" fill="none"/>
-            <g transform="translate(60, 70)">
-              <circle class="car-wheel" cx="0" cy="0" r="22" />
-              <g class="car-rim">
-                <circle cx="0" cy="0" r="14" fill="#ccc"/>
-                <path d="M0,-14 L0,14 M-14,0 L14,0 M-10,-10 L10,10 M-10,10 L10,-10" stroke="#555" stroke-width="3"/>
-              </g>
-            </g>
-            <g transform="translate(230, 70)">
-              <circle class="car-wheel" cx="0" cy="0" r="22" />
-              <g class="car-rim">
-                <circle cx="0" cy="0" r="14" fill="#ccc"/>
-                <path d="M0,-14 L0,14 M-14,0 L14,0 M-10,-10 L10,10 M-10,10 L10,-10" stroke="#555" stroke-width="3"/>
-              </g>
-            </g>
-            <path fill="#fff" d="M265,55 L280,58 L280,65 L265,60 Z" />
-            <path fill="red" d="M25,50 L20,60 L30,65 L35,55 Z" />
-          </svg>
-        </div>
-
-        <!-- Moto SVG -->
-        <div class="moto-wrapper">
-          <div class="headlight-beam moto-headlight-beam"></div>
-          <svg viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
-            <ellipse cx="100" cy="110" rx="80" ry="6" fill="rgba(0,0,0,0.6)" />
-            <path class="moto-rider" d="M90,40 C95,20 110,15 120,20 C130,25 125,40 115,50 C100,60 90,70 80,75 L70,70 C75,55 85,45 90,40 Z" />
-            <circle fill="#222" cx="120" cy="20" r="15" />
-            <path class="moto-body" d="M60,80 L40,60 L70,50 L110,50 L140,40 L150,55 L120,70 L100,80 Z" />
-            <path fill="#dc2626" d="M70,50 L110,50 L100,70 L80,70 Z" />
-            <line x1="145" y1="45" x2="165" y2="90" stroke="silver" stroke-width="6" />
-            <path fill="#555" d="M80,85 L40,80 L35,85 L80,95 Z" />
-            <g transform="translate(50, 90)">
-              <circle class="moto-tire" cx="0" cy="0" r="20" />
-              <g class="moto-rim">
-                <circle cx="0" cy="0" r="12" fill="#aaa" />
-                <path d="M0,-12 L0,12 M-12,0 L12,0 M-8,-8 L8,8 M-8,8 L8,-8" stroke="#333" stroke-width="2"/>
-              </g>
-            </g>
-            <g transform="translate(165, 90)">
-              <circle class="moto-tire" cx="0" cy="0" r="20" />
-              <g class="moto-rim">
-                <circle cx="0" cy="0" r="12" fill="#aaa" />
-                <path d="M0,-12 L0,12 M-12,0 L12,0 M-8,-8 L8,8 M-8,8 L8,-8" stroke="#333" stroke-width="2"/>
-              </g>
-            </g>
-            <circle fill="#fff" cx="150" cy="55" r="5" />
-          </svg>
-        </div>
-      </div>
-    </div>
-
-    <!-- Text Content -->
-    <div class="hero-content-wrapper w-full max-w-4xl mx-auto px-4 flex flex-col items-center text-center mt-10">
+    <!-- Text Content & Animation -->
+    <div class="hero-content-wrapper w-full max-w-4xl mx-auto px-4 flex flex-col items-center text-center mt-2">
       <div class="mb-6 inline-flex items-center px-4 py-1.5 rounded-full bg-red-600/20 border border-red-500/50 backdrop-blur-sm">
         <span class="flex h-2 w-2 rounded-full bg-red-500 animate-ping mr-3"></span>
         <span class="text-red-500 text-xs font-bold tracking-[0.2em] uppercase">Nouveau Partenaire</span>
@@ -620,11 +558,67 @@
         </h2>
       </div>
 
-      <div class="max-w-xl mb-10 p-4 border-l-4 border-red-600 bg-black/40 backdrop-blur-sm rounded-r-xl text-left z-10">
-        <p class="text-gray-300 text-sm sm:text-base leading-relaxed italic">
-          "Profitez d'offres exclusives sur vos contrôles techniques. <br class="hidden sm:block">
-          <span class="text-white font-bold uppercase tracking-wider">Présentation du badge obligatoire</span> pour bénéficier des avantages CSE."
-        </p>
+      <!-- Animated Road Scene inserted here -->
+      <div class="road-scene">
+        <div class="road-lines"></div>
+        <div class="vehicles-wrapper">
+          <!-- Car SVG -->
+          <div class="car-wrapper">
+            <div class="headlight-beam"></div>
+            <svg viewBox="0 0 300 100" xmlns="http://www.w3.org/2000/svg">
+              <ellipse cx="150" cy="90" rx="130" ry="10" fill="rgba(0,0,0,0.6)" />
+              <path class="car-body" d="M30,75 L20,60 L25,45 C30,35 50,30 70,25 C100,15 130,10 170,15 C200,20 230,35 250,50 L270,55 L280,65 L285,75 Z" />
+              <path class="car-window" d="M80,28 C110,20 140,18 170,22 C190,25 210,35 225,45 L170,45 L130,22 Z" />
+              <path class="car-window" d="M165,45 L135,23 C110,23 90,26 80,30 L85,45 Z" />
+              <path fill="#999" d="M250,50 L270,55 L280,65" stroke="#777" stroke-width="2" fill="none"/>
+              <g transform="translate(60, 70)">
+                <circle class="car-wheel" cx="0" cy="0" r="22" />
+                <g class="car-rim">
+                  <circle cx="0" cy="0" r="14" fill="#ccc"/>
+                  <path d="M0,-14 L0,14 M-14,0 L14,0 M-10,-10 L10,10 M-10,10 L10,-10" stroke="#555" stroke-width="3"/>
+                </g>
+              </g>
+              <g transform="translate(230, 70)">
+                <circle class="car-wheel" cx="0" cy="0" r="22" />
+                <g class="car-rim">
+                  <circle cx="0" cy="0" r="14" fill="#ccc"/>
+                  <path d="M0,-14 L0,14 M-14,0 L14,0 M-10,-10 L10,10 M-10,10 L10,-10" stroke="#555" stroke-width="3"/>
+                </g>
+              </g>
+              <path fill="#fff" d="M265,55 L280,58 L280,65 L265,60 Z" />
+              <path fill="red" d="M25,50 L20,60 L30,65 L35,55 Z" />
+            </svg>
+          </div>
+
+          <!-- Moto SVG -->
+          <div class="moto-wrapper">
+            <div class="headlight-beam moto-headlight-beam"></div>
+            <svg viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
+              <ellipse cx="100" cy="110" rx="80" ry="6" fill="rgba(0,0,0,0.6)" />
+              <path class="moto-rider" d="M90,40 C95,20 110,15 120,20 C130,25 125,40 115,50 C100,60 90,70 80,75 L70,70 C75,55 85,45 90,40 Z" />
+              <circle fill="#222" cx="120" cy="20" r="15" />
+              <path class="moto-body" d="M60,80 L40,60 L70,50 L110,50 L140,40 L150,55 L120,70 L100,80 Z" />
+              <path fill="#dc2626" d="M70,50 L110,50 L100,70 L80,70 Z" />
+              <line x1="145" y1="45" x2="165" y2="90" stroke="silver" stroke-width="6" />
+              <path fill="#555" d="M80,85 L40,80 L35,85 L80,95 Z" />
+              <g transform="translate(50, 90)">
+                <circle class="moto-tire" cx="0" cy="0" r="20" />
+                <g class="moto-rim">
+                  <circle cx="0" cy="0" r="12" fill="#aaa" />
+                  <path d="M0,-12 L0,12 M-12,0 L12,0 M-8,-8 L8,8 M-8,8 L8,-8" stroke="#333" stroke-width="2"/>
+                </g>
+              </g>
+              <g transform="translate(165, 90)">
+                <circle class="moto-tire" cx="0" cy="0" r="20" />
+                <g class="moto-rim">
+                  <circle cx="0" cy="0" r="12" fill="#aaa" />
+                  <path d="M0,-12 L0,12 M-12,0 L12,0 M-8,-8 L8,8 M-8,8 L8,-8" stroke="#333" stroke-width="2"/>
+                </g>
+              </g>
+              <circle fill="#fff" cx="150" cy="55" r="5" />
+            </svg>
+          </div>
+        </div>
       </div>
 
       <div class="flex flex-col sm:flex-row gap-6 z-10">
