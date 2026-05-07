@@ -398,16 +398,26 @@
     }
 
     .tape-1 {
-      top: 15%;
+      top: 5%;
       transform: rotate(-5deg) translateX(-10vw);
     }
 
     .tape-2 {
-      bottom: 15%;
+      bottom: 5%;
       transform: rotate(5deg) translateX(-10vw);
       background: #fff;
       color: #ef4444;
       box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+    }
+
+    @media (max-width: 640px) {
+      .tape-1 { top: 15px; }
+      .tape-2 { bottom: 15px; }
+      .warning-tape { 
+        font-size: 1.5rem; 
+        height: 50px; 
+        line-height: 50px; 
+      }
     }
 
     .tape-2 .tape-content {
