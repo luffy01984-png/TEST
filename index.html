@@ -356,104 +356,77 @@
       scrollbar-width: none;
     }
 
-    /* Animation Vraie Voiture et Moto */
-    .road-scene {
+    /* Impact/Percutant Hero Animation */
+    .impact-hero-bg {
+      background: #0a0a0a;
+      background-image: repeating-linear-gradient(
+        -45deg,
+        #111 0,
+        #111 20px,
+        #050505 20px,
+        #050505 40px
+      );
       position: relative;
-      width: 100%;
-      height: 220px;
       overflow: hidden;
-      z-index: 1;
-      background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.6) 50%, #111);
-      margin: 1.5rem 0;
-      border-radius: 1.5rem;
-      border: 1px solid rgba(220, 38, 38, 0.3);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     }
 
-    .road-lines {
+    .warning-tape {
       position: absolute;
-      bottom: 20%;
-      left: 0;
       width: 200vw;
-      height: 6px;
-      background-image: linear-gradient(to right, #666 40%, transparent 40%);
-      background-size: 150px 100%;
-      animation: roadMove 0.3s linear infinite;
-    }
-
-    @keyframes roadMove {
-      from { transform: translateX(0); }
-      to { transform: translateX(-150px); }
-    }
-
-    .vehicles-wrapper {
-      position: absolute;
-      bottom: 22%;
-      width: 100%;
+      height: 70px;
+      background: #ef4444;
+      color: #000;
+      font-weight: 900;
+      font-size: 2.5rem;
+      line-height: 70px;
+      text-transform: uppercase;
+      letter-spacing: 6px;
       display: flex;
-      justify-content: center;
-      align-items: flex-end;
-      gap: 1rem;
       z-index: 5;
+      box-shadow: 0 0 30px rgba(239, 68, 68, 0.6);
     }
 
-    .car-wrapper {
-      width: 320px;
-      position: relative;
-      animation: suspension 1s ease-in-out infinite alternate;
+    .tape-content {
+      white-space: nowrap;
+      animation: tapeScroll 15s linear infinite;
+      padding-right: 20px;
     }
 
-    .moto-wrapper {
-      width: 200px;
-      position: relative;
-      margin-bottom: 5px;
-      margin-left: -50px; /* Overlap slightly */
-      animation: suspension 0.7s ease-in-out infinite alternate-reverse;
+    @keyframes tapeScroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-100%); }
     }
 
-    @keyframes suspension {
-      0% { transform: translateY(0) rotate(0deg); }
-      100% { transform: translateY(-4px) rotate(-0.5deg); }
+    .tape-1 {
+      top: 15%;
+      transform: rotate(-5deg) translateX(-10vw);
     }
 
-    .car-body { fill: #dc2626; }
-    .car-window { fill: #0a0a0a; border: 2px solid #333; }
-    .car-wheel { fill: #111; stroke: #333; stroke-width: 4; }
-    .car-rim { fill: #ddd; transform-origin: 50% 50%; transform-box: fill-box; animation: spin 0.2s linear infinite; }
-
-    .moto-body { fill: #fff; }
-    .moto-tire { fill: #111; }
-    .moto-rim { fill: #ccc; transform-origin: 50% 50%; transform-box: fill-box; animation: spin 0.15s linear infinite; }
-    .moto-rider { fill: #1a1a1a; }
-
-    @keyframes spin {
-      100% { transform: rotate(360deg); }
+    .tape-2 {
+      bottom: 15%;
+      transform: rotate(5deg) translateX(-10vw);
+      background: #fff;
+      color: #ef4444;
+      box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
     }
 
-    .headlight-beam {
-      position: absolute;
-      top: 55%;
-      right: -200px;
-      width: 250px;
-      height: 80px;
-      background: linear-gradient(to right, rgba(255, 255, 255, 0.5), transparent);
-      clip-path: polygon(0 30%, 100% 0, 100% 100%, 0 70%);
-      transform-origin: left center;
-      animation: flicker 2s infinite;
-      z-index: 4;
-      pointer-events: none;
+    .tape-2 .tape-content {
+      animation-direction: reverse;
     }
 
-    .moto-headlight-beam {
-      top: 45%;
-      right: -120px;
-      width: 150px;
-      height: 50px;
+    .impact-card {
+      background: rgba(10, 10, 10, 0.85);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      border: 2px solid #ef4444;
+      border-top: 6px solid #ef4444;
+      box-shadow: 0 0 50px rgba(239, 68, 68, 0.3), inset 0 0 20px rgba(239, 68, 68, 0.2);
+      animation: pulseCard 3s infinite alternate;
     }
 
-    @keyframes flicker {
-      0%, 100% { opacity: 0.5; }
-      50% { opacity: 0.8; }
+    @keyframes pulseCard {
+      0% { box-shadow: 0 0 40px rgba(239, 68, 68, 0.3), inset 0 0 10px rgba(239, 68, 68, 0.2); }
+      100% { box-shadow: 0 0 80px rgba(239, 68, 68, 0.7), inset 0 0 40px rgba(239, 68, 68, 0.5); }
     }
 
     .hero-content-wrapper {
@@ -533,103 +506,41 @@
 
 
 
-  <!-- HERO SECTION - REAL CAR & MOTO ANIMATION -->
-  <section id="hero" class="relative pt-8 pb-16 sm:pt-12 sm:pb-20 bg-gray-900 border-b-4 border-red-600 overflow-hidden min-h-[70vh] flex flex-col justify-start">
-    <!-- Background Image with Overlay -->
-    <div class="absolute inset-0 z-0">
-      <img src="assets/hero_technical_control.png" alt="Background Technical Control" class="w-full h-full object-cover opacity-30">
-      <div class="absolute inset-0 bg-gradient-to-b from-gray-900 via-transparent to-gray-900"></div>
+  <!-- HERO SECTION - HIGH IMPACT -->
+  <section id="hero" class="impact-hero-bg relative pt-24 pb-36 sm:pt-32 sm:pb-48 border-b-4 border-red-600 min-h-[75vh] flex flex-col justify-center items-center">
+    
+    <!-- Moving Tapes -->
+    <div class="warning-tape tape-1">
+      <div class="tape-content">NOUVEAU PARTENAIRE • NOUVEAU PARTENAIRE • NOUVEAU PARTENAIRE • NOUVEAU PARTENAIRE • </div>
+      <div class="tape-content">NOUVEAU PARTENAIRE • NOUVEAU PARTENAIRE • NOUVEAU PARTENAIRE • NOUVEAU PARTENAIRE • </div>
     </div>
-
-    <!-- Text Content & Animation -->
-    <div class="hero-content-wrapper w-full max-w-4xl mx-auto px-4 flex flex-col items-center text-center mt-2">
-      <div class="mb-6 inline-flex items-center px-4 py-1.5 rounded-full bg-red-600/20 border border-red-500/50 backdrop-blur-sm">
-        <span class="flex h-2 w-2 rounded-full bg-red-500 animate-ping mr-3"></span>
-        <span class="text-red-500 text-xs font-bold tracking-[0.2em] uppercase">Nouveau Partenaire</span>
-      </div>
-
-      <h1 class="text-4xl sm:text-5xl lg:text-7xl font-black text-white tracking-tighter uppercase mb-4 drop-shadow-2xl leading-tight">
-        Mon Contrôle Technique
-      </h1>
+    
+    <div class="warning-tape tape-2">
+      <div class="tape-content">OFFRE EXCLUSIVE • OFFRE EXCLUSIVE • OFFRE EXCLUSIVE • OFFRE EXCLUSIVE • OFFRE EXCLUSIVE • </div>
+      <div class="tape-content">OFFRE EXCLUSIVE • OFFRE EXCLUSIVE • OFFRE EXCLUSIVE • OFFRE EXCLUSIVE • OFFRE EXCLUSIVE • </div>
+    </div>
+    
+    <div class="hero-content-wrapper relative z-10 w-full max-w-5xl mx-auto px-4 flex flex-col items-center">
       
-      <div class="mb-8">
-        <h2 class="text-2xl sm:text-4xl text-gray-200 font-light tracking-wide uppercase">
-          Contrôle Technique <span class="text-red-500 font-black italic">Auto & Moto</span>
+      <!-- Impact Card -->
+      <div class="impact-card relative rounded-2xl p-8 sm:p-14 w-full max-w-3xl text-center overflow-hidden transform hover:scale-[1.03] transition-transform duration-300">
+        
+        <h1 class="text-5xl sm:text-7xl lg:text-8xl font-black tracking-tighter uppercase mb-2 text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.4)] leading-none italic">
+          Mon Contrôle<br><span class="text-red-500">Technique</span>
+        </h1>
+        
+        <div class="w-32 h-2 bg-red-600 mx-auto my-8"></div>
+
+        <h2 class="text-2xl sm:text-4xl text-gray-200 font-bold tracking-widest uppercase mb-12">
+          Catégorie <span class="text-red-500 italic">Auto & Moto</span>
         </h2>
-      </div>
 
-      <!-- Animated Road Scene inserted here -->
-      <div class="road-scene">
-        <div class="road-lines"></div>
-        <div class="vehicles-wrapper">
-          <!-- Car SVG -->
-          <div class="car-wrapper">
-            <div class="headlight-beam"></div>
-            <svg viewBox="0 0 300 100" xmlns="http://www.w3.org/2000/svg">
-              <ellipse cx="150" cy="90" rx="130" ry="10" fill="rgba(0,0,0,0.6)" />
-              <path class="car-body" d="M30,75 L20,60 L25,45 C30,35 50,30 70,25 C100,15 130,10 170,15 C200,20 230,35 250,50 L270,55 L280,65 L285,75 Z" />
-              <path class="car-window" d="M80,28 C110,20 140,18 170,22 C190,25 210,35 225,45 L170,45 L130,22 Z" />
-              <path class="car-window" d="M165,45 L135,23 C110,23 90,26 80,30 L85,45 Z" />
-              <path fill="#999" d="M250,50 L270,55 L280,65" stroke="#777" stroke-width="2" fill="none"/>
-              <g transform="translate(60, 70)">
-                <circle class="car-wheel" cx="0" cy="0" r="22" />
-                <g class="car-rim">
-                  <circle cx="0" cy="0" r="14" fill="#ccc"/>
-                  <path d="M0,-14 L0,14 M-14,0 L14,0 M-10,-10 L10,10 M-10,10 L10,-10" stroke="#555" stroke-width="3"/>
-                </g>
-              </g>
-              <g transform="translate(230, 70)">
-                <circle class="car-wheel" cx="0" cy="0" r="22" />
-                <g class="car-rim">
-                  <circle cx="0" cy="0" r="14" fill="#ccc"/>
-                  <path d="M0,-14 L0,14 M-14,0 L14,0 M-10,-10 L10,10 M-10,10 L10,-10" stroke="#555" stroke-width="3"/>
-                </g>
-              </g>
-              <path fill="#fff" d="M265,55 L280,58 L280,65 L265,60 Z" />
-              <path fill="red" d="M25,50 L20,60 L30,65 L35,55 Z" />
-            </svg>
-          </div>
-
-          <!-- Moto SVG -->
-          <div class="moto-wrapper">
-            <div class="headlight-beam moto-headlight-beam"></div>
-            <svg viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
-              <ellipse cx="100" cy="110" rx="80" ry="6" fill="rgba(0,0,0,0.6)" />
-              <path class="moto-rider" d="M90,40 C95,20 110,15 120,20 C130,25 125,40 115,50 C100,60 90,70 80,75 L70,70 C75,55 85,45 90,40 Z" />
-              <circle fill="#222" cx="120" cy="20" r="15" />
-              <path class="moto-body" d="M60,80 L40,60 L70,50 L110,50 L140,40 L150,55 L120,70 L100,80 Z" />
-              <path fill="#dc2626" d="M70,50 L110,50 L100,70 L80,70 Z" />
-              <line x1="145" y1="45" x2="165" y2="90" stroke="silver" stroke-width="6" />
-              <path fill="#555" d="M80,85 L40,80 L35,85 L80,95 Z" />
-              <g transform="translate(50, 90)">
-                <circle class="moto-tire" cx="0" cy="0" r="20" />
-                <g class="moto-rim">
-                  <circle cx="0" cy="0" r="12" fill="#aaa" />
-                  <path d="M0,-12 L0,12 M-12,0 L12,0 M-8,-8 L8,8 M-8,8 L8,-8" stroke="#333" stroke-width="2"/>
-                </g>
-              </g>
-              <g transform="translate(165, 90)">
-                <circle class="moto-tire" cx="0" cy="0" r="20" />
-                <g class="moto-rim">
-                  <circle cx="0" cy="0" r="12" fill="#aaa" />
-                  <path d="M0,-12 L0,12 M-12,0 L12,0 M-8,-8 L8,8 M-8,8 L8,-8" stroke="#333" stroke-width="2"/>
-                </g>
-              </g>
-              <circle fill="#fff" cx="150" cy="55" r="5" />
-            </svg>
-          </div>
+        <div class="flex flex-col sm:flex-row gap-6 justify-center">
+          <button onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/moncontrole.webp')"
+            class="px-12 py-5 bg-red-600 hover:bg-white hover:text-red-600 text-white font-black rounded text-xl sm:text-2xl uppercase tracking-widest transition-all duration-300 transform hover:scale-105 shadow-[0_10px_30px_rgba(220,38,38,0.6)]">
+            Découvrir l'offre
+          </button>
         </div>
-      </div>
-
-      <div class="flex flex-col sm:flex-row gap-6 z-10">
-        <button onclick="openModal('https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/assets/moncontrole.webp')"
-          class="px-10 py-4 bg-red-600 hover:bg-red-700 text-white font-black rounded-xl shadow-lg shadow-red-600/50 transform hover:-translate-y-1 transition-all duration-300 flex items-center uppercase">
-          Découvrir l'offre
-          <svg class="w-5 h-5 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
-        </button>
-        <a href="#categories" class="px-10 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl backdrop-blur-md transition-all duration-300 border border-white/20 flex items-center justify-center">
-          Toutes les offres
-        </a>
       </div>
     </div>
   </section>
