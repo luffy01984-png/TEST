@@ -35,11 +35,17 @@
       }
     }
 
+    html {
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
     body {
       font-family: 'Inter', sans-serif;
       margin: 0;
       padding: 0;
       background-color: #f3f4f6;
+      overflow-x: hidden;
     }
 
 
@@ -239,10 +245,19 @@
       color: #9ca3af;
       text-decoration: none;
       font-weight: 600;
-      padding: 0.5rem 1rem;
+      padding: 0.35rem 0.65rem;
+      font-size: 0.8125rem;
       border-radius: 9999px;
       transition: all 0.3s ease;
       display: inline-block;
+      white-space: nowrap;
+    }
+
+    @media (min-width: 640px) {
+      .nav-link {
+        padding: 0.5rem 1rem;
+        font-size: 0.875rem;
+      }
     }
 
     .nav-link:hover {
@@ -569,6 +584,46 @@
       z-index: 35;
       transition: opacity 0.5s ease-out;
     }
+
+    /* Fluidité & Format Header / Logo */
+    header {
+      transition: background-color 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+    .header-inner {
+      transition: padding 0.3s ease;
+    }
+    header.header-compact .header-inner {
+      padding-top: 0.35rem;
+      padding-bottom: 0.35rem;
+    }
+    .header-logo-badge {
+      width: 2.5rem;
+      height: 2.5rem;
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+      will-change: transform;
+    }
+    @media (min-width: 640px) {
+      .header-logo-badge {
+        width: 3.25rem;
+        height: 3.25rem;
+      }
+    }
+    .header-brand-link:hover .header-logo-badge {
+      transform: scale(1.06);
+    }
+    .header-logo-img {
+      transition: transform 0.35s ease;
+    }
+    .header-brand-link:hover .header-logo-img {
+      transform: scale(1.08) rotate(2deg);
+    }
+
+    @media (max-width: 639px) {
+      .nav-link {
+        padding: 0.3rem 0.55rem !important;
+        font-size: 0.75rem !important;
+      }
+    }
   </style>
 <link rel="stylesheet" href="halloween.css">
 </head>
@@ -586,17 +641,33 @@
 
   <!-- HEADER -->
   <header class="bg-white shadow-xl sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto flex justify-between items-center px-4 py-3">
-      <!-- Logo et texte -->
-      <div class="flex items-center space-x-2">
-        <img src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/Header.webp"
-          alt="Logo Renault Trucks" class="h-20 sm:h-24 rounded-md">
-        <span class="text-xs font-bold text-red-600 uppercase tracking-widest hidden sm:inline">CSE
-          Bourg-en-Bresse</span>
-      </div>
+    <div class="header-inner max-w-7xl mx-auto flex justify-between items-center px-3 sm:px-4 py-2 sm:py-3">
+      <!-- Logo et texte cliquables avec micro-interaction fluide -->
+      <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;" class="header-brand-link group flex items-center space-x-2 sm:space-x-3 select-none focus:outline-none flex-shrink-0" aria-label="Retour en haut - CSE Renault Trucks">
+        <!-- Médaillon logo responsive -->
+        <div class="header-logo-badge relative flex-shrink-0 w-9 h-9 sm:w-12 sm:h-12 md:w-13 md:h-13 rounded-full bg-white p-1 shadow-md border border-gray-200/80 flex items-center justify-center overflow-hidden">
+          <img 
+            src="https://raw.githubusercontent.com/luffy01984-png/Renault-trucks-CE/main/assets/Header.webp"
+            alt="Logo Renault Trucks" 
+            class="header-logo-img w-full h-full object-contain rounded-full"
+            width="52"
+            height="52"
+            loading="eager">
+        </div>
+        <!-- Typographie de marque lisible sur tout écran -->
+        <div class="flex flex-col justify-center leading-tight">
+          <span class="header-brand-title text-[11px] sm:text-sm font-black uppercase tracking-wide text-gray-900 transition-colors duration-200">
+            <span class="sm:hidden">CSE Renault</span>
+            <span class="hidden sm:inline">CSE Renault Trucks</span>
+          </span>
+          <span class="header-brand-sub text-[8.5px] sm:text-[11px] font-bold uppercase tracking-wider text-red-600 transition-colors duration-200">
+            Bourg-en-Bresse
+          </span>
+        </div>
+      </a>
 
       <!-- Navbar -->
-      <nav class="flex items-center space-x-2 sm:space-x-4 text-sm">
+      <nav class="flex items-center space-x-1 sm:space-x-2.5 text-xs sm:text-sm font-semibold flex-shrink-0">
         <a href="#categories" class="nav-link" id="nav-partenaires">Partenaires</a>
         <a href="#mentions" class="nav-link" id="nav-mentions">Mentions</a>
       </nav>
@@ -621,12 +692,21 @@
       document.getElementById('mentions').scrollIntoView({ behavior: 'smooth' });
     });
 
-    // Détection scroll pour active link automatique
+    // Détection scroll pour active link automatique et header compact
     const categoriesSection = document.getElementById('categories');
     const mentionsSection = document.getElementById('mentions');
+    const headerElement = document.querySelector('header');
 
     window.addEventListener('scroll', () => {
-      const scrollPos = window.scrollY + 150; // Ajuste pour le header sticky
+      if (headerElement) {
+        if (window.scrollY > 30) {
+          headerElement.classList.add('header-compact');
+        } else {
+          headerElement.classList.remove('header-compact');
+        }
+      }
+
+      const scrollPos = window.scrollY + 120; // Ajuste pour le header sticky
       if (categoriesSection && mentionsSection) {
         if (scrollPos >= mentionsSection.offsetTop) {
           navMentions.classList.add('active');
@@ -636,7 +716,7 @@
           navMentions.classList.remove('active');
         }
       }
-    });
+    }, { passive: true });
   </script>
 
 
@@ -653,12 +733,11 @@
       
       <!-- Top Header / Badges & Info -->
       <div class="text-center space-y-3 mb-6 max-w-2xl">
-        <div class="inline-flex items-center space-x-2 text-[10px] sm:text-xs font-extrabold text-red-300 uppercase tracking-widest bg-red-950/80 px-4 py-1.5 rounded-full border border-red-500/40 shadow-[0_0_20px_rgba(239,68,68,0.3)] animate-pulse">
+        <div class="inline-flex flex-wrap items-center justify-center gap-1.5 text-[10px] sm:text-xs font-extrabold text-red-300 uppercase tracking-widest bg-red-950/80 px-3 sm:px-4 py-1.5 rounded-full border border-red-500/40 shadow-[0_0_20px_rgba(239,68,68,0.3)] animate-pulse max-w-full">
           <span class="inline-block w-2 h-2 rounded-full bg-red-500 shadow-[0_0_8px_#ef4444]"></span>
-          <span>NOUVEAU PARTENAIRE • ÉPILATION LASER & DÉTATOUAGE</span>
+          <span class="text-center">NOUVEAU PARTENAIRE • ÉPILATION LASER & DÉTATOUAGE</span>
           <span class="inline-block w-2 h-2 rounded-full bg-red-500 shadow-[0_0_8px_#ef4444]"></span>
         </div>
-        </h1>
         <p class="text-sm sm:text-base text-gray-300 max-w-xl mx-auto font-medium">
           Profitez d'un tarif préférentiel exclusif pour les salariés Renault Trucks à Bourg-en-Bresse.
         </p>
