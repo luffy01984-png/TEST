@@ -1,0 +1,201 @@
+/* ===== THÈME HALLOWEEN XXL — à charger APRÈS le <style> existant ===== */
+@import url('https://fonts.googleapis.com/css2?family=Creepster&display=swap');
+
+:root {
+  --nuit: #0b0515; --prune: #1a0c2e; --prune-clair: #2c1850;
+  --citrouille: #ff6a00; --citrouille-vif: #ffa040;
+  --violet: #8b3dff; --slime: #9dff2e; --os: #f5e9d0; --sang: #e11d2e;
+}
+
+html { background: #07030f; }
+body {
+  background-color: var(--nuit) !important;
+  background-image:
+    radial-gradient(circle at 10% 5%, rgba(139, 61, 255, .4), transparent 45%),
+    radial-gradient(circle at 92% 60%, rgba(255, 106, 0, .22), transparent 50%),
+    radial-gradient(circle at 30% 95%, rgba(157, 255, 46, .1), transparent 40%) !important;
+  background-attachment: fixed !important;
+  color: var(--os) !important;
+}
+
+/* ---------- Éclairs + vignette (plein écran, non cliquables) ---------- */
+
+  content: ''; position: fixed; inset: 0; z-index: 9999; pointer-events: none;
+  background: radial-gradient(circle at 70% 0%, #fff, #c9b3ff 40%, transparent 75%);
+  opacity: 0; animation: eclair 11s infinite;
+}
+@keyframes eclair {
+  0%, 90%, 94%, 100% { opacity: 0; }
+  91% { opacity: .55; } 92% { opacity: .05; } 93% { opacity: .4; }
+}
+html::after {
+  content: ''; position: fixed; inset: 0; z-index: 39; pointer-events: none;
+  background: radial-gradient(ellipse at center, transparent 45%, rgba(0, 0, 0, .75) 100%);
+}
+
+/* ---------- Titres néon qui grésillent ---------- */
+#categories h2, #mentions h2 {
+  font-family: 'Creepster', 'Inter', cursive !important; font-weight: 400 !important;
+  letter-spacing: .08em; font-size: 2.8rem !important; line-height: 1.1;
+  color: var(--citrouille-vif) !important;
+  animation: neon 4s infinite;
+}
+@keyframes neon {
+  0%, 18%, 22%, 62%, 64%, 100% {
+    text-shadow: 0 0 6px #fff3, 0 0 18px var(--citrouille), 0 0 40px var(--citrouille), 0 0 80px #ff3d00, 0 4px 0 #3a1000;
+  }
+  20%, 63% { text-shadow: none; color: #7a3b00 !important; }
+}
+#categories h2 svg { color: var(--slime) !important; filter: drop-shadow(0 0 8px var(--slime)); }
+
+/* ---------- Header : slime qui dégouline ---------- */
+header.bg-white {
+  background: linear-gradient(180deg, #1a0d2e, #12091f) !important;
+  border-bottom: 3px solid var(--citrouille);
+  box-shadow: 0 0 35px rgba(255, 106, 0, .55) !important;
+  overflow: visible !important;
+}
+header img { background: #fff; padding: 2px; box-shadow: 0 0 18px rgba(255, 106, 0, .6); }
+header .text-red-600 { color: var(--citrouille) !important; text-shadow: 0 0 12px var(--citrouille); }
+header::before { /* dégoulinures */
+  content: ''; position: absolute; left: 0; right: 0; top: 100%; height: 30px;
+  pointer-events: none; z-index: 2;
+  background:
+    linear-gradient(var(--slime), var(--slime)) top / 100% 4px no-repeat,
+    radial-gradient(ellipse 8px 100% at 50% 0, var(--slime) 96%, transparent) 0 0 / 83px 100% repeat-x,
+    radial-gradient(ellipse 6px 70% at 50% 0, var(--slime) 96%, transparent) 40px 0 / 61px 100% repeat-x;
+  filter: drop-shadow(0 0 6px var(--slime));
+  animation: drip 5s ease-in-out infinite alternate;
+}
+@keyframes drip { from { height: 16px; } to { height: 34px; } }
+header::after { /* toile */
+  content: ''; position: absolute; top: 0; right: 0; width: 130px; height: 130px;
+  pointer-events: none; opacity: .7;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='none' stroke='%23f5e9d0' stroke-width='1'%3E%3Cpath d='M100 0L0 0M100 0L0 30M100 0L0 65M100 0L30 100M100 0L65 100M100 0L100 100'/%3E%3Cpath d='M100 22Q78 22 78 0M100 45Q58 45 55 0M100 70Q38 70 33 0M100 95Q18 95 12 0'/%3E%3C/svg%3E") no-repeat top right / contain;
+}
+.nav-link { color: var(--os) !important; opacity: .8; }
+.nav-link:hover { background: rgba(255, 106, 0, .25) !important; color: var(--citrouille-vif) !important; opacity: 1; }
+.nav-link.active { background: var(--citrouille) !important; color: #120600 !important; opacity: 1;
+  box-shadow: 0 0 20px var(--citrouille); }
+
+/* ---------- Hero ---------- */
+.laser-hero-bg {
+  background-color: #0a0414 !important;
+  background-image:
+    radial-gradient(circle at 84% 20%, #fff7da 0 30px, rgba(255, 200, 100, .45) 31px 62px, rgba(255, 140, 0, .15) 63px 120px, transparent 121px),
+    radial-gradient(at 12% 25%, rgba(139, 61, 255, .5), transparent 55%),
+    radial-gradient(at 80% 90%, rgba(255, 106, 0, .4), transparent 50%) !important;
+  background-size: 100% 100% !important; animation: none !important;
+  border-color: var(--citrouille) !important;
+}
+.laser-hero-bg::before { background: linear-gradient(to top, var(--nuit), transparent) !important; }
+.laser-hero-bg::after {
+  content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 90px; z-index: 3; pointer-events: none;
+  background: radial-gradient(ellipse at 50% 100%, rgba(157, 255, 46, .22), transparent 70%);
+  animation: brume 6s ease-in-out infinite alternate;
+}
+@keyframes brume { from { opacity: .4; transform: translateX(-4%); } to { opacity: 1; transform: translateX(4%); } }
+#hero > div.relative::before { /* fantôme flottant */
+  content: '👻'; position: absolute; left: 2%; top: 6px; font-size: 3.2rem; z-index: 20;
+  filter: drop-shadow(0 0 14px #fff) drop-shadow(0 0 30px var(--violet));
+  animation: flotte 5s ease-in-out infinite; pointer-events: none;
+}
+@keyframes flotte { 0%, 100% { transform: translate(0, 0) rotate(-8deg); opacity: .9; }
+  50% { transform: translate(40px, -18px) rotate(8deg); opacity: .5; } }
+.laser-beam, .laser-handpiece, #laserCanvas { filter: hue-rotate(95deg) saturate(1.5); }
+.laser-flyer-card { border: 2px solid var(--citrouille) !important;
+  box-shadow: 0 25px 60px -10px #000, 0 0 50px rgba(255, 106, 0, .6), 0 0 100px rgba(139, 61, 255, .35) !important; }
+.laser-veil { background: linear-gradient(135deg, #0a0414, #1a0c2e) !important; }
+.laser-hero-bg .bg-red-950\/80, .laser-hero-bg .bg-red-950\/60 { background: rgba(70, 25, 0, .85) !important; }
+.laser-hero-bg .text-red-300, .laser-hero-bg .text-red-400, .laser-hero-bg .text-red-200 { color: var(--citrouille-vif) !important; }
+.laser-hero-bg a.from-red-600 { background: linear-gradient(90deg, #ff6a00, #c2410c) !important; color: #120600 !important;
+  box-shadow: 0 0 24px rgba(255, 106, 0, .7) !important; }
+
+/* ---------- Araignée suspendue ---------- */
+#categories { position: relative; }
+#categories::before {
+  content: '🕷️'; position: absolute; top: -28px; left: 6%; z-index: 45; pointer-events: none;
+  padding-top: 90px; font-size: 2rem; transform-origin: top center;
+  background: linear-gradient(var(--os), var(--os)) top center / 1px 90px no-repeat;
+  animation: balance 3.5s ease-in-out infinite alternate;
+}
+@keyframes balance { from { transform: rotate(-9deg); } to { transform: rotate(9deg); } }
+
+/* ---------- Cartes catégories ---------- */
+.category-card { border: 2px solid rgba(255, 106, 0, .5); animation: halo 3s ease-in-out infinite alternate; }
+@keyframes halo {
+  from { box-shadow: 0 0 14px rgba(255, 106, 0, .45), 0 6px 20px #000; }
+  to   { box-shadow: 0 0 26px rgba(139, 61, 255, .8), 0 6px 20px #000; }
+}
+.category-card:hover { transform: scale(1.05) rotate(-1deg) !important; border-color: var(--slime); }
+.category-card > div.absolute.inset-0 {
+  background: linear-gradient(180deg, rgba(11, 5, 21, .25), rgba(90, 30, 170, .8)) !important;
+  font-family: 'Creepster', 'Inter', cursive; font-weight: 400 !important;
+  font-size: 2rem !important; letter-spacing: .08em; text-align: center; gap: .5rem;
+  color: #fff !important; text-shadow: 0 0 14px var(--citrouille), 0 0 28px var(--citrouille), 0 3px 0 #000;
+}
+.category-card > div.absolute.inset-0::before { content: '🎃'; font-size: 1.6rem; }
+.category-card > div.absolute.inset-0::after  { content: '🦇'; font-size: 1.6rem; }
+.badge-compteur { background: var(--slime) !important; color: #101800 !important; font-weight: 800 !important;
+  box-shadow: 0 0 16px var(--slime) !important; }
+
+/* ---------- Contenus dépliés ---------- */
+.partner-content, .partner-content.bg-white, .partner-content.bg-gray-50 {
+  background: var(--prune) !important; border: 2px solid var(--violet) !important;
+  box-shadow: 0 0 30px rgba(139, 61, 255, .45) !important;
+}
+.partner-link {
+  position: relative; background: var(--prune-clair) !important; color: var(--os) !important;
+  border: 2px solid rgba(255, 106, 0, .4); box-shadow: 0 4px 14px rgba(0, 0, 0, .6) !important;
+}
+.partner-link:hover {
+  background: #3d1f78 !important; color: #fff !important; border-color: var(--citrouille);
+  transform: translateY(-3px) scale(1.05) rotate(-1deg) !important;
+  box-shadow: 0 0 26px var(--citrouille) !important; text-shadow: 0 0 8px var(--citrouille);
+}
+.partner-link:hover::after { content: '🎃'; position: absolute; top: -12px; right: -8px; font-size: 1.4rem; }
+
+/* ---------- Accordéons ---------- */
+.accordion-btn { background: var(--prune-clair) !important; color: var(--os) !important; border: 1px solid rgba(139, 61, 255, .5); }
+.accordion-btn:hover { background: #3d1f78 !important; }
+.accordion-btn.active { background: #6b2a00 !important; color: #fff !important; border-color: var(--citrouille);
+  box-shadow: 0 0 16px rgba(255, 106, 0, .6); }
+.accordion-content { background: #140a24 !important; border-left: 4px solid var(--citrouille) !important; color: var(--os); }
+.accordion-content a { color: var(--slime) !important; }
+
+/* ---------- Mentions ---------- */
+#mentions { background: var(--prune) !important; border-top: 3px solid var(--citrouille);
+  box-shadow: 0 -10px 40px rgba(255, 106, 0, .25), inset 0 0 50px #000 !important; }
+#mentions::after { content: '🎃 Joyeux Halloween 👻'; display: block; text-align: center; margin-top: 1.5rem;
+  font-family: 'Creepster', cursive; font-size: 2rem; color: var(--citrouille-vif);
+  text-shadow: 0 0 16px var(--citrouille); animation: neon 4s infinite; }
+
+/* ---------- Boutons / modale / PWA ---------- */
+#scrollTopBtn { background: var(--citrouille) !important; font-size: 0 !important; box-shadow: 0 0 22px var(--citrouille) !important; }
+#scrollTopBtn::after { content: '🎃'; font-size: 1.7rem; }
+#imageModal { background: rgba(8, 2, 18, .92) !important; }
+#imageModal button { background: var(--citrouille) !important; color: #120600 !important; }
+body > div[style*="z-index: 10001"] { background: var(--citrouille) !important; color: #120600 !important; }
+
+/* ---------- Chauves-souris ---------- */
+body::before, body::after {
+  content: ''; position: fixed; z-index: 40; pointer-events: none; left: -80px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 46 28'%3E%3Cpath fill='%23000' d='M23 8l3-6 2 6c4-5 9-7 18-6-3 4-3 9-6 12-3-2-6-2-8 2-2-3-5-4-9-1-4-3-7-2-9 1-2-4-5-4-8-2-3-3-3-8-6-12 9-1 14 1 18 6l2-6z'/%3E%3C/svg%3E") no-repeat center / contain;
+  filter: drop-shadow(0 0 6px var(--violet)) drop-shadow(0 0 2px var(--citrouille));
+}
+body::before { top: 20vh; width: 70px; height: 43px; animation: vol 14s linear infinite; }
+body::after  { top: 58vh; width: 50px; height: 31px; animation: vol 20s linear 6s infinite; }
+@keyframes vol {
+  0%   { transform: translate(0, 0) rotate(-6deg) scaleY(1); }
+  12%  { transform: translate(14vw, -30px) scaleY(.6); }
+  25%  { transform: translate(28vw, 20px) rotate(6deg) scaleY(1); }
+  37%  { transform: translate(44vw, -40px) scaleY(.6); }
+  50%  { transform: translate(60vw, 30px) rotate(-6deg) scaleY(1); }
+  75%  { transform: translate(88vw, -30px) rotate(6deg) scaleY(.7); }
+  100% { transform: translate(120vw, 10px) rotate(-6deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; }
+  html::before, body::before, body::after { display: none; }
+}
